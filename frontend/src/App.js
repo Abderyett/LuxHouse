@@ -4,7 +4,8 @@ import { GlobalStyle } from './Global';
 function App() {
   return (
     <>
-      <div>Hello from The App Component</div>
+      <h1>Hello from The App Component</h1>
+
       <GlobalStyle />
     </>
   );
