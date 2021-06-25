@@ -1,21 +1,42 @@
 import { createGlobalStyle } from 'styled-components';
+import josfinRegular from './fonts/josefinsans-regular-webfont.woff2';
+import josfinBold from './fonts/josefinsans-bold-webfont.woff2';
 import avenirBold from './fonts/Avenir-Bold.woff2';
 import avenirRegular from './fonts/Avenir-Regular.woff2';
 import { color } from './utilities';
 
 export const GlobalStyle = createGlobalStyle`
 @font-face {
-    font-family: "avenirRegular";
+    font-family: 'josefin_bold';
+    src: url(${josfinBold}) format('woff2');
+        
+    font-weight: bold;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'josefin_regular';
+    src: url(${josfinRegular}) format('woff2');
+       
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: "avenir_regular";
     src: url(${avenirRegular}) format("woff2");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    font-family: "avenirBold";
+    font-family: "avenir_bold";
     src: url(${avenirBold}) format("woff2");
     font-weight: bold;
     font-style: normal;
 }
+
+
 *,
 *::before,
 *::after {
@@ -26,7 +47,7 @@ export const GlobalStyle = createGlobalStyle`
 
 body{
 
-  font-family: 'avenirRegular',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+  font-family: 'avenir_regular',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   
  
@@ -66,6 +87,12 @@ h5 {
 p {
   margin-bottom: 1.25rem;
   color: ${color.grey_700};
+}
+ul{
+  list-style-type: none;
+}
+a{
+  text-decoration:none;
 }
 @media screen and (min-width: 800px) {
   h1 {

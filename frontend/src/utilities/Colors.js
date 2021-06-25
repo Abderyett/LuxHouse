@@ -2,6 +2,8 @@ export const color = {
   /* eslint-disable camelcase */
   black: '#000000',
   white: '#ffffff',
+  sugar_swi: '#f3eee7',
+  ecru: '#ede1cf',
   blue_grey_900: '#102a43',
   blue_grey_800: '#243b53',
   blue_grey_700: '#334e68',
