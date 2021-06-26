@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { GlobalStyle } from './Global';
-import { Header, Footer, Hero } from './components';
+import { Header, Footer, Hero, Features } from './components';
 
 function App() {
   return (
@@ -9,6 +9,7 @@ function App() {
       <Header />
       <main>
         <Hero />
+        <Features />
       </main>
 
       <Footer />
