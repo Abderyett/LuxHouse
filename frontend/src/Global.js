@@ -3,6 +3,9 @@ import josfinRegular from './fonts/josefinsans-regular-webfont.woff2';
 import josfinBold from './fonts/josefinsans-bold-webfont.woff2';
 import avenirBold from './fonts/Avenir-Bold.woff2';
 import avenirRegular from './fonts/Avenir-Regular.woff2';
+import playFairRegular from './fonts/playfairdisplay-regular-webfont.woff2';
+import playFairBold from './fonts/playfairdisplay-bold-webfont.woff2';
+import playFairItalic from './fonts/playfairdisplay-italic-webfont.woff2';
 import { color } from './utilities';
 
 export const GlobalStyle = createGlobalStyle`
@@ -34,6 +37,39 @@ export const GlobalStyle = createGlobalStyle`
     src: url(${avenirBold}) format("woff2");
     font-weight: bold;
     font-style: normal;
+}
+
+@font-face {
+    font-family: 'playfair_bold';
+    src: url(${playFairBold}) format('woff2');
+         
+    font-weight: bold;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'playfair_italic';
+    src: url(${playFairItalic}) format('woff2');
+         
+    font-weight: normal;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'playfair_regular';
+    src: url(${playFairRegular}) format('woff2');
+         
+    font-weight: normal;
+    font-style: normal;
+
 }
 
 

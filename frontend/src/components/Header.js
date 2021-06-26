@@ -51,12 +51,13 @@ const HeadWrapper = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  box-shadow: ${shadow.xl};
+  box-shadow: ${shadow.md};
+  overflow: auto;
 `;
 
 const Logo = styled.h4`
-  font-size: 1.5rem;
-  font-family: 'josefin_regular';
+  font-size: 1.6rem;
+  font-family: 'playfair_bold';
 
   text-transform: uppercase;
 `;
@@ -88,7 +89,7 @@ const NavLink = styled(Link)`
 const ActionLink = styled(Link)`
   ${ListStyle}
   border-right:1px solid ${color.grey_300};
-  line-height: 6rem;
+  line-height: 5rem;
   padding: 0 2rem;
 
   :last-child {
