@@ -4,6 +4,7 @@ export const color = {
   white: '#ffffff',
   sugar_swi: '#f3eee7',
   ecru: '#ede1cf',
+  wes_yellow: '#ffc600',
   blue_grey_900: '#102a43',
   blue_grey_800: '#243b53',
   blue_grey_700: '#334e68',

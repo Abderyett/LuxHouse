@@ -6,6 +6,7 @@ import avenirRegular from './fonts/Avenir-Regular.woff2';
 import playFairRegular from './fonts/playfairdisplay-regular-webfont.woff2';
 import playFairBold from './fonts/playfairdisplay-bold-webfont.woff2';
 import playFairItalic from './fonts/playfairdisplay-italic-webfont.woff2';
+import avenirSemi from './fonts/metropolis-medium-webfont.woff2';
 import { color } from './utilities';
 
 export const GlobalStyle = createGlobalStyle`
@@ -36,6 +37,12 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "avenir_bold";
     src: url(${avenirBold}) format("woff2");
     font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: "avenir_semi";
+    src: url(${avenirSemi}) format("woff2");
+    font-weight: normal;
     font-style: normal;
 }
 

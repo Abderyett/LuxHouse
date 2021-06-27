@@ -63,6 +63,7 @@ const Logo = styled.h4`
 `;
 const ListWrapper = styled.div`
   font-weight: 600;
+  font-family: 'avenir_semi';
   ul {
     display: flex;
     margin-right: 1rem;

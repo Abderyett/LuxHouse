@@ -56,7 +56,7 @@ const HeroText = styled.h1`
   color: ${color.black};
   width: 20ch;
   text-transform: uppercase;
-  font-family: 'avenir_regular';
+  font-family: 'avenir_semi';
   position: absolute;
   top: 37%;
   left: 35%;
