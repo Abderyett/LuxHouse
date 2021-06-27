@@ -22,13 +22,13 @@ export function Features() {
 }
 
 const FeatureSection = styled.section`
-  width: 90vw;
+  width: 100%;
   padding: 0 3rem;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10rem;
+  /* margin-top: 10rem; */
   display: grid;
-
+  height: 100vh;
   align-items: center;
   justify-content: center;
   grid-template-columns: repeat(auto-fit, 19rem);
