@@ -141,7 +141,7 @@ const popular = [
     title: 'Be My Guest',
     category: 'Stool',
     img:
-      'warmnordic-bemyguest-barstool-1700x1700.jpeg (https://dl.airtable.com/.attachments/6884584f93782366dc842ca15dbe1753/7aefdf95/warmnordic-bemyguest-barstool-1700x1700.jpeg)',
+      'https://dl.airtable.com/.attachments/6884584f93782366dc842ca15dbe1753/7aefdf95/warmnordic-bemyguest-barstool-1700x1700.jpeg',
     price: 529,
     description:
       'An elegant, classic bar stool with a wicker seat and simple metal frame. With its French rattan and oak seat and simple black metal legs, this unique bar stool will look great at any bar. Together with the idiom, the choice of materials creates a warm, sophisticated, floating look and a fundamental lightness. With its classic design and touch of modern lightness',

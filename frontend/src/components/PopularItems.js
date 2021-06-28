@@ -1,20 +1,46 @@
+/* eslint-disable no-shadow */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FiHeart } from 'react-icons/fi';
 import { pagination, color, shadow } from '../utilities';
-import { Circle } from '../utilities/svg';
+import { Circle, NextArrow, PrevArrow, Dots } from '../utilities/svg';
 
 export function PopularItems() {
   const [data, setData] = useState(pagination());
   const [page, setPage] = useState(0);
 
+  const nextPage = () => {
+    setPage((oldPage) => {
+      let nextPage = oldPage + 1;
+      if (nextPage > data.length - 1) {
+        nextPage = 0;
+      }
+      return nextPage;
+    });
+  };
+  const prevPage = () => {
+    setPage((oldPage) => {
+      let prevPage = oldPage - 1;
+      if (prevPage < 0) {
+        prevPage = data.length - 1;
+      }
+      return prevPage;
+    });
+  };
+
   return (
     <CardWrapper>
       <Heading>
         <h2>Popular Items</h2>
-        <span>
+        <div>
           {page + 1} of {data.length}
-        </span>
+        </div>
+        <button type="button" onClick={prevPage}>
+          <PrevArrow />
+        </button>
+        <button type="button" onClick={nextPage}>
+          <NextArrow />
+        </button>
       </Heading>
       {data[page].map((el) => {
         const { id, title, category, img, price, description } = el;
@@ -31,6 +57,9 @@ export function PopularItems() {
           </Card>
         );
       })}
+      <StyedDots>
+        <Dots />
+      </StyedDots>
     </CardWrapper>
   );
 }
@@ -64,12 +93,14 @@ const Heart = styled(FiHeart)`
   transition: opacity 0.6s ease-in-out;
   &:active {
     color: red;
+    fill: red;
   }
 `;
 
 const Heading = styled.div`
-  span {
+  div {
     color: ${color.grey_700};
+    margin-bottom: 5rem;
   }
 `;
 
@@ -80,6 +111,7 @@ const Card = styled.div`
   transition: all 0.6s ease-in-out;
   cursor: pointer;
   position: relative;
+  z-index: 1;
   &:last-child {
     border: none;
   }
@@ -127,4 +159,11 @@ const Title = styled.div`
     bottom: 15px;
     right: 2px;
   }
+`;
+
+const StyedDots = styled.div`
+  position: absolute;
+  bottom: 190px;
+  left: 430px;
+  z-index: 0;
 `;
