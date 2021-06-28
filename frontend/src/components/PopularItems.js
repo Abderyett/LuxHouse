@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { BsPlusCircle } from 'react-icons/bs';
+import { FiHeart } from 'react-icons/fi';
 import { pagination, color, shadow } from '../utilities';
+import { Circle } from '../utilities/svg';
 
 export function PopularItems() {
   const [data, setData] = useState(pagination());
@@ -19,13 +20,14 @@ export function PopularItems() {
         const { id, title, category, img, price, description } = el;
         return (
           <Card key={id}>
+            <Heart />
             <StyledImg src={img} alt={title} />
             <Title>
               <h3>{title}</h3>
               <h5>${price}</h5>
             </Title>
             <p>{category} </p>
-            <StyledCircle />
+            <Circle />
           </Card>
         );
       })}
@@ -45,10 +47,23 @@ const CardWrapper = styled.section`
   align-items: center;
   justify-content: center;
   grid-template-columns: repeat(auto-fit, 20rem);
+  position: relative;
   h2 {
     font-family: 'avenir_semi';
     width: 2ch;
     line-height: 3.5rem;
+  }
+`;
+
+const Heart = styled(FiHeart)`
+  font-size: 1.5rem;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  &:active {
+    color: red;
   }
 `;
 
@@ -71,6 +86,10 @@ const Card = styled.div`
   &:hover {
     box-shadow: ${shadow.xxl};
     z-index: 2;
+
+    ${Heart} {
+      opacity: 1;
+    }
   }
 
   h3 {
@@ -108,11 +127,4 @@ const Title = styled.div`
     bottom: 15px;
     right: 2px;
   }
-`;
-
-const StyledCircle = styled(BsPlusCircle)`
-  font-size: 3rem;
-  position: absolute;
-  bottom: -24px;
-  right: 24px;
 `;

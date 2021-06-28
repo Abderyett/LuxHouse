@@ -28,10 +28,9 @@ const FeatureSection = styled.section`
   margin-right: auto;
   margin-top: 10rem;
   display: grid;
-
+  grid-template-columns: repeat(auto-fit, 19rem);
   align-items: center;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, 19rem);
 `;
 
 const Card = styled.div`

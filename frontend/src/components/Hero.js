@@ -54,7 +54,7 @@ const Sofa = styled.img`
 const HeroText = styled.h1`
   font-size: 4.8rem;
   color: ${color.black};
-  width: 20ch;
+  width: 15ch;
   text-transform: uppercase;
   font-family: 'avenir_semi';
   position: absolute;
