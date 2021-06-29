@@ -59,6 +59,7 @@ const Heading = styled.div`
   p {
     width: 70ch;
     padding-bottom: 1rem;
+    font-size: 1.2rem;
   }
 `;
 
@@ -144,6 +145,7 @@ const ThirdImg = styled.div`
   ${Img}
   background-position: right 100% bottom 30%;
   position: relative;
+  margin-bottom: 1rem;
   &::before {
     content: '';
     position: absolute;
@@ -151,12 +153,12 @@ const ThirdImg = styled.div`
     top: 0;
     width: 70rem;
     height: 100%;
-    background-image: linear-gradient(to right, ${color.sugar_swi} 10%, rgba(255, 255, 255, 0) 100%);
+    background-image: linear-gradient(to right, ${color.sugar_swi} 0%, rgba(255, 255, 255, 0) 100%);
   }
 `;
 
 const ThirdText = styled.div`
   ${EmbededText}
-  left: 10rem;
+  left: 5rem;
   top: 45%;
 `;

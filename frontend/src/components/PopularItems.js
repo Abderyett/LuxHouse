@@ -68,12 +68,12 @@ export function PopularItems() {
 const CardWrapper = styled.section`
   background: ${color.sugar_swi};
   width: 100%;
-  padding: 0 3rem;
+  padding: 15rem 3rem;
   margin-left: auto;
   margin-right: auto;
   margin: 10rem 0;
   display: grid;
-  height: 100vh;
+
   align-items: center;
   justify-content: center;
   grid-template-columns: repeat(auto-fit, 20rem);
@@ -106,11 +106,6 @@ const Heading = styled.div`
   button {
     background: transparent;
   }
-`;
-const Wrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
 `;
 
 const Card = styled.div`
