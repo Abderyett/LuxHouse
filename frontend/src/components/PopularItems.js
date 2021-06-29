@@ -42,6 +42,7 @@ export function PopularItems() {
           <NextArrow />
         </button>
       </Heading>
+
       {data[page].map((el) => {
         const { id, title, category, img, price, description } = el;
         return (
@@ -102,6 +103,14 @@ const Heading = styled.div`
     color: ${color.grey_700};
     margin-bottom: 5rem;
   }
+  button {
+    background: transparent;
+  }
+`;
+const Wrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
 const Card = styled.div`
@@ -163,7 +172,7 @@ const Title = styled.div`
 
 const StyedDots = styled.div`
   position: absolute;
-  bottom: 190px;
-  left: 430px;
+  bottom: 22%;
+  left: 25%;
   z-index: 0;
 `;

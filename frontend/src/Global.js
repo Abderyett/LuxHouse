@@ -94,7 +94,7 @@ body{
     Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   
  
-  line-height: 1.5;
+  /* line-height: 1.5; */
   font-size: 0.875rem;
   
 }
@@ -109,7 +109,7 @@ h4,
 h5 {
   
   text-transform: capitalize;
-  line-height: 1.25;
+  /* line-height: 1.25; */
   margin-bottom: 0.75rem;
 }
 h1 {
