@@ -30,15 +30,24 @@ export function Footer() {
           <Conatcts>
             <h4>contacts</h4>
             <a href="/">1-844-962-1453</a>
-            <a href="/">contact@luxhouse.com</a>
+            <a href="mailto:contact@luxhouse.com">contact@luxhouse.com</a>
           </Conatcts>
 
           <Social>
-            <FaFacebookF />
-            <FaInstagram />
-            <FaPinterest />
-
-            <p>Social media</p>
+            <SocialWrapper>
+              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                <FaFacebookF />
+              </a>
+              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                <FaInstagram />
+              </a>
+              <a href="https://www.pinterest.com/" target="_blank" rel="noopener noreferrer">
+                <FaPinterest />
+              </a>
+            </SocialWrapper>
+            <div>
+              <p>Social media</p>
+            </div>
           </Social>
         </ContactWrapper>
       </FooterWrapper>
@@ -51,6 +60,7 @@ const FooterWrapper = styled.footer`
   justify-content: space-evenly;
 
   background: ${color.grey_200};
+
   h4 {
     font-family: 'avenir_semi';
     margin-bottom: 2rem;
@@ -62,6 +72,10 @@ const FooterWrapper = styled.footer`
     text-transform: capitalize;
     color: ${color.grey_600};
     margin-bottom: 1rem;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      color: ${color.grey_700};
+    }
   }
 `;
 
@@ -81,13 +95,14 @@ const Separtor = styled.div`
 `;
 const Social = styled.div`
   color: ${color.grey_600};
+  display: flex;
   padding: 2rem;
   width: 50%;
   background-color: ${color.white};
   p {
     text-transform: capitalize;
     position: relative;
-    top: 5rem;
+    top: 2rem;
     left: 3rem;
     transform: rotate(90deg);
   }
@@ -96,22 +111,30 @@ const Social = styled.div`
     width: 3px;
     color: ${color.grey_400};
     height: 4rem;
-    background: red;
-    position: absolute;
+    background: ${color.grey_400};
     transform: rotate(90deg);
+    position: absolute;
+    left: 8rem;
+    top: -1.2rem;
   }
 `;
 
 const ContactWrapper = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 40%;
+  width: 35%;
   background: ${color.grey_200};
 `;
 const InfoWrapper = styled.div`
   width: 60%;
   display: flex;
   justify-content: space-evenly;
-  padding: 3rem;
+  padding: 3rem 3rem 1rem 3rem;
   background: ${color.grey_200};
+`;
+
+const SocialWrapper = styled.div`
+  display: grid;
+  grid-gap: 0.5rem;
+  font-size: 1.7rem;
 `;
