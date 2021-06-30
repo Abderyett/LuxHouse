@@ -40,7 +40,16 @@ const HangLamp = styled.img`
   width: 250px;
   position: absolute;
   top: 0;
-  right: 200px;
+  right: 10%;
+  @media (max-width: 900px) {
+    width: 200px;
+    right: 0;
+  }
+
+  @media (max-width: 800px) {
+    width: 180px;
+    right: 0;
+  }
 `;
 const Sofa = styled.img`
   width: 900px;
@@ -49,6 +58,18 @@ const Sofa = styled.img`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+  @media (max-width: 950px) {
+    width: 780px;
+    left: 50%;
+  }
+  @media (max-width: 800px) {
+    width: 700px;
+    left: 50%;
+  }
+  @media (max-width: 650px) {
+    width: 700px;
+    left: 80%;
+  }
 `;
 
 const HeroText = styled.h1`
@@ -60,7 +81,23 @@ const HeroText = styled.h1`
   position: absolute;
   top: 37%;
   left: 35%;
+
   transform: translate(-50%, -50%);
+  @media (max-width: 1170px) {
+    font-size: 4rem;
+  }
+  @media (max-width: 950px) {
+    font-size: 3.5rem;
+    left: 38%;
+  }
+  @media (max-width: 800px) {
+    font-size: 3rem;
+    left: 40%;
+  }
+  @media (max-width: 650px) {
+    font-size: 2.5rem;
+    left: 50%;
+  }
   span {
     font-family: 'playfair_italic';
     color: ${color.blue_grey_400};

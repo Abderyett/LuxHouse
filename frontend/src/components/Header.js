@@ -3,13 +3,14 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiHeart, FiUser } from 'react-icons/fi';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
-
+import { Menu } from '../utilities/svg';
 import { shadow, color } from '../utilities';
 
 export function Header() {
   return (
     <HeadWrapper>
       <Logo>Lux house</Logo>
+      <Menu />
       <ListWrapper>
         <ul>
           <NavLink to="home">home</NavLink>
@@ -58,15 +59,21 @@ const HeadWrapper = styled.header`
 const Logo = styled.h4`
   font-size: 1.6rem;
   font-family: 'playfair_bold';
-
   text-transform: uppercase;
+  margin-bottom: 0;
+  @media (max-width: 1200px) {
+    font-size: 1.3rem;
+  }
 `;
 const ListWrapper = styled.div`
   font-weight: 600;
   font-family: 'avenir_semi';
+  @media (max-width: 1030px) {
+    display: none;
+  }
   ul {
     display: flex;
-    margin-right: 1rem;
+    /* margin-right: 1rem; */
   }
 `;
 const ListStyle = css`
@@ -81,6 +88,10 @@ const ListStyle = css`
   &:hover {
     color: rgba(0, 0, 0, 0.5);
   }
+  @media (max-width: 1250px) {
+    padding-right: 2rem;
+    font-size: 1rem;
+  }
 `;
 
 const NavLink = styled(Link)`
@@ -90,14 +101,12 @@ const NavLink = styled(Link)`
 const ActionLink = styled(Link)`
   ${ListStyle}
   border-right:1px solid ${color.grey_300};
-  line-height: 5rem;
-  padding: 0 2rem;
 
+  /* padding: 0 2rem; */
   :last-child {
     border: none;
     padding-right: 0rem;
   }
-
   span {
     font-size: 1.4rem;
     vertical-align: sub;
