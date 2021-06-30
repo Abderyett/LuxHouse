@@ -60,6 +60,14 @@ const Heading = styled.div`
     width: 70ch;
     padding-bottom: 1rem;
     font-size: 1.2rem;
+    @media (max-width: 950px) {
+      width: 50ch;
+      font-size: 1rem;
+    }
+    @media (max-width: 768px) {
+      width: 40ch;
+      font-size: 0.8rem;
+    }
   }
 `;
 
@@ -72,6 +80,9 @@ const ImgWrapper = styled.div`
   margin-right: auto;
   grid-auto-flow: row;
   position: relative;
+  @media (max-width: 768px) {
+    grid-gap: 1rem;
+  }
 `;
 const Img = css`
   height: 30rem;
@@ -83,6 +94,9 @@ const Img = css`
   &:hover {
     transform: scale(1.02);
   }
+  @media (max-width: 768px) {
+    background-size: 100vw;
+  }
 `;
 
 const FirstImg = styled.div`
@@ -90,11 +104,14 @@ const FirstImg = styled.div`
   ${Img}
   background-position: left 100% bottom 40%;
   position: relative;
+  @media (max-width: 768px) {
+    height: 18rem;
+  }
   &::after {
     content: '';
     position: absolute;
-    left: -12rem;
-    width: 100rem;
+    left: 0rem;
+    width: 100%;
     height: 100%;
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, ${color.sugar_swi} 100%);
   }
@@ -106,6 +123,9 @@ const EmbededText = css`
   font-family: 'avenir_semi';
   right: 0;
   top: 30%;
+  @media (max-width: 768px) {
+    left: 5%;
+  }
 
   h4 {
     color: ${color.black};
@@ -113,9 +133,16 @@ const EmbededText = css`
     width: 24ch;
     color: ${color.grey_800};
     line-height: 2.5rem;
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+      line-height: 1.8rem;
+    }
   }
   p {
     text-transform: uppercase;
+    @media (max-width: 768px) {
+      font-size: 0.75rem;
+    }
   }
 `;
 const FirstText = styled.div`
@@ -127,6 +154,9 @@ const SecondImg = styled.div`
   ${Img}
   background-position: left 100% bottom 0;
   position: relative;
+  @media (max-width: 768px) {
+    height: 14rem;
+  }
 `;
 const SecondText = styled.div`
   ${EmbededText}
@@ -146,6 +176,9 @@ const ThirdImg = styled.div`
   background-position: right 100% bottom 30%;
   position: relative;
   margin-bottom: 1rem;
+  @media (max-width: 768px) {
+    height: 14rem;
+  }
   &::before {
     content: '';
     position: absolute;

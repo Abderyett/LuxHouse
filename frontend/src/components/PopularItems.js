@@ -42,25 +42,26 @@ export function PopularItems() {
           <NextArrow />
         </button>
       </Heading>
-
-      {data[page].map((el) => {
-        const { id, title, category, img, price, description } = el;
-        return (
-          <Card key={id}>
-            <Heart />
-            <StyledImg src={img} alt={title} />
-            <Title>
-              <h3>{title}</h3>
-              <h5>${price}</h5>
-            </Title>
-            <p>{category} </p>
-            <Circle />
-          </Card>
-        );
-      })}
-      <StyedDots>
-        <Dots />
-      </StyedDots>
+      <Wrapper>
+        <StyedDots>
+          <Dots />
+        </StyedDots>
+        {data[page].map((el) => {
+          const { id, title, category, img, price, description } = el;
+          return (
+            <Card key={id}>
+              <Heart />
+              <StyledImg src={img} alt={title} />
+              <Title>
+                <h3>{title}</h3>
+                <h5>${price}</h5>
+              </Title>
+              <p>{category} </p>
+              <Circle />
+            </Card>
+          );
+        })}
+      </Wrapper>
     </CardWrapper>
   );
 }
@@ -73,15 +74,29 @@ const CardWrapper = styled.section`
   margin-right: auto;
   margin: 10rem 0;
   display: grid;
-
-  align-items: center;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fit, 20rem);
+  grid-auto-flow: column;
+  grid-template-columns: 30% 70%;
   position: relative;
+  @media (max-width: 768px) {
+    margin: 5rem 0;
+    padding: 5rem 3rem;
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+  }
   h2 {
     font-family: 'avenir_semi';
     width: 2ch;
     line-height: 3.5rem;
+  }
+`;
+const Wrapper = styled.div`
+  display: grid;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, 20rem);
+  @media (max-width: 1464px) {
+    grid-gap: 2rem;
   }
 `;
 
@@ -99,9 +114,14 @@ const Heart = styled(FiHeart)`
 `;
 
 const Heading = styled.div`
+  position: relative;
+  @media (max-width: 768px) {
+    margin-bottom: 5rem;
+    justify-self: center;
+  }
   div {
     color: ${color.grey_700};
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
   }
   button {
     background: transparent;
@@ -167,7 +187,7 @@ const Title = styled.div`
 
 const StyedDots = styled.div`
   position: absolute;
-  bottom: 22%;
-  left: 25%;
+  top: -3%;
+  left: 0%;
   z-index: 0;
 `;

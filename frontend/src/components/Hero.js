@@ -54,10 +54,14 @@ const HangLamp = styled.img`
 const Sofa = styled.img`
   width: 900px;
   position: absolute;
-  top: 65%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+  @media (max-width: 1080px) {
+    width: 800px;
+    left: 50%;
+  }
   @media (max-width: 950px) {
     width: 780px;
     left: 50%;
@@ -68,7 +72,7 @@ const Sofa = styled.img`
   }
   @media (max-width: 650px) {
     width: 700px;
-    left: 80%;
+    left: 90%;
   }
 `;
 
@@ -81,6 +85,7 @@ const HeroText = styled.h1`
   position: absolute;
   top: 37%;
   left: 35%;
+  padding-left: 2rem;
 
   transform: translate(-50%, -50%);
   @media (max-width: 1170px) {
@@ -106,10 +111,11 @@ const HeroText = styled.h1`
 
 const NewCollection = styled.button`
   position: absolute;
-  bottom: 100px;
+  bottom: 3rem;
   right: 0;
   background-color: ${color.black};
   padding: 1rem 2rem;
+  cursor: pointer;
   &:hover {
     svg {
       transform: translateX(5px);
@@ -121,7 +127,6 @@ const NewCollection = styled.button`
     color: ${color.white};
     font-family: 'avenir_regular';
     font-size: 1.2rem;
-    cursor: pointer;
   }
 `;
 const StyledArrow = styled(HiOutlineArrowNarrowRight)`

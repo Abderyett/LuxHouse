@@ -31,6 +31,9 @@ const FeatureSection = styled.section`
   grid-template-columns: repeat(auto-fit, 19rem);
   align-items: center;
   justify-content: center;
+  @media (max-width: 768px) {
+    margin-top: 5rem;
+  }
 `;
 
 const Card = styled.div`
@@ -39,6 +42,10 @@ const Card = styled.div`
   padding: 4rem 2rem;
   transition: all 0.6s ease-in-out;
   cursor: pointer;
+  @media (max-width: 768px) {
+    border: none;
+    border-bottom: 1px solid ${color.grey_300};
+  }
   &:last-child {
     border: none;
   }
