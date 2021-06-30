@@ -57,13 +57,20 @@ export function Footer() {
 
 const FooterWrapper = styled.footer`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 
   background: ${color.grey_200};
+  @media (max-width: 950px) {
+    flex-direction: column;
+    align-items: center;
+  }
 
   h4 {
     font-family: 'avenir_semi';
     margin-bottom: 2rem;
+    @media (max-width: 950px) {
+      font-size: 1rem;
+    }
   }
   a {
     text-align: start;
@@ -75,6 +82,9 @@ const FooterWrapper = styled.footer`
     transition: all 0.3s ease-in-out;
     &:hover {
       color: ${color.grey_700};
+    }
+    @media (max-width: 768px) {
+      font-size: 0.75rem;
     }
   }
 `;
@@ -97,25 +107,34 @@ const Social = styled.div`
   color: ${color.grey_600};
   display: flex;
   padding: 2rem;
-  width: 50%;
+  width: 100%;
   background-color: ${color.white};
+
   p {
-    text-transform: capitalize;
+    text-transform: uppercase;
     position: relative;
-    top: 2rem;
+    font-size: 0.5rem;
+
+    top: 0;
     left: 3rem;
+    transform-origin: 0 0;
     transform: rotate(90deg);
+
+    @media (max-width: 768px) {
+      font-size: 0.7rem;
+    }
   }
+
   p::after {
     content: '';
-    width: 3px;
+    width: 2px;
     color: ${color.grey_400};
-    height: 4rem;
+    height: 5rem;
     background: ${color.grey_400};
     transform: rotate(90deg);
     position: absolute;
-    left: 8rem;
-    top: -1.2rem;
+    left: 7rem;
+    top: -2.2rem;
   }
 `;
 
@@ -131,6 +150,10 @@ const InfoWrapper = styled.div`
   justify-content: space-evenly;
   padding: 3rem 3rem 1rem 3rem;
   background: ${color.grey_200};
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 3rem 2.5rem 1rem 2.5rem;
+  }
 `;
 
 const SocialWrapper = styled.div`
