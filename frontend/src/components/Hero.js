@@ -21,12 +21,12 @@ export function Hero() {
       <Sofa src={sofa} alt="grey sofa" />
       <HeroText
         initial={{ x: '-100%', opacity: 0 }}
-        animate={{ x: '-60%', y: '-20%', opacity: 1 }}
+        animate={{ x: '-60%', opacity: 1 }}
         transition={{ duration: 1, delay: 0.5 }}
       >
         <span>Lapan</span> sofas collection
       </HeroText>
-      <NewCollection type="button" initial={{ x: '-1000%' }} animate={{ x: 0 }} transition={{ duration: 1, delay: 3 }}>
+      <NewCollection type="button" initial={{ x: '-100vw' }} animate={{ x: 0 }} transition={{ duration: 1, delay: 3 }}>
         <a href="/newcollection"> New Collection</a>
         <span>
           <StyledArrow />
@@ -43,13 +43,13 @@ const StyledSection = styled.section`
 
 const Secondcolor = styled(motion.div)`
   background-color: ${color.ecru};
-  height: 100%;
+  height: 90%;
   width: 50%;
   float: right;
 `;
 const Firstcolor = styled(motion.div)`
   background-color: ${color.sugar_swi};
-  height: 100%;
+  height: 90%;
   width: 50%;
   float: left;
 `;
@@ -101,7 +101,7 @@ const HeroText = styled(motion.h1)`
   text-transform: uppercase;
   font-family: 'avenir_semi';
   position: absolute;
-  top: 37%;
+  top: 35%;
   left: 35%;
   padding-left: 2rem;
 

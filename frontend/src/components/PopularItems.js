@@ -1,11 +1,17 @@
 /* eslint-disable no-shadow */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FiHeart } from 'react-icons/fi';
+import { useInView } from 'react-intersection-observer';
+import { motion, useAnimation } from 'framer-motion';
 import { pagination, color, shadow } from '../utilities';
 import { Circle, NextArrow, PrevArrow, Dots } from '../utilities/svg';
 
 export function PopularItems() {
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+  });
+  const animation = useAnimation();
   const [data, setData] = useState(pagination());
   const [page, setPage] = useState(0);
 
@@ -27,10 +33,22 @@ export function PopularItems() {
       return prevPage;
     });
   };
+  console.log(inView);
+  useEffect(() => {
+    if (inView) {
+      animation.start({
+        x: 0,
+        opacity: 1,
+        transition: {
+          duration: 2,
+        },
+      });
+    }
+  }, [inView]);
 
   return (
-    <CardWrapper>
-      <Heading>
+    <CardWrapper ref={ref}>
+      <Heading animate={animation} initial={{ x: 10, opacity: 0 }}>
         <h2>Popular Items</h2>
         <div>
           {page + 1} of {data.length}
@@ -42,12 +60,12 @@ export function PopularItems() {
           <NextArrow />
         </button>
       </Heading>
-      <Wrapper>
+      <Wrapper animate={animation} initial={{ x: -10, opacity: 0 }}>
         <StyedDots>
           <Dots />
         </StyedDots>
         {data[page].map((el) => {
-          const { id, title, category, img, price, description } = el;
+          const { id, title, category, img, price } = el;
           return (
             <Card key={id}>
               <Heart />
@@ -89,7 +107,7 @@ const CardWrapper = styled.section`
     line-height: 3.5rem;
   }
 `;
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   display: grid;
   position: relative;
   align-items: center;
@@ -113,7 +131,7 @@ const Heart = styled(FiHeart)`
   }
 `;
 
-const Heading = styled.div`
+const Heading = styled(motion.div)`
   position: relative;
   @media (max-width: 768px) {
     margin-bottom: 5rem;

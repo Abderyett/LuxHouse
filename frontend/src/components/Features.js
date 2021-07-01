@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import featuresData from '../featureData';
 import { color, shadow } from '../utilities';
 
 export function Features() {
+  const { ref, inView } = useInView({
+    threshold: 0.4,
+  });
+  const animation = useAnimation();
+
+  useEffect(() => {
+    if (inView) {
+      animation.start({
+        opacity: 1,
+        transition: {
+          duration: 2,
+        },
+      });
+    }
+  }, [inView]);
   return (
-    <FeatureSection>
+    <FeatureSection ref={ref} animate={animation} initial={{ opacity: 0 }}>
       {featuresData.map((el) => {
         const { id, feature, featureIcon, arrowIcon, description } = el;
         return (
@@ -21,7 +38,7 @@ export function Features() {
   );
 }
 
-const FeatureSection = styled.section`
+const FeatureSection = styled(motion.section)`
   width: 100%;
   padding: 0 3rem;
   margin-left: auto;

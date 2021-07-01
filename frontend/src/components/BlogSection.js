@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import { useAnimation, motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import diningRoom from '../assets/dining_room.jpg';
 import livingRoom from '../assets/living_room.jpg';
 import bathroom from '../assets/bathroom.jpg';
 import { color } from '../utilities';
 
 export function BlogSection() {
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+  });
+  const animation = useAnimation();
+
+  useEffect(() => {
+    if (inView) {
+      animation.start({
+        opacity: 1,
+        transition: {
+          duration: 1,
+        },
+      });
+    }
+  }, [inView]);
   return (
     <>
       <Heading>
@@ -17,24 +34,24 @@ export function BlogSection() {
       </Heading>
       <ImgWrapper>
         <a href="/">
-          <FirstImg>
-            <FirstText>
+          <FirstImg ref={ref} animate={animation} initial={{ opacity: 0 }}>
+            <FirstText animate={animation} initial={{ opacity: 0 }}>
               <h4>Why did reed karkoff walk away from his brand?</h4>
               <p>Robert Ford | 3 min ago</p>
             </FirstText>
           </FirstImg>
         </a>
         <a href="/">
-          <SecondImg>
-            <SecondText>
+          <SecondImg animate={animation} initial={{ opacity: 0 }}>
+            <SecondText animate={animation} initial={{ opacity: 0 }}>
               <h4>Hot look: a fun random beauty report straight from the buyer</h4>
               <p>Jesse Lingard | 9 min ago</p>
             </SecondText>
           </SecondImg>
         </a>
         <a href="/">
-          <ThirdImg>
-            <ThirdText>
+          <ThirdImg animate={animation} initial={{ opacity: 0 }}>
+            <ThirdText animate={animation} initial={{ opacity: 0 }}>
               <h4>How Lux home can improve the look of your house?</h4>
               <p>jack grealish | 20 min ago</p>
             </ThirdText>
@@ -99,7 +116,7 @@ const Img = css`
   }
 `;
 
-const FirstImg = styled.div`
+const FirstImg = styled(motion.div)`
   background-image: url(${diningRoom});
   ${Img}
   background-position: left 100% bottom 40%;
@@ -149,7 +166,7 @@ const FirstText = styled.div`
   ${EmbededText}
 `;
 
-const SecondImg = styled.div`
+const SecondImg = styled(motion.div)`
   background-image: url(${bathroom});
   ${Img}
   background-position: left 100% bottom 0;
@@ -170,7 +187,7 @@ const SecondText = styled.div`
   }
 `;
 
-const ThirdImg = styled.div`
+const ThirdImg = styled(motion.div)`
   background-image: url(${livingRoom});
   ${Img}
   background-position: right 100% bottom 30%;
