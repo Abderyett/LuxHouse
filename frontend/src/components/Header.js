@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiHeart, FiUser } from 'react-icons/fi';
@@ -7,11 +7,12 @@ import { Menu } from '../utilities/svg';
 import { shadow, color } from '../utilities';
 
 export function Header() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <HeadWrapper>
       <Logo>Lux house</Logo>
 
-      <Wrapper>
+      <Wrapper isOpen={isOpen}>
         <ListWrapper>
           <ul>
             <NavLink to="home">home</NavLink>
@@ -44,7 +45,9 @@ export function Header() {
           </ul>
         </ListWrapper>
       </Wrapper>
-      <Menu />
+      <Button type="button" onClick={() => setIsOpen(!isOpen)}>
+        <Menu />
+      </Button>
     </HeadWrapper>
   );
 }
@@ -65,17 +68,21 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 999;
 
   @media (max-width: 1030px) {
     flex-direction: column;
     align-items: flex-start;
     position: fixed;
     top: 0;
-    right: 0;
+    left: ${({ isOpen }) => (isOpen ? '0' : '-100rem')};
     margin-top: 5rem;
     background-color: ${color.white};
     z-index: 99;
-    width: 100vw;
+    width: 50vw;
+    box-shadow: ${shadow.lg};
+    opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
+    transition: all 0.6s ease-in-out;
   }
 `;
 
@@ -93,10 +100,6 @@ const ListWrapper = styled.div`
   font-family: 'avenir_semi';
 
   @media (max-width: 1030px) {
-    border-bottom: 2px solid ${color.grey_400};
-    :last-child {
-      border: none;
-    }
   }
 
   ul {
@@ -104,7 +107,6 @@ const ListWrapper = styled.div`
     @media (max-width: 1030px) {
       flex-direction: column;
       padding-left: 0;
-      transform: translateX(2rem);
     }
   }
 `;
@@ -114,21 +116,23 @@ const ListStyle = css`
   padding-right: 3rem;
   font-size: 1.1rem;
   text-transform: capitalize;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.6s ease-in-out;
   color: ${color.black};
   font-weight: 600;
   &:hover {
     color: rgba(0, 0, 0, 0.5);
   }
-
   @media (max-width: 1250px) {
-    padding-right: 2rem;
+    padding-right: 1rem;
     font-size: 1rem;
-    width: 100vw;
+    width: 50vw;
     &:hover {
       background-color: ${color.sugar_swi};
       color: ${color.black};
     }
+  }
+  @media (max-width: 1030px) {
+    padding: 1rem;
   }
 `;
 
@@ -136,6 +140,7 @@ const NavLink = styled(Link)`
   ${ListStyle}
   @media (max-width: 1030px) {
     padding-top: 1rem;
+    padding-left: 2rem;
     :last-child {
       padding-bottom: 1rem;
     }
@@ -150,6 +155,7 @@ const ActionLink = styled(Link)`
   @media (max-width: 1030px) {
     border: none;
     padding-top: 1rem;
+    padding-left: 1rem;
     :last-child {
       padding-bottom: 1rem;
     }
@@ -164,4 +170,8 @@ const ActionLink = styled(Link)`
     padding-right: 0.5rem;
     font-weight: 600;
   }
+`;
+
+const Button = styled.button`
+  background-color: transparent;
 `;
