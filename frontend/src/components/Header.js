@@ -10,38 +10,41 @@ export function Header() {
   return (
     <HeadWrapper>
       <Logo>Lux house</Logo>
+
+      <Wrapper>
+        <ListWrapper>
+          <ul>
+            <NavLink to="home">home</NavLink>
+            <NavLink to="blog">stories</NavLink>
+            <NavLink to="products">shop</NavLink>
+            <NavLink to="contact">contact</NavLink>
+          </ul>
+        </ListWrapper>
+        <ListWrapper>
+          <ul>
+            <ActionLink to="wichlist">
+              <span>
+                <FiHeart />
+              </span>
+              My Wichlist
+            </ActionLink>
+            <ActionLink to="login">
+              &nbsp;
+              <span>
+                <FiUser />
+              </span>
+              account
+            </ActionLink>
+            <ActionLink to="cart">
+              <span>
+                <HiOutlineShoppingBag />
+              </span>
+              shoping cart
+            </ActionLink>
+          </ul>
+        </ListWrapper>
+      </Wrapper>
       <Menu />
-      <ListWrapper>
-        <ul>
-          <NavLink to="home">home</NavLink>
-          <NavLink to="blog">stories</NavLink>
-          <NavLink to="products">shop</NavLink>
-          <NavLink to="contact">contact</NavLink>
-        </ul>
-      </ListWrapper>
-      <ListWrapper>
-        <ul>
-          <ActionLink to="wichlist">
-            <span>
-              <FiHeart />
-            </span>
-            My Wichlist
-          </ActionLink>
-          <ActionLink to="login">
-            &nbsp;
-            <span>
-              <FiUser />
-            </span>
-            account
-          </ActionLink>
-          <ActionLink to="cart">
-            <span>
-              <HiOutlineShoppingBag />
-            </span>
-            shoping cart
-          </ActionLink>
-        </ul>
-      </ListWrapper>
     </HeadWrapper>
   );
 }
@@ -54,6 +57,26 @@ const HeadWrapper = styled.header`
   padding: 0 2rem;
   box-shadow: ${shadow.md};
   overflow: auto;
+  position: relative;
+  @media (max-width: 1030px) {
+  }
+`;
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 1030px) {
+    flex-direction: column;
+    align-items: flex-start;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-top: 5rem;
+    background-color: ${color.white};
+    z-index: 99;
+    width: 100vw;
+  }
 `;
 
 const Logo = styled.h4`
@@ -68,12 +91,21 @@ const Logo = styled.h4`
 const ListWrapper = styled.div`
   font-weight: 600;
   font-family: 'avenir_semi';
+
   @media (max-width: 1030px) {
-    display: none;
+    border-bottom: 2px solid ${color.grey_400};
+    :last-child {
+      border: none;
+    }
   }
+
   ul {
     display: flex;
-    /* margin-right: 1rem; */
+    @media (max-width: 1030px) {
+      flex-direction: column;
+      padding-left: 0;
+      transform: translateX(2rem);
+    }
   }
 `;
 const ListStyle = css`
@@ -88,21 +120,40 @@ const ListStyle = css`
   &:hover {
     color: rgba(0, 0, 0, 0.5);
   }
+
   @media (max-width: 1250px) {
     padding-right: 2rem;
     font-size: 1rem;
+    width: 100vw;
+    &:hover {
+      background-color: ${color.sugar_swi};
+      color: ${color.black};
+    }
   }
 `;
 
 const NavLink = styled(Link)`
   ${ListStyle}
+  @media (max-width: 1030px) {
+    padding-top: 1rem;
+    :last-child {
+      padding-bottom: 1rem;
+    }
+  }
 `;
 
 const ActionLink = styled(Link)`
   ${ListStyle}
   border-right:1px solid ${color.grey_300};
 
-  /* padding: 0 2rem; */
+  padding: 0 1rem;
+  @media (max-width: 1030px) {
+    border: none;
+    padding-top: 1rem;
+    :last-child {
+      padding-bottom: 1rem;
+    }
+  }
   :last-child {
     border: none;
     padding-right: 0rem;
