@@ -12,10 +12,4 @@ export function Menu() {
   );
 }
 
-const StyledSvg = styled.svg`
-  display: none;
-  cursor: pointer;
-  @media (max-width: 1030px) {
-    display: block;
-  }
-`;
+const StyledSvg = styled.svg``;

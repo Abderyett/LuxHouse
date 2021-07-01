@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
+import { motion } from 'framer-motion';
 import { color } from '../utilities';
 import sofa from '../assets/hero_sofa.png';
 import lamp from '../assets/hero_lamp.png';
@@ -8,13 +9,24 @@ import lamp from '../assets/hero_lamp.png';
 export function Hero() {
   return (
     <StyledSection>
-      <Secondcolor />
-      <HangLamp src={lamp} alt="hanging lamp" />
+      <Firstcolor initial={{ y: '-100%' }} animate={{ y: 0 }} transition={{ duration: 1, delay: 1 }} />
+      <Secondcolor initial={{ y: '-100%' }} animate={{ y: 0 }} transition={{ duration: 1 }} />
+      <HangLamp
+        src={lamp}
+        alt="hanging lamp"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2 }}
+      />
       <Sofa src={sofa} alt="grey sofa" />
-      <HeroText>
+      <HeroText
+        initial={{ x: '-100%', opacity: 0 }}
+        animate={{ x: '-60%', y: '-20%', opacity: 1 }}
+        transition={{ duration: 1, delay: 0.5 }}
+      >
         <span>Lapan</span> sofas collection
       </HeroText>
-      <NewCollection type="button">
+      <NewCollection type="button" initial={{ x: '-1000%' }} animate={{ x: 0 }} transition={{ duration: 1, delay: 3 }}>
         <a href="/newcollection"> New Collection</a>
         <span>
           <StyledArrow />
@@ -29,14 +41,20 @@ const StyledSection = styled.section`
   position: relative;
 `;
 
-const Secondcolor = styled.div`
-  background-color: ${color.sugar_swi};
+const Secondcolor = styled(motion.div)`
+  background-color: ${color.ecru};
   height: 100%;
   width: 50%;
   float: right;
 `;
+const Firstcolor = styled(motion.div)`
+  background-color: ${color.sugar_swi};
+  height: 100%;
+  width: 50%;
+  float: left;
+`;
 
-const HangLamp = styled.img`
+const HangLamp = styled(motion.img)`
   width: 250px;
   position: absolute;
   top: 0;
@@ -76,7 +94,7 @@ const Sofa = styled.img`
   }
 `;
 
-const HeroText = styled.h1`
+const HeroText = styled(motion.h1)`
   font-size: 4.8rem;
   color: ${color.black};
   width: 15ch;
@@ -109,9 +127,9 @@ const HeroText = styled.h1`
   }
 `;
 
-const NewCollection = styled.button`
+const NewCollection = styled(motion.button)`
   position: absolute;
-  bottom: 3rem;
+  bottom: 5rem;
   right: 0;
   background-color: ${color.black};
   padding: 1rem 2rem;

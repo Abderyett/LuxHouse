@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiHeart, FiUser } from 'react-icons/fi';
-import { HiOutlineShoppingBag } from 'react-icons/hi';
+import { HiOutlineShoppingBag, HiX } from 'react-icons/hi';
 import { Menu } from '../utilities/svg';
 import { shadow, color } from '../utilities';
 
@@ -13,7 +13,7 @@ export function Header() {
       <Logo>Lux house</Logo>
 
       <Wrapper isOpen={isOpen}>
-        <ListWrapper>
+        <ListWrapper onClick={() => setIsOpen(false)}>
           <ul>
             <NavLink to="home">home</NavLink>
             <NavLink to="blog">stories</NavLink>
@@ -21,7 +21,7 @@ export function Header() {
             <NavLink to="contact">contact</NavLink>
           </ul>
         </ListWrapper>
-        <ListWrapper>
+        <ListWrapper onClick={() => setIsOpen(false)}>
           <ul>
             <ActionLink to="wichlist">
               <span>
@@ -46,7 +46,7 @@ export function Header() {
         </ListWrapper>
       </Wrapper>
       <Button type="button" onClick={() => setIsOpen(!isOpen)}>
-        <Menu />
+        {isOpen ? <HiX /> : <Menu />}
       </Button>
     </HeadWrapper>
   );
@@ -59,8 +59,13 @@ const HeadWrapper = styled.header`
   justify-content: space-between;
   padding: 0 2rem;
   box-shadow: ${shadow.md};
+  background-color: ${color.white};
+  z-index: 9999;
   overflow: auto;
   position: relative;
+  position: sticky;
+  top: 0;
+  left: 0;
   @media (max-width: 1030px) {
   }
 `;
@@ -75,14 +80,15 @@ const Wrapper = styled.div`
     align-items: flex-start;
     position: fixed;
     top: 0;
-    left: ${({ isOpen }) => (isOpen ? '0' : '-100rem')};
+    left: ${({ isOpen }) => (isOpen ? '0' : '-100%')};
     margin-top: 5rem;
     background-color: ${color.white};
     z-index: 99;
     width: 50vw;
     box-shadow: ${shadow.lg};
     opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
-    transition: all 0.6s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
   }
 `;
 
@@ -125,7 +131,7 @@ const ListStyle = css`
   @media (max-width: 1250px) {
     padding-right: 1rem;
     font-size: 1rem;
-    width: 50vw;
+
     &:hover {
       background-color: ${color.sugar_swi};
       color: ${color.black};
@@ -133,6 +139,7 @@ const ListStyle = css`
   }
   @media (max-width: 1030px) {
     padding: 1rem;
+    width: 50vw;
   }
 `;
 
@@ -174,4 +181,13 @@ const ActionLink = styled(Link)`
 
 const Button = styled.button`
   background-color: transparent;
+  cursor: pointer;
+  display: none;
+
+  svg {
+    font-size: 2rem;
+  }
+  @media (max-width: 1030px) {
+    display: block;
+  }
 `;
