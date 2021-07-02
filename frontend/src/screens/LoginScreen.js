@@ -3,13 +3,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import styled, { css } from 'styled-components';
+import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { Error } from '../components';
+import { color, shadow, rounded } from '../utilities';
 
 export function LoginScreen() {
   return (
-    <div className="form-container">
-      <div className="wrap">
-        <div className="form-wrapper">
+    <Container>
+      <Wrap>
+        <FormWrapper>
           <Formik
             initialValues={{ email: '', name: '', password: '', confirmPassword: '' }}
             validationSchema={Yup.object({
@@ -31,51 +34,176 @@ export function LoginScreen() {
           >
             {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
               <form autoComplete="off" onSubmit={handleSubmit}>
-                <h2 className="form-heading">Sign in to your account</h2>
-                <div className="email-input">
-                  <label htmlFor="email"> Email</label>
-                  <input
+                <Heading>Registred Customers</Heading>
+                <TextHeading>
+                  If you have an account with us, plase log in. You can use social netwoks for authorizing here.
+                </TextHeading>
+                <InputWrapper>
+                  <Input
+                    error={touched.email && errors.email}
                     id="email"
                     type="email"
                     name="email"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email}
+                    placeholder="Your email"
                     className={touched.email && errors.email ? 'has-error' : null}
                   />
                   <Error touched={touched.email} message={errors.email} />
-                </div>
-                <div className="password-input">
-                  <div className="password-text">
-                    <label htmlFor="password"> Password</label>
-
-                    <Link className="password-reset" to="/reset">
-                      Forgot your password?
-                    </Link>
-                  </div>
-
-                  <input
+                </InputWrapper>
+                <InputWrapper className="password-input">
+                  <Input
+                    error={touched.password && errors.password}
                     id="password"
                     type="password"
                     name="password"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.password}
+                    placeholder="Your password"
                     className={touched.password && errors.password ? 'has-error' : null}
                   />
                   <Error touched={touched.password} message={errors.password} />
-                </div>
-                <button className="submit-btn" type="submit" disabled={isSubmitting}>
-                  Continue
-                </button>
+                  <ResetPassword>
+                    <Link className="password-reset" to="/reset">
+                      Forgot your password?
+                    </Link>
+                  </ResetPassword>
+                </InputWrapper>
+                <Social>
+                  <StyledButton type="submit">
+                    <span>
+                      <FaFacebookF />
+                    </span>
+                    Facebook
+                  </StyledButton>
+                  <StyledButton google="google" type="submit">
+                    <span>
+                      <FaGoogle />
+                    </span>
+                    Google
+                  </StyledButton>
+                </Social>
+                <ButtonWrapper>
+                  <SubmitBtn className="submit-btn" type="submit" disabled={isSubmitting}>
+                    sign in
+                  </SubmitBtn>
+                </ButtonWrapper>
               </form>
             )}
           </Formik>
-        </div>
-        <div className="register-text">
+        </FormWrapper>
+        {/* <div className="register-text">
           Don't have an account? &nbsp; <Link to="/register"> Sign up</Link>
-        </div>
-      </div>
-    </div>
+        </div> */}
+      </Wrap>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  background-color: ${color.grey_050};
+  height: 100vh;
+  display: grid;
+  place-items: center;
+`;
+const Wrap = styled.div`
+  padding: 4rem 2rem;
+`;
+const FormWrapper = styled.div``;
+const Heading = styled.h3`
+  font-family: 'avenir_bold';
+  line-height: 1rem;
+`;
+const TextHeading = styled.p`
+  color: ${color.grey_700};
+  padding-top: 1rem;
+  width: 50ch;
+`;
+
+const InputWrapper = styled.div``;
+const Input = styled.input`
+  border-radius: ${rounded.full};
+  height: 3.5rem;
+  width: 30rem;
+  max-width: 30rem;
+  text-indent: 5%;
+  font-size: 1.2rem;
+  color: ${color.grey_800};
+  font-family: 'avenir_regular';
+  box-shadow: ${shadow.lg};
+  margin-top: 0.5rem;
+  box-shadow: ${({ error }) => error && `0px 0px 0px 2px ${color.red_vivid_500}`};
+
+  @media (max-width: 768px) {
+    width: 90vw;
+  }
+  outline: none;
+  &:focus {
+    box-shadow: 0px 0px 0px 2px ${color.grey_400};
+  }
+`;
+const ResetPassword = styled.div`
+  a {
+    text-decoration: underline;
+    color: ${color.grey_600};
+    display: flex;
+    justify-content: flex-end;
+  }
+`;
+
+const SubmitBtn = styled.button`
+  background: transparent;
+  border: 3px solid ${color.black};
+  border-radius: ${rounded.sm};
+  padding: 0.75rem 4rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-family: 'avenir_semi';
+`;
+
+const Button = css`
+  background-color: ${({ google }) => (google ? '#DB4437' : '#4267b2')};
+  color: ${color.white};
+  border-radius: ${rounded.full};
+  padding: 1rem 3.5rem;
+  font-size: 1.1rem;
+  font-family: 'avenir_semi';
+  margin-left: ${({ google }) => (google ? '20px' : '0')};
+  @media (max-width: 768px) {
+    margin-top: ${({ google }) => (google ? '20px' : '0')};
+    margin-left: 0;
+  }
+`;
+const StyledButton = styled.button`
+  ${Button}
+  width:50%;
+  @media (max-width: 768px) {
+    width: 60%;
+  }
+
+  span {
+    vertical-align: middle;
+    padding-right: 1rem;
+    font-size: 1.1rem;
+  }
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ google }) => (google ? 'rgba(219, 68, 55,0.9)' : 'rgba(66,103,178,0.9)')};
+  }
+`;
+
+const Social = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 0 2rem 0;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+const ButtonWrapper = styled.div`
+  display: grid;
+  place-items: center;
+`;
