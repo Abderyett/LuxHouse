@@ -15,7 +15,7 @@ export function Header() {
       <Wrapper isOpen={isOpen}>
         <ListWrapper onClick={() => setIsOpen(false)}>
           <ul>
-            <NavLink to="home">home</NavLink>
+            <NavLink to="/">home</NavLink>
             <NavLink to="blog">stories</NavLink>
             <NavLink to="products">shop</NavLink>
             <NavLink to="contact">contact</NavLink>

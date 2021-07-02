@@ -16,17 +16,22 @@ export function Hero() {
         alt="hanging lamp"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
+        transition={{ duration: 3 }}
       />
       <Sofa src={sofa} alt="grey sofa" />
       <HeroText
         initial={{ x: '-100%', opacity: 0 }}
         animate={{ x: '-60%', opacity: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
+        transition={{ duration: 1, delay: 2 }}
       >
         <span>Lapan</span> sofas collection
       </HeroText>
-      <NewCollection type="button" initial={{ x: '-100vw' }} animate={{ x: 0 }} transition={{ duration: 1, delay: 3 }}>
+      <NewCollection
+        type="button"
+        initial={{ x: '-100vw' }}
+        animate={{ x: 0 }}
+        transition={{ duration: 1, delay: 3.5 }}
+      >
         <a href="/newcollection"> New Collection</a>
         <span>
           <StyledArrow />

@@ -1,20 +1,15 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { GlobalStyle } from './Global';
-import { Header, Footer, Hero, Features, PopularItems, BlogSection } from './components';
+import { HomeScreen } from './screens';
 
 function App() {
   return (
     <>
-      <Header />
-      <main>
-        <Hero />
-        <Features />
-        <PopularItems />
-        <BlogSection />
-      </main>
+      <Switch>
+        <Route path="/" exact component={HomeScreen} />
+      </Switch>
 
-      <Footer />
       <GlobalStyle />
     </>
   );
