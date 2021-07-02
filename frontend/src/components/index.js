@@ -4,3 +4,4 @@ export * from './Hero';
 export * from './Features';
 export * from './PopularItems';
 export * from './BlogSection';
+export * from './Error';

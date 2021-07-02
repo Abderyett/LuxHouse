@@ -103,7 +103,7 @@ const Logo = styled.h4`
 `;
 const ListWrapper = styled.div`
   font-weight: 600;
-  font-family: 'avenir_semi';
+  font-family: 'avenir_regular';
 
   @media (max-width: 1030px) {
   }
