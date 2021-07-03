@@ -21,14 +21,14 @@ export function LoginScreen() {
           <p>You will have the oportunity to create an account and track your order once you complete your purchase</p>
 
           <SubmitBtn className="submit-btn" type="submit">
-            CREATE AN ACCOUNT
+            <Link to="/register">CREATE AN ACCOUNT</Link>
           </SubmitBtn>
         </RgisterWrapper>
       </RegisterContainer>
       <FromContainer>
         <Wrap>
           <Formik
-            initialValues={{ email: '', name: '', password: '', confirmPassword: '' }}
+            initialValues={{ email: '', password: '' }}
             validationSchema={Yup.object({
               email: Yup.string().email('Please enter valide email adress').required('Please enter your email adrress'),
 
@@ -129,6 +129,7 @@ const FromContainer = styled.div`
   place-items: center;
   @media (max-width: 1030px) {
     width: 100vw;
+    height: 85vh;
   }
 `;
 const Wrap = styled.div`
@@ -176,6 +177,7 @@ const RegisterContainer = styled.div`
   z-index: 2;
   @media (max-width: 1030px) {
     width: 100vw;
+
     order: 1;
   }
 
@@ -247,6 +249,10 @@ const SubmitBtn = styled.button`
   font-size: 1.2rem;
   font-family: 'avenir_semi';
   cursor: pointer;
+  a {
+    text-decoration: none;
+    color: ${color.black};
+  }
 `;
 
 const Button = css`

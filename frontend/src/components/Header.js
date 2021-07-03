@@ -178,14 +178,6 @@ const ListStyle = css`
 
 const NavLink = styled(Link)`
   ${ListStyle}
-
-  &:hover {
-    span {
-      opacity: 1;
-      transition: all 0.6s ease-in-out;
-    }
-    vertical-align: middle;
-  }
   span {
     opacity: 0;
     font-size: 1.5rem;
@@ -198,6 +190,13 @@ const NavLink = styled(Link)`
     justify-content: space-between;
     :last-child {
       padding-bottom: 1rem;
+    }
+    &:hover {
+      span {
+        opacity: 1;
+        transition: all 0.6s ease-in-out;
+      }
+      vertical-align: middle;
     }
   }
 `;

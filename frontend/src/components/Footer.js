@@ -9,17 +9,17 @@ export function Footer() {
       <FooterWrapper>
         <InfoWrapper>
           <CustomerRelation>
-            <h4>customer relations</h4>
+            <h5>customer relations</h5>
             <a href="/">Contact us</a>
             <a href="/">return poacy</a>
           </CustomerRelation>
           <Service>
-            <h4>customer relations</h4>
+            <h5>customer relations</h5>
             <a href="/">Assembly service</a>
             <a href="/">deavery</a>
           </Service>
           <Products>
-            <h4>products</h4>
+            <h5>products</h5>
             <a href="/">All products</a>
             <a href="/">bathrom</a>
           </Products>
@@ -28,7 +28,7 @@ export function Footer() {
         <ContactWrapper>
           <Separtor />
           <Conatcts>
-            <h4>contacts</h4>
+            <h5>contacts</h5>
             <a href="/">1-844-962-1453</a>
             <a href="mailto:contact@luxhouse.com">contact@luxhouse.com</a>
           </Conatcts>
@@ -58,7 +58,10 @@ export function Footer() {
 const FooterWrapper = styled.footer`
   display: flex;
   justify-content: space-between;
-
+  /* position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0; */
   background: ${color.grey_200};
   @media (max-width: 950px) {
     flex-direction: column;
