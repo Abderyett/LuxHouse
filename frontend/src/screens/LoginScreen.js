@@ -7,12 +7,26 @@ import styled, { css } from 'styled-components';
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { Error } from '../components';
 import { color, shadow, rounded } from '../utilities';
+import pendantLamp from '../utilities/svg/pendant_lamp.svg';
+import sofa from '../utilities/svg/sofa.svg';
 
 export function LoginScreen() {
   return (
     <Container>
-      <Wrap>
-        <FormWrapper>
+      <RegisterContainer>
+        <FirstPendant src={pendantLamp} alt="pendant Lamp" />
+        <Sofa src={sofa} alt="sofa" />
+        <RgisterWrapper>
+          <h2>New customer</h2>
+          <p>You will have the oportunity to create an account and track your order once you complete your purchase</p>
+
+          <SubmitBtn className="submit-btn" type="submit">
+            CREATE AN ACCOUNT
+          </SubmitBtn>
+        </RgisterWrapper>
+      </RegisterContainer>
+      <FromContainer>
+        <Wrap>
           <Formik
             initialValues={{ email: '', name: '', password: '', confirmPassword: '' }}
             validationSchema={Yup.object({
@@ -93,25 +107,60 @@ export function LoginScreen() {
               </form>
             )}
           </Formik>
-        </FormWrapper>
-        {/* <div className="register-text">
-          Don't have an account? &nbsp; <Link to="/register"> Sign up</Link>
-        </div> */}
-      </Wrap>
+        </Wrap>
+      </FromContainer>
     </Container>
   );
 }
 
 const Container = styled.div`
-  background-color: ${color.grey_050};
+  display: flex;
+`;
+
+const FromContainer = styled.div`
+  /* background-color: ${color.grey_050}; */
   height: 100vh;
+  width: 50vw;
   display: grid;
+  grid-auto-flow: column;
   place-items: center;
 `;
 const Wrap = styled.div`
   padding: 4rem 2rem;
 `;
-const FormWrapper = styled.div``;
+const RegisterContainer = styled.div`
+  height: 100vh;
+  width: 50vw;
+  background-color: ${color.ecru};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  h2 {
+    font-family: 'avenir_bold';
+    margin-bottom: 1rem;
+  }
+  p {
+    width: 40ch;
+    padding-bottom: 2rem;
+  }
+`;
+
+const FirstPendant = styled.img`
+  position: absolute;
+  top: 0;
+  left: 5%;
+`;
+const Sofa = styled.img`
+  position: absolute;
+  bottom: 0;
+`;
+
+const RgisterWrapper = styled.div`
+  margin-bottom: 30%;
+`;
+
 const Heading = styled.h3`
   font-family: 'avenir_bold';
   line-height: 1rem;
@@ -155,12 +204,13 @@ const ResetPassword = styled.div`
 
 const SubmitBtn = styled.button`
   background: transparent;
-  border: 3px solid ${color.black};
+  border: 2.5px solid ${color.black};
   border-radius: ${rounded.sm};
   padding: 0.75rem 4rem;
   text-transform: uppercase;
   font-size: 1.2rem;
   font-family: 'avenir_semi';
+  cursor: pointer;
 `;
 
 const Button = css`

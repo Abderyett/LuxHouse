@@ -131,15 +131,14 @@ const ListStyle = css`
   @media (max-width: 1250px) {
     padding-right: 1rem;
     font-size: 1rem;
-
-    &:hover {
-      background-color: ${color.sugar_swi};
-      color: ${color.black};
-    }
   }
   @media (max-width: 1030px) {
     padding: 1rem;
     width: 50vw;
+    &:hover {
+      background-color: ${color.sugar_swi};
+      color: ${color.black};
+    }
   }
 `;
 
