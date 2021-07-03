@@ -115,18 +115,55 @@ export function LoginScreen() {
 
 const Container = styled.div`
   display: flex;
+  @media (max-width: 1030px) {
+    flex-direction: column;
+  }
 `;
 
 const FromContainer = styled.div`
-  /* background-color: ${color.grey_050}; */
+  background-color: ${color.grey_050};
   height: 100vh;
   width: 50vw;
   display: grid;
   grid-auto-flow: column;
   place-items: center;
+  @media (max-width: 1030px) {
+    width: 100vw;
+  }
 `;
 const Wrap = styled.div`
   padding: 4rem 2rem;
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
+`;
+
+const FirstPendant = styled.img`
+  position: absolute;
+  top: 0;
+  left: 5%;
+
+  @media (max-width: 1400px) {
+    width: 100px;
+    left: 0;
+  }
+  @media (max-width: 1030px) {
+    width: 80px;
+    left: 5%;
+  }
+  @media (max-width: 768px) {
+    width: 65px;
+  }
+`;
+const Sofa = styled.img`
+  position: absolute;
+  bottom: 0;
+  @media (max-width: 1400px) {
+    width: 90%;
+  }
+  @media (max-width: 768) {
+    width: 90%;
+  }
 `;
 const RegisterContainer = styled.div`
   height: 100vh;
@@ -136,6 +173,11 @@ const RegisterContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  z-index: 2;
+  @media (max-width: 1030px) {
+    width: 100vw;
+    order: 1;
+  }
 
   h2 {
     font-family: 'avenir_bold';
@@ -145,16 +187,6 @@ const RegisterContainer = styled.div`
     width: 40ch;
     padding-bottom: 2rem;
   }
-`;
-
-const FirstPendant = styled.img`
-  position: absolute;
-  top: 0;
-  left: 5%;
-`;
-const Sofa = styled.img`
-  position: absolute;
-  bottom: 0;
 `;
 
 const RgisterWrapper = styled.div`
@@ -194,6 +226,10 @@ const Input = styled.input`
   }
 `;
 const ResetPassword = styled.div`
+  @media (max-width: 768px) {
+    display: grid;
+    place-items: center;
+  }
   a {
     text-decoration: underline;
     color: ${color.grey_600};
