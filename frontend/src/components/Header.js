@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiHeart, FiUser } from 'react-icons/fi';
 import { HiOutlineShoppingBag, HiX } from 'react-icons/hi';
+import { RiArrowDropRightLine } from 'react-icons/ri';
 import { Menu } from '../utilities/svg';
 import { shadow, color } from '../utilities';
 
@@ -15,10 +16,30 @@ export function Header() {
       <Wrapper isOpen={isOpen}>
         <ListWrapper onClick={() => setIsOpen(false)}>
           <ul>
-            <NavLink to="/">home</NavLink>
-            <NavLink to="blog">stories</NavLink>
-            <NavLink to="products">shop</NavLink>
-            <NavLink to="contact">contact</NavLink>
+            <NavLink to="/">
+              home
+              <span>
+                <RiArrowDropRightLine />
+              </span>
+            </NavLink>
+            <NavLink to="blog">
+              stories
+              <span>
+                <RiArrowDropRightLine />
+              </span>
+            </NavLink>
+            <NavLink to="products">
+              shop
+              <span>
+                <RiArrowDropRightLine />
+              </span>
+            </NavLink>
+            <NavLink to="contact">
+              contact
+              <span>
+                <RiArrowDropRightLine />
+              </span>
+            </NavLink>
           </ul>
         </ListWrapper>
         <ListWrapper onClick={() => setIsOpen(false)}>
@@ -26,21 +47,30 @@ export function Header() {
             <ActionLink to="wichlist">
               <span>
                 <FiHeart />
+                My Wichlist
               </span>
-              My Wichlist
+
+              <Arrow second="second">
+                <RiArrowDropRightLine />
+              </Arrow>
             </ActionLink>
             <ActionLink to="login">
-              &nbsp;
               <span>
                 <FiUser />
+                account
               </span>
-              account
+              <Arrow>
+                <RiArrowDropRightLine />
+              </Arrow>
             </ActionLink>
             <ActionLink to="cart">
               <span>
                 <HiOutlineShoppingBag />
+                shoping cart
               </span>
-              shoping cart
+              <Arrow>
+                <RiArrowDropRightLine />
+              </Arrow>
             </ActionLink>
           </ul>
         </ListWrapper>
@@ -66,8 +96,6 @@ const HeadWrapper = styled.header`
   position: sticky;
   top: 0;
   left: 0;
-  @media (max-width: 1030px) {
-  }
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -105,11 +133,15 @@ const ListWrapper = styled.div`
   font-weight: 600;
   font-family: 'avenir_regular';
 
+  span {
+    font-size: 1rem;
+  }
   @media (max-width: 1030px) {
   }
 
   ul {
     display: flex;
+
     @media (max-width: 1030px) {
       flex-direction: column;
       padding-left: 0;
@@ -135,6 +167,8 @@ const ListStyle = css`
   @media (max-width: 1030px) {
     padding: 1rem;
     width: 50vw;
+    border: 0.5px solid ${color.grey_300};
+
     &:hover {
       background-color: ${color.sugar_swi};
       color: ${color.black};
@@ -144,34 +178,69 @@ const ListStyle = css`
 
 const NavLink = styled(Link)`
   ${ListStyle}
+
+  &:hover {
+    span {
+      opacity: 1;
+      transition: all 0.6s ease-in-out;
+    }
+    vertical-align: middle;
+  }
+  span {
+    opacity: 0;
+    font-size: 1.5rem;
+  }
   @media (max-width: 1030px) {
     padding-top: 1rem;
     padding-left: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     :last-child {
       padding-bottom: 1rem;
     }
   }
 `;
+const Arrow = styled.span`
+  opacity: 0;
+  font-size: 1.5rem;
+`;
 
 const ActionLink = styled(Link)`
   ${ListStyle}
-  border-right:1px solid ${color.grey_300};
+  border-right:0.5px solid ${color.grey_300};
 
   padding: 0 1rem;
   @media (max-width: 1030px) {
     border: none;
     padding-top: 1rem;
     padding-left: 1rem;
+    border: 0.5px solid ${color.grey_300};
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:hover {
+      ${Arrow} {
+        opacity: 1;
+        transition: all 0.6s ease-in-out;
+      }
+    }
+    ${Arrow} {
+      svg {
+        font-size: 2rem;
+      }
+    }
+
     :last-child {
       padding-bottom: 1rem;
     }
   }
   :last-child {
     border: none;
-    padding-right: 0rem;
+    padding-right: 1rem;
   }
-  span {
-    font-size: 1.4rem;
+  svg {
+    font-size: 1.5rem;
     vertical-align: sub;
     padding-right: 0.5rem;
     font-weight: 600;
