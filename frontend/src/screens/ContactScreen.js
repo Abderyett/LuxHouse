@@ -1,12 +1,35 @@
-import React from 'react';
+/* eslint-disable no-shadow */
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import ReactMapGL from 'react-map-gl';
 import { Header, Error } from '../components';
 import { color, rounded, shadow } from '../utilities';
 import contactImg from '../assets/contact_image.jpg';
 
 export function ContactScreen() {
+  const [viewport, setViewport] = useState({
+    latitude: 40.8115504,
+    longitude: -73.9464769,
+    zoom: 12,
+    width: '40vw',
+    height: '40vh',
+  });
+  const [secondViewport, setSecondViewport] = useState({
+    latitude: 43.65107,
+    longitude: -79.347015,
+    zoom: 12,
+    width: '40vw',
+    height: '40vh',
+  });
+  const [thirdViewport, setThirdViewport] = useState({
+    latitude: 45.516109,
+    longitude: -73.643059,
+    zoom: 12,
+    width: '40vw',
+    height: '40vh',
+  });
   return (
     <>
       <Header />
@@ -86,6 +109,55 @@ export function ContactScreen() {
               </Formik>
             </Wrap>
           </FromContainer>
+          {/* First ShowRoom */}
+
+          <Adress>
+            <h1>Adress</h1>
+          </Adress>
+          <Location>
+            <Map>
+              <ReactMapGL
+                {...viewport}
+                mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+                onViewportChange={(viewport) => setViewport(viewport)}
+              >
+                markers here
+              </ReactMapGL>
+            </Map>
+          </Location>
+
+          {/* Second showroom */}
+
+          <Location>
+            <Map>
+              <ReactMapGL
+                {...secondViewport}
+                mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+                onViewportChange={(secondViewport) => setSecondViewport(secondViewport)}
+              >
+                markers here
+              </ReactMapGL>
+            </Map>
+          </Location>
+          <Adress>
+            <h1>Adress</h1>
+          </Adress>
+          {/* Third Shaowroom */}
+
+          <Adress>
+            <h1>Adress</h1>
+          </Adress>
+          <Location>
+            <Map>
+              <ReactMapGL
+                {...thirdViewport}
+                mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+                onViewportChange={(thirdViewport) => setThirdViewport(thirdViewport)}
+              >
+                markers here
+              </ReactMapGL>
+            </Map>
+          </Location>
         </Wrapper>
       </Container>
     </>
@@ -101,8 +173,9 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  height: 100vh;
+  height: 100%;
   background: ${color.grey_050};
+  padding-bottom: 10rem;
 
   /* @media (max-width: 1030px) {
     flex-direction: column;
@@ -206,4 +279,11 @@ const SubmitBtn = styled.button`
 const ButtonWrapper = styled.div`
   display: grid;
   place-items: center;
+`;
+
+const Location = styled.div``;
+const Adress = styled.div``;
+const Map = styled.div`
+  width: 100%;
+  height: 100%;
 `;
