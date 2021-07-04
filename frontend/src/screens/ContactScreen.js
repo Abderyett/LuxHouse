@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import ReactMapGL from 'react-map-gl';
+import ReactMapGL, { Marker } from 'react-map-gl';
+import { HiOutlinePhone, HiOutlineMailOpen } from 'react-icons/hi';
+import { RiMapPin2Fill } from 'react-icons/ri';
 import { Header, Error } from '../components';
 import { color, rounded, shadow } from '../utilities';
 import contactImg from '../assets/contact_image.jpg';
@@ -112,7 +114,23 @@ export function ContactScreen() {
           {/* First ShowRoom */}
 
           <Adress>
-            <h1>Adress</h1>
+            <h3>Showroom at West Harlem</h3>
+            <p>
+              <span>
+                <HiOutlinePhone />
+              </span>
+              &nbsp;+1 365 965 9874
+            </p>
+            <p>
+              <span>
+                <HiOutlineMailOpen />
+              </span>
+              &nbsp; herlem@luxhouse.com
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus adipisci accusantium assumenda debitis
+              velit ipsam iusto error consectetur. Totam, laudantium!
+            </p>
           </Adress>
           <Location>
             <Map>
@@ -121,7 +139,9 @@ export function ContactScreen() {
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 onViewportChange={(viewport) => setViewport(viewport)}
               >
-                markers here
+                <Marker latitude={40.8115504} longitude={-73.9464769}>
+                  <RiMapPin2Fill />
+                </Marker>
               </ReactMapGL>
             </Map>
           </Location>
@@ -135,17 +155,51 @@ export function ContactScreen() {
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 onViewportChange={(secondViewport) => setSecondViewport(secondViewport)}
               >
-                markers here
+                <Marker latitude={43.65107} longitude={-79.347015}>
+                  <RiMapPin2Fill />
+                </Marker>
               </ReactMapGL>
             </Map>
           </Location>
           <Adress>
-            <h1>Adress</h1>
+            <h3>Showroom at Toronto</h3>
+            <p>
+              <span>
+                <HiOutlinePhone />
+              </span>
+              &nbsp;+1 334 645 2354
+            </p>
+            <p>
+              <span>
+                <HiOutlineMailOpen />
+              </span>
+              &nbsp; toronto@luxhouse.com
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus adipisci accusantium assumenda debitis
+              velit ipsam iusto error consectetur. Totam, laudantium!
+            </p>
           </Adress>
           {/* Third Shaowroom */}
 
           <Adress>
-            <h1>Adress</h1>
+            <h3>Showroom at Montreal</h3>
+            <p>
+              <span>
+                <HiOutlinePhone />
+              </span>
+              &nbsp;+1 985 124 3587
+            </p>
+            <p>
+              <span>
+                <HiOutlineMailOpen />
+              </span>
+              &nbsp; montreal@luxhouse.com
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus adipisci accusantium assumenda debitis
+              velit ipsam iusto error consectetur. Totam, laudantium!
+            </p>
           </Adress>
           <Location>
             <Map>
@@ -154,7 +208,9 @@ export function ContactScreen() {
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 onViewportChange={(thirdViewport) => setThirdViewport(thirdViewport)}
               >
-                markers here
+                <Marker latitude={45.516109} longitude={-73.643059}>
+                  <RiMapPin2Fill />
+                </Marker>
               </ReactMapGL>
             </Map>
           </Location>
@@ -282,8 +338,23 @@ const ButtonWrapper = styled.div`
 `;
 
 const Location = styled.div``;
-const Adress = styled.div``;
+const Adress = styled.div`
+  padding: 3rem;
+  h3 {
+    font-family: 'avenir_bold';
+  }
+  p {
+    width: 50ch;
+    color: ${color.grey_800};
+    font-size: 1.2rem;
+  }
+`;
 const Map = styled.div`
   width: 100%;
   height: 100%;
+  svg {
+    font-size: 2rem;
+    cursor: pointer;
+    color: ${color.grey_800};
+  }
 `;
