@@ -9,7 +9,7 @@ import { color } from '../utilities';
 
 export function BlogSection() {
   const { ref, inView } = useInView({
-    threshold: 0.1,
+    threshold: 0.5,
   });
   const animation = useAnimation();
 
@@ -25,7 +25,7 @@ export function BlogSection() {
   }, [inView]);
   return (
     <>
-      <Heading>
+      <Heading ref={ref}>
         <h2>Our cozy blog</h2>
         <p>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla dolor provident officiis incidunt, magnam
@@ -34,7 +34,7 @@ export function BlogSection() {
       </Heading>
       <ImgWrapper>
         <a href="/">
-          <FirstImg ref={ref} animate={animation} initial={{ opacity: 0 }}>
+          <FirstImg animate={animation} initial={{ opacity: 0 }}>
             <FirstText animate={animation} initial={{ opacity: 0 }}>
               <h4>Why did reed karkoff walk away from his brand?</h4>
               <p>Robert Ford | 3 min ago</p>

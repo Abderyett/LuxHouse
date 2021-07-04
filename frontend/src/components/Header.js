@@ -34,7 +34,7 @@ export function Header() {
                 <RiArrowDropRightLine />
               </span>
             </NavLink>
-            <NavLink to="contact">
+            <NavLink to="/contact">
               contact
               <span>
                 <RiArrowDropRightLine />

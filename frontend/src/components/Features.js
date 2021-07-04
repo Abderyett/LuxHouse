@@ -7,7 +7,7 @@ import { color, shadow } from '../utilities';
 
 export function Features() {
   const { ref, inView } = useInView({
-    threshold: 0.4,
+    threshold: 0.1,
   });
   const animation = useAnimation();
 
@@ -22,7 +22,7 @@ export function Features() {
     }
   }, [inView]);
   return (
-    <FeatureSection ref={ref} animate={animation} initial={{ opacity: 0 }}>
+    <FeatureSection ref={ref} animate={animation} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
       {featuresData.map((el) => {
         const { id, feature, featureIcon, arrowIcon, description } = el;
         return (

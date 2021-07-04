@@ -5,116 +5,124 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled, { css } from 'styled-components';
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
-import { Error } from '../components';
+import { Error, Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import pendantLamp from '../utilities/svg/pendant_lamp.svg';
 import sofa from '../utilities/svg/sofa.svg';
 
 export function LoginScreen() {
   return (
-    <Container>
-      <RegisterContainer>
-        <FirstPendant src={pendantLamp} alt="pendant Lamp" />
-        <Sofa src={sofa} alt="sofa" />
-        <RgisterWrapper>
-          <h2>New customer</h2>
-          <p>You will have the oportunity to create an account and track your order once you complete your purchase</p>
+    <>
+      <Header />
+      <Container>
+        <RegisterContainer>
+          <FirstPendant src={pendantLamp} alt="pendant Lamp" />
+          <Sofa src={sofa} alt="sofa" />
+          <RgisterWrapper>
+            <h2>New customer</h2>
+            <p>
+              You will have the oportunity to create an account and track your order once you complete your purchase
+            </p>
 
-          <SubmitBtn className="submit-btn" type="submit">
-            <Link to="/register">CREATE AN ACCOUNT</Link>
-          </SubmitBtn>
-        </RgisterWrapper>
-      </RegisterContainer>
-      <FromContainer>
-        <Wrap>
-          <Formik
-            initialValues={{ email: '', password: '' }}
-            validationSchema={Yup.object({
-              email: Yup.string().email('Please enter valide email adress').required('Please enter your email adrress'),
+            <SubmitBtn className="submit-btn" type="submit">
+              <Link to="/register">CREATE AN ACCOUNT</Link>
+            </SubmitBtn>
+          </RgisterWrapper>
+        </RegisterContainer>
+        <FromContainer>
+          <Wrap>
+            <Formik
+              initialValues={{ email: '', password: '' }}
+              validationSchema={Yup.object({
+                email: Yup.string()
+                  .email('Please enter valide email adress')
+                  .required('Please enter your email adrress'),
 
-              password: Yup.string()
-                .required('Please enter password')
-                .min(5, 'Must at least 5 characters long.')
-                .max(255, 'Name Must less than 255 characters'),
-            })}
-            onSubmit={(values, { resetForm, setSubmitting }) => {
-              setSubmitting(true);
-              setTimeout(() => {
-                alert(JSON.stringify(values), null, 2);
-                resetForm();
-                setSubmitting(false);
-              }, 1000);
-            }}
-          >
-            {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-              <form autoComplete="off" onSubmit={handleSubmit}>
-                <Heading>Registred Customers</Heading>
-                <TextHeading>
-                  If you have an account with us, plase log in. You can use social netwoks for authorizing here.
-                </TextHeading>
-                <InputWrapper>
-                  <Input
-                    error={touched.email && errors.email}
-                    id="email"
-                    type="email"
-                    name="email"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.email}
-                    placeholder="Your email"
-                    className={touched.email && errors.email ? 'has-error' : null}
-                  />
-                  <Error touched={touched.email} message={errors.email} />
-                </InputWrapper>
-                <InputWrapper className="password-input">
-                  <Input
-                    error={touched.password && errors.password}
-                    id="password"
-                    type="password"
-                    name="password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.password}
-                    placeholder="Your password"
-                    className={touched.password && errors.password ? 'has-error' : null}
-                  />
-                  <Error touched={touched.password} message={errors.password} />
-                  <ResetPassword>
-                    <Link className="password-reset" to="/reset">
-                      Forgot your password?
-                    </Link>
-                  </ResetPassword>
-                </InputWrapper>
-                <Social>
-                  <StyledButton type="submit">
-                    <span>
-                      <FaFacebookF />
-                    </span>
-                    Facebook
-                  </StyledButton>
-                  <StyledButton google="google" type="submit">
-                    <span>
-                      <FaGoogle />
-                    </span>
-                    Google
-                  </StyledButton>
-                </Social>
-                <ButtonWrapper>
-                  <SubmitBtn className="submit-btn" type="submit" disabled={isSubmitting}>
-                    sign in
-                  </SubmitBtn>
-                </ButtonWrapper>
-              </form>
-            )}
-          </Formik>
-        </Wrap>
-      </FromContainer>
-    </Container>
+                password: Yup.string()
+                  .required('Please enter password')
+                  .min(5, 'Must at least 5 characters long.')
+                  .max(255, 'Name Must less than 255 characters'),
+              })}
+              onSubmit={(values, { resetForm, setSubmitting }) => {
+                setSubmitting(true);
+                setTimeout(() => {
+                  alert(JSON.stringify(values), null, 2);
+                  resetForm();
+                  setSubmitting(false);
+                }, 1000);
+              }}
+            >
+              {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                <form autoComplete="off" onSubmit={handleSubmit}>
+                  <Heading>Registred Customers</Heading>
+                  <TextHeading>
+                    If you have an account with us, plase log in. You can use social netwoks for authorizing here.
+                  </TextHeading>
+                  <InputWrapper>
+                    <Input
+                      error={touched.email && errors.email}
+                      id="email"
+                      type="email"
+                      name="email"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.email}
+                      placeholder="Your email"
+                      className={touched.email && errors.email ? 'has-error' : null}
+                    />
+                    <Error touched={touched.email} message={errors.email} />
+                  </InputWrapper>
+                  <InputWrapper className="password-input">
+                    <Input
+                      error={touched.password && errors.password}
+                      id="password"
+                      type="password"
+                      name="password"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.password}
+                      placeholder="Your password"
+                      className={touched.password && errors.password ? 'has-error' : null}
+                    />
+                    <Error touched={touched.password} message={errors.password} />
+                    <ResetPassword>
+                      <Link className="password-reset" to="/reset">
+                        Forgot your password?
+                      </Link>
+                    </ResetPassword>
+                  </InputWrapper>
+                  <Social>
+                    <StyledButton type="submit">
+                      <span>
+                        <FaFacebookF />
+                      </span>
+                      Facebook
+                    </StyledButton>
+                    <StyledButton google="google" type="submit">
+                      <span>
+                        <FaGoogle />
+                      </span>
+                      Google
+                    </StyledButton>
+                  </Social>
+                  <ButtonWrapper>
+                    <SubmitBtn className="submit-btn" type="submit" disabled={isSubmitting}>
+                      sign in
+                    </SubmitBtn>
+                  </ButtonWrapper>
+                </form>
+              )}
+            </Formik>
+          </Wrap>
+        </FromContainer>
+      </Container>
+    </>
   );
 }
 
 const Container = styled.div`
   display: flex;
+  height: 94vh;
   @media (max-width: 1030px) {
     flex-direction: column;
   }
@@ -122,7 +130,7 @@ const Container = styled.div`
 
 const FromContainer = styled.div`
   background-color: ${color.grey_050};
-  height: 100vh;
+  height: 94vh;
   width: 50vw;
   display: grid;
   grid-auto-flow: column;
@@ -167,7 +175,7 @@ const Sofa = styled.img`
   }
 `;
 const RegisterContainer = styled.div`
-  height: 100vh;
+  height: 94vh;
   width: 50vw;
   background-color: ${color.ecru};
   display: flex;
@@ -208,7 +216,7 @@ const TextHeading = styled.p`
 const InputWrapper = styled.div``;
 const Input = styled.input`
   border-radius: ${rounded.full};
-  height: 3.5rem;
+  height: 3rem;
   width: 30rem;
   max-width: 30rem;
   text-indent: 5%;
@@ -216,7 +224,7 @@ const Input = styled.input`
   color: ${color.grey_800};
   font-family: 'avenir_regular';
   box-shadow: ${shadow.lg};
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   box-shadow: ${({ error }) => error && `0px 0px 0px 2px ${color.red_vivid_500}`};
 
   @media (max-width: 768px) {
@@ -237,6 +245,9 @@ const ResetPassword = styled.div`
     color: ${color.grey_600};
     display: flex;
     justify-content: flex-end;
+    &:hover {
+      color: ${color.black};
+    }
   }
 `;
 
@@ -253,13 +264,16 @@ const SubmitBtn = styled.button`
     text-decoration: none;
     color: ${color.black};
   }
+  &:hover {
+    background: ${color.white};
+  }
 `;
 
 const Button = css`
   background-color: ${({ google }) => (google ? '#DB4437' : '#4267b2')};
   color: ${color.white};
   border-radius: ${rounded.full};
-  padding: 1rem 3.5rem;
+  padding: 0.75rem 3.5rem;
   font-size: 1.1rem;
   font-family: 'avenir_semi';
   margin-left: ${({ google }) => (google ? '20px' : '0')};
@@ -277,7 +291,7 @@ const StyledButton = styled.button`
 
   span {
     vertical-align: middle;
-    padding-right: 1rem;
+    padding-right: 0.75rem;
     font-size: 1.1rem;
   }
   cursor: pointer;

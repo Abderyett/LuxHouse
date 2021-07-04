@@ -59,7 +59,7 @@ export function RegisterScreen() {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.FirstName}
-                      placeholder="Your FirstName"
+                      placeholder="Your First name"
                     />
                     <Error touched={touched.FirstName} message={errors.FirstName} />
                   </InputWrapper>
@@ -72,7 +72,7 @@ export function RegisterScreen() {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.LastName}
-                      placeholder="Your LastName"
+                      placeholder="Your Last name"
                     />
                     <Error touched={touched.LastName} message={errors.LastName} />
                   </InputWrapper>
@@ -172,7 +172,7 @@ const Input = styled.input`
   color: ${color.grey_800};
   font-family: 'avenir_regular';
   box-shadow: ${shadow.lg};
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   box-shadow: ${({ error }) => error && `0px 0px 0px 2px ${color.red_vivid_500}`};
 
   @media (max-width: 768px) {
@@ -193,6 +193,9 @@ const SubmitBtn = styled.button`
   font-size: 1.2rem;
   font-family: 'avenir_semi';
   cursor: pointer;
+  &:hover {
+    background-color: ${color.white};
+  }
 `;
 
 const ButtonWrapper = styled.div`
