@@ -33,7 +33,7 @@ export function PopularItems() {
       return prevPage;
     });
   };
-  console.log(inView);
+
   useEffect(() => {
     if (inView) {
       animation.start({

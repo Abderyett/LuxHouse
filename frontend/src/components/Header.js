@@ -136,7 +136,10 @@ const ListWrapper = styled.div`
   span {
     font-size: 1rem;
   }
-  @media (max-width: 1030px) {
+  @media (max-width: 1111px) {
+    ul {
+      padding-left: 0;
+    }
   }
 
   ul {
