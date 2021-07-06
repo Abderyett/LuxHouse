@@ -1,14 +1,20 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-shadow */
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import ReactMapGL, { Marker } from 'react-map-gl';
+
 import { HiOutlinePhone, HiOutlineMailOpen } from 'react-icons/hi';
 import { RiMapPin2Fill } from 'react-icons/ri';
+import mapboxgl from 'mapbox-gl'; // This is a dependency of react-map-gl even if you didn't explicitly install it
 import { Header, Error } from '../components';
 import { color, rounded, shadow } from '../utilities';
 import contactImg from '../assets/contact_image.jpg';
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 export function ContactScreen() {
   const [viewport, setViewport] = useState({
