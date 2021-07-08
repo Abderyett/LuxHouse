@@ -234,7 +234,6 @@ export function ContactScreen() {
 const Container = styled.div`
   height: 100%;
 
-  background: ${color.grey_050};
   padding-bottom: 10rem;
   margin-left: auto;
   margin-right: auto;
@@ -266,7 +265,7 @@ const MapContainer = styled.div`
 `;
 
 const ContactImg = styled.div`
-  width: 100%;
+  width: 50vw;
   height: 100%;
   background-image: url(${contactImg});
   background-size: cover;
@@ -380,6 +379,7 @@ const ButtonWrapper = styled.div`
 
 const Adress = styled.div`
   padding: 3rem;
+
   h3 {
     font-family: 'avenir_bold';
   }

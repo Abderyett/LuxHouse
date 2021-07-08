@@ -28,7 +28,7 @@ export function Header() {
                 <RiArrowDropRightLine />
               </span>
             </NavLink>
-            <NavLink to="products">
+            <NavLink to="/products">
               shop
               <span>
                 <RiArrowDropRightLine />
@@ -118,6 +118,9 @@ const Wrapper = styled.div`
     transition: all 0.3s ease-in-out;
     overflow: hidden;
   }
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const Logo = styled.h4`
@@ -176,6 +179,9 @@ const ListStyle = css`
       background-color: ${color.sugar_swi};
       color: ${color.black};
     }
+  }
+  @media (max-width: 768px) {
+    width: 100vw;
   }
 `;
 
