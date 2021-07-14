@@ -1,5 +1,5 @@
-{
-  "data": [
+
+ [
     {
       "_id": "rec4OLsxMF5nV0BRY",
       "fields": {
@@ -2122,7 +2122,7 @@
         ],
         "reviews": 129,
         "stars": 5,
-        "subcategory": "foor lamp",
+        "subcategory": "floor lamp",
         "shipping": "true",
         "available": "true",
         "category": "lighting"
@@ -3770,7 +3770,7 @@
         "colors": ["#1E1D1C", "#A04824"],
         "reviews": 200,
         "stars": 5,
-        "subcategory": "foor lamp",
+        "subcategory": "floor lamp",
         "shipping": "true",
         "available": "true",
         "category": "lighting"
@@ -3929,7 +3929,7 @@
         "colors": ["#1E1D1C"],
         "reviews": 320,
         "stars": 4.8,
-        "subcategory": "foor lamp",
+        "subcategory": "floor lamp",
         "shipping": "true",
         "available": "true",
         "category": "lighting"
@@ -4028,4 +4028,4 @@
       }
     }
   ]
-}
+
