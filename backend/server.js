@@ -21,7 +21,7 @@ app.get('/api/v1/products', (req, res) => {
 
 app.get('/api/v1/products/:id', (req, res) => {
   const product = products.data.find((el) => el._id === req.params.id);
-  console.log('product', product);
+
   if (!product) {
     return res.status(404).json({
       status: 'fail',
