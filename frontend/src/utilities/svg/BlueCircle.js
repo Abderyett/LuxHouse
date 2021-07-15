@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { color } from '../Colors';
 
-export function Circle() {
+export function BlueCircle() {
   const [toggle, setToggle] = useState(false);
   return (
     <StyledSvg
@@ -35,7 +35,7 @@ export function Circle() {
         <>
           <Stroke
             d="M32.3836 62C48.9521 62 62.3836 48.5685 62.3836 32C62.3836 15.4315 48.9521 2 32.3836 2C15.815 2 2.38356 15.4315 2.38356 32C2.38356 48.5685 15.815 62 32.3836 62Z"
-            stroke="#F4DF21"
+            stroke={color.blue_500}
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -63,6 +63,7 @@ const StyledSvg = styled.svg`
   bottom: -30px;
   right: 30px;
   cursor: pointer;
+
   &:active {
     ${Stroke} {
       stroke: ${color.green_500};

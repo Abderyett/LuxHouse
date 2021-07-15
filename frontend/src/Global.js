@@ -101,7 +101,7 @@ body{
 }
 hr {
   border: none;
-  border-top: 1px solid ${color.grey_600};
+  border-top: 1px solid ${color.grey_400};
 }
 h1,
 h2,

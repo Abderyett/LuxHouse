@@ -75,6 +75,7 @@ export function PopularItems() {
                 <h5>${price}</h5>
               </Title>
               <p>{category} </p>
+
               <Circle />
             </Card>
           );
