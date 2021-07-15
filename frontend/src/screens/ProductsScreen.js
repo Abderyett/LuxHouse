@@ -7,6 +7,8 @@ import { color, shadow, rounded } from '../utilities';
 export function ProductsScreen() {
   const [products, setProducts] = useState([]);
   const [subCategories, setsubCategories] = useState([]);
+  const [categorieText, setCategorieText] = useState('');
+
   const fetchProducts = async () => {
     const { data } = await axios.get('/api/v1/products');
     setProducts(data);
@@ -23,6 +25,12 @@ export function ProductsScreen() {
     }
   }, [products]);
 
+  const filterState = (e) => {
+    const text = e.target.textContent.toLowerCase();
+    const newProducts = products.filter((el) => el.fields.subcategory === text);
+    setProducts(newProducts);
+  };
+
   return (
     <>
       <Header />
@@ -30,7 +38,7 @@ export function ProductsScreen() {
         <Div>
           <CategorieWrapper>
             {subCategories.map((el, index) => (
-              <Button key={index} type="button">
+              <Button key={index} type="button" onClick={filterState}>
                 {el}
               </Button>
             ))}
