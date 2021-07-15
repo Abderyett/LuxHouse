@@ -39,12 +39,6 @@ export function ProductsScreen() {
     filterProducts(categorieText);
   }, [categorieText]);
 
-  /* <ul>
-            {categorieText === 'all'
-              ? products.map((el) => <li key={el._id}>{el.fields.subcategory}</li>)
-              : filtredProducts.map((el) => <li key={el._id}>{el.fields.subcategory}</li>)}
-          </ul> */
-
   return (
     <>
       <Header />
@@ -65,29 +59,39 @@ export function ProductsScreen() {
             <div>Freeshipping</div>
             <div>Clear Filters</div>
           </FilterWrapper>
-          <GridContainer>
-            <GridDetails>
+          <div>
+            <HeaderDetails>
               <span>25 results </span>
               <hr /> <span>Sort By</span>
-            </GridDetails>
-            <GridList>
-              <Card>
-                <StyledImg
-                  src="https://dl.airtable.com/.attachments/d7e4c18656f698beb90a5e84a68bf9e5/721c86bd/2101118-warmnordic-furniture-friedegg-sofa-teak-bluish-1700x1700.png"
-                  alt="sofa"
-                />
-                <Title>
-                  <h3>Mr.Olsen</h3>
-                  <h5>$3654</h5>
-                </Title>
-                <Price>Sofa </Price>
-                <Description>
-                  The Cow Horn Chair is an iconic 1960s chair and a sculptural masterpiece for design lovers....
-                </Description>
-                <BlueCircle />
-              </Card>
-            </GridList>
-          </GridContainer>
+            </HeaderDetails>
+            <GridContainer>
+              {categorieText === 'all'
+                ? products.map((el) => (
+                    <Card key={el._id}>
+                      <StyledImg src={el.fields.image[0].url} alt="sofa" />
+                      <Title>
+                        <h3>{el.fields.name}</h3>
+                        <h5>${el.fields.price}</h5>
+                      </Title>
+                      <Subcategory>{el.fields.subcategory} </Subcategory>
+                      <Description>{el.fields.description.substring(0, 100)}...</Description>
+                      <BlueCircle />
+                    </Card>
+                  ))
+                : filtredProducts.map((el) => (
+                    <Card key={el._id}>
+                      <StyledImg src={el.fields.image[0].url} alt="sofa" />
+                      <Title>
+                        <h3>{el.fields.name}</h3>
+                        <h5>${el.fields.price}</h5>
+                      </Title>
+                      <Subcategory>{el.fields.subcategory} </Subcategory>
+                      <Description>{el.fields.description.substring(0, 100)}...</Description>
+                      <BlueCircle />
+                    </Card>
+                  ))}
+            </GridContainer>
+          </div>
         </ContentWrapper>
       </Container>
     </>
@@ -100,50 +104,48 @@ const ContentWrapper = styled.div`
   height: 100%;
   display: grid;
   grid-template-columns: 20% 1fr;
-  place-items: center;
 `;
 const FilterWrapper = styled.div``;
 const GridContainer = styled.div`
-  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 25rem);
+
+  grid-gap: 2.5rem;
 `;
-const GridDetails = styled.div`
+const HeaderDetails = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 3rem;
   hr {
-    width: 65%;
+    width: 75%;
   }
   span {
     padding: 0 1rem;
   }
 `;
-const GridList = styled.div`
-  margin-top: 12rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 23rem);
-`;
+
 const Card = styled.div`
-  width: 23rem;
-  height: 18rem;
+  width: 25rem;
+  height: 25rem;
   box-shadow: ${shadow.xxl};
   background-color: ${color.white};
   padding-left: 2rem;
   padding-right: 2rem;
-  /* border: 1px solid grey; */
+
   position: relative;
 `;
 const StyledImg = styled.img`
-  width: 20rem;
-
-  position: absolute;
-  top: -11rem;
-  left: 1.5rem;
+  width: 14rem;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
-  padding-top: 6rem;
+  padding-top: 1rem;
   h5::after {
     content: '';
     background: rgba(66, 153, 225, 0.3);
@@ -159,7 +161,7 @@ const Title = styled.div`
   }
 `;
 
-const Price = styled.p`
+const Subcategory = styled.p`
   font-size: 1rem;
   margin-bottom: 1rem;
   color: ${color.blue_500};
