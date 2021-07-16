@@ -6,8 +6,8 @@ export function BlueCircle() {
   const [toggle, setToggle] = useState(false);
   return (
     <StyledSvg
-      width="55"
-      height="55"
+      width="50"
+      height="50"
       viewBox="0 0 64 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ const Stroke = styled.path`
 
 const StyledSvg = styled.svg`
   position: absolute;
-  bottom: -30px;
+  bottom: -25px;
   right: 30px;
   cursor: pointer;
 

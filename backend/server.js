@@ -20,7 +20,7 @@ app.get('/api/v1/products', (req, res) => {
 });
 
 app.get('/api/v1/products/:id', (req, res) => {
-  const product = products.data.find((el) => el._id === req.params.id);
+  const product = products.find((el) => el.id === req.params.id);
 
   if (!product) {
     return res.status(404).json({

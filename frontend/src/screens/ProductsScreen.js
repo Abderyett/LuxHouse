@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { Link, usePrams } from 'react-router-dom';
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { BlueCircle } from '../utilities/svg';
@@ -67,26 +68,30 @@ export function ProductsScreen() {
             <GridContainer>
               {categorieText === 'all'
                 ? products.map((el) => (
-                    <Card key={el._id}>
-                      <StyledImg src={el.fields.image[0].url} alt="sofa" />
-                      <Title>
-                        <h3>{el.fields.name}</h3>
-                        <h5>${el.fields.price}</h5>
-                      </Title>
-                      <Subcategory>{el.fields.subcategory} </Subcategory>
-                      <Description>{el.fields.description.substring(0, 100)}...</Description>
+                    <Card key={el.id}>
+                      <Link to={`/:${el.id}`}>
+                        <StyledImg src={el.fields.image[0].url} alt="sofa" />
+                        <Title>
+                          <h3>{el.fields.name}</h3>
+                          <h5>${el.fields.price}</h5>
+                        </Title>
+                        <Subcategory>{el.fields.subcategory} </Subcategory>
+                        <Description>{el.fields.description.substring(0, 100)}...</Description>
+                      </Link>
                       <BlueCircle />
                     </Card>
                   ))
                 : filtredProducts.map((el) => (
-                    <Card key={el._id}>
-                      <StyledImg src={el.fields.image[0].url} alt="sofa" />
-                      <Title>
-                        <h3>{el.fields.name}</h3>
-                        <h5>${el.fields.price}</h5>
-                      </Title>
-                      <Subcategory>{el.fields.subcategory} </Subcategory>
-                      <Description>{el.fields.description.substring(0, 100)}...</Description>
+                    <Card key={el.id}>
+                      <Link to={`/:${el.id}`}>
+                        <StyledImg src={el.fields.image[0].url} alt="sofa" />
+                        <Title>
+                          <h3>{el.fields.name}</h3>
+                          <h5>${el.fields.price}</h5>
+                        </Title>
+                        <Subcategory>{el.fields.subcategory} </Subcategory>
+                        <Description>{el.fields.description.substring(0, 100)}...</Description>
+                      </Link>
                       <BlueCircle />
                     </Card>
                   ))}
@@ -125,13 +130,13 @@ const HeaderDetails = styled.div`
 `;
 
 const Card = styled.div`
-  width: 25rem;
+  width: 23rem;
   height: 25rem;
   box-shadow: ${shadow.xxl};
   background-color: ${color.white};
   padding-left: 2rem;
   padding-right: 2rem;
-
+  cursor: pointer;
   position: relative;
 `;
 const StyledImg = styled.img`
@@ -146,6 +151,10 @@ const Title = styled.div`
   align-items: center;
   position: relative;
   padding-top: 1rem;
+  color: ${color.grey_800};
+  &:active {
+    color: ${color.grey_800};
+  }
   h5::after {
     content: '';
     background: rgba(66, 153, 225, 0.3);
@@ -156,20 +165,22 @@ const Title = styled.div`
     right: 2px;
   }
   h3 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-family: 'avenir_semi';
   }
 `;
 
 const Subcategory = styled.p`
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-bottom: 1rem;
   color: ${color.blue_500};
   font-family: 'playfair_italic';
   font-weight: 900;
   text-transform: uppercase;
 `;
-const Description = styled.p``;
+const Description = styled.p`
+  font-size: 0.8rem;
+`;
 
 const CategorieWrapper = styled.div`
   display: flex;
