@@ -5,12 +5,15 @@ import { useParams } from 'react-router-dom';
 export function SingleProduct() {
   const { id } = useParams();
   const [product, setProduct] = useState({});
-  console.log(id);
+
   const fetchProduct = async () => {
-    const { data } = await axios.get(`/api/products/:${id}`);
+    const { data } = await axios.get(`/api/v1/products/${id}`);
+    setProduct(data);
   };
 
-  useEffect(() => {}, [product]);
+  useEffect(() => {
+    fetchProduct();
+  }, [id]);
 
-  return <div>Products</div>;
+  return <p>Single page</p>;
 }

@@ -69,7 +69,7 @@ export function ProductsScreen() {
               {categorieText === 'all'
                 ? products.map((el) => (
                     <Card key={el.id}>
-                      <Link to={`/:${el.id}`}>
+                      <Link to={`/products/${el.id}`}>
                         <StyledImg src={el.fields.image[0].url} alt="sofa" />
                         <Title>
                           <h3>{el.fields.name}</h3>
@@ -83,7 +83,7 @@ export function ProductsScreen() {
                   ))
                 : filtredProducts.map((el) => (
                     <Card key={el.id}>
-                      <Link to={`/:${el.id}`}>
+                      <Link to={`/products/${el.id}`}>
                         <StyledImg src={el.fields.image[0].url} alt="sofa" />
                         <Title>
                           <h3>{el.fields.name}</h3>
@@ -113,7 +113,7 @@ const ContentWrapper = styled.div`
 const FilterWrapper = styled.div``;
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, 25rem);
+  grid-template-columns: repeat(auto-fit, 23rem);
 
   grid-gap: 2.5rem;
 `;
@@ -130,8 +130,8 @@ const HeaderDetails = styled.div`
 `;
 
 const Card = styled.div`
-  width: 23rem;
-  height: 25rem;
+  width: 20rem;
+  height: 24rem;
   box-shadow: ${shadow.xxl};
   background-color: ${color.white};
   padding-left: 2rem;
@@ -140,7 +140,7 @@ const Card = styled.div`
   position: relative;
 `;
 const StyledImg = styled.img`
-  width: 14rem;
+  width: 15rem;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
@@ -150,7 +150,7 @@ const Title = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  padding-top: 1rem;
+
   color: ${color.grey_800};
   &:active {
     color: ${color.grey_800};
