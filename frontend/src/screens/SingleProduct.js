@@ -32,7 +32,7 @@ export function SingleProduct() {
             <SelectedImg img={selectedPhoto} />
             <ImgsWrapper>
               {photo.map((p) => (
-                <IMG src={p} />
+                <IMG src={p} onClick={() => setselectedPhoto(p)} />
               ))}
             </ImgsWrapper>
           </PhotosSection>
@@ -73,6 +73,7 @@ const SelectedImg = styled.div`
 const ImgsWrapper = styled.div`
   position: absolute;
   top: 92%;
+  left: 20%;
   display: grid;
   grid-auto-flow: column;
   grid-gap: 2rem;

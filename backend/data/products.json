@@ -3915,31 +3915,8 @@
                                 "height": 3000
                             }
                         }
-                    },
-                    {
-                        "id": "attRl7tqFpsSxc8Iq",
-                        "url": "https://dl.airtable.com/.attachments/313830686b7ac3a98a7426e1d32bcfe3/da8eff79/6708918-warmnordic-accessories-sprinkle-map-cushion-mountain-01-1700x1700.jpeg",
-                        "filename": "6708918-warmnordic-accessories-sprinkle-map-cushion-mountain-01-1700x1700.jpeg",
-                        "size": 137948,
-                        "type": "image/jpeg",
-                        "thumbnails": {
-                            "small": {
-                                "url": "https://dl.airtable.com/.attachmentThumbnails/2ee2deac6bf612873ea85e37f0ce4397/5c8e2433",
-                                "width": 36,
-                                "height": 36
-                            },
-                            "large": {
-                                "url": "https://dl.airtable.com/.attachmentThumbnails/1cc174fe964d2a4adc30f432d4168e73/9c424b00",
-                                "width": 512,
-                                "height": 512
-                            },
-                            "full": {
-                                "url": "https://dl.airtable.com/.attachmentThumbnails/39df35a05344eadc34f75404e0cd0154/2d863f4c",
-                                "width": 3000,
-                                "height": 3000
-                            }
-                        }
                     }
+                    
                 ],
                 "reviews": 57,
                 "stars": 4.9,
