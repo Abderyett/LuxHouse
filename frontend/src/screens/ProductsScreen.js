@@ -103,7 +103,9 @@ export function ProductsScreen() {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  background-color: rgba(240, 244, 248, 0.5);
+`;
 const ContentWrapper = styled.div`
   padding-top: 5rem;
   height: 100%;

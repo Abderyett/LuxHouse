@@ -203,31 +203,8 @@
                                 "height": 3000
                             }
                         }
-                    },
-                    {
-                        "id": "attGsRWpHKV4xsvUY",
-                        "url": "https://dl.airtable.com/.attachments/9841e17a7fc6966c071837310ff83471/297b3427/2816002-warmnordic-furniture-daisy-stool-rose-01-1700x1700.jpeg",
-                        "filename": "2816002-warmnordic-furniture-daisy-stool-rose-01-1700x1700.jpeg",
-                        "size": 33829,
-                        "type": "image/jpeg",
-                        "thumbnails": {
-                            "small": {
-                                "url": "https://dl.airtable.com/.attachmentThumbnails/cbe2bb9ed7fd2bdf7fbc00c2b807ea23/236938c8",
-                                "width": 36,
-                                "height": 36
-                            },
-                            "large": {
-                                "url": "https://dl.airtable.com/.attachmentThumbnails/0a5d46d7cacf1b59e97541b5890746f0/59a24e3e",
-                                "width": 512,
-                                "height": 512
-                            },
-                            "full": {
-                                "url": "https://dl.airtable.com/.attachmentThumbnails/0980dc1a7cc70a157b5fcfb5309966c8/3fa6d10c",
-                                "width": 3000,
-                                "height": 3000
-                            }
-                        }
                     }
+                    
                 ],
                 "colors": [
                     "#A04824",

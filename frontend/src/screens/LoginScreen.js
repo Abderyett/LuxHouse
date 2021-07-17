@@ -129,7 +129,7 @@ const Container = styled.div`
 `;
 
 const FromContainer = styled.div`
-  background-color: ${color.grey_050};
+  background-color: rgba(240, 244, 248, 0.5);
   height: 94vh;
   width: 50vw;
   display: grid;

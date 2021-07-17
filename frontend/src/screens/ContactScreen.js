@@ -237,6 +237,7 @@ const Container = styled.div`
   padding-bottom: 10rem;
   margin-left: auto;
   margin-right: auto;
+  background-color: rgba(240, 244, 248, 0.5);
 
   /* @media (max-width: 1030px) {
     flex-direction: column;
