@@ -5,3 +5,5 @@ export * from './PrevArrow';
 export * from './Dots';
 export * from './Menu';
 export * from './Heart';
+export * from './Dimension';
+export * from './Equipement';

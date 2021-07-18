@@ -1,4 +1,4 @@
-[
+ [
         {
             "id": "rec4OLsxMF5nV0BRY",
             "fields": {
@@ -156,30 +156,7 @@
                             }
                         }
                     },
-                    {
-                        "id": "attsuDxDeLJ5r1I2g",
-                        "url": "https://dl.airtable.com/.attachments/2374045fa32d24ec9e0039bf2417006f/ed33b7b6/2816002-warmnordic-furniture-daisy-stool-rose-01-1700x1700.jpeg",
-                        "filename": "2816002-warmnordic-furniture-daisy-stool-rose-01-1700x1700.jpeg",
-                        "size": 33829,
-                        "type": "image/jpeg",
-                        "thumbnails": {
-                            "small": {
-                                "url": "https://dl.airtable.com/.attachmentThumbnails/4664285123e109a5f85a9ce3ac48cb2d/070c9319",
-                                "width": 36,
-                                "height": 36
-                            },
-                            "large": {
-                                "url": "https://dl.airtable.com/.attachmentThumbnails/48cbbaaeff459e676261954de1e85435/d93eca07",
-                                "width": 512,
-                                "height": 512
-                            },
-                            "full": {
-                                "url": "https://dl.airtable.com/.attachmentThumbnails/92b2fe9900f7cf78ded45adfb10a8178/57cb935e",
-                                "width": 3000,
-                                "height": 3000
-                            }
-                        }
-                    },
+                  
                     {
                         "id": "attgQxDlyhrgF4k8L",
                         "url": "https://dl.airtable.com/.attachments/60406def6d722a2fd9ab8dae4271aad7/7f58bdc2/warmnordic-daisyfamily1-1100x1520.jpeg",
@@ -203,8 +180,31 @@
                                 "height": 3000
                             }
                         }
+                    },
+                    {
+                        "id": "attGsRWpHKV4xsvUY",
+                        "url": "https://dl.airtable.com/.attachments/9841e17a7fc6966c071837310ff83471/297b3427/2816002-warmnordic-furniture-daisy-stool-rose-01-1700x1700.jpeg",
+                        "filename": "2816002-warmnordic-furniture-daisy-stool-rose-01-1700x1700.jpeg",
+                        "size": 33829,
+                        "type": "image/jpeg",
+                        "thumbnails": {
+                            "small": {
+                                "url": "https://dl.airtable.com/.attachmentThumbnails/cbe2bb9ed7fd2bdf7fbc00c2b807ea23/236938c8",
+                                "width": 36,
+                                "height": 36
+                            },
+                            "large": {
+                                "url": "https://dl.airtable.com/.attachmentThumbnails/0a5d46d7cacf1b59e97541b5890746f0/59a24e3e",
+                                "width": 512,
+                                "height": 512
+                            },
+                            "full": {
+                                "url": "https://dl.airtable.com/.attachmentThumbnails/0980dc1a7cc70a157b5fcfb5309966c8/3fa6d10c",
+                                "width": 3000,
+                                "height": 3000
+                            }
+                        }
                     }
-                    
                 ],
                 "colors": [
                     "#A04824",
@@ -903,8 +903,8 @@
                 "available": "true",
                 "category": "furniture",
                 "Features": [
-                    " B64 x D71 x H78",
-                    " Oiled oak"
+                    " Oiled oak",
+                    " B64 x D71 x H78"
                 ]
             },
             "createdTime": "2021-07-08T13:46:42.000Z"
@@ -2269,8 +2269,8 @@
                 "available": "true",
                 "category": "lighting",
                 "Features": [
-                    "L45 x D45 x H17",
-                    "Lacquered steel"
+                    "Lacquered steel",
+                    "L45 x D45 x H17"
                 ]
             },
             "createdTime": "2021-07-08T15:24:42.000Z"
@@ -2768,8 +2768,8 @@
                 "available": "true",
                 "category": "lighting",
                 "Features": [
-                    " L45 x D59 x H140",
-                    " Lacquered steel/solid brass"
+                    " Lacquered steel/solid brass",
+                    " L45 x D59 x H140"
                 ]
             },
             "createdTime": "2021-07-08T15:49:52.000Z"
@@ -3748,16 +3748,6 @@
                 ],
                 "description": "A wall light with an elegantly shaped wide shade by the grand master of 1950s Danish lighting design, Svend Aage Holm-Sørensen. It makes a sophisticated addition to a living room or a bedroom, where it will create atmosphere as a bedside lamp. The Lightsome wall light provides generous light by virtue of its large sculptural shade in painted metal with delicate light holes at the top  an extra Holm-Sørensen designer touch. Its gentle idiom and discreet brass details make Lightsome a timeless wall light of the highest quality. Choose from several classic colours in Warm Nordics exclusive silky matt quality paint, which guarantees an extraordinarily beautiful and durable surface.",
                 "price": 309,
-                "reviews": 109,
-                "stars": 4.8,
-                "subcategory": "wall lamp",
-                "shipping": "true",
-                "available": "true",
-                "category": "lighting",
-                "Features": [
-                    " Lacquered steel/solid brass",
-                    " L25 x D33 x H22"
-                ],
                 "images": [
                     {
                         "id": "attgXR8z1j456Hq3L",
@@ -3783,6 +3773,16 @@
                             }
                         }
                     }
+                ],
+                "reviews": 109,
+                "stars": 4.8,
+                "subcategory": "wall lamp",
+                "shipping": "true",
+                "available": "true",
+                "category": "lighting",
+                "Features": [
+                    " Lacquered steel/solid brass",
+                    " L25 x D33 x H22"
                 ]
             },
             "createdTime": "2021-07-08T15:57:01.000Z"
@@ -3893,7 +3893,6 @@
                             }
                         }
                     }
-                    
                 ],
                 "reviews": 57,
                 "stars": 4.9,
@@ -4146,8 +4145,8 @@
                 "available": "true",
                 "category": "furniture",
                 "Features": [
-                    "L100 x W35 x H80",
-                    "Soft black powder coated steel"
+                    "Soft black powder coated steel",
+                    "L100 x W35 x H80"
                 ]
             },
             "createdTime": "2021-07-08T14:11:54.000Z"
@@ -4266,8 +4265,8 @@
                 "available": "true",
                 "category": "furniture",
                 "Features": [
-                    "Ø34 x H53",
-                    " Black noir powder coated steel"
+                    " Black noir powder coated steel",
+                    "Ø34 x H53"
                 ]
             },
             "createdTime": "2021-07-08T15:24:35.000Z"
@@ -5181,8 +5180,8 @@
                 "available": "true",
                 "category": "lighting",
                 "Features": [
-                    " L45 x D59 x H140",
-                    " Lacquered steel/solid brass"
+                    " Lacquered steel/solid brass",
+                    " L45 x D59 x H140"
                 ]
             },
             "createdTime": "2021-07-08T15:49:52.000Z"

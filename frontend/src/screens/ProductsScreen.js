@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -15,6 +16,7 @@ export function ProductsScreen() {
   const fetchProducts = async () => {
     const { data } = await axios.get('/api/v1/products');
     setProducts(data);
+    console.log(data);
   };
   useEffect(() => {
     fetchProducts();
@@ -62,7 +64,7 @@ export function ProductsScreen() {
           </FilterWrapper>
           <div>
             <HeaderDetails>
-              <span>25 results </span>
+              <span>{filtredProducts.length === 0 ? products.length : filtredProducts.length} Results </span>
               <hr /> <span>Sort By</span>
             </HeaderDetails>
             <GridContainer>
@@ -73,9 +75,9 @@ export function ProductsScreen() {
                         <StyledImg src={el.fields.image[0].url} alt="sofa" />
                         <Title>
                           <h3>{el.fields.name}</h3>
-                          <h5>${el.fields.price}</h5>
+                          <PriceText category={el.fields.category}>${el.fields.price}</PriceText>
                         </Title>
-                        <Subcategory>{el.fields.subcategory} </Subcategory>
+                        <Subcategory category={el.fields.category}>{el.fields.subcategory} </Subcategory>
                         <Description>{el.fields.description.substring(0, 100)}...</Description>
                       </Link>
                       <BlueCircle />
@@ -87,9 +89,9 @@ export function ProductsScreen() {
                         <StyledImg src={el.fields.image[0].url} alt="sofa" />
                         <Title>
                           <h3>{el.fields.name}</h3>
-                          <h5>${el.fields.price}</h5>
+                          <PriceText category={el.fields.category}>${el.fields.price}</PriceText>
                         </Title>
-                        <Subcategory>{el.fields.subcategory} </Subcategory>
+                        <Subcategory category={el.fields.category}>{el.fields.subcategory}</Subcategory>
                         <Description>{el.fields.description.substring(0, 100)}...</Description>
                       </Link>
                       <BlueCircle />
@@ -157,25 +159,39 @@ const Title = styled.div`
   &:active {
     color: ${color.grey_800};
   }
-  h5::after {
+
+  h3 {
+    font-size: 1.2rem;
+    font-family: 'avenir_semi';
+  }
+`;
+const PriceText = styled.h5`
+  color: ${color.grey_800};
+  &::after {
     content: '';
-    background: rgba(66, 153, 225, 0.3);
+    background: ${({ category }) =>
+      category === 'furniture'
+        ? 'rgba(66, 153, 225, 0.3)'
+        : category === 'lighting'
+        ? 'rgba(244, 223, 33, 0.3)'
+        : `rgba(72, 187, 120, 0.3)`};
     height: 10px;
     width: 2.6rem;
     position: absolute;
     bottom: 15px;
     right: 2px;
   }
-  h3 {
-    font-size: 1.2rem;
-    font-family: 'avenir_semi';
-  }
 `;
 
 const Subcategory = styled.p`
   font-size: 0.8rem;
   margin-bottom: 1rem;
-  color: ${color.blue_500};
+  color: ${({ category }) =>
+    category === 'furniture'
+      ? 'rgba(66, 153, 225, 1)'
+      : category === 'lighting'
+      ? 'rgba(244, 223, 33, 1)'
+      : `rgba(72, 187, 120, 1)`};
   font-family: 'playfair_italic';
   font-weight: 900;
   text-transform: uppercase;

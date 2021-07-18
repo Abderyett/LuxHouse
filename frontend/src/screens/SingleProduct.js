@@ -2,13 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import { FiCheckCircle } from 'react-icons/fi';
+import { BsXCircle } from 'react-icons/bs';
 import ImageZoom from 'react-medium-image-zoom';
 import { color, shadow, rounded } from '../utilities';
 import { Header } from '../components';
-import { Heart } from '../utilities/svg';
+import { Heart, Equipement, Dimension } from '../utilities/svg';
 import 'react-medium-image-zoom/dist/styles.css';
 import { formatter } from '../helper/CurrencyFormat';
 
@@ -56,12 +57,14 @@ export function SingleProduct() {
                 <DescriptionText>{item.description && item.description.substring(0, 149)}</DescriptionText>
               </DetailHeader>
               <ColorWrapper>
-                Textures/Colors styles :{item.colors && item.colors.map((c) => <Color texture={c} />)}
+                {item.colors && 'Textures/Colors styles :'}
+                {item.colors && item.colors.map((c) => <Color texture={c} />)}
               </ColorWrapper>
 
               <ButtonWrapper>
                 <div>
-                  <FiCheckCircle /> &nbsp;<span>Available for delivery</span>
+                  {item.shipping === 'true' ? <FiCheckCircle /> : <BsXCircle />} &nbsp;
+                  <span>{item.shipping === 'true' ? 'Available' : 'Not available'} for delivery</span>
                 </div>
 
                 <CartBtn>
@@ -83,7 +86,24 @@ export function SingleProduct() {
             </DetailWrapper>
           </DetailsSection>
         </FirstSection>
-        <SecondSection>Second</SecondSection>
+        <SecondSection>
+          <Description>
+            <h4>Description</h4>
+            <p> {item.description}</p>
+          </Description>
+          <Features>
+            {' '}
+            <h4>Features</h4>
+            <FirstFeature>
+              {' '}
+              <Equipement /> <span>{item.Features[0]}</span>
+            </FirstFeature>
+            <SecondFeature>
+              {' '}
+              <Dimension /> <span>{item.Features[1]}</span>
+            </SecondFeature>
+          </Features>
+        </SecondSection>
       </Container>
     </>
   );
@@ -96,11 +116,8 @@ const FirstSection = styled.section`
   grid-auto-flow: column;
   grid-template-columns: 50vw;
 `;
-const SecondSection = styled.section`
-  background-color: ${color.sugar_swi};
-  height: 60vh;
-`;
 
+// First Section Photos
 const PhotosSection = styled.section`
   display: flex;
   justify-content: center;
@@ -132,6 +149,7 @@ const IMG = styled.img`
   cursor: pointer;
 `;
 
+// First Section details
 const DetailWrapper = styled.div`
   display: grid;
   padding: 0 5.5rem;
@@ -156,7 +174,7 @@ const Price = styled.div`
   p {
     padding-left: 60%;
     position: relative;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: black;
     &::after {
       content: '';
@@ -197,6 +215,8 @@ const Color = styled.div`
   box-shadow: ${shadow.lg};
   margin-left: 1.5rem;
   cursor: pointer;
+  display: grid;
+  place-items: center;
 `;
 
 const ButtonWrapper = styled.div`
@@ -227,4 +247,40 @@ const Button = styled.button`
 const CartBtn = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const SecondSection = styled.section`
+  background-color: ${color.sugar_swi};
+  height: 100%;
+  padding: 10rem 4rem;
+  display: flex;
+`;
+const Description = styled.div`
+  width: 60vw;
+  h4 {
+    font-family: 'avenir_semi';
+  }
+  p {
+    width: 80ch;
+    line-height: 2.5rem;
+  }
+`;
+const Features = styled.div`
+  width: 40vw;
+`;
+
+const position = css`
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  span {
+    padding-left: 1rem;
+  }
+`;
+
+const FirstFeature = styled.div`
+  ${position}
+`;
+const SecondFeature = styled.div`
+  ${position}
 `;
