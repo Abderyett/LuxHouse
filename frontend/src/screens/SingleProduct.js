@@ -5,12 +5,16 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import { FiCheckCircle } from 'react-icons/fi';
+import ImageZoom from 'react-medium-image-zoom';
 import { color, shadow, rounded } from '../utilities';
 import { Header } from '../components';
 import { Heart } from '../utilities/svg';
+import 'react-medium-image-zoom/dist/styles.css';
+import { formatter } from '../helper/CurrencyFormat';
 
 export function SingleProduct() {
   const { id } = useParams();
+
   const [item, setItem] = useState({});
   const [photo, setPhoto] = useState([]);
   const [selectedPhoto, setselectedPhoto] = useState('');
@@ -32,7 +36,9 @@ export function SingleProduct() {
       <Container>
         <FirstSection>
           <PhotosSection>
-            <SelectedImg img={selectedPhoto} />
+            <ImageZoom>
+              <SelectedImg img={selectedPhoto} />
+            </ImageZoom>
             <ImgsWrapper>
               {photo.map((p, index) => (
                 <IMG key={index} src={p} onClick={() => setselectedPhoto(p)} />
@@ -42,9 +48,10 @@ export function SingleProduct() {
           <DetailsSection>
             <DetailWrapper>
               <DetailHeader>
-                <h3>
-                  {item.name} <span>$ {item.price}</span>
-                </h3>
+                <Price>
+                  <h3>{item.name}</h3>
+                  <p>{formatter.format(item.price)}</p>
+                </Price>
                 <Text>{item.subcategory}</Text>
                 <DescriptionText>{item.description && item.description.substring(0, 149)}</DescriptionText>
               </DetailHeader>
@@ -106,6 +113,7 @@ const SelectedImg = styled.div`
   height: 500px;
   background-size: contain;
   background-repeat: no-repeat;
+  cursor: zoom-in;
 `;
 
 const ImgsWrapper = styled.div`
@@ -138,21 +146,30 @@ const DetailHeader = styled.div`
 
   h3 {
     font-family: 'avenir_semi';
-    span {
-      padding-left: 60%;
-      position: relative;
-      &::after {
-        content: '';
-        background: rgba(244, 223, 33, 0.3);
-        height: 15px;
-        width: 4.5rem;
-        position: absolute;
-        bottom: 5px;
-        right: 2px;
-      }
+  }
+`;
+const Price = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'avenir_semi';
+  p {
+    padding-left: 60%;
+    position: relative;
+    font-size: 2rem;
+    color: black;
+    &::after {
+      content: '';
+      background: rgba(244, 223, 33, 0.3);
+      height: 15px;
+      width: 4.5rem;
+      position: absolute;
+      bottom: 5px;
+      right: 2px;
     }
   }
 `;
+
 const Text = styled.p`
   color: ${color.grey_500};
   text-transform: capitalize;
