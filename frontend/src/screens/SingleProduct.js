@@ -75,12 +75,12 @@ export function SingleProduct() {
                     {' '}
                     Add to cart{' '}
                     <span>
-                      <AiOutlinePlusCircle />
+                      <PlusIcon />
                     </span>{' '}
                     &nbsp; 1
                     <span>
                       &nbsp;
-                      <AiOutlineMinusCircle />
+                      <MinusIcon />
                     </span>
                   </Button>
                 </CartBtn>
@@ -161,6 +161,9 @@ const ImgsWrapper = styled.div`
     top: 100%;
     /* padding-bottom: 4rem; */
   }
+  @media (max-width: 600px) {
+    grid-gap: 0.75rem;
+  }
 `;
 const IMG = styled.img`
   width: 150px;
@@ -178,7 +181,7 @@ const DetailWrapper = styled.div`
     padding: 0 2rem;
   }
   @media (max-width: 1030px) {
-    padding: 3rem;
+    padding: 2rem;
     margin-top: 2rem;
   }
 `;
@@ -202,7 +205,6 @@ const Price = styled.div`
   align-items: center;
   font-family: 'avenir_semi';
   p {
-    padding-left: 60%;
     position: relative;
     font-size: 1.8rem;
     color: black;
@@ -239,6 +241,7 @@ const ColorWrapper = styled.div`
   @media (max-width: 600px) {
     display: grid;
     grid-auto-flow: column;
+    grid-gap: 0.5rem;
   }
 `;
 const Color = styled.div`
@@ -247,10 +250,14 @@ const Color = styled.div`
   border-radius: ${rounded.full};
   background: ${({ texture }) => texture};
   box-shadow: ${shadow.lg};
+
   margin-left: 1.5rem;
   cursor: pointer;
   display: grid;
   place-items: center;
+  @media (max-width: 600px) {
+    margin-left: 0rem;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -260,8 +267,6 @@ const ButtonWrapper = styled.div`
   padding-top: 2rem;
   @media (max-width: 1268px) {
     padding-top: 1rem;
-    /* flex-direction: column;
-    align-items: flex-start; */
   }
   @media (max-width: 1045px) {
     flex-direction: column;
@@ -271,10 +276,17 @@ const ButtonWrapper = styled.div`
   svg {
     font-size: 1.5rem;
     vertical-align: middle;
-    margin-left: 0.5rem;
+
     cursor: pointer;
   }
 `;
+const PlusIcon = styled(AiOutlinePlusCircle)`
+  margin-left: 0.5rem;
+`;
+const MinusIcon = styled(AiOutlineMinusCircle)`
+  margin-left: 0.5rem;
+`;
+
 const Button = styled.button`
   border-radius: ${rounded.full};
   padding: 0.7rem;
@@ -299,21 +311,25 @@ const SecondSection = styled.section`
   background-color: ${color.sugar_swi};
   height: 100%;
   padding: 10rem 4rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-gap: 1rem;
+  @media (max-width: 1030px) {
+    padding: 2rem;
+  }
+  @media (max-width: 984px) {
+    grid-template-columns: 1fr;
+  } ;
 `;
 const Description = styled.div`
-  width: 60vw;
   h4 {
     font-family: 'avenir_semi';
   }
   p {
-    width: 80ch;
     line-height: 2.5rem;
   }
 `;
-const Features = styled.div`
-  width: 40vw;
-`;
+const Features = styled.div``;
 
 const position = css`
   display: flex;
