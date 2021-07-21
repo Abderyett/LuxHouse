@@ -57,8 +57,8 @@ export function SingleProduct() {
                 <DescriptionText>{item.description && item.description.substring(0, 149)}</DescriptionText>
               </DetailHeader>
               <ColorWrapper>
-                {item.colors && 'Textures/Colors styles :'}
-                {item.colors && item.colors.map((c) => <Color texture={c} />)}
+                <b>{item.colors && 'Textures/Colors styles :'}</b>
+                {item.colors && item.colors.map((c, index) => <Color key={index} texture={c} />)}
               </ColorWrapper>
 
               <ButtonWrapper>
@@ -66,6 +66,8 @@ export function SingleProduct() {
                   {item.shipping === 'true' ? <FiCheckCircle /> : <BsXCircle />} &nbsp;
                   <span>{item.shipping === 'true' ? 'Available' : 'Not available'} for delivery</span>
                 </div>
+
+                {/* !Cart buttons */}
 
                 <CartBtn>
                   <Heart />
@@ -82,6 +84,8 @@ export function SingleProduct() {
                     </span>
                   </Button>
                 </CartBtn>
+
+                {/* !Cart buttons */}
               </ButtonWrapper>
             </DetailWrapper>
           </DetailsSection>
@@ -96,11 +100,11 @@ export function SingleProduct() {
             <h4>Features</h4>
             <FirstFeature>
               {' '}
-              <Equipement /> <span>{item.Features[0]}</span>
+              <Equipement /> <span>{item.Features && item.Features[0]}</span>
             </FirstFeature>
             <SecondFeature>
               {' '}
-              <Dimension /> <span>{item.Features[1]}</span>
+              <Dimension /> <span>{item.Features && item.Features[1]}</span>
             </SecondFeature>
           </Features>
         </SecondSection>
@@ -115,6 +119,11 @@ const FirstSection = styled.section`
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 50vw;
+  @media (max-width: 1030px) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
 `;
 
 // First Section Photos
@@ -131,6 +140,12 @@ const SelectedImg = styled.div`
   background-size: contain;
   background-repeat: no-repeat;
   cursor: zoom-in;
+
+  @media (max-width: 500px) {
+    width: 90vw;
+    height: 400px;
+    margin: 0 auto;
+  }
 `;
 
 const ImgsWrapper = styled.div`
@@ -140,12 +155,18 @@ const ImgsWrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-gap: 2rem;
+  overflow-x: auto;
+  width: 100%;
+  @media (max-width: 1030px) {
+    top: 100%;
+    /* padding-bottom: 4rem; */
+  }
 `;
 const IMG = styled.img`
   width: 150px;
   height: 150px;
   border: 7px solid ${color.white};
-  box-shadow: ${shadow.lg};
+  box-shadow: ${shadow.xl};
   cursor: pointer;
 `;
 
@@ -153,6 +174,13 @@ const IMG = styled.img`
 const DetailWrapper = styled.div`
   display: grid;
   padding: 0 5.5rem;
+  @media (max-width: 1268px) {
+    padding: 0 2rem;
+  }
+  @media (max-width: 1030px) {
+    padding: 3rem;
+    margin-top: 2rem;
+  }
 `;
 
 const DetailsSection = styled.section`
@@ -161,7 +189,9 @@ const DetailsSection = styled.section`
 `;
 const DetailHeader = styled.div`
   padding-bottom: 1.5rem;
-
+  @media (max-width: 1268px) {
+    padding: 0;
+  }
   h3 {
     font-family: 'avenir_semi';
   }
@@ -196,7 +226,7 @@ const Text = styled.p`
 
 const DescriptionText = styled.p`
   color: Black;
-  width: 55ch;
+
   font-size: 1.3rem;
   line-height: 2.5rem;
 `;
@@ -206,6 +236,10 @@ const ColorWrapper = styled.div`
   align-items: center;
   color: ${color.black};
   font-size: 1.2rem;
+  @media (max-width: 600px) {
+    display: grid;
+    grid-auto-flow: column;
+  }
 `;
 const Color = styled.div`
   width: 2.5rem;
@@ -224,6 +258,15 @@ const ButtonWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding-top: 2rem;
+  @media (max-width: 1268px) {
+    padding-top: 1rem;
+    /* flex-direction: column;
+    align-items: flex-start; */
+  }
+  @media (max-width: 1045px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
   svg {
     font-size: 1.5rem;
@@ -247,6 +290,9 @@ const Button = styled.button`
 const CartBtn = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 1268px) {
+    margin-top: 1rem;
+  }
 `;
 
 const SecondSection = styled.section`
