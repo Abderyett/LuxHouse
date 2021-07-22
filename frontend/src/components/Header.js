@@ -128,7 +128,7 @@ const Logo = styled.h4`
   font-family: 'playfair_bold';
   text-transform: uppercase;
   margin-bottom: 0;
-  @media (max-width: 1200px) {
+  @media (max-width: 1289px) {
     font-size: 1.3rem;
   }
 `;
@@ -218,7 +218,7 @@ const ActionLink = styled(Link)`
   ${ListStyle}
   border-right:0.5px solid ${color.grey_300};
 
-  padding: 0 1rem;
+  padding: 0 0.75rem;
   @media (max-width: 1030px) {
     border: none;
     padding-top: 1rem;

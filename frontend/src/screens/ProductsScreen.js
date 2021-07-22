@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Link, usePrams } from 'react-router-dom';
-import { Header } from '../components';
+import { Link } from 'react-router-dom';
+import { Header, Accordion } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { BlueCircle } from '../utilities/svg';
 
@@ -16,7 +16,7 @@ export function ProductsScreen() {
   const fetchProducts = async () => {
     const { data } = await axios.get('/api/v1/products');
     setProducts(data);
-    console.log(data);
+    // setfiltredProducts(data);
   };
   useEffect(() => {
     fetchProducts();
@@ -26,6 +26,7 @@ export function ProductsScreen() {
     if (products.length > 0) {
       const newArr = products.map((el) => el.fields.subcategory);
       const categories = ['all', ...new Set(newArr)];
+
       setsubCategories(categories);
     }
   }, [products]);
@@ -38,6 +39,16 @@ export function ProductsScreen() {
       setfiltredProducts(newProducts);
     }
   };
+
+  // const getColor=()=>{
+  //   const arr = products.map((el) => el.fields.colors);
+  // const filtredArr = arr.filter((el) => el && el);
+
+  // const flatted = filtredArr.reduce((acc, curVal) => acc.concat(curVal), []);
+  // const unique = [...new Set(flatted)];
+
+  // }
+
   useEffect(() => {
     filterProducts(categorieText);
   }, [categorieText]);
@@ -57,10 +68,9 @@ export function ProductsScreen() {
         </Div>
         <ContentWrapper>
           <FilterWrapper>
-            <div>Colors</div>
-            <div>Price</div>
-            <div>Freeshipping</div>
-            <div>Clear Filters</div>
+            <Accordion />
+
+            <ClearBtn type="button">Clear Filters</ClearBtn>
           </FilterWrapper>
           <div>
             <HeaderDetails>
@@ -107,14 +117,32 @@ export function ProductsScreen() {
 
 const Container = styled.div`
   background-color: rgba(240, 244, 248, 0.5);
+  height: 100%;
+  padding-bottom: 5rem;
 `;
 const ContentWrapper = styled.div`
   padding-top: 5rem;
-  height: 100%;
+
   display: grid;
   grid-template-columns: 20% 1fr;
 `;
-const FilterWrapper = styled.div``;
+const FilterWrapper = styled.div`
+  padding-left: 4rem;
+  article {
+    border-bottom: 0.5px solid black;
+    width: 60%;
+    padding: 1rem 0.5rem;
+  }
+`;
+
+const ClearBtn = styled.button`
+  background: ${color.red_500};
+  color: ${color.white};
+  padding: 0.5rem;
+  border-radius: ${rounded.xxl};
+  margin-top: 1rem;
+`;
+
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, 23rem);

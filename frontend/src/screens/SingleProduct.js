@@ -35,6 +35,7 @@ export function SingleProduct() {
     <>
       <Header />
       <Container>
+        <a href="/products">Go Back</a>
         <FirstSection>
           <PhotosSection>
             <ImageZoom>

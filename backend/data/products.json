@@ -156,7 +156,30 @@
                             }
                         }
                     },
-                  
+                    {
+                        "id": "attsuDxDeLJ5r1I2g",
+                        "url": "https://dl.airtable.com/.attachments/2374045fa32d24ec9e0039bf2417006f/ed33b7b6/2816002-warmnordic-furniture-daisy-stool-rose-01-1700x1700.jpeg",
+                        "filename": "2816002-warmnordic-furniture-daisy-stool-rose-01-1700x1700.jpeg",
+                        "size": 33829,
+                        "type": "image/jpeg",
+                        "thumbnails": {
+                            "small": {
+                                "url": "https://dl.airtable.com/.attachmentThumbnails/4664285123e109a5f85a9ce3ac48cb2d/070c9319",
+                                "width": 36,
+                                "height": 36
+                            },
+                            "large": {
+                                "url": "https://dl.airtable.com/.attachmentThumbnails/48cbbaaeff459e676261954de1e85435/d93eca07",
+                                "width": 512,
+                                "height": 512
+                            },
+                            "full": {
+                                "url": "https://dl.airtable.com/.attachmentThumbnails/92b2fe9900f7cf78ded45adfb10a8178/57cb935e",
+                                "width": 3000,
+                                "height": 3000
+                            }
+                        }
+                    },
                     {
                         "id": "attgQxDlyhrgF4k8L",
                         "url": "https://dl.airtable.com/.attachments/60406def6d722a2fd9ab8dae4271aad7/7f58bdc2/warmnordic-daisyfamily1-1100x1520.jpeg",
@@ -338,7 +361,7 @@
                 "reviews": 22,
                 "stars": 4.8,
                 "subcategory": "lounge chair ",
-                "shipping": "true",
+                "shipping": "false",
                 "available": "true",
                 "category": "furniture",
                 "Features": [
@@ -436,7 +459,7 @@
                 "reviews": 37,
                 "stars": 4.5,
                 "subcategory": "pendant",
-                "shipping": "true",
+                "shipping": "false",
                 "available": "true",
                 "category": "lighting",
                 "Features": [
@@ -899,7 +922,7 @@
                 "reviews": 34,
                 "stars": 4.7,
                 "subcategory": "lounge chair ",
-                "shipping": "true",
+                "shipping": "false",
                 "available": "true",
                 "category": "furniture",
                 "Features": [
@@ -2884,7 +2907,7 @@
                 "reviews": 10,
                 "stars": 5,
                 "subcategory": "mirror",
-                "shipping": "true",
+                "shipping": "false",
                 "available": "true",
                 "category": "accessories",
                 "Features": [
@@ -3777,7 +3800,7 @@
                 "reviews": 109,
                 "stars": 4.8,
                 "subcategory": "wall lamp",
-                "shipping": "true",
+                "shipping": "false",
                 "available": "true",
                 "category": "lighting",
                 "Features": [
@@ -4510,7 +4533,7 @@
                 "reviews": 15,
                 "stars": 4.7,
                 "subcategory": "sofa",
-                "shipping": "true",
+                "shipping": "false",
                 "available": "true",
                 "category": "furniture",
                 "Features": [
@@ -4857,7 +4880,7 @@
                 "reviews": 38,
                 "stars": 4.8,
                 "subcategory": "cushion",
-                "shipping": "true",
+                "shipping": "false",
                 "available": "true",
                 "category": "accessories",
                 "Features": [
@@ -4957,7 +4980,7 @@
                 "reviews": 200,
                 "stars": 5,
                 "subcategory": "foor lamp",
-                "shipping": "true",
+                "shipping": "false",
                 "available": "true",
                 "category": "lighting",
                 "Features": [
