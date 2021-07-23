@@ -46,8 +46,10 @@ const data = [
 
 export function Accordion() {
   const [activeIndex, setactiveIndex] = useState(null);
-  const [selected, setSelected] = useState(false);
+
   const [selectedColor, setSelectedColor] = useState('1E1D1C');
+  const [checked, setChecked] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
   const toggle = (i) => {
     if (activeIndex === i) {
@@ -57,9 +59,12 @@ export function Accordion() {
   };
 
   const handleChange = (e, i) => {
-    console.log('e', e.target.checked);
-    console.log('i', i);
+    if (selectedIndex === i) {
+      return setChecked(null);
+    }
+    setChecked(true);
   };
+
   return (
     <>
       <SingleFilter index={activeIndex}>
@@ -94,7 +99,12 @@ export function Accordion() {
                       return (
                         <Wrapper key={i}>
                           <Price>
-                            <input type="checkbox" onChange={(e) => handleChange(e, i)} />
+                            <input
+                              type="checkbox"
+                              onClick={() => setSelectedIndex(i)}
+                              onChange={(e) => handleChange(e, i)}
+                              checked={selectedIndex === i && checked}
+                            />
                             <label>
                               {' '}
                               &nbsp;{typeof item[0] === 'string' ? item[0] : `$ ${item[0]}`} - ${item[1]}
