@@ -16,7 +16,6 @@ export function ProductsScreen() {
   const fetchProducts = async () => {
     const { data } = await axios.get('/api/v1/products');
     setProducts(data);
-    // setfiltredProducts(data);
   };
   useEffect(() => {
     fetchProducts();
@@ -129,8 +128,7 @@ const ContentWrapper = styled.div`
 const FilterWrapper = styled.div`
   padding-left: 4rem;
   article {
-    border-bottom: 0.5px solid black;
-    width: 60%;
+    width: 90%;
     padding: 1rem 0.5rem;
   }
 `;
@@ -141,6 +139,7 @@ const ClearBtn = styled.button`
   padding: 0.5rem;
   border-radius: ${rounded.xxl};
   margin-top: 1rem;
+  margin-left: 1rem;
 `;
 
 const GridContainer = styled.div`
