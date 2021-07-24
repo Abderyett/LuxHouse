@@ -1,9 +1,11 @@
 const express = require('express');
 const fs = require('fs');
 const dotenv = require('dotenv');
+const connect = require('./config/db');
 
 dotenv.config();
 const app = express();
+connect();
 
 let products = null;
 const readData = async () => {
