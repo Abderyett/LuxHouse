@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
+const colors = require('colors');
+
 dotenv.config();
-const DB = process.env.MONGO_URI;
+const DB = process.env.MONGO_URI.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
+);
 
 const connect = async () => {
   try {
@@ -11,9 +16,12 @@ const connect = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
-    console.log(`Connection establish successfuly ${con.connection.host}`);
+    console.log(
+      `Connection establish successfuly ${con.connection.host}`.brightCyan
+        .underline
+    );
   } catch (error) {
-    console.log('Error: 💥', error.message);
+    console.log('Error: 💥', error.message.red.underline.bold);
     process.exit(1);
   }
 };
