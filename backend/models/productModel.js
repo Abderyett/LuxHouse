@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 
+const imgSchema = new mongoose.Schema({
+  url: {
+    type: String,
+  },
+});
+
 const productSchema = new mongoose.Schema(
   {
     user: {
@@ -11,17 +17,15 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, 'User must have name'],
     },
+    image: {
+      type: [imgSchema],
+      required: true,
+    },
     price: {
       type: Number,
       required: [true, 'User must have price'],
     },
-    image: {
-      type: String,
-      required: [true, 'User must have password'],
-    },
-    images: {
-      type: Array,
-    },
+    images: [imgSchema],
 
     description: {
       type: String,

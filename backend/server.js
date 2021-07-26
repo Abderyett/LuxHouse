@@ -1,11 +1,11 @@
 const express = require('express');
 const fs = require('fs');
 const dotenv = require('dotenv');
-const connect = require('./config/db');
+const connectDB = require('./config/db');
 
 dotenv.config();
 const app = express();
-connect();
+connectDB();
 
 let products = null;
 const readData = async () => {

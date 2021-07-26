@@ -9,7 +9,7 @@ const DB = process.env.MONGO_URI.replace(
   process.env.DATABASE_PASSWORD
 );
 
-const connect = async () => {
+const connectDB = async () => {
   try {
     const con = await mongoose.connect(DB, {
       useNewUrlParser: true,
@@ -25,4 +25,4 @@ const connect = async () => {
     process.exit(1);
   }
 };
-module.exports = connect;
+module.exports = connectDB;

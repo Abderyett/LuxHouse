@@ -23,7 +23,7 @@ export function ProductsScreen() {
 
   useEffect(() => {
     if (products.length > 0) {
-      const newArr = products.map((el) => el.fields.subcategory);
+      const newArr = products.map((el) => el.subcategory);
       const categories = ['all', ...new Set(newArr)];
 
       setsubCategories(categories);
@@ -34,13 +34,13 @@ export function ProductsScreen() {
     if (category === 'all') {
       setfiltredProducts(products);
     } else {
-      const newProducts = products.filter((el) => el.fields.subcategory === category);
+      const newProducts = products.filter((el) => el.subcategory === category);
       setfiltredProducts(newProducts);
     }
   };
 
   // const getColor=()=>{
-  //   const arr = products.map((el) => el.fields.colors);
+  //   const arr = products.map((el) => el.colors);
   // const filtredArr = arr.filter((el) => el && el);
 
   // const flatted = filtredArr.reduce((acc, curVal) => acc.concat(curVal), []);
@@ -81,13 +81,13 @@ export function ProductsScreen() {
                 ? products.map((el) => (
                     <Card key={el.id}>
                       <Link to={`/products/${el.id}`}>
-                        <StyledImg src={el.fields.image[0].url} alt="sofa" />
+                        <StyledImg src={el.image[0].url} alt={el.subcategory} />
                         <Title>
-                          <h3>{el.fields.name}</h3>
-                          <PriceText category={el.fields.category}>${el.fields.price}</PriceText>
+                          <h3>{el.name}</h3>
+                          <PriceText category={el.category}>${el.price}</PriceText>
                         </Title>
-                        <Subcategory category={el.fields.category}>{el.fields.subcategory} </Subcategory>
-                        <Description>{el.fields.description.substring(0, 100)}...</Description>
+                        <Subcategory category={el.category}>{el.subcategory} </Subcategory>
+                        <Description>{el.description.substring(0, 100)}...</Description>
                       </Link>
                       <BlueCircle />
                     </Card>
@@ -95,13 +95,13 @@ export function ProductsScreen() {
                 : filtredProducts.map((el) => (
                     <Card key={el.id}>
                       <Link to={`/products/${el.id}`}>
-                        <StyledImg src={el.fields.image[0].url} alt="sofa" />
+                        <StyledImg src={el.image[0].url} alt={el.subcategory} />
                         <Title>
-                          <h3>{el.fields.name}</h3>
-                          <PriceText category={el.fields.category}>${el.fields.price}</PriceText>
+                          <h3>{el.name}</h3>
+                          <PriceText category={el.category}>${el.price}</PriceText>
                         </Title>
-                        <Subcategory category={el.fields.category}>{el.fields.subcategory}</Subcategory>
-                        <Description>{el.fields.description.substring(0, 100)}...</Description>
+                        <Subcategory category={el.category}>{el.subcategory}</Subcategory>
+                        <Description>{el.description.substring(0, 100)}...</Description>
                       </Link>
                       <BlueCircle />
                     </Card>
