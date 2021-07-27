@@ -22,8 +22,9 @@ export function SingleProduct() {
 
   const fetchProduct = async () => {
     const { data } = await axios.get(`/api/v1/products/${id}`);
-    setItem(data.product.fields);
-    const arr = data.product.fields.images.map((el) => el.url);
+
+    setItem(data.products);
+    const arr = data.products.images.map((el) => el.url);
     setPhoto(arr);
     setselectedPhoto(arr[0]);
   };

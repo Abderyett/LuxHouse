@@ -79,8 +79,8 @@ export function ProductsScreen() {
             <GridContainer>
               {categorieText === 'all'
                 ? products.map((el) => (
-                    <Card key={el.id}>
-                      <Link to={`/products/${el.id}`}>
+                    <Card key={el._id}>
+                      <Link to={`/products/${el._id}`}>
                         <StyledImg src={el.image[0].url} alt={el.subcategory} />
                         <Title>
                           <h3>{el.name}</h3>
@@ -93,8 +93,8 @@ export function ProductsScreen() {
                     </Card>
                   ))
                 : filtredProducts.map((el) => (
-                    <Card key={el.id}>
-                      <Link to={`/products/${el.id}`}>
+                    <Card key={el._id}>
+                      <Link to={`/products/${el._id}`}>
                         <StyledImg src={el.image[0].url} alt={el.subcategory} />
                         <Title>
                           <h3>{el.name}</h3>
