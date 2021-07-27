@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unsupported-features/es-syntax */
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const colors = require('colors');
@@ -24,6 +25,7 @@ const importData = async () => {
       ...product,
       user: adminUser,
     }));
+
     await Product.insertMany(newProducts);
     console.log('Data imported!'.green.inverse);
     process.exit();
