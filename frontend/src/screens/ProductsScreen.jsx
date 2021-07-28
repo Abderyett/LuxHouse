@@ -3,23 +3,24 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { listProduct } from '../actions/productActions';
 import { Header, Accordion } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { BlueCircle } from '../utilities/svg';
 
 export function ProductsScreen() {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+
   const [subCategories, setsubCategories] = useState([]);
   const [filtredProducts, setfiltredProducts] = useState([]);
   const [categorieText, setCategorieText] = useState('all');
+  const porductList = useSelector((state) => state.porductList);
+  const { loading, error, products } = porductList;
 
-  const fetchProducts = async () => {
-    const { data } = await axios.get('/api/v1/products');
-    setProducts(data);
-  };
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    dispatch(listProduct());
+  }, [dispatch]);
 
   useEffect(() => {
     if (products.length > 0) {
