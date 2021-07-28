@@ -5,18 +5,18 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProduct } from '../actions/productActions';
-import { Header, Accordion } from '../components';
+import { Header, Accordion, Loader, Message } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { BlueCircle } from '../utilities/svg';
 
 export function ProductsScreen() {
   const dispatch = useDispatch();
+  const porductList = useSelector((state) => state.porductList);
+  const { loading, error, products } = porductList;
 
   const [subCategories, setsubCategories] = useState([]);
   const [filtredProducts, setfiltredProducts] = useState([]);
   const [categorieText, setCategorieText] = useState('all');
-  const porductList = useSelector((state) => state.porductList);
-  const { loading, error, products } = porductList;
 
   useEffect(() => {
     dispatch(listProduct());
@@ -39,15 +39,6 @@ export function ProductsScreen() {
       setfiltredProducts(newProducts);
     }
   };
-
-  // const getColor=()=>{
-  //   const arr = products.map((el) => el.colors);
-  // const filtredArr = arr.filter((el) => el && el);
-
-  // const flatted = filtredArr.reduce((acc, curVal) => acc.concat(curVal), []);
-  // const unique = [...new Set(flatted)];
-
-  // }
 
   useEffect(() => {
     filterProducts(categorieText);
@@ -77,37 +68,43 @@ export function ProductsScreen() {
               <span>{filtredProducts.length === 0 ? products.length : filtredProducts.length} Results </span>
               <hr /> <span>Sort By</span>
             </HeaderDetails>
-            <GridContainer>
-              {categorieText === 'all'
-                ? products.map((el) => (
-                    <Card key={el._id}>
-                      <Link to={`/products/${el._id}`}>
-                        <StyledImg src={el.image[0].url} alt={el.subcategory} />
-                        <Title>
-                          <h3>{el.name}</h3>
-                          <PriceText category={el.category}>${el.price}</PriceText>
-                        </Title>
-                        <Subcategory category={el.category}>{el.subcategory} </Subcategory>
-                        <Description>{el.description.substring(0, 100)}...</Description>
-                      </Link>
-                      <BlueCircle />
-                    </Card>
-                  ))
-                : filtredProducts.map((el) => (
-                    <Card key={el._id}>
-                      <Link to={`/products/${el._id}`}>
-                        <StyledImg src={el.image[0].url} alt={el.subcategory} />
-                        <Title>
-                          <h3>{el.name}</h3>
-                          <PriceText category={el.category}>${el.price}</PriceText>
-                        </Title>
-                        <Subcategory category={el.category}>{el.subcategory}</Subcategory>
-                        <Description>{el.description.substring(0, 100)}...</Description>
-                      </Link>
-                      <BlueCircle />
-                    </Card>
-                  ))}
-            </GridContainer>
+            {loading ? (
+              <Loader />
+            ) : error ? (
+              <Message bg="danger">{error}</Message>
+            ) : (
+              <GridContainer>
+                {categorieText === 'all'
+                  ? products.map((el) => (
+                      <Card key={el._id}>
+                        <Link to={`/products/${el._id}`}>
+                          <StyledImg src={el.image[0].url} alt={el.subcategory} />
+                          <Title>
+                            <h3>{el.name}</h3>
+                            <PriceText category={el.category}>${el.price}</PriceText>
+                          </Title>
+                          <Subcategory category={el.category}>{el.subcategory} </Subcategory>
+                          <Description>{el.description.substring(0, 100)}...</Description>
+                        </Link>
+                        <BlueCircle />
+                      </Card>
+                    ))
+                  : filtredProducts.map((el) => (
+                      <Card key={el._id}>
+                        <Link to={`/products/${el._id}`}>
+                          <StyledImg src={el.image[0].url} alt={el.subcategory} />
+                          <Title>
+                            <h3>{el.name}</h3>
+                            <PriceText category={el.category}>${el.price}</PriceText>
+                          </Title>
+                          <Subcategory category={el.category}>{el.subcategory}</Subcategory>
+                          <Description>{el.description.substring(0, 100)}...</Description>
+                        </Link>
+                        <BlueCircle />
+                      </Card>
+                    ))}
+              </GridContainer>
+            )}
           </div>
         </ContentWrapper>
       </Container>
@@ -146,8 +143,11 @@ const ClearBtn = styled.button`
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, 23rem);
-
   grid-gap: 2.5rem;
+  width: 90%;
+  place-content: center;
+  justify-content: center;
+  justify-items: stretch;
 `;
 const HeaderDetails = styled.div`
   display: flex;

@@ -6,3 +6,5 @@ export * from './PopularItems';
 export * from './BlogSection';
 export * from './Error';
 export * from './Accordion';
+export * from './Loader';
+export * from './Message';

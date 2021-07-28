@@ -8,7 +8,7 @@ import { FiCheckCircle } from 'react-icons/fi';
 import { BsXCircle } from 'react-icons/bs';
 import ImageZoom from 'react-medium-image-zoom';
 import { color, shadow, rounded } from '../utilities';
-import { Header } from '../components';
+import { Header, Loader } from '../components';
 import { Heart, Equipement, Dimension } from '../utilities/svg';
 import 'react-medium-image-zoom/dist/styles.css';
 import { formatter } from '../helper/CurrencyFormat';
@@ -35,6 +35,7 @@ export function SingleProduct() {
   return (
     <>
       <Header />
+
       <Container>
         <FirstSection>
           <PhotosSection>
