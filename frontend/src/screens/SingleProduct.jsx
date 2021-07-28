@@ -153,9 +153,8 @@ const ImgsWrapper = styled.div`
   position: absolute;
   top: 92%;
   left: 10%;
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 2rem;
+  display: flex;
+  margin-right: 1rem;
   overflow-x: auto;
   width: 100%;
   @media (max-width: 1030px) {
