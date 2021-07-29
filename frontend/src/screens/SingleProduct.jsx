@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -7,110 +8,117 @@ import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import { FiCheckCircle } from 'react-icons/fi';
 import { BsXCircle } from 'react-icons/bs';
 import ImageZoom from 'react-medium-image-zoom';
+import { useSelector, useDispatch } from 'react-redux';
 import { color, shadow, rounded } from '../utilities';
-import { Header, Loader } from '../components';
+import { Header, Loader, Message } from '../components';
 import { Heart, Equipement, Dimension } from '../utilities/svg';
 import 'react-medium-image-zoom/dist/styles.css';
 import { formatter } from '../helper/CurrencyFormat';
+import { detailProduct } from '../actions/productActions';
 
 export function SingleProduct() {
   const { id } = useParams();
-
-  const [item, setItem] = useState({});
+  const productDetail = useSelector((state) => state.productDetail);
+  const dispatch = useDispatch();
   const [photo, setPhoto] = useState([]);
   const [selectedPhoto, setselectedPhoto] = useState('');
+  const { loading, error, product } = productDetail;
 
-  const fetchProduct = async () => {
-    const { data } = await axios.get(`/api/v1/products/${id}`);
-
-    setItem(data.products);
-    const arr = data.products.images.map((el) => el.url);
-    setPhoto(arr);
-    setselectedPhoto(arr[0]);
-  };
   useEffect(() => {
-    fetchProduct();
-  }, [id]);
+    dispatch(detailProduct(id));
+
+    if (product && !error) {
+      setPhoto(product.images);
+      setselectedPhoto(product.images[0]);
+    }
+  }, [dispatch]);
 
   return (
     <>
       <Header />
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message bg="danger">{error}</Message>
+      ) : (
+        <Container>
+          <FirstSection>
+            <PhotosSection>
+              <ImageZoom>
+                <SelectedImg img={selectedPhoto.url} />
+              </ImageZoom>
+              <ImgsWrapper>
+                {photo.map((p) => (
+                  <IMG key={p._id} src={p.url} onClick={() => setselectedPhoto(p)} />
+                ))}
+              </ImgsWrapper>
+            </PhotosSection>
+            <DetailsSection>
+              <DetailWrapper>
+                <DetailHeader>
+                  <Price>
+                    <h3>{product && product.name}</h3>
+                    <p>{product && formatter.format(product.price)}</p>
+                  </Price>
+                  <Text>{product && product.subcategory}</Text>
+                  <DescriptionText>
+                    {product && product.description && product.description.substring(0, 149)}
+                  </DescriptionText>
+                </DetailHeader>
+                <ColorWrapper>
+                  <b>{product && product.colors && 'Textures/Colors styles :'}</b>
+                  {product && product.colors && product.colors.map((c, index) => <Color key={index} texture={c} />)}
+                </ColorWrapper>
 
-      <Container>
-        <FirstSection>
-          <PhotosSection>
-            <ImageZoom>
-              <SelectedImg img={selectedPhoto} />
-            </ImageZoom>
-            <ImgsWrapper>
-              {photo.map((p, index) => (
-                <IMG key={index} src={p} onClick={() => setselectedPhoto(p)} />
-              ))}
-            </ImgsWrapper>
-          </PhotosSection>
-          <DetailsSection>
-            <DetailWrapper>
-              <DetailHeader>
-                <Price>
-                  <h3>{item.name}</h3>
-                  <p>{formatter.format(item.price)}</p>
-                </Price>
-                <Text>{item.subcategory}</Text>
-                <DescriptionText>{item.description && item.description.substring(0, 149)}</DescriptionText>
-              </DetailHeader>
-              <ColorWrapper>
-                <b>{item.colors && 'Textures/Colors styles :'}</b>
-                {item.colors && item.colors.map((c, index) => <Color key={index} texture={c} />)}
-              </ColorWrapper>
+                <ButtonWrapper>
+                  <div>
+                    {product && product.shipping === 'true' ? <FiCheckCircle /> : <BsXCircle />} &nbsp;
+                    <span>{product && product.shipping === 'true' ? 'Available' : 'Not available'} for delivery</span>
+                  </div>
 
-              <ButtonWrapper>
-                <div>
-                  {item.shipping === 'true' ? <FiCheckCircle /> : <BsXCircle />} &nbsp;
-                  <span>{item.shipping === 'true' ? 'Available' : 'Not available'} for delivery</span>
-                </div>
+                  {/* !Cart buttons */}
 
-                {/* !Cart buttons */}
+                  <CartBtn>
+                    <Heart />
+                    <Button>
+                      {' '}
+                      Add to cart{' '}
+                      <span>
+                        <PlusIcon />
+                      </span>{' '}
+                      &nbsp; 1
+                      <span>
+                        &nbsp;
+                        <MinusIcon />
+                      </span>
+                    </Button>
+                  </CartBtn>
 
-                <CartBtn>
-                  <Heart />
-                  <Button>
-                    {' '}
-                    Add to cart{' '}
-                    <span>
-                      <PlusIcon />
-                    </span>{' '}
-                    &nbsp; 1
-                    <span>
-                      &nbsp;
-                      <MinusIcon />
-                    </span>
-                  </Button>
-                </CartBtn>
-
-                {/* !Cart buttons */}
-              </ButtonWrapper>
-            </DetailWrapper>
-          </DetailsSection>
-        </FirstSection>
-        <SecondSection>
-          <Description>
-            <h4>Description</h4>
-            <p> {item.description}</p>
-          </Description>
-          <Features>
-            {' '}
-            <h4>Features</h4>
-            <FirstFeature>
+                  {/* !Cart buttons */}
+                </ButtonWrapper>
+              </DetailWrapper>
+            </DetailsSection>
+          </FirstSection>
+          <SecondSection>
+            <Description>
+              <h4>Description</h4>
+              <p> {product && product && product.description}</p>
+            </Description>
+            <Features>
               {' '}
-              <Equipement /> <span>{item.Features && item.Features[0]}</span>
-            </FirstFeature>
-            <SecondFeature>
-              {' '}
-              <Dimension /> <span>{item.Features && item.Features[1]}</span>
-            </SecondFeature>
-          </Features>
-        </SecondSection>
-      </Container>
+              <h4>Features</h4>
+              <FirstFeature>
+                {' '}
+                <Equipement /> <span>{product && product.Features && product.Features[0]}</span>
+              </FirstFeature>
+              <SecondFeature>
+                {' '}
+                <Dimension /> <span>{product && product.Features && product.Features[1]}</span>
+              </SecondFeature>
+            </Features>
+          </SecondSection>
+        </Container>
+      )}
     </>
   );
 }

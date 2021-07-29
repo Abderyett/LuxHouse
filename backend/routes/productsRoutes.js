@@ -43,10 +43,7 @@ router.get(
         message: 'Cannot find this product',
       });
     }
-    res.status(200).json({
-      status: 'success',
-      products,
-    });
+    res.status(200).json(products);
   })
 );
 

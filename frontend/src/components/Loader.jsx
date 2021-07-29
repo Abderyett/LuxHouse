@@ -1,9 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
 import { color } from '../utilities';
 
 export function Loader() {
   return (
-    <svg
+    <StyledSvg
       xmlns="http://www.w3.org/2000/svg"
       style={{ margin: 'auto', display: 'block', shapeRendering: 'auto' }}
       width="81px"
@@ -55,6 +56,10 @@ export function Loader() {
           begin="-0.8928571428571428s"
         />
       </circle>
-    </svg>
+    </StyledSvg>
   );
 }
+
+const StyledSvg = styled.svg`
+  margin-top: 50rem;
+`;

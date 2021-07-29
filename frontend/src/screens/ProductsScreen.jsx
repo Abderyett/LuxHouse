@@ -1,7 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProduct } from '../actions/productActions';
@@ -47,32 +46,33 @@ export function ProductsScreen() {
   return (
     <>
       <Header />
-      <Container>
-        <Div>
-          <CategorieWrapper>
-            {subCategories.map((el, index) => (
-              <Button key={index} type="button" onClick={(e) => setCategorieText(e.target.textContent.toLowerCase())}>
-                {el}
-              </Button>
-            ))}
-          </CategorieWrapper>
-        </Div>
-        <ContentWrapper>
-          <FilterWrapper>
-            <Accordion />
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message bg="danger">{error}</Message>
+      ) : (
+        <Container>
+          <Div>
+            <CategorieWrapper>
+              {subCategories.map((el, index) => (
+                <Button key={index} type="button" onClick={(e) => setCategorieText(e.target.textContent.toLowerCase())}>
+                  {el}
+                </Button>
+              ))}
+            </CategorieWrapper>
+          </Div>
+          <ContentWrapper>
+            <FilterWrapper>
+              <Accordion />
 
-            <ClearBtn type="button">Clear Filters</ClearBtn>
-          </FilterWrapper>
-          <div>
-            <HeaderDetails>
-              <span>{filtredProducts.length === 0 ? products.length : filtredProducts.length} Results </span>
-              <hr /> <span>Sort By</span>
-            </HeaderDetails>
-            {loading ? (
-              <Loader />
-            ) : error ? (
-              <Message bg="danger">{error}</Message>
-            ) : (
+              <ClearBtn type="button">Clear Filters</ClearBtn>
+            </FilterWrapper>
+            <div>
+              <HeaderDetails>
+                <span>{filtredProducts.length === 0 ? products.length : filtredProducts.length} Results </span>
+                <hr /> <span>Sort By</span>
+              </HeaderDetails>
+
               <GridContainer>
                 {categorieText === 'all'
                   ? products.map((el) => (
@@ -104,10 +104,10 @@ export function ProductsScreen() {
                       </Card>
                     ))}
               </GridContainer>
-            )}
-          </div>
-        </ContentWrapper>
-      </Container>
+            </div>
+          </ContentWrapper>
+        </Container>
+      )}
     </>
   );
 }
