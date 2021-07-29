@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
@@ -15,19 +17,21 @@ import { Heart, Equipement, Dimension } from '../utilities/svg';
 import 'react-medium-image-zoom/dist/styles.css';
 import { formatter } from '../helper/CurrencyFormat';
 import { detailProduct } from '../actions/productActions';
+import { incrementCount, decrementCount } from '../actions/cartAction';
 
 export function SingleProduct() {
   const { id } = useParams();
   const productDetail = useSelector((state) => state.productDetail);
+  const num = useSelector((state) => state.count);
   const dispatch = useDispatch();
-  const [photo, setPhoto] = useState([]);
+
   const [selectedPhoto, setselectedPhoto] = useState(null);
   const { loading, error, product } = productDetail;
 
   useEffect(() => {
     dispatch(detailProduct(id));
   }, [dispatch]);
-  console.log('selectedPhoto', selectedPhoto);
+  console.log('count:', num);
 
   return (
     <>
@@ -77,12 +81,12 @@ export function SingleProduct() {
                     <Heart />
                     <Button>
                       {' '}
-                      Add to cart{' '}
-                      <span>
+                      Add to cart
+                      <span onClick={() => dispatch(incrementCount())}>
                         <PlusIcon />
                       </span>{' '}
-                      &nbsp; 1
-                      <span>
+                      &nbsp; {num.count}
+                      <span onClick={() => dispatch(decrementCount())}>
                         &nbsp;
                         <MinusIcon />
                       </span>
