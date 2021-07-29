@@ -21,17 +21,13 @@ export function SingleProduct() {
   const productDetail = useSelector((state) => state.productDetail);
   const dispatch = useDispatch();
   const [photo, setPhoto] = useState([]);
-  const [selectedPhoto, setselectedPhoto] = useState('');
+  const [selectedPhoto, setselectedPhoto] = useState(null);
   const { loading, error, product } = productDetail;
 
   useEffect(() => {
     dispatch(detailProduct(id));
-
-    if (product && !error) {
-      setPhoto(product.images);
-      setselectedPhoto(product.images[0]);
-    }
   }, [dispatch]);
+  console.log('selectedPhoto', selectedPhoto);
 
   return (
     <>
@@ -45,12 +41,11 @@ export function SingleProduct() {
           <FirstSection>
             <PhotosSection>
               <ImageZoom>
-                <SelectedImg img={selectedPhoto.url} />
+                <SelectedImg img={selectedPhoto === null ? product.images && product.images[0].url : selectedPhoto} />
               </ImageZoom>
               <ImgsWrapper>
-                {photo.map((p) => (
-                  <IMG key={p._id} src={p.url} onClick={() => setselectedPhoto(p)} />
-                ))}
+                {product.images &&
+                  product.images.map((p) => <IMG key={p._id} src={p.url} onClick={() => setselectedPhoto(p.url)} />)}
               </ImgsWrapper>
             </PhotosSection>
             <DetailsSection>
