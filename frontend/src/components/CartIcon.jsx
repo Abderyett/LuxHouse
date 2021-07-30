@@ -6,14 +6,14 @@ export function CartIcon() {
   return (
     <Container>
       <StyledShoppingIcon />
-      <span>10</span>
+      <span>0</span>
     </Container>
   );
 }
 
 const Container = styled.div`
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   position: relative;
   display: flex;
   align-items: center;
@@ -21,12 +21,13 @@ const Container = styled.div`
 
   span {
     position: absolute;
-    bottom: 10px;
-    font-size: 12px;
+    bottom: 9px;
+    font-size: 11px !important;
   }
 `;
 
 const StyledShoppingIcon = styled(ShoppingIcon)`
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
 `;

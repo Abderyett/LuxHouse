@@ -142,7 +142,7 @@ const ClearBtn = styled.button`
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, 23rem);
+  grid-template-columns: repeat(auto-fit, 21rem);
   grid-gap: 2.5rem;
   width: 90%;
   place-content: center;

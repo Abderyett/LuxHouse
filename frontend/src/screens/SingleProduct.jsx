@@ -21,7 +21,7 @@ import { incrementCount, decrementCount } from '../actions/cartAction';
 export function SingleProduct() {
   const { id } = useParams();
   const productDetail = useSelector((state) => state.productDetail);
-  const num = useSelector((state) => state.count);
+  const num = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const [selectedPhoto, setselectedPhoto] = useState(null);

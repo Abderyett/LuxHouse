@@ -1,4 +1,4 @@
-import { DECREASE_CART_ITEM, INCREASE_CART_ITEM } from './types';
+import { DECREASE_CART_ITEM, INCREASE_CART_ITEM, TOGGLE_DROPDOWN } from './types';
 
 export const incrementCount = () => (dispatch) => {
   dispatch({
@@ -8,5 +8,10 @@ export const incrementCount = () => (dispatch) => {
 export const decrementCount = () => (dispatch) => {
   dispatch({
     type: DECREASE_CART_ITEM,
+  });
+};
+export const toggleCart = () => (dispatch) => {
+  dispatch({
+    type: TOGGLE_DROPDOWN,
   });
 };

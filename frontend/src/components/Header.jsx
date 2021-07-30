@@ -2,14 +2,22 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiHeart, FiUser } from 'react-icons/fi';
-import { HiOutlineShoppingBag, HiX } from 'react-icons/hi';
+import { HiX } from 'react-icons/hi';
 import { RiArrowDropRightLine } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux';
 import { Menu } from '../utilities/svg';
 import { shadow, color } from '../utilities';
 import { CartIcon } from './CartIcon';
+import { CartDropdown } from './CartDropdown';
+import { toggleCart } from '../actions/cartAction';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const toggleDropdown = useSelector((state) => state.cart);
+  const { showDropdown } = toggleDropdown;
+  console.log(showDropdown);
+
   return (
     <HeadWrapper>
       <Logo>Lux house</Logo>
@@ -64,7 +72,7 @@ export function Header() {
                 <RiArrowDropRightLine />
               </Arrow>
             </ActionLink>
-            <ShoppingCart to="cart">
+            <ShoppingCart onClick={() => dispatch(toggleCart())}>
               <CartIcon />
               <span>shoping cart</span>
               <Arrow>
@@ -77,6 +85,8 @@ export function Header() {
       <Button type="button" onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? <HiX /> : <Menu />}
       </Button>
+
+      {showDropdown && <CartDropdown />}
     </HeadWrapper>
   );
 }
@@ -214,10 +224,12 @@ const Arrow = styled.span`
   opacity: 0;
   font-size: 1.5rem;
 `;
-const ShoppingCart = styled(Link)`
+const ShoppingCart = styled.a`
   display: flex;
   align-items: center;
-  ${ListStyle}
+  cursor: pointer;
+
+  ${ListStyle};
 `;
 
 const ActionLink = styled(Link)`
@@ -225,6 +237,7 @@ const ActionLink = styled(Link)`
   border-right:0.5px solid ${color.grey_300};
 
   padding: 0 0.75rem;
+
   @media (max-width: 1030px) {
     border: none;
     padding-top: 1rem;
@@ -254,10 +267,11 @@ const ActionLink = styled(Link)`
     padding-right: 1rem;
   }
   svg {
-    font-size: 1.5rem;
-    vertical-align: sub;
+    font-size: 1.6rem;
+
     padding-right: 0.5rem;
     font-weight: 600;
+    vertical-align: bottom;
   }
 `;
 
