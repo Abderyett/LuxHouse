@@ -3,7 +3,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
@@ -31,7 +30,6 @@ export function SingleProduct() {
   useEffect(() => {
     dispatch(detailProduct(id));
   }, [dispatch]);
-  console.log('count:', num);
 
   return (
     <>
@@ -214,15 +212,15 @@ const Price = styled.div`
   font-family: 'avenir_semi';
   p {
     position: relative;
-    font-size: 1.8rem;
+    font-size: 1.3rem;
     color: black;
     &::after {
       content: '';
       background: rgba(244, 223, 33, 0.3);
-      height: 15px;
-      width: 4.5rem;
+      height: 12px;
+      width: 4rem;
       position: absolute;
-      bottom: 5px;
+      bottom: 0px;
       right: 2px;
     }
   }
@@ -237,7 +235,7 @@ const Text = styled.p`
 const DescriptionText = styled.p`
   color: Black;
 
-  font-size: 1.3rem;
+  font-size: 1rem;
   line-height: 2.5rem;
 `;
 
@@ -245,7 +243,7 @@ const ColorWrapper = styled.div`
   display: flex;
   align-items: center;
   color: ${color.black};
-  font-size: 1.2rem;
+  font-size: 1rem;
   @media (max-width: 600px) {
     display: grid;
     grid-auto-flow: column;
@@ -253,8 +251,8 @@ const ColorWrapper = styled.div`
   }
 `;
 const Color = styled.div`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: ${rounded.full};
   background: ${({ texture }) => texture};
   box-shadow: ${shadow.lg};
@@ -282,7 +280,7 @@ const ButtonWrapper = styled.div`
   }
 
   svg {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     vertical-align: middle;
 
     cursor: pointer;
@@ -305,6 +303,7 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const CartBtn = styled.div`

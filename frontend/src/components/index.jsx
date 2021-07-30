@@ -8,3 +8,4 @@ export * from './Error';
 export * from './Accordion';
 export * from './Loader';
 export * from './Message';
+export * from './CartIcon';

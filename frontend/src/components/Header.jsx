@@ -6,6 +6,7 @@ import { HiOutlineShoppingBag, HiX } from 'react-icons/hi';
 import { RiArrowDropRightLine } from 'react-icons/ri';
 import { Menu } from '../utilities/svg';
 import { shadow, color } from '../utilities';
+import { CartIcon } from './CartIcon';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,15 +64,13 @@ export function Header() {
                 <RiArrowDropRightLine />
               </Arrow>
             </ActionLink>
-            <ActionLink to="cart">
-              <span>
-                <HiOutlineShoppingBag />
-                shoping cart
-              </span>
+            <ShoppingCart to="cart">
+              <CartIcon />
+              <span>shoping cart</span>
               <Arrow>
                 <RiArrowDropRightLine />
               </Arrow>
-            </ActionLink>
+            </ShoppingCart>
           </ul>
         </ListWrapper>
       </Wrapper>
@@ -83,7 +82,7 @@ export function Header() {
 }
 
 const HeadWrapper = styled.header`
-  height: 5rem;
+  height: 4.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -109,7 +108,7 @@ const Wrapper = styled.div`
     position: fixed;
     top: 0;
     left: ${({ isOpen }) => (isOpen ? '0' : '-100%')};
-    margin-top: 5rem;
+    margin-top: 4.5rem;
     background-color: ${color.white};
     z-index: 99;
     width: 50vw;
@@ -158,11 +157,13 @@ const ListStyle = css`
   text-decoration: none;
   color: inherit;
   padding-right: 3rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   text-transform: capitalize;
   transition: all 0.6s ease-in-out;
   color: ${color.black};
   font-weight: 600;
+  display: flex;
+  align-items: center;
   &:hover {
     color: rgba(0, 0, 0, 0.5);
   }
@@ -212,6 +213,11 @@ const NavLink = styled(Link)`
 const Arrow = styled.span`
   opacity: 0;
   font-size: 1.5rem;
+`;
+const ShoppingCart = styled(Link)`
+  display: flex;
+  align-items: center;
+  ${ListStyle}
 `;
 
 const ActionLink = styled(Link)`
