@@ -29,5 +29,4 @@ const Container = styled.div`
 const StyledShoppingIcon = styled(ShoppingIcon)`
   width: 22px;
   height: 22px;
-  vertical-align: middle;
 `;

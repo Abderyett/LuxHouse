@@ -4,13 +4,16 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProduct } from '../actions/productActions';
+import { addItem } from '../actions/cartAction';
 import { Header, Accordion, Loader, Message } from '../components';
 import { color, shadow, rounded } from '../utilities';
-import { BlueCircle } from '../utilities/svg';
+import { BlueCircle, CheckCircle } from '../utilities/svg';
 
 export function ProductsScreen() {
   const dispatch = useDispatch();
   const porductList = useSelector((state) => state.porductList);
+  const isAdded = useSelector((state) => state.cart.cartItem);
+
   const { loading, error, products } = porductList;
 
   const [subCategories, setsubCategories] = useState([]);
@@ -25,7 +28,6 @@ export function ProductsScreen() {
     if (products.length > 0) {
       const newArr = products.map((el) => el.subcategory);
       const categories = ['all', ...new Set(newArr)];
-
       setsubCategories(categories);
     }
   }, [products]);
@@ -75,7 +77,7 @@ export function ProductsScreen() {
 
               <GridContainer>
                 {categorieText === 'all'
-                  ? products.map((el) => (
+                  ? products.map((el, i) => (
                       <Card key={el._id}>
                         <Link to={`/products/${el._id}`}>
                           <StyledImg src={el.image[0].url} alt={el.subcategory} />
@@ -86,10 +88,12 @@ export function ProductsScreen() {
                           <Subcategory category={el.category}>{el.subcategory} </Subcategory>
                           <Description>{el.description.substring(0, 100)}...</Description>
                         </Link>
-                        <BlueCircle />
+                        <IconWrapper type="button" onClick={() => dispatch(addItem(el))}>
+                          {isAdded[0] && isAdded[i] ? <CheckCircle /> : <BlueCircle />}
+                        </IconWrapper>
                       </Card>
                     ))
-                  : filtredProducts.map((el) => (
+                  : filtredProducts.map((el, index) => (
                       <Card key={el._id}>
                         <Link to={`/products/${el._id}`}>
                           <StyledImg src={el.image[0].url} alt={el.subcategory} />
@@ -100,7 +104,9 @@ export function ProductsScreen() {
                           <Subcategory category={el.category}>{el.subcategory}</Subcategory>
                           <Description>{el.description.substring(0, 100)}...</Description>
                         </Link>
-                        <BlueCircle />
+                        <IconWrapper style={{ background: 'red' }} type="submit" onClick={() => dispatch(addItem(el))}>
+                          {isAdded[0] && isAdded[index] ? <CheckCircle /> : <BlueCircle />}
+                        </IconWrapper>
                       </Card>
                     ))}
               </GridContainer>
@@ -272,4 +278,8 @@ const Div = styled.div`
     height: 100%;
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #fff 100%);
   }
+`;
+
+const IconWrapper = styled.button`
+  background-color: transparent;
 `;

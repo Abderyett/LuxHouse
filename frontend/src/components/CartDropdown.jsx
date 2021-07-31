@@ -21,15 +21,15 @@ export function CartDropdown() {
 }
 
 const Container = styled.div`
-  position: fixed;
+  position: absolute;
   top: 5.5rem;
-  right: 2rem;
+  right: 1rem;
   width: 17rem;
   height: 20rem;
   box-shadow: ${shadow.xxl};
   padding: 0.75rem;
   background-color: ${color.white};
-  z-index: 999999;
+  z-index: 999 !important;
 `;
 
 const Content = styled.div`

@@ -16,78 +16,78 @@ export function Header() {
   const dispatch = useDispatch();
   const toggleDropdown = useSelector((state) => state.cart);
   const { showDropdown } = toggleDropdown;
-  console.log(showDropdown);
 
   return (
-    <HeadWrapper>
-      <Logo>Lux house</Logo>
+    <>
+      <HeadWrapper>
+        <Logo>Lux house</Logo>
 
-      <Wrapper isOpen={isOpen}>
-        <ListWrapper onClick={() => setIsOpen(false)}>
-          <ul>
-            <NavLink to="/">
-              home
-              <span>
-                <RiArrowDropRightLine />
-              </span>
-            </NavLink>
-            <NavLink to="blog">
-              stories
-              <span>
-                <RiArrowDropRightLine />
-              </span>
-            </NavLink>
-            <NavLink to="/products">
-              shop
-              <span>
-                <RiArrowDropRightLine />
-              </span>
-            </NavLink>
-            <NavLink to="/contact">
-              contact
-              <span>
-                <RiArrowDropRightLine />
-              </span>
-            </NavLink>
-          </ul>
-        </ListWrapper>
-        <ListWrapper onClick={() => setIsOpen(false)}>
-          <ul>
-            <ActionLink to="wichlist">
-              <span>
-                <FiHeart />
-                My Wichlist
-              </span>
+        <Wrapper isOpen={isOpen}>
+          <ListWrapper onClick={() => setIsOpen(false)}>
+            <ul>
+              <NavLink to="/">
+                home
+                <span>
+                  <RiArrowDropRightLine />
+                </span>
+              </NavLink>
+              <NavLink to="blog">
+                stories
+                <span>
+                  <RiArrowDropRightLine />
+                </span>
+              </NavLink>
+              <NavLink to="/products">
+                shop
+                <span>
+                  <RiArrowDropRightLine />
+                </span>
+              </NavLink>
+              <NavLink to="/contact">
+                contact
+                <span>
+                  <RiArrowDropRightLine />
+                </span>
+              </NavLink>
+            </ul>
+          </ListWrapper>
+          <ListWrapper onClick={() => setIsOpen(false)}>
+            <ul>
+              <ActionLink to="wichlist">
+                <span>
+                  <FiHeart />
+                  My Wichlist
+                </span>
 
-              <Arrow second="second">
-                <RiArrowDropRightLine />
-              </Arrow>
-            </ActionLink>
-            <ActionLink to="login">
-              <span>
-                <FiUser />
-                account
-              </span>
-              <Arrow>
-                <RiArrowDropRightLine />
-              </Arrow>
-            </ActionLink>
-            <ShoppingCart onClick={() => dispatch(toggleCart())}>
-              <CartIcon />
-              <span>shoping cart</span>
-              <Arrow>
-                <RiArrowDropRightLine />
-              </Arrow>
-            </ShoppingCart>
-          </ul>
-        </ListWrapper>
-      </Wrapper>
-      <Button type="button" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? <HiX /> : <Menu />}
-      </Button>
-
+                <Arrow second="second">
+                  <RiArrowDropRightLine />
+                </Arrow>
+              </ActionLink>
+              <ActionLink to="login">
+                <span>
+                  <FiUser />
+                  account
+                </span>
+                <Arrow>
+                  <RiArrowDropRightLine />
+                </Arrow>
+              </ActionLink>
+              <ShoppingCart onClick={() => dispatch(toggleCart())}>
+                <CartIcon />
+                <span>shoping cart</span>
+                <Arrow>
+                  <RiArrowDropRightLine />
+                </Arrow>
+              </ShoppingCart>
+            </ul>
+          </ListWrapper>
+        </Wrapper>
+        <Button type="button" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <HiX /> : <Menu />}
+        </Button>
+      </HeadWrapper>
       {showDropdown && <CartDropdown />}
-    </HeadWrapper>
+    </>
   );
 }
 
@@ -99,7 +99,7 @@ const HeadWrapper = styled.header`
   padding: 0 2rem;
   box-shadow: ${shadow.md};
   background-color: ${color.white};
-  z-index: 9999;
+  z-index: 9;
   overflow: auto;
   position: relative;
   position: sticky;
@@ -110,7 +110,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 999;
+  z-index: 9;
 
   @media (max-width: 1030px) {
     flex-direction: column;
@@ -120,7 +120,7 @@ const Wrapper = styled.div`
     left: ${({ isOpen }) => (isOpen ? '0' : '-100%')};
     margin-top: 4.5rem;
     background-color: ${color.white};
-    z-index: 99;
+    z-index: 9;
     width: 50vw;
     box-shadow: ${shadow.lg};
     opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};

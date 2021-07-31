@@ -7,3 +7,4 @@ export * from './Menu';
 export * from './Heart';
 export * from './Dimension';
 export * from './Equipement';
+export * from './CheckCircle';
