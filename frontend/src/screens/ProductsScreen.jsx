@@ -89,7 +89,7 @@ export function ProductsScreen() {
                           <Description>{el.description.substring(0, 100)}...</Description>
                         </Link>
                         <IconWrapper type="button" onClick={() => dispatch(addItem(el))}>
-                          {isAdded[0] && isAdded[i] ? <CheckCircle /> : <BlueCircle />}
+                          {isAdded && isAdded[i] ? <CheckCircle /> : <BlueCircle />}
                         </IconWrapper>
                       </Card>
                     ))
@@ -105,7 +105,7 @@ export function ProductsScreen() {
                           <Description>{el.description.substring(0, 100)}...</Description>
                         </Link>
                         <IconWrapper style={{ background: 'red' }} type="submit" onClick={() => dispatch(addItem(el))}>
-                          {isAdded[0] && isAdded[index] ? <CheckCircle /> : <BlueCircle />}
+                          {isAdded && isAdded[index] ? <CheckCircle /> : <BlueCircle />}
                         </IconWrapper>
                       </Card>
                     ))}

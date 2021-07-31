@@ -1,4 +1,5 @@
 import { INCREASE_CART_ITEM, DECREASE_CART_ITEM, ADD_TO_CART, TOGGLE_DROPDOWN } from '../../actions/types';
+import { addCartItem } from '../../helper/addCartItem';
 
 export const cartReducer = (state = { count: 0, showDropdown: false, cartItem: [] }, action) => {
   switch (action.type) {
@@ -9,8 +10,10 @@ export const cartReducer = (state = { count: 0, showDropdown: false, cartItem: [
     case TOGGLE_DROPDOWN:
       return { ...state, showDropdown: !state.showDropdown };
     case ADD_TO_CART:
-      return { ...state, cartItem: [...state.cartItem, { itemAdded: true, item: action.payload }] };
+      return { ...state, cartItem: addCartItem(state.cartItem, action.payload) };
     default:
       return state;
   }
 };
+
+// return { ...state, cartItem: [...state.cartItem, { itemAdded: true, item: action.payload }] };
