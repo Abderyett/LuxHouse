@@ -15,5 +15,3 @@ export const cartReducer = (state = { count: 0, showDropdown: false, cartItem: [
       return state;
   }
 };
-
-// return { ...state, cartItem: [...state.cartItem, { itemAdded: true, item: action.payload }] };
