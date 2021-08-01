@@ -5,6 +5,7 @@ export const color = {
   sugar_swi: '#f3eee7',
   ecru: '#ede1cf',
   wes_yellow: '#ffc600',
+  scallop_shell: '#FBD8C9',
   blue_grey_900: '#102a43',
   blue_grey_800: '#243b53',
   blue_grey_700: '#334e68',

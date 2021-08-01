@@ -1,12 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import { ReactComponent as ShoppingIcon } from '../utilities/svg/ShoppingIcon.svg';
+import { color } from '../utilities';
 
 export function CartIcon() {
+  const cart = useSelector((state) => state.cart);
+
   return (
     <Container>
       <StyledShoppingIcon />
-      <span>0</span>
+      <span>{cart.cartItem.length} </span>
     </Container>
   );
 }
@@ -21,8 +25,16 @@ const Container = styled.div`
 
   span {
     position: absolute;
-    bottom: 9px;
-    font-size: 11px !important;
+    bottom: 15px;
+    right: 5px;
+    font-size: 10px !important;
+    background-color: ${color.scallop_shell};
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 

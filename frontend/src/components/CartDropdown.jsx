@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import { color, shadow } from '../utilities';
 import { toggleCart } from '../actions/cartAction';
 
@@ -21,7 +22,7 @@ export function CartDropdown() {
 }
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   top: 5.5rem;
   right: 1rem;
   width: 17rem;

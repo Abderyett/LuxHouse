@@ -98,6 +98,7 @@ const HeadWrapper = styled.header`
   justify-content: space-between;
   padding: 0 2rem;
   box-shadow: ${shadow.md};
+  max-width: 2880px;
   background-color: ${color.white};
   z-index: 9;
   overflow: auto;

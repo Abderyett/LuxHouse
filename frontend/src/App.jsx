@@ -1,7 +1,15 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { GlobalStyle } from './Global';
-import { HomeScreen, LoginScreen, RegisterScreen, ContactScreen, ProductsScreen, SingleProduct } from './screens';
+import {
+  HomeScreen,
+  LoginScreen,
+  RegisterScreen,
+  ContactScreen,
+  ProductsScreen,
+  SingleProduct,
+  CartScreen,
+} from './screens';
 
 function App() {
   return (
@@ -13,6 +21,7 @@ function App() {
         <Route path="/contact" exact component={ContactScreen} />
         <Route path="/products" exact component={ProductsScreen} />
         <Route path="/products/:id" exact component={SingleProduct} />
+        <Route path="/cart" exact component={CartScreen} />
       </Switch>
 
       <GlobalStyle />

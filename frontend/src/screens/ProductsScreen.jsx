@@ -47,7 +47,7 @@ export function ProductsScreen() {
 
   return (
     <>
-      <Header />
+      <Header productList />
       {loading ? (
         <Loader />
       ) : error ? (
