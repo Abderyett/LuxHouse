@@ -20,7 +20,7 @@ export function Features() {
         },
       });
     }
-  }, [inView]);
+  }, [inView, animation]);
   return (
     <FeatureSection ref={ref} animate={animation} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
       {featuresData.map((el) => {

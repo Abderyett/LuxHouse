@@ -22,7 +22,7 @@ export function BlogSection() {
         },
       });
     }
-  }, [inView]);
+  }, [inView, animation]);
   return (
     <>
       <Heading ref={ref}>

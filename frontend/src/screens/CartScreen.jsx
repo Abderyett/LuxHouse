@@ -10,7 +10,6 @@ export function CartScreen() {
   const cart = useSelector((state) => state.cart);
 
   const { cartItem } = cart;
-  console.log(cartItem);
 
   return (
     <>
@@ -70,11 +69,16 @@ const Wrapper = styled.div`
   border-radius: ${rounded.sm};
   border: 1px solid grey;
   z-index: 3;
+  position: relative;
 `;
 
 const CartItem = styled.section``;
 
-const Card = styled.div``;
+const Card = styled.div`
+  height: 5rem;
+  border: 1px solid ${color.grey_400};
+  width: 100%;
+`;
 
 const CheckoutSection = styled.section``;
 const CheckoutWrapper = styled.div`

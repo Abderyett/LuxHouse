@@ -4,7 +4,6 @@ import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { FiCheck } from 'react-icons/fi';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { string } from 'prop-types';
 import { color } from '../utilities';
 
 const data = [

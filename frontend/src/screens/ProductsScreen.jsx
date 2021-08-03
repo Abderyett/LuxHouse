@@ -25,7 +25,7 @@ export function ProductsScreen() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (products.length > 0) {
+    if (products) {
       const newArr = products.map((el) => el.subcategory);
       const categories = ['all', ...new Set(newArr)];
       setsubCategories(categories);
@@ -40,10 +40,16 @@ export function ProductsScreen() {
       setfiltredProducts(newProducts);
     }
   };
-
   useEffect(() => {
     filterProducts(categorieText);
   }, [categorieText]);
+
+  const isAddedProduct = (id) => {
+    const val = isAdded.length > 0 && isAdded.find((el) => el._id === id);
+
+    const newVal = val && val.itemAdded;
+    return newVal;
+  };
 
   return (
     <>
@@ -89,7 +95,7 @@ export function ProductsScreen() {
                           <Description>{el.description.substring(0, 100)}...</Description>
                         </Link>
                         <IconWrapper type="button" onClick={() => dispatch(addItem(el))}>
-                          {isAdded && isAdded[i] ? <CheckCircle /> : <BlueCircle />}
+                          {isAddedProduct(el._id) === true ? <CheckCircle /> : <BlueCircle />}
                         </IconWrapper>
                       </Card>
                     ))
@@ -105,7 +111,7 @@ export function ProductsScreen() {
                           <Description>{el.description.substring(0, 100)}...</Description>
                         </Link>
                         <IconWrapper style={{ background: 'red' }} type="submit" onClick={() => dispatch(addItem(el))}>
-                          {isAdded && isAdded[index] ? <CheckCircle /> : <BlueCircle />}
+                          {isAddedProduct(el._id) === true ? <CheckCircle /> : <BlueCircle />}
                         </IconWrapper>
                       </Card>
                     ))}
