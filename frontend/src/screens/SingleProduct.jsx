@@ -88,7 +88,7 @@ export function SingleProduct() {
                     <Heart />
                     <Button>
                       {' '}
-                      <p onClick={() => dispatch(addItem(product))}> Add to cart</p>
+                      Add to cart
                       <span onClick={() => dispatch(incrementCartItem(product))}>
                         <PlusIcon />
                       </span>{' '}
@@ -313,15 +313,6 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  p {
-    margin-bottom: 0;
-    &:hover {
-      border-bottom: 2px solid ${color.black};
-      padding-bottom: 0.125rem;
-      cursor: pointer;
-      color: ${color.black};
-    }
-  }
 `;
 
 const CartBtn = styled.div`

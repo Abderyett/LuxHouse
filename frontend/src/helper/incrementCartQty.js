@@ -1,4 +1,10 @@
-export const incrementQty = (cartItems, cartItemAdded) =>
-  cartItems.map((cartItem) =>
-    cartItem._id === cartItemAdded._id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
-  );
+export const incrementQty = (cartItems, cartItemToAdd) => {
+  const existingItemCart = cartItems.find((cartItem) => cartItem._id === cartItemToAdd._id);
+
+  if (existingItemCart) {
+    return cartItems.map((cartItem) =>
+      cartItem._id === cartItemToAdd._id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
+    );
+  }
+  return [...cartItems, { ...cartItemToAdd, quantity: 1, itemAdded: true }];
+};
