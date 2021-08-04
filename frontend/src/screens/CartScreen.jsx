@@ -7,7 +7,7 @@ import { BsTrash } from 'react-icons/bs';
 import { Header } from '../components';
 import shelf from '../utilities/svg/shelf.svg';
 import { color, shadow, rounded } from '../utilities';
-import { incrementCartItem, decrementCartItem } from '../actions/cartAction';
+import { decrementCartItem, incrementCartItem } from '../actions/cartAction';
 
 export function CartScreen() {
   const cart = useSelector((state) => state.cart);
@@ -25,29 +25,27 @@ export function CartScreen() {
             <Card>
               {cartItem.length > 0 &&
                 cartItem.map((el) => (
-                  <>
-                    <CardWrapper key={el._id}>
-                      <CarImg>
-                        <img src={el.image[0].url} alt={el.subcategory} />
-                      </CarImg>
-                      <p>{el.name}</p>
-                      <IconWrapper>
-                        <span>
-                          <StyledPlusICon onClick={() => dispatch(incrementCartItem(el))} />
-                        </span>
-                        &nbsp;
-                        <Quantity>{el.quantity}</Quantity>
-                        &nbsp;
-                        <span>
-                          <StyledMinusICon onClick={() => dispatch(decrementCartItem(el))} />
-                        </span>
-                      </IconWrapper>
-                      <p>$ {el.price}</p>
-                      <IconTrash>
-                        <BsTrash />
-                      </IconTrash>
-                    </CardWrapper>
-                  </>
+                  <CardWrapper key={el._id}>
+                    <CarImg>
+                      <img src={el.image[0].url} alt={el.subcategory} />
+                    </CarImg>
+                    <p>{el.name}</p>
+                    <IconWrapper>
+                      <span>
+                        <StyledPlusICon onClick={() => dispatch(incrementCartItem(el))} />
+                      </span>
+                      &nbsp;
+                      <Quantity>{el.quantity}</Quantity>
+                      &nbsp;
+                      <span>
+                        <StyledMinusICon onClick={() => dispatch(decrementCartItem(el))} />
+                      </span>
+                    </IconWrapper>
+                    <p>$ {el.price}</p>
+                    <IconTrash>
+                      <BsTrash />
+                    </IconTrash>
+                  </CardWrapper>
                 ))}
             </Card>
           </CartItem>
@@ -65,10 +63,6 @@ export function CartScreen() {
     </>
   );
 }
-
-// {
-//   cartItem.length > 0 && cartItem.map((el) => <div>{el._id}</div>);
-// }
 
 const Container = styled.div`
   position: relative;
@@ -114,7 +108,7 @@ const CartItem = styled.section`
 `;
 
 const Card = styled.div`
-  height: 7rem;
+  /* height: 10rem; */
   padding: 1rem;
 `;
 
@@ -128,6 +122,7 @@ const CardWrapper = styled.div`
   align-items: center;
   p {
     margin-bottom: 0;
+    width: 10ch;
   }
 `;
 

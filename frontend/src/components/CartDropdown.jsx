@@ -13,19 +13,23 @@ export function CartDropdown() {
   return (
     <Container>
       <Content>
-        {cartItem.map((el) => (
-          <Wrapper key={el.id}>
-            <ImgWrapper>
-              <img src={el.image[0].url} alt={el.subcategory} />
-            </ImgWrapper>
-            <Text>
-              <p>{el.name}</p>
-              <p>
-                {el.quantity} X ${el.price}
-              </p>
-            </Text>
-          </Wrapper>
-        ))}
+        {cartItem.length === 0 ? (
+          <EmptyText>Your cart is empty</EmptyText>
+        ) : (
+          cartItem.map((el) => (
+            <Wrapper key={el.id}>
+              <ImgWrapper>
+                <img src={el.image[0].url} alt={el.subcategory} />
+              </ImgWrapper>
+              <Text>
+                <p>{el.name}</p>
+                <p>
+                  {el.quantity} X ${el.price}
+                </p>
+              </Text>
+            </Wrapper>
+          ))
+        )}
       </Content>
       <BtnContainer>
         <Button onClick={() => dispatch(toggleCart())} to="/cart">
@@ -43,7 +47,7 @@ const Container = styled.div`
   width: 20rem;
   height: 22rem;
   box-shadow: ${shadow.xxl};
-  padding: 1.4rem;
+  padding: 1rem;
   background-color: ${color.white};
   z-index: 999 !important;
 `;
@@ -51,7 +55,18 @@ const Container = styled.div`
 const Content = styled.div`
   width: 100%;
   height: 14.5rem;
-  overflow-y: auto;
+  padding: 0.5rem;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  }
 `;
 
 const BtnContainer = styled.div`
@@ -62,16 +77,16 @@ const BtnContainer = styled.div`
 
 const Button = styled(Link)`
   text-transform: uppercase;
-  background-color: ${color.white};
-  color: ${color.black};
+  background-color: ${color.black};
+  color: ${color.white};
   padding: 1rem 2.5rem;
   font-weight: bold;
   border: 1px solid black;
   transition: all 0.6s ease-in-out;
   margin-top: 1rem;
   &:hover {
-    background-color: ${color.black};
-    color: ${color.white};
+    background-color: ${color.white};
+    color: ${color.black};
   }
 `;
 
@@ -93,4 +108,10 @@ const Text = styled.div`
     color: ${color.grey_800};
     font-weight: bold;
   }
+`;
+
+const EmptyText = styled.p`
+  padding: 3rem;
+  font-weight: bold;
+  font-size: 1.2rem;
 `;

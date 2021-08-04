@@ -83,7 +83,7 @@ export function ProductsScreen() {
 
               <GridContainer>
                 {categorieText === 'all'
-                  ? products.map((el, i) => (
+                  ? products.map((el) => (
                       <Card key={el._id}>
                         <Link to={`/products/${el._id}`}>
                           <StyledImg src={el.image[0].url} alt={el.subcategory} />
@@ -99,7 +99,7 @@ export function ProductsScreen() {
                         </IconWrapper>
                       </Card>
                     ))
-                  : filtredProducts.map((el, index) => (
+                  : filtredProducts.map((el) => (
                       <Card key={el._id}>
                         <Link to={`/products/${el._id}`}>
                           <StyledImg src={el.image[0].url} alt={el.subcategory} />
@@ -110,7 +110,7 @@ export function ProductsScreen() {
                           <Subcategory category={el.category}>{el.subcategory}</Subcategory>
                           <Description>{el.description.substring(0, 100)}...</Description>
                         </Link>
-                        <IconWrapper style={{ background: 'red' }} type="submit" onClick={() => dispatch(addItem(el))}>
+                        <IconWrapper type="submit" onClick={() => dispatch(addItem(el))}>
                           {isAddedProduct(el._id) === true ? <CheckCircle /> : <BlueCircle />}
                         </IconWrapper>
                       </Card>

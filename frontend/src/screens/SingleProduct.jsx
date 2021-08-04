@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-nested-ternary */
@@ -16,7 +17,7 @@ import { Heart, Equipement, Dimension } from '../utilities/svg';
 import 'react-medium-image-zoom/dist/styles.css';
 import { formatter } from '../helper/CurrencyFormat';
 import { detailProduct } from '../actions/productActions';
-import { incrementCount, decrementCount } from '../actions/cartAction';
+import { incrementCartItem, decrementCartItem, addItem } from '../actions/cartAction';
 
 export function SingleProduct() {
   const { id } = useParams();
@@ -26,6 +27,14 @@ export function SingleProduct() {
 
   const [selectedPhoto, setselectedPhoto] = useState(null);
   const { loading, error, product } = productDetail;
+
+  const quantity = () => {
+    const val = num.cartItem.find((el) => el._id === id);
+    if (val && val.quantity) {
+      return val.quantity;
+    }
+    return 0;
+  };
 
   useEffect(() => {
     dispatch(detailProduct(id));
@@ -79,12 +88,12 @@ export function SingleProduct() {
                     <Heart />
                     <Button>
                       {' '}
-                      Add to cart
-                      <span onClick={() => dispatch(incrementCount())}>
+                      <p onClick={() => dispatch(addItem(product))}> Add to cart</p>
+                      <span onClick={() => dispatch(incrementCartItem(product))}>
                         <PlusIcon />
                       </span>{' '}
-                      &nbsp; {num.count}
-                      <span onClick={() => dispatch(decrementCount())}>
+                      &nbsp; {quantity()}
+                      <span onClick={() => dispatch(decrementCartItem(product))}>
                         &nbsp;
                         <MinusIcon />
                       </span>
@@ -304,6 +313,15 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  p {
+    margin-bottom: 0;
+    &:hover {
+      border-bottom: 2px solid ${color.black};
+      padding-bottom: 0.125rem;
+      cursor: pointer;
+      color: ${color.black};
+    }
+  }
 `;
 
 const CartBtn = styled.div`
