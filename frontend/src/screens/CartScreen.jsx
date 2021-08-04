@@ -1,15 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import styled, { css } from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
 import { Header } from '../components';
 import shelf from '../utilities/svg/shelf.svg';
 import { color, shadow, rounded } from '../utilities';
+import { incrementCartItem, decrementCartItem } from '../actions/cartAction';
 
 export function CartScreen() {
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   const { cartItem } = cart;
 
@@ -30,11 +32,15 @@ export function CartScreen() {
                       </CarImg>
                       <p>{el.name}</p>
                       <IconWrapper>
-                        <AiOutlinePlusCircle />
+                        <span>
+                          <StyledPlusICon onClick={() => dispatch(incrementCartItem(el))} />
+                        </span>
                         &nbsp;
-                        <span>{el.quantity}</span>
+                        <Quantity>{el.quantity}</Quantity>
                         &nbsp;
-                        <AiOutlineMinusCircle />
+                        <span>
+                          <StyledMinusICon onClick={() => dispatch(decrementCartItem(el))} />
+                        </span>
                       </IconWrapper>
                       <p>$ {el.price}</p>
                       <IconTrash>
@@ -76,7 +82,7 @@ const Container = styled.div`
   margin-left: 10rem;
 `;
 
-//* SVG
+//* background SVG
 
 const IMG = styled.img`
   position: absolute;
@@ -99,11 +105,6 @@ const Wrapper = styled.div`
 
   z-index: 3;
   position: relative;
-
-  svg {
-    color: ${color.grey_700};
-    width: 2rem;
-  }
 `;
 
 //*  Card
@@ -113,7 +114,7 @@ const CartItem = styled.section`
 `;
 
 const Card = styled.div`
-  height: 5rem;
+  height: 7rem;
   padding: 1rem;
 `;
 
@@ -141,15 +142,33 @@ const CarImg = styled.div`
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
-  span {
-    font-size: 12px;
-    vertical-align: top;
-    color: ${color.grey_700};
-  }
+`;
+
+const styledIcons = css`
+  color: ${color.grey_700};
+  font-size: 1rem;
+`;
+
+const StyledPlusICon = styled(AiOutlinePlusCircle)`
+  ${styledIcons}
+`;
+
+const Quantity = styled.span`
+  font-size: 14px;
+  vertical-align: top;
+  color: ${color.grey_700};
+  padding: 0 0.5rem;
+`;
+
+const StyledMinusICon = styled(AiOutlineMinusCircle)`
+  ${styledIcons}
 `;
 
 const IconTrash = styled.div`
+  ${styledIcons}
   svg {
+    color: ${color.grey_700};
+
     &:hover {
       color: ${color.red_vivid_500};
     }

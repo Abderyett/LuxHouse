@@ -1,5 +1,14 @@
-import { INCREASE_CART_ITEM, DECREASE_CART_ITEM, ADD_TO_CART, TOGGLE_DROPDOWN } from '../../actions/types';
+import {
+  INCREASE_CART_ITEM,
+  DECREASE_CART_ITEM,
+  ADD_TO_CART,
+  TOGGLE_DROPDOWN,
+  INCREASE_CART_QUANTITY,
+  DECREASE_CART_QUANTITY,
+} from '../../actions/types';
 import { addCartItem } from '../../helper/addCartItem';
+import { incrementQty } from '../../helper/incrementCartQty';
+import { decrementQty } from '../../helper/decrementCartQty';
 
 export const cartReducer = (state = { count: 0, showDropdown: false, cartItem: [] }, action) => {
   switch (action.type) {
@@ -11,6 +20,10 @@ export const cartReducer = (state = { count: 0, showDropdown: false, cartItem: [
       return { ...state, showDropdown: !state.showDropdown };
     case ADD_TO_CART:
       return { ...state, cartItem: addCartItem(state.cartItem, action.payload) };
+    case INCREASE_CART_QUANTITY:
+      return { ...state, cartItem: incrementQty(state.cartItem, action.payload) };
+    case DECREASE_CART_QUANTITY:
+      return { ...state, cartItem: decrementQty(state.cartItem, action.payload) };
     default:
       return state;
   }
