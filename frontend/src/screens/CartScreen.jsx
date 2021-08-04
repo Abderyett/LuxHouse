@@ -185,6 +185,7 @@ const CheckoutWrapper = styled.div`
   border: 1px solid ${color.grey_400};
   padding: 1rem;
   margin: 1rem;
+  background-color: ${color.white};
 `;
 const CheckoutHeader = styled.h4`
   text-align: center;
