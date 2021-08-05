@@ -5,6 +5,7 @@ import {
   ADD_TO_CART,
   INCREASE_CART_QUANTITY,
   DECREASE_CART_QUANTITY,
+  REMOVE_FROM_CART,
 } from './types';
 
 export const incrementCount = () => (dispatch) => {
@@ -38,5 +39,12 @@ export const decrementCartItem = (cartItem) => (dispatch) => {
   dispatch({
     type: DECREASE_CART_QUANTITY,
     payload: cartItem,
+  });
+};
+
+export const removeItem = (id) => (dispatch) => {
+  dispatch({
+    type: REMOVE_FROM_CART,
+    payload: id,
   });
 };

@@ -17,7 +17,7 @@ export function CartDropdown() {
           <EmptyText>Your cart is empty</EmptyText>
         ) : (
           cartItem.map((el) => (
-            <Wrapper key={el.id}>
+            <Wrapper key={el._id}>
               <ImgWrapper>
                 <img src={el.image[0].url} alt={el.subcategory} />
               </ImgWrapper>

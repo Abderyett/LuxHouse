@@ -7,7 +7,7 @@ import { BsTrash } from 'react-icons/bs';
 import { Header } from '../components';
 import shelf from '../utilities/svg/shelf.svg';
 import { color, shadow, rounded } from '../utilities';
-import { decrementCartItem, incrementCartItem } from '../actions/cartAction';
+import { decrementCartItem, incrementCartItem, removeItem } from '../actions/cartAction';
 
 export function CartScreen() {
   const cart = useSelector((state) => state.cart);
@@ -43,7 +43,7 @@ export function CartScreen() {
                     </IconWrapper>
                     <p>$ {el.price}</p>
                     <IconTrash>
-                      <BsTrash />
+                      <BsTrash onClick={() => dispatch(removeItem(el._id))} />
                     </IconTrash>
                   </CardWrapper>
                 ))}
