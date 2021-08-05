@@ -8,6 +8,7 @@ import { Header } from '../components';
 import shelf from '../utilities/svg/shelf.svg';
 import { color, shadow, rounded } from '../utilities';
 import { decrementCartItem, incrementCartItem, removeItem } from '../actions/cartAction';
+import { formatter } from '../helper/CurrencyFormat';
 
 export function CartScreen() {
   const cart = useSelector((state) => state.cart);
@@ -41,7 +42,7 @@ export function CartScreen() {
                         <StyledMinusICon onClick={() => dispatch(decrementCartItem(el))} />
                       </span>
                     </IconWrapper>
-                    <p>$ {el.price}</p>
+                    <p> {formatter.format(el.price)}</p>
                     <IconTrash>
                       <BsTrash onClick={() => dispatch(removeItem(el._id))} />
                     </IconTrash>
@@ -51,8 +52,15 @@ export function CartScreen() {
           </CartItem>
           <CheckoutSection>
             <CheckoutWrapper>
-              <CheckoutHeader> Subtotal {cartItem.length} items</CheckoutHeader>
-              <TotalPrice>$399</TotalPrice>
+              <CheckoutHeader>
+                {' '}
+                Subtotal {cartItem === [] ? 0 : cartItem.reduce((acc, item) => acc + item.quantity, 0)} items
+              </CheckoutHeader>
+              <TotalPrice>
+                {formatter.format(
+                  cartItem === [] ? 0 : cartItem.reduce((acc, item) => acc + item.quantity * item.price, 0)
+                )}
+              </TotalPrice>
               <BtnWrapper>
                 <Btn to="/checkout">proceed to checkout</Btn>
               </BtnWrapper>

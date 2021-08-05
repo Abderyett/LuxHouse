@@ -6,11 +6,12 @@ import { color } from '../utilities';
 
 export function CartIcon() {
   const cart = useSelector((state) => state.cart);
+  const { cartItem } = cart;
 
   return (
     <Container>
       <StyledShoppingIcon />
-      <span>{cart.cartItem.length} </span>
+      <span>{cartItem === [] ? 0 : cartItem.reduce((acc, item) => acc + item.quantity, 0)} </span>
     </Container>
   );
 }

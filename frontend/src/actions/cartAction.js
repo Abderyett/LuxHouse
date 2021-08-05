@@ -6,6 +6,7 @@ import {
   INCREASE_CART_QUANTITY,
   DECREASE_CART_QUANTITY,
   REMOVE_FROM_CART,
+  TOTAL_CART,
 } from './types';
 
 export const incrementCount = () => (dispatch) => {

@@ -17,7 +17,7 @@ import { Heart, Equipement, Dimension } from '../utilities/svg';
 import 'react-medium-image-zoom/dist/styles.css';
 import { formatter } from '../helper/CurrencyFormat';
 import { detailProduct } from '../actions/productActions';
-import { incrementCartItem, decrementCartItem, addItem } from '../actions/cartAction';
+import { incrementCartItem, decrementCartItem } from '../actions/cartAction';
 
 export function SingleProduct() {
   const { id } = useParams();
