@@ -1,5 +1,5 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
-const mongoose = require('mongoose');
+
 const dotenv = require('dotenv');
 const colors = require('colors');
 const Order = require('./models/orderModel');

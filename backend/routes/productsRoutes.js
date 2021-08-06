@@ -1,6 +1,9 @@
 const express = require('express');
-const asyncHandler = require('express-async-handler');
-const Product = require('../models/productModel');
+
+const {
+  getPrducts,
+  getSingleProducts,
+} = require('../controllers/products.controller');
 
 const router = express.Router();
 
@@ -8,17 +11,11 @@ const router = express.Router();
 //* @route GET api/v1/products
 //* @access Public
 
-router.get(
-  '/',
-  asyncHandler(async (req, res) => {
-    const products = await Product.find({});
+router.route('/').get(getPrducts);
 
-    res.status(200).send(products);
-  })
-);
-//* @desc Fetch Single Category
-//* @route GET api/v1/products/categories
-//* @access Public
+// @desc Fetch Single Category
+//@route GET api/v1/products/categories
+// @access Public
 
 // router.get(
 //   '/category',
@@ -32,19 +29,6 @@ router.get(
 //* @route GET api/v1/products/:id
 //* @access Public
 
-router.get(
-  '/:id',
-  asyncHandler(async (req, res) => {
-    const products = await Product.findById(req.params.id);
-
-    if (!products) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'Cannot find this product',
-      });
-    }
-    res.status(200).json(products);
-  })
-);
+router.get('/:id', getSingleProducts);
 
 module.exports = router;
