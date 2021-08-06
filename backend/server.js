@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const productsRoutes = require('./routes/productsRoutes');
+const userRoutes = require('./routes/userRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 dotenv.config();
@@ -12,6 +13,7 @@ app.get('/', (req, res) => {
   res.send('Home page');
 });
 app.use('/api/v1/products', productsRoutes);
+app.use('/api/v1/users/login', userRoutes);
 
 app.use('*', notFound);
 
