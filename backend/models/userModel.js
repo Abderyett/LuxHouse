@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const bcrypt = require('bcryptjs');
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -14,6 +16,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, 'User must have password'],
+      select: false,
     },
     isAdmin: {
       type: Boolean,
@@ -23,6 +26,9 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+userSchema.methods.matchPassword = async function (entredPassword) {
+  return await bcrypt.compare(entredPassword, this.password);
+};
 
 const User = mongoose.model('User', userSchema);
 

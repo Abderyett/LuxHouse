@@ -8,12 +8,13 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 dotenv.config();
 const app = express();
 connectDB();
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Home page');
 });
 app.use('/api/v1/products', productsRoutes);
-app.use('/api/v1/users/login', userRoutes);
+app.use('/api/v1/user/login', userRoutes);
 
 app.use('*', notFound);
 
