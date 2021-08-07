@@ -29,8 +29,18 @@ exports.logUser = asyncHandler(async (req, res) => {
 //* @route GET api/v1/users/Profile
 //* @access Private
 
-exports.getUserProfile = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-  });
-};
+exports.getUserProfile = asyncHandler(async (req, res) => {
+  const profile = await User.findById(req.user);
+
+  if (profile) {
+    res.status(200).json({
+      _id: profile._id,
+      name: profile.name,
+      email: profile.email,
+      isAdmin: profile.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('user not found');
+  }
+});

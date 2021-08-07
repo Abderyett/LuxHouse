@@ -10,7 +10,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
-    console.log(token);
   }
   if (!token) {
     res.status(401);
@@ -21,9 +20,10 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
   try {
     const decoded = await jwt.verify(token, process.env.TOKEN_SECRET);
-    console.log(decoded);
+
+    req.user = decoded.id;
   } catch (error) {
-    console.log('cant decode the token');
+    console.log('Invalid token');
   }
 
   //* 3- Check if user still exist
