@@ -3,7 +3,7 @@ const { generateToken } = require('../utils/generateJwt');
 const User = require('../models/userModel');
 
 //* @desc Auth user/Get Token
-//* @route GET api/v1/users/login
+//* @route POST api/v1/users/login
 //* @access Public
 exports.logUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -24,3 +24,13 @@ exports.logUser = asyncHandler(async (req, res) => {
     throw new Error('Invalid email or password');
   }
 });
+
+//* @desc Get profile
+//* @route GET api/v1/users/Profile
+//* @access Private
+
+exports.getUserProfile = (req, res) => {
+  res.status(200).json({
+    status: 'success',
+  });
+};

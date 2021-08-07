@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
   res.send('Home page');
 });
 app.use('/api/v1/products', productsRoutes);
-app.use('/api/v1/user/login', userRoutes);
+app.use('/api/v1/user', userRoutes);
 
 app.use('*', notFound);
 
