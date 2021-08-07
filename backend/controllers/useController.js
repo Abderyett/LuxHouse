@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
-
+const { generateToken } = require('../utils/generateJwt');
 const User = require('../models/userModel');
+
 //* @desc Auth user/Get Token
 //* @route GET api/v1/users/login
 //* @access Public
@@ -16,7 +17,7 @@ exports.logUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: null,
+      token: generateToken(user._id),
     });
   } else {
     res.status(401);
