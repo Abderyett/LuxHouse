@@ -16,19 +16,15 @@ export function RegisterScreen() {
         <FromContainer>
           <Wrap>
             <Formik
-              initialValues={{ email: '', FirstName: '', LastName: '', password: '' }}
+              initialValues={{ email: '', name: '', password: '' }}
               validationSchema={Yup.object({
                 email: Yup.string()
                   .email('Please enter valide email adress')
                   .required('Please enter your email adrress'),
-                FirstName: Yup.string()
+                name: Yup.string()
                   .min(2, 'Must at least 2 characters long.')
                   .max(255, 'Name Must less than 255 characters')
                   .required('Please enter your First Name'),
-                LastName: Yup.string()
-                  .min(2, 'Must at least 2 characters long.')
-                  .max(255, 'Name Must less than 255 characters')
-                  .required('Please enter your Last Name'),
 
                 password: Yup.string()
                   .required('Please enter password')
@@ -52,30 +48,18 @@ export function RegisterScreen() {
                   </TextHeading>
                   <InputWrapper>
                     <Input
-                      error={touched.FirstName && errors.FirstName}
-                      id="firstName"
+                      error={touched.name && errors.name}
+                      id="name"
                       type="text"
-                      name="FirstName"
+                      name="name"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.FirstName}
-                      placeholder="Your First name"
+                      value={values.name}
+                      placeholder="Your name"
                     />
-                    <Error touched={touched.FirstName} message={errors.FirstName} />
+                    <Error touched={touched.name} message={errors.name} />
                   </InputWrapper>
-                  <InputWrapper>
-                    <Input
-                      error={touched.LastName && errors.LastName}
-                      id="LastName"
-                      type="text"
-                      name="LastName"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.LastName}
-                      placeholder="Your Last name"
-                    />
-                    <Error touched={touched.LastName} message={errors.LastName} />
-                  </InputWrapper>
+
                   <InputWrapper>
                     <Input
                       error={touched.email && errors.email}
@@ -193,6 +177,7 @@ const SubmitBtn = styled.button`
   font-size: 1.2rem;
   font-family: 'avenir_semi';
   cursor: pointer;
+  margin-top: 1.5rem;
   &:hover {
     background-color: ${color.white};
   }

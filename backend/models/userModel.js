@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema(
       required: [true, 'User must have password'],
       select: false,
     },
+
     isAdmin: {
       type: Boolean,
       required: true,
@@ -31,7 +32,7 @@ userSchema.methods.matchPassword = async function (entredPassword) {
 };
 
 userSchema.pre('save', async function (next) {
-  //we check if the password has not been updated to not hash it again
+  // only hash the password if it has been modified (or is new)
   if (!this.isModified('password')) {
     next();
   }
