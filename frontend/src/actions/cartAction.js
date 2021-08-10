@@ -6,6 +6,7 @@ import {
   INCREASE_CART_QUANTITY,
   DECREASE_CART_QUANTITY,
   REMOVE_FROM_CART,
+  TOGGLE_PROFILE_DROPDOWN,
 } from './types';
 
 export const incrementCount = () => (dispatch, getState) => {
@@ -54,4 +55,10 @@ export const removeItem = (id) => (dispatch, getState) => {
     payload: id,
   });
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItem));
+};
+
+export const toggleProfileDropdown = () => (dispatch) => {
+  dispatch({
+    type: TOGGLE_PROFILE_DROPDOWN,
+  });
 };

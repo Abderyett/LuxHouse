@@ -19,13 +19,17 @@ export const logUser = (email, password) => async (dispatch) => {
       payload: data,
     });
     localStorage.setItem('userInfo', JSON.stringify(data));
-    dispatch({
-      type: USER_LOGOUT,
-    });
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
+};
+
+export const logOut = () => (dispatch) => {
+  dispatch({
+    type: USER_LOGOUT,
+  });
+  localStorage.setItem('userInfo', JSON.stringify({}));
 };
