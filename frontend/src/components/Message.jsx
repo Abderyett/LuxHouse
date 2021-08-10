@@ -13,12 +13,13 @@ const Alert = styled.div`
   background-color: ${({ bg }) =>
     bg === 'danger' ? `${color.red_100}` : bg === 'success' ? `${color.green_200}` : `${color.blue_200}`};
   margin: 0 auto;
-  width: 80vw;
+  width: 100%;
   margin-top: 4rem;
   border-radius: ${rounded.md};
   color: ${({ bg }) =>
     bg === 'danger' ? `${color.red_400}` : bg === 'success' ? `${color.green_600}` : `${color.blue_500}`};
-  padding: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 3rem;
 `;
 
 Message.propTypes = {

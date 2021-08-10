@@ -3,6 +3,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
+
 import { Error, Header, Footer } from '../components';
 import { color, shadow, rounded } from '../utilities';
 
@@ -89,7 +90,7 @@ export function RegisterScreen() {
 
                   <ButtonWrapper>
                     <SubmitBtn className="submit-btn" type="submit" disabled={isSubmitting}>
-                      sign in
+                      register
                     </SubmitBtn>
                   </ButtonWrapper>
                 </form>

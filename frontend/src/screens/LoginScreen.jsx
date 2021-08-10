@@ -1,16 +1,27 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled, { css } from 'styled-components';
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
-import { Error, Header } from '../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { Error, Header, Message, Loader } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import pendantLamp from '../utilities/svg/pendant_lamp.svg';
 import sofa from '../utilities/svg/sofa.svg';
+import { logUser } from '../actions/userActions';
 
 export function LoginScreen() {
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const history = useHistory();
+  const { error, loading, userInfo } = userLogin;
+  useEffect(() => {
+    if (userInfo) {
+      history.push('/products');
+    }
+  }, [userInfo]);
   return (
     <>
       <Header />
@@ -29,8 +40,12 @@ export function LoginScreen() {
             </SubmitBtn>
           </RgisterWrapper>
         </RegisterContainer>
+
+        {/* LOGIN SECTION */}
+        {loading && <Loader />}
         <FromContainer>
           <Wrap>
+            {error && <Message bg="danger">{error}</Message>}
             <Formik
               initialValues={{ email: '', password: '' }}
               validationSchema={Yup.object({
@@ -46,7 +61,7 @@ export function LoginScreen() {
               onSubmit={(values, { resetForm, setSubmitting }) => {
                 setSubmitting(true);
                 setTimeout(() => {
-                  alert(JSON.stringify(values), null, 2);
+                  dispatch(logUser(values.email, values.password));
                   resetForm();
                   setSubmitting(false);
                 }, 1000);

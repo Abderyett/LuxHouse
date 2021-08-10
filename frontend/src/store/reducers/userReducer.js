@@ -1,6 +1,6 @@
 const { USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGOUT } = require('../../actions/types');
 
-export const loginReducer = (state = {}, action) => {
+export const loginReducer = (state = { userInfo: {} }, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { ...state, loading: true };
