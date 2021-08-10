@@ -9,23 +9,10 @@ import {
   TOGGLE_PROFILE_DROPDOWN,
 } from './types';
 
-export const incrementCount = () => (dispatch, getState) => {
-  dispatch({
-    type: INCREASE_CART_ITEM,
-  });
-  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItem));
-};
-export const decrementCount = () => (dispatch, getState) => {
-  dispatch({
-    type: DECREASE_CART_ITEM,
-  });
-  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItem));
-};
-export const toggleCart = () => (dispatch, getState) => {
+export const toggleCart = () => (dispatch) => {
   dispatch({
     type: TOGGLE_DROPDOWN,
   });
-  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItem));
 };
 
 export const addItem = (item) => (dispatch, getState) => {
@@ -33,18 +20,18 @@ export const addItem = (item) => (dispatch, getState) => {
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItem));
 };
 
-export const incrementCartItem = (cartItem, getState) => (dispatch) => {
+export const incrementCartItem = (item) => (dispatch, getState) => {
   dispatch({
     type: INCREASE_CART_QUANTITY,
-    payload: cartItem,
+    payload: item,
   });
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItem));
 };
 
-export const decrementCartItem = (cartItem, getState) => (dispatch) => {
+export const decrementCartItem = (item) => (dispatch, getState) => {
   dispatch({
     type: DECREASE_CART_QUANTITY,
-    payload: cartItem,
+    payload: item,
   });
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItem));
 };
