@@ -5,9 +5,11 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiHeart, FiUser } from 'react-icons/fi';
 import { HiX } from 'react-icons/hi';
-import { RiArrowDropRightLine } from 'react-icons/ri';
+import { RiArrowDropRightLine, RiUserReceivedLine } from 'react-icons/ri';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { BsCaretDownFill } from 'react-icons/bs';
+import { CgProfile, CgLogOut } from 'react-icons/cg';
 import { Menu } from '../utilities/svg';
 import { shadow, color } from '../utilities';
 import { CartIcon } from './CartIcon';
@@ -82,11 +84,28 @@ export function Header() {
                   <ProfileDropdown>
                     {userInfo ? (
                       <>
-                        <ProfileLink to="profile">Profile</ProfileLink>
-                        <div onClick={() => dispatch(logOut())}>Logout</div>
+                        <ProfileLink to="profile">
+                          {' '}
+                          <span>
+                            <CgProfile />
+                          </span>
+                          Profile
+                        </ProfileLink>
+                        <button type="button" onClick={() => dispatch(logOut())}>
+                          <span>
+                            <CgLogOut />
+                          </span>
+                          Logout
+                        </button>
                       </>
                     ) : (
-                      <ProfileLink to="login">Login</ProfileLink>
+                      <ProfileLink to="login">
+                        {' '}
+                        <span>
+                          <RiUserReceivedLine />
+                        </span>
+                        Login
+                      </ProfileLink>
                     )}
                   </ProfileDropdown>
                 )}
@@ -191,16 +210,27 @@ const ProfileDropdown = styled.div`
   padding: 1rem;
   position: fixed;
   top: 4.5rem;
-  box-shadow:${shadow.xxl}
+  box-shadow: ${shadow.xxl};
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
   &:hover {
     color: ${color.grey_800};
   }
 
-  div {
-    padding: 1rem 0;
+  button {
     cursor: pointer;
     color: ${color.black};
+    background-color: transparent;
+    font-size: 1rem;
+    margin-top: 1rem;
+    padding-left: 0;
+    span {
+      svg {
+        vertical-align: middle;
+      }
+    }
     &:hover {
       color: ${color.grey_600};
     }
@@ -215,7 +245,6 @@ const StyledArrowDropdown = styled(BsCaretDownFill)`
 `;
 
 const ProfileLink = styled(Link)`
-  padding: 2rem 0;
   cursor: pointer;
   color: ${color.black};
 

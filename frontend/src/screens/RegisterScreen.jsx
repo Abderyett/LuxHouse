@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
@@ -13,22 +13,32 @@ import { registringUser } from '../actions/userActions';
 export function RegisterScreen() {
   const dispatch = useDispatch();
   const registerUser = useSelector((state) => state.registerUser);
+  const [showMessage, setShowMessage] = useState(false);
   const history = useHistory();
   const { loading, error, userInfo } = registerUser;
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     history.push('/products');
-  //   }
-  // }, [userInfo]);
+  console.log('userInfo', userInfo);
+
+  useEffect(() => {
+    let timerId;
+    if (error) {
+      setShowMessage(true);
+      timerId = setTimeout(() => {
+        setShowMessage(false);
+      }, 5000);
+    }
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [error]);
 
   return (
     <>
       <Header />
       <Container>
-        {loading && <Loader />}
         <FromContainer>
           <Wrap>
-            {error && <Message bg="danger">{error}</Message>}
+            {loading && <Loader />}
+            {showMessage ? <Message bg="danger">{error}</Message> : null}
             <Formik
               initialValues={{ email: '', name: '', password: '', confirmPassword: '' }}
               validationSchema={Yup.object({
@@ -53,7 +63,7 @@ export function RegisterScreen() {
               onSubmit={(values, { resetForm, setSubmitting }) => {
                 setSubmitting(true);
                 dispatch(registringUser(values.name, values.email, values.password));
-
+                history.push('/products');
                 resetForm();
                 setSubmitting(false);
               }}

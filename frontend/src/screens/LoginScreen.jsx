@@ -36,7 +36,7 @@ export function LoginScreen() {
             </p>
 
             <SubmitBtn className="submit-btn" type="submit">
-              <Link to="/register">CREATE AN ACCOUNT</Link>
+              {userInfo ? <Link to="/">You already registered</Link> : <Link to="/register">CREATE AN ACCOUNT</Link>}
             </SubmitBtn>
           </RgisterWrapper>
         </RegisterContainer>
