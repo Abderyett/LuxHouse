@@ -23,7 +23,6 @@ export function Header() {
   const { showDropdown, toggleProfileDropDown } = toggleDropdown;
 
   const { userInfo } = userLogin;
-  console.log(userInfo);
 
   return (
     <>

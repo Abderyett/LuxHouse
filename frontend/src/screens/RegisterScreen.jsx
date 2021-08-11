@@ -1,23 +1,36 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
-
-import { Error, Header, Footer } from '../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { Error, Header, Footer, Message, Loader } from '../components';
 import { color, shadow, rounded } from '../utilities';
-
 import registerSofa from '../utilities/svg/RegisterSofa.svg';
+import { registringUser } from '../actions/userActions';
 
 export function RegisterScreen() {
+  const dispatch = useDispatch();
+  const registerUser = useSelector((state) => state.registerUser);
+  const history = useHistory();
+  const { loading, error, userInfo } = registerUser;
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     history.push('/products');
+  //   }
+  // }, [userInfo]);
+
   return (
     <>
       <Header />
       <Container>
+        {loading && <Loader />}
         <FromContainer>
           <Wrap>
+            {error && <Message bg="danger">{error}</Message>}
             <Formik
-              initialValues={{ email: '', name: '', password: '' }}
+              initialValues={{ email: '', name: '', password: '', confirmPassword: '' }}
               validationSchema={Yup.object({
                 email: Yup.string()
                   .email('Please enter valide email adress')
@@ -31,14 +44,18 @@ export function RegisterScreen() {
                   .required('Please enter password')
                   .min(5, 'Must at least 5 characters long.')
                   .max(255, 'Name Must less than 255 characters'),
+                confirmPassword: Yup.string()
+                  .required('Please confirm password')
+                  .min(5, 'Must at least 5 characters long.')
+                  .max(255, 'Name Must less than 255 characters')
+                  .oneOf([Yup.ref('password'), null], 'Passwords must match'),
               })}
               onSubmit={(values, { resetForm, setSubmitting }) => {
                 setSubmitting(true);
-                setTimeout(() => {
-                  alert(JSON.stringify(values), null, 2);
-                  resetForm();
-                  setSubmitting(false);
-                }, 1000);
+                dispatch(registringUser(values.name, values.email, values.password));
+
+                resetForm();
+                setSubmitting(false);
               }}
             >
               {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
@@ -86,6 +103,19 @@ export function RegisterScreen() {
                       placeholder="Your password"
                     />
                     <Error touched={touched.password} message={errors.password} />
+                  </InputWrapper>
+                  <InputWrapper className="password-input">
+                    <Input
+                      error={touched.confirmPassword && errors.confirmPassword}
+                      id="confirmPassword"
+                      type="password"
+                      name="confirmPassword"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.confirmPassword}
+                      placeholder="Confirm  password"
+                    />
+                    <Error touched={touched.confirmPassword} message={errors.confirmPassword} />
                   </InputWrapper>
 
                   <ButtonWrapper>

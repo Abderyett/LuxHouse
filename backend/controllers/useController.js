@@ -46,7 +46,7 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
 });
 
 //* @desc Create User
-//* @route POST api/v1/users
+//* @route POST api/v1/users/register
 //* @access Public
 
 exports.registerUser = asyncHandler(async (req, res) => {

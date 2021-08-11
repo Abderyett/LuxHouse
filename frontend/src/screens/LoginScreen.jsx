@@ -60,11 +60,10 @@ export function LoginScreen() {
               })}
               onSubmit={(values, { resetForm, setSubmitting }) => {
                 setSubmitting(true);
-                setTimeout(() => {
-                  dispatch(logUser(values.email, values.password));
-                  resetForm();
-                  setSubmitting(false);
-                }, 1000);
+
+                dispatch(logUser(values.email, values.password));
+                resetForm();
+                setSubmitting(false);
               }}
             >
               {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
