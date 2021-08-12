@@ -25,26 +25,6 @@ exports.logUser = asyncHandler(async (req, res) => {
   }
 });
 
-//* @desc Get profile
-//* @route GET api/v1/users/Profile
-//* @access Private
-
-exports.getUserProfile = asyncHandler(async (req, res) => {
-  const profile = await User.findById(req.user);
-
-  if (profile) {
-    res.status(200).json({
-      _id: profile._id,
-      name: profile.name,
-      email: profile.email,
-      isAdmin: profile.isAdmin,
-    });
-  } else {
-    res.status(404);
-    throw new Error('User already exist');
-  }
-});
-
 //* @desc Create User
 //* @route POST api/v1/users/register
 //* @access Public
@@ -69,5 +49,57 @@ exports.registerUser = asyncHandler(async (req, res) => {
   } else {
     res.status(400);
     throw new Error('Invalid data');
+  }
+});
+
+//* @desc Get profile
+//* @route GET api/v1/users/Profile
+//* @access Private
+
+exports.getUserProfile = asyncHandler(async (req, res) => {
+  const profile = await User.findById(req.user);
+
+  if (profile) {
+    res.status(200).json({
+      _id: profile._id,
+      name: profile.name,
+      email: profile.email,
+      isAdmin: profile.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User already exist');
+  }
+});
+
+//* @desc Update User
+//* @route POST api/v1/users/register
+//* @access Public
+
+exports.updateUserProfile = asyncHandler(async (req, res) => {
+  //* 1-  We find user by ID attached by token in req
+  const user = await User.findById(req.user);
+  //* 2- Verify if there is user and update it
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    //* 3-  Save and send updated user info to the frontend
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      status: 'success',
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token: generateToken(updatedUser._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error('User Not found');
   }
 });

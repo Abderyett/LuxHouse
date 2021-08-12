@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -15,6 +15,7 @@ import { logUser } from '../actions/userActions';
 export function LoginScreen() {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
+  const [showMessage, setShowMessage] = useState(false);
   const history = useHistory();
   const { error, loading, userInfo } = userLogin;
   useEffect(() => {
@@ -22,6 +23,18 @@ export function LoginScreen() {
       history.push('/products');
     }
   }, [userInfo]);
+  useEffect(() => {
+    let timerId;
+    if (error) {
+      setShowMessage(true);
+      timerId = setTimeout(() => {
+        setShowMessage(false);
+      }, 5000);
+    }
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [error]);
   return (
     <>
       <Header />
@@ -42,10 +55,10 @@ export function LoginScreen() {
         </RegisterContainer>
 
         {/* LOGIN SECTION */}
-        {loading && <Loader />}
         <FromContainer>
           <Wrap>
-            {error && <Message bg="danger">{error}</Message>}
+            {loading && <Loader />}
+            {showMessage && <Message bg="danger">{error}</Message>}
             <Formik
               initialValues={{ email: '', password: '' }}
               validationSchema={Yup.object({
