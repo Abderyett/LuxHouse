@@ -9,6 +9,7 @@ import {
   ProductsScreen,
   SingleProduct,
   CartScreen,
+  ProfileScreen,
 } from './screens';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/products" exact component={ProductsScreen} />
         <Route path="/products/:id" exact component={SingleProduct} />
         <Route path="/cart" exact component={CartScreen} />
+        <Route path="/profile" exact component={ProfileScreen} />
       </Switch>
 
       <GlobalStyle />

@@ -5,3 +5,4 @@ export * from './ContactScreen';
 export * from './ProductsScreen';
 export * from './SingleProduct';
 export * from './CartScreen';
+export * from './ProfileScreen';

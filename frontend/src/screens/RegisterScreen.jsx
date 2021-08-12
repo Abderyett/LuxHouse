@@ -48,7 +48,7 @@ export function RegisterScreen() {
                 name: Yup.string()
                   .min(2, 'Must at least 2 characters long.')
                   .max(255, 'Name Must less than 255 characters')
-                  .required('Please enter your First Name'),
+                  .required('Please enter your Name'),
 
                 password: Yup.string()
                   .required('Please enter password')
