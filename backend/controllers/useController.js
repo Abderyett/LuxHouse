@@ -68,12 +68,12 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(404);
-    throw new Error('User already exist');
+    throw new Error("User Profile Doesn't exist");
   }
 });
 
 //* @desc Update User
-//* @route POST api/v1/users/register
+//* @route PUT api/v1/users/Porfile
 //* @access Public
 
 exports.updateUserProfile = asyncHandler(async (req, res) => {

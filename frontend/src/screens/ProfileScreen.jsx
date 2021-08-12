@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Header, Error } from '../components';
 import { color, rounded, shadow } from '../utilities';
 
 export function ProfileScreen() {
   const userLogin = useSelector((state) => state.userLogin);
-  const { email, name } = userLogin.userInfo;
+  const { userInfo } = userLogin;
+  const history = useHistory();
 
-  const currentValues = {
-    email,
-    name,
-    password: '',
-    confirmPassword: '',
-  };
+  let currentValues;
+  if (userInfo) {
+    currentValues = { email: userInfo.email, name: userInfo.name, password: '', confirmPassword: '' };
+  } else {
+    currentValues = { email: '', name: '', password: '', confirmPassword: '' };
+  }
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login');
+    }
+  }, [userInfo]);
 
   return (
     <>
