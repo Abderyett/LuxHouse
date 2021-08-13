@@ -44,7 +44,7 @@ export const registerReducer = (state = { userInfo: {} }, action) => {
   }
 };
 
-export const userDetailsReducer = (state = { user: {} }, action) => {
+export const userDetailsReducer = (state = { user: {}, error: '' }, action) => {
   switch (action.type) {
     case USER_PROFILE_DETAILS_REQUEST:
       return { ...state, loading: true };

@@ -7,6 +7,9 @@ const User = require('../models/userModel');
 //* @access Public
 exports.logUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  if (!email || !password) {
+    throw new Error('Please Provide Email and Password');
+  }
 
   const user = await User.findOne({ email }).select('+password');
 
