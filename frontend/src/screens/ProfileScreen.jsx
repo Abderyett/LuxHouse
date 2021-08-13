@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Header, Error, Message } from '../components';
 import { color, rounded, shadow } from '../utilities';
-import { getUserDetails } from '../actions/userActions';
+import { getUserDetails, updateUserProfile } from '../actions/userActions';
 
 export function ProfileScreen() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -51,18 +51,20 @@ export function ProfileScreen() {
                   .required('Please enter your Name'),
 
                 password: Yup.string()
-                  .required('Please enter password')
+
                   .min(5, 'Must at least 5 characters long.')
                   .max(255, 'Name Must less than 255 characters'),
                 confirmPassword: Yup.string()
-                  .required('Please confirm password')
+
                   .min(5, 'Must at least 5 characters long.')
                   .max(255, 'Name Must less than 255 characters')
                   .oneOf([Yup.ref('password'), null], 'Passwords must match'),
               })}
               onSubmit={(values, { resetForm, setSubmitting }) => {
                 setSubmitting(true);
-
+                dispatch(
+                  updateUserProfile({ _id: user.id, name: values.name, email: values.email, password: values.apssword })
+                );
                 resetForm();
                 setSubmitting(false);
               }}
