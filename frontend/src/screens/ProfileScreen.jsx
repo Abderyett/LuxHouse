@@ -11,15 +11,17 @@ import { getUserDetails, updateUserProfile } from '../actions/userActions';
 export function ProfileScreen() {
   const userLogin = useSelector((state) => state.userLogin);
   const userDetails = useSelector((state) => state.userDetails);
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
   const { user, error } = userDetails;
-  console.log(userDetails);
+
   const { userInfo } = userLogin;
   const history = useHistory();
   const dispatch = useDispatch();
 
   let currentValues;
   if (userInfo) {
-    currentValues = { email: userInfo.email, name: userInfo.name, password: '', confirmPassword: '' };
+    currentValues = { email: user.email, name: user.name, password: '', confirmPassword: '' };
   } else {
     currentValues = { email: '', name: '', password: '', confirmPassword: '' };
   }
@@ -29,7 +31,7 @@ export function ProfileScreen() {
     } else {
       dispatch(getUserDetails('profile'));
     }
-  }, [userInfo, history]);
+  }, [success, userInfo]);
 
   return (
     <>
@@ -63,7 +65,7 @@ export function ProfileScreen() {
               onSubmit={(values, { resetForm, setSubmitting }) => {
                 setSubmitting(true);
                 dispatch(
-                  updateUserProfile({ _id: user.id, name: values.name, email: values.email, password: values.apssword })
+                  updateUserProfile({ _id: user.id, name: values.name, email: values.email, password: values.password })
                 );
                 resetForm();
                 setSubmitting(false);
@@ -130,7 +132,7 @@ export function ProfileScreen() {
 
                   <ButtonWrapper>
                     <SubmitBtn className="submit-btn" type="submit" disabled={isSubmitting}>
-                      Submit
+                      Update
                     </SubmitBtn>
                   </ButtonWrapper>
                 </form>
