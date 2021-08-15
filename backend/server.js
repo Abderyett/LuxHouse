@@ -4,6 +4,7 @@ const connectDB = require('./config/db');
 const productsRoutes = require('./routes/productsRoutes');
 const userRoutes = require('./routes/userRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+require('./utils/init-redis');
 
 dotenv.config();
 const app = express();
