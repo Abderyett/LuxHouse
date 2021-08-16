@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const { generateToken } = require('../utils/generateJwt');
 const User = require('../models/userModel');
+const redisClient = require('../utils/init-redis');
 
 //* @desc Auth user/Get Token
 //* @route POST api/v1/users/login
@@ -12,8 +13,14 @@ exports.logUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.findOne({ email }).select('+password');
-
   if (user && (await user.matchPassword(password))) {
+    const { id } = user;
+    const token = generateToken(id);
+    redisClient.SET(id, token, 'EX', 2 * 24 * 60 * 60, (err, reply) => {
+      if (err || !reply) {
+        console.log(err.message);
+      }
+    });
     res.status(200).json({
       status: 'success',
       _id: user._id,
@@ -41,6 +48,13 @@ exports.registerUser = asyncHandler(async (req, res) => {
   }
   const user = await User.create({ name, email, password });
   if (user) {
+    const { id } = user;
+    const token = generateToken(id);
+    redisClient.SET(id, token, 'EX', 2 * 24 * 60 * 60, (err, reply) => {
+      if (err || !reply) {
+        console.log(err.message);
+      }
+    });
     res.status(200).json({
       status: 'success',
       _id: user._id,
@@ -92,7 +106,13 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
     //* 3-  Save and send updated user info to the frontend
 
     const updatedUser = await user.save();
-
+    const { id } = updatedUser;
+    const token = generateToken(id);
+    redisClient.SET(id, token, (err, reply) => {
+      if (err || !reply) {
+        console.log(err.message);
+      }
+    });
     res.status(200).json({
       _id: updatedUser._id,
       name: updatedUser.name,

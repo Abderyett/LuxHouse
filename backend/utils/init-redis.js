@@ -1,21 +1,23 @@
 const redis = require('redis');
 
-const client = redis.createClient({
-  port: 6379,
-  host: '127.0.0.1',
+const redisClient = redis.createClient({
+  port: 14448,
+  host: 'redis-14448.c78.eu-west-1-2.ec2.cloud.redislabs.com',
+
+  password: process.env.REDIS_PASS,
 });
 
-client.on('connect', () =>
+redisClient.on('connect', () =>
   console.log('Client connected to redis...'.green.inverse)
 );
-client.on('ready', () =>
+redisClient.on('ready', () =>
   console.log('Client connected to redis and ready...'.brightMagenta.inverse)
 );
-client.on('end', () =>
+redisClient.on('end', () =>
   console.log('Client cdisconnect from redis...'.red.inverse)
 );
-client.on('error', (err) => console.log(err.message.red.inverse));
+redisClient.on('error', (err) => console.log(err.message.red.inverse));
 
-process.on('SIGINT', () => client.quit());
+// process.on('SIGINT', () => redisClient.quit());
 
-module.exports = client;
+module.exports = redisClient;
