@@ -8,6 +8,8 @@ const User = require('./models/userModel');
 const connectDB = require('./config/db');
 const products = require('./data/products.json');
 const users = require('./data/user');
+const countries = require('./data/countries.json');
+const Countries = require('./models/countriesModel');
 
 dotenv.config();
 connectDB();
@@ -17,6 +19,7 @@ const importData = async () => {
     await Order.deleteMany();
     await Product.deleteMany();
     await User.deleteMany();
+    await Countries.deleteMany();
     const createdUsers = await User.insertMany(users);
 
     const adminUser = createdUsers[0]._id;
@@ -27,7 +30,9 @@ const importData = async () => {
     }));
 
     await Product.insertMany(newProducts);
+    await Countries.insertMany(countries);
     console.log('Data imported!'.green.inverse);
+
     process.exit();
   } catch (error) {
     console.log(`${error}`.red.inverse);
