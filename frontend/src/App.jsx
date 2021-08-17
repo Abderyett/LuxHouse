@@ -10,6 +10,7 @@ import {
   SingleProduct,
   CartScreen,
   ProfileScreen,
+  CheckoutScreen,
 } from './screens';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/products/:id" exact component={SingleProduct} />
         <Route path="/cart" exact component={CartScreen} />
         <Route path="/profile" exact component={ProfileScreen} />
+        <Route path="/checkout" exact component={CheckoutScreen} />
       </Switch>
 
       <GlobalStyle />
