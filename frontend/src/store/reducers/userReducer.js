@@ -12,6 +12,7 @@ const {
   USER_PROFILE_DETAILS_REQUEST,
   USER_PROFILE_DETAILS_SUCCESS,
   USER_PROFILE_DETAILS_FAIL,
+  USER_PROFILE_DETAILS_CLEAR,
 } = require('../../actions/types');
 
 export const loginReducer = (state = { userInfo: {} }, action) => {
@@ -49,9 +50,11 @@ export const userDetailsReducer = (state = { user: {}, error: '' }, action) => {
     case USER_PROFILE_DETAILS_REQUEST:
       return { ...state, loading: true };
     case USER_PROFILE_DETAILS_SUCCESS:
-      return { ...state, loading: false, user: action.payload };
+      return { ...state, loading: false, user: action.payload, error: '' };
     case USER_PROFILE_DETAILS_FAIL:
       return { ...state, loading: false, error: action.payload };
+    case USER_PROFILE_DETAILS_CLEAR:
+      return { user: {}, error: '' };
 
     default:
       return state;

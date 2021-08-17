@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiHeart, FiUser } from 'react-icons/fi';
@@ -15,16 +15,22 @@ import { shadow, color } from '../utilities';
 import { CartIcon } from './CartIcon';
 import { CartDropdown } from './CartDropdown';
 import { toggleCart, toggleProfileDropdown } from '../actions/cartAction';
-import { logOut } from '../actions/userActions';
+import { logOut, getUserDetails } from '../actions/userActions';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const toggleDropdown = useSelector((state) => state.cart);
   const userLogin = useSelector((state) => state.userLogin);
+  const userDetails = useSelector((state) => state.userDetails);
   const { showDropdown, toggleProfileDropDown } = toggleDropdown;
 
   const { userInfo } = userLogin;
+  const { user } = userDetails;
+
+  useEffect(() => {
+    dispatch(getUserDetails('profile'));
+  }, [userInfo, dispatch]);
 
   return (
     <>
@@ -75,7 +81,7 @@ export function Header() {
               <Account onClick={() => dispatch(toggleProfileDropdown())}>
                 <span>
                   <FiUser />
-                  {userInfo && userInfo.name ? userInfo.name : 'Account'}
+                  {user && user.name ? user.name : 'Account'}
                 </span>
 
                 <StyledArrowDropdown />
