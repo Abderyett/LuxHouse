@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { FaSort } from 'react-icons/fa';
 import { Header, Error } from '../components';
 import { color, shadow, rounded } from '../utilities';
 
 export function CheckoutScreen() {
   const [countries, setCountries] = useState(null);
+  const [showCountry, setShowCountry] = useState(false);
+  const [countryName, setCountryName] = useState();
+  const [flagUrl, setFlagUrl] = useState('');
+
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
   const { user } = userDetails;
@@ -31,6 +36,12 @@ export function CheckoutScreen() {
   useEffect(() => {
     getCountries();
   }, []);
+
+  const selectedCountry = (event) => {
+    setCountryName(event.target.textContent);
+    setFlagUrl(event.target.firstChild.src);
+  };
+
   return (
     <>
       <Header />
@@ -38,6 +49,33 @@ export function CheckoutScreen() {
         <FirstHeading>Shipping Adress</FirstHeading>
         <Line />
         <Wrap>
+          <Country onClick={() => setShowCountry(!showCountry)}>
+            {countryName ? (
+              <Selected>
+                <span>
+                  <img src={flagUrl} alt={countryName} />
+                  {countryName}
+                </span>
+              </Selected>
+            ) : (
+              <Text>Select country</Text>
+            )}
+            <Arrow />
+            {showCountry && (
+              <CountryWrapper>
+                {countries &&
+                  countries.map((country) => (
+                    <ImgWrapper onClick={selectedCountry}>
+                      <span>
+                        <img src={country.flag} alt={country.name} />
+
+                        {country.name}
+                      </span>
+                    </ImgWrapper>
+                  ))}
+              </CountryWrapper>
+            )}
+          </Country>
           <Formik
             initialValues={{ country: '', state: '', street: '', postalCode: '' }}
             validationSchema={Yup.object({
@@ -55,7 +93,7 @@ export function CheckoutScreen() {
           >
             {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
               <form autoComplete="off" onSubmit={handleSubmit}>
-                <InputWrapper>
+                {/* <InputWrapper>
                   <StyledField
                     as="select"
                     id="country"
@@ -64,12 +102,11 @@ export function CheckoutScreen() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.name}
-                    placeholder="Your name"
                   >
-                    {countries && countries.map((country) => <p>{country.name}</p>)}
+                    {countries && countries.map((country) => <option>{country.name}</option>)}
                   </StyledField>
                   <Error touched={touched.name} message={errors.name} />
-                </InputWrapper>
+                </InputWrapper> */}
 
                 <InputWrapper>
                   <Input
@@ -153,55 +190,100 @@ const Wrap = styled.div`
 `;
 
 const InputWrapper = styled.div``;
+
+const styledInput = css`
+  border-radius: ${rounded.md};
+  height: 3rem;
+  width: 30rem;
+  max-width: 30rem;
+  text-indent: 5%;
+  font-size: 1.2rem;
+  color: ${color.grey_800};
+  font-family: 'avenir_regular';
+  box-shadow: ${shadow.lg};
+  margin-top: 1rem;
+  box-shadow: ${({ error }) => error && `0px 0px 0px 2px ${color.red_vivid_500}`};
+  z-index: 0;
+
+  @media (max-width: 768px) {
+    width: 90vw;
+  }
+  outline: none;
+  &:focus {
+    box-shadow: 0px 0px 0px 2px ${color.grey_400};
+  }
+`;
 const Input = styled.input`
-  border-radius: ${rounded.full};
-  height: 3rem;
-  width: 30rem;
-  max-width: 30rem;
-  text-indent: 5%;
-  font-size: 1.2rem;
-  color: ${color.grey_800};
-  font-family: 'avenir_regular';
-  box-shadow: ${shadow.lg};
-  margin-top: 1rem;
-  box-shadow: ${({ error }) => error && `0px 0px 0px 2px ${color.red_vivid_500}`};
-
-  @media (max-width: 768px) {
-    width: 90vw;
-  }
-  outline: none;
-  &:focus {
-    box-shadow: 0px 0px 0px 2px ${color.grey_400};
-  }
+  ${styledInput}
 `;
-const StyledField = styled(Field)`
-  border-radius: ${rounded.full};
-  height: 3rem;
-  width: 30rem;
-  max-width: 30rem;
-  text-indent: 5%;
-  font-size: 1.2rem;
-  color: ${color.grey_800};
-  font-family: 'avenir_regular';
-  box-shadow: ${shadow.lg};
-  margin-top: 1rem;
-  box-shadow: ${({ error }) => error && `0px 0px 0px 2px ${color.red_vivid_500}`};
 
-  @media (max-width: 768px) {
-    width: 90vw;
-  }
-  outline: none;
-  &:focus {
-    box-shadow: 0px 0px 0px 2px ${color.grey_400};
+// const StyledField = styled.select`
+//   ${styledInput}
+// `;
+const Country = styled.div`
+  ${styledInput}
+
+  padding-top: 3.1rem;
+  position: relative;
+  cursor: pointer;
+`;
+const Arrow = styled(FaSort)`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+`;
+const CountryWrapper = styled.div`
+  width: 100%;
+  height: 400px;
+  padding-top: 1rem;
+  overflow-y: scroll;
+  background-color: ${color.white};
+  box-shadow: ${shadow.lg};
+  z-index: 99999;
+  margin-top: 0.5rem;
+  border-radius: ${rounded.md};
+
+  img {
+    width: 8%;
+
+    margin-right: 1rem;
+    border: 1px solid ${color.grey_300};
+    border-radius: ${rounded.sm};
+    vertical-align: middle;
   }
 `;
 
-const Option = styled.option``;
-const CountryName = styled.div``;
-const Flag = styled.div`
-  svg {
-    width: 5px;
+const ImgWrapper = styled.div`
+  display: grid;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${color.grey_100};
   }
+`;
+
+const Selected = styled.div`
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
+  span {
+    img {
+      width: 8%;
+
+      margin-right: 1rem;
+      border: 1px solid ${color.grey_300};
+      border-radius: ${rounded.sm};
+      vertical-align: middle;
+    }
+  }
+`;
+const Text = styled.p`
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
+  width: 100%;
 `;
 
 const SubmitBtn = styled.button`

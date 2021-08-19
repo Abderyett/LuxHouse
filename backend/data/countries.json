@@ -131,7 +131,7 @@
   },
   {
     "flag": "https://restcountries.eu/data/bol.svg",
-    "name": "Bolivia (Plurinational State of)",
+    "name": "Bolivia",
     "subregion": "South America"
   },
   {
@@ -171,12 +171,12 @@
   },
   {
     "flag": "https://restcountries.eu/data/vgb.svg",
-    "name": "Virgin Islands (British)",
+    "name": "Virgin Islands",
     "subregion": "Caribbean"
   },
   {
     "flag": "https://restcountries.eu/data/vir.svg",
-    "name": "Virgin Islands (U.S.)",
+    "name": "Virgin Islands",
     "subregion": "Caribbean"
   },
   {
@@ -251,7 +251,7 @@
   },
   {
     "flag": "https://restcountries.eu/data/cck.svg",
-    "name": "Cocos (Keeling) Islands",
+    "name": "Cocos Islands",
     "subregion": "Australia and New Zealand"
   },
   {
@@ -271,7 +271,7 @@
   },
   {
     "flag": "https://restcountries.eu/data/cod.svg",
-    "name": "Congo (Democratic Republic of the)",
+    "name": "Congo",
     "subregion": "Middle Africa"
   },
   {
@@ -366,7 +366,7 @@
   },
   {
     "flag": "https://restcountries.eu/data/flk.svg",
-    "name": "Falkland Islands (Malvinas)",
+    "name": "Falkland Islands",
     "subregion": "South America"
   },
   {
@@ -536,7 +536,7 @@
   },
   {
     "flag": "https://restcountries.eu/data/irn.svg",
-    "name": "Iran (Islamic Republic of)",
+    "name": "Iran",
     "subregion": "Southern Asia"
   },
   {
@@ -661,7 +661,7 @@
   },
   {
     "flag": "https://restcountries.eu/data/mkd.svg",
-    "name": "Macedonia (the former Yugoslav Republic of)",
+    "name": "Macedonia",
     "subregion": "Southern Europe"
   },
   {
@@ -726,12 +726,12 @@
   },
   {
     "flag": "https://restcountries.eu/data/fsm.svg",
-    "name": "Micronesia (Federated States of)",
+    "name": "Micronesia",
     "subregion": "Micronesia"
   },
   {
     "flag": "https://restcountries.eu/data/mda.svg",
-    "name": "Moldova (Republic of)",
+    "name": "Moldova",
     "subregion": "Eastern Europe"
   },
   {
@@ -826,7 +826,7 @@
   },
   {
     "flag": "https://restcountries.eu/data/prk.svg",
-    "name": "Korea (Democratic People's Republic of)",
+    "name": "Korea",
     "subregion": "Eastern Asia"
   },
   {
@@ -956,7 +956,7 @@
   },
   {
     "flag": "https://restcountries.eu/data/maf.svg",
-    "name": "Saint Martin (French part)",
+    "name": "Saint Martin",
     "subregion": "Caribbean"
   },
   {
@@ -1016,7 +1016,7 @@
   },
   {
     "flag": "https://restcountries.eu/data/sxm.svg",
-    "name": "Sint Maarten (Dutch part)",
+    "name": "Sint Maarten",
     "subregion": "Caribbean"
   },
   {
@@ -1051,7 +1051,7 @@
   },
   {
     "flag": "https://restcountries.eu/data/kor.svg",
-    "name": "Korea (Republic of)",
+    "name": "Korea",
     "subregion": "Eastern Asia"
   },
   {
@@ -1191,12 +1191,12 @@
   },
   {
     "flag": "https://restcountries.eu/data/gbr.svg",
-    "name": "United Kingdom of Great Britain and Northern Ireland",
+    "name": "United Kingdom",
     "subregion": "Northern Europe"
   },
   {
     "flag": "https://restcountries.eu/data/usa.svg",
-    "name": "United States of America",
+    "name": "United States",
     "subregion": "Northern America"
   },
   {
