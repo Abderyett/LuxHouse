@@ -2,27 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { Formik, Field } from 'formik';
-import * as Yup from 'yup';
 import axios from 'axios';
 import { FaSort } from 'react-icons/fa';
-import { Header, Error } from '../components';
+import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
 
 export function CheckoutScreen() {
   const [countries, setCountries] = useState(null);
+  // toggle Dorpdown
   const [showCountry, setShowCountry] = useState(false);
-  const [countryName, setCountryName] = useState();
+  const [showState, setShowState] = useState(false);
+  //= =============
+  const [countryName, setCountryName] = useState('');
   const [flagUrl, setFlagUrl] = useState('');
+
+  const [city, setCity] = useState([]);
+  const [selectCity, setSelectCity] = useState();
 
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
   const { user } = userDetails;
+
+  //* Check if user is loged in
   useEffect(() => {
     if (Object.keys(user).length === 0) {
       history.push('/login');
     }
   }, [user]);
+
+  // * Fetch countries and flag from Backend
 
   const getCountries = async () => {
     try {
@@ -37,9 +45,46 @@ export function CheckoutScreen() {
     getCountries();
   }, []);
 
+  //* Select Country
+
   const selectedCountry = (event) => {
     setCountryName(event.target.textContent);
     setFlagUrl(event.target.firstChild.src);
+  };
+
+  //* Fetch state relative to selected Country
+  const config = {
+    headers: {
+      Authorization: `Bearer ${process.env.REACT_APP_STATE_TOKEN}`,
+    },
+  };
+
+  const initialUrl = `https://www.universal-tutorial.com/api/states/canada`;
+  const selectedUrl = `https://www.universal-tutorial.com/api/states/${countryName}`;
+
+  const endPoint = countryName.length === 0 ? initialUrl : selectedUrl;
+  const getState = async () => {
+    try {
+      const { data } = await axios.get(endPoint, config);
+      setCity(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getState();
+  }, [countryName]);
+
+  //* Show and hide state, country Dropdown
+
+  const countryHandler = () => {
+    setShowCountry(!showCountry);
+    setShowState(false);
+  };
+  const stateHandler = () => {
+    setShowState(!showState);
+    setShowCountry(false);
   };
 
   return (
@@ -49,7 +94,7 @@ export function CheckoutScreen() {
         <FirstHeading>Shipping Adress</FirstHeading>
         <Line />
         <Wrap>
-          <Country onClick={() => setShowCountry(!showCountry)}>
+          <Country onClick={countryHandler}>
             {countryName ? (
               <Selected>
                 <span>
@@ -58,14 +103,20 @@ export function CheckoutScreen() {
                 </span>
               </Selected>
             ) : (
-              <Text>Select country</Text>
+              <Selected>
+                <span>
+                  <img src="https://restcountries.eu/data/can.svg" alt="Canada" />
+                  Canada
+                </span>
+              </Selected>
             )}
+
             <Arrow />
             {showCountry && (
               <CountryWrapper>
                 {countries &&
                   countries.map((country) => (
-                    <ImgWrapper onClick={selectedCountry}>
+                    <ImgWrapper key={country._id} onClick={selectedCountry}>
                       <span>
                         <img src={country.flag} alt={country.name} />
 
@@ -76,86 +127,23 @@ export function CheckoutScreen() {
               </CountryWrapper>
             )}
           </Country>
-          <Formik
-            initialValues={{ country: '', state: '', street: '', postalCode: '' }}
-            validationSchema={Yup.object({
-              country: Yup.string().required('Please select your country'),
-              name: Yup.string().required('Please select your State'),
-              street: Yup.string().required('Please enter your Street'),
-              postalCode: Yup.string().required('Please enter your Postal Code'),
-            })}
-            onSubmit={(values, { resetForm, setSubmitting }) => {
-              setSubmitting(true);
-
-              resetForm();
-              setSubmitting(false);
-            }}
-          >
-            {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-              <form autoComplete="off" onSubmit={handleSubmit}>
-                {/* <InputWrapper>
-                  <StyledField
-                    as="select"
-                    id="country"
-                    type="text"
-                    name="name"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.name}
-                  >
-                    {countries && countries.map((country) => <option>{country.name}</option>)}
-                  </StyledField>
-                  <Error touched={touched.name} message={errors.name} />
-                </InputWrapper> */}
-
-                <InputWrapper>
-                  <Input
-                    error={touched.email && errors.email}
-                    id="email"
-                    type="email"
-                    name="email"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.email}
-                    placeholder="Your email"
-                  />
-                  <Error touched={touched.email} message={errors.email} />
-                </InputWrapper>
-                <InputWrapper className="password-input">
-                  <Input
-                    error={touched.password && errors.password}
-                    id="password"
-                    type="password"
-                    name="password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.password}
-                    placeholder="Your password"
-                  />
-                  <Error touched={touched.password} message={errors.password} />
-                </InputWrapper>
-                <InputWrapper className="password-input">
-                  <Input
-                    error={touched.confirmPassword && errors.confirmPassword}
-                    id="confirmPassword"
-                    type="password"
-                    name="confirmPassword"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.confirmPassword}
-                    placeholder="Confirm  password"
-                  />
-                  <Error touched={touched.confirmPassword} message={errors.confirmPassword} />
-                </InputWrapper>
-
-                <ButtonWrapper>
-                  <SubmitBtn className="submit-btn" type="submit" disabled={isSubmitting}>
-                    register
-                  </SubmitBtn>
-                </ButtonWrapper>
-              </form>
+          <State onClick={stateHandler}>
+            {selectCity || <Text>Select State</Text>}
+            <Arrow />
+            {showState && (
+              <StateWrapper onClick={(e) => setSelectCity(e.target.textContent)}>
+                {city &&
+                  city.map((c, index) => (
+                    <ImgWrapper key={index}>
+                      <span>{c.state_name}</span>
+                    </ImgWrapper>
+                  ))}
+              </StateWrapper>
             )}
-          </Formik>
+          </State>
+
+          <Input type="text" placeholder="Street" />
+          <Input type="text" placeholder="Postal Code" />
         </Wrap>
       </Container>
     </>
@@ -189,8 +177,7 @@ const Wrap = styled.div`
   }
 `;
 
-const InputWrapper = styled.div``;
-
+//* Styled Input
 const styledInput = css`
   border-radius: ${rounded.md};
   height: 3rem;
@@ -213,33 +200,20 @@ const styledInput = css`
     box-shadow: 0px 0px 0px 2px ${color.grey_400};
   }
 `;
+//* =================
+
+//* Select Country Section ========
 const Input = styled.input`
   ${styledInput}
 `;
-
-// const StyledField = styled.select`
-//   ${styledInput}
-// `;
-const Country = styled.div`
-  ${styledInput}
-
-  padding-top: 3.1rem;
-  position: relative;
-  cursor: pointer;
-`;
-const Arrow = styled(FaSort)`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-`;
-const CountryWrapper = styled.div`
+const wrapper = css`
   width: 100%;
   height: 400px;
   padding-top: 1rem;
   overflow-y: scroll;
   background-color: ${color.white};
   box-shadow: ${shadow.lg};
-  z-index: 99999;
+  z-index: 99;
   margin-top: 0.5rem;
   border-radius: ${rounded.md};
 
@@ -253,6 +227,26 @@ const CountryWrapper = styled.div`
   }
 `;
 
+const CountryWrapper = styled.div`
+  ${wrapper}
+`;
+
+const Country = styled.div`
+  ${styledInput}
+
+  padding-top: 3.1rem;
+  position: relative;
+  cursor: pointer;
+`;
+
+const Arrow = styled(FaSort)`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+`;
+//* =============================
+
+//* Coutries Flags Wrapper
 const ImgWrapper = styled.div`
   display: grid;
   padding-bottom: 1rem;
@@ -263,6 +257,20 @@ const ImgWrapper = styled.div`
     background-color: ${color.grey_100};
   }
 `;
+//* State selection =============
+
+const State = styled.div`
+  ${styledInput}
+
+  padding-top: 3.1rem;
+  position: relative;
+  cursor: pointer;
+`;
+const StateWrapper = styled.div`
+  ${wrapper}
+`;
+
+//* Selected Flag and Country ============
 
 const Selected = styled.div`
   position: absolute;
@@ -284,6 +292,11 @@ const Text = styled.p`
   top: 0.75rem;
   left: 1rem;
   width: 100%;
+`;
+//* ==========================
+
+const Select = styled.select`
+  ${styledInput}
 `;
 
 const SubmitBtn = styled.button`
