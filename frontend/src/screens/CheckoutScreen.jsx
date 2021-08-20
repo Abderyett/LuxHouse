@@ -8,7 +8,7 @@ import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
 
 export function CheckoutScreen() {
-  const [countries, setCountries] = useState(null);
+  const [countries, setCountries] = useState(JSON.parse(localStorage.getItem('countries')));
   // toggle Dorpdown
   const [showCountry, setShowCountry] = useState(false);
   const [showState, setShowState] = useState(false);
@@ -35,7 +35,9 @@ export function CheckoutScreen() {
   const getCountries = async () => {
     try {
       const { data } = await axios.get('/api/v1/countries');
+
       setCountries(data);
+      localStorage.setItem('coutries', JSON.stringify(data));
     } catch (error) {
       console.log(error);
     }
@@ -128,7 +130,7 @@ export function CheckoutScreen() {
             )}
           </Country>
           <State onClick={stateHandler}>
-            {selectCity || <Text>Select State</Text>}
+            {selectCity ? <Text>{selectCity}</Text> : <Text>Select City</Text>}
             <Arrow />
             {showState && (
               <StateWrapper onClick={(e) => setSelectCity(e.target.textContent)}>
@@ -190,7 +192,7 @@ const styledInput = css`
   box-shadow: ${shadow.lg};
   margin-top: 1rem;
   box-shadow: ${({ error }) => error && `0px 0px 0px 2px ${color.red_vivid_500}`};
-  z-index: 0;
+  z-index: 1;
 
   @media (max-width: 768px) {
     width: 90vw;
@@ -207,13 +209,13 @@ const Input = styled.input`
   ${styledInput}
 `;
 const wrapper = css`
-  width: 100%;
-  height: 400px;
+  width: auto;
+  height: 100%;
   padding-top: 1rem;
   overflow-y: scroll;
   background-color: ${color.white};
   box-shadow: ${shadow.lg};
-  z-index: 99;
+
   margin-top: 0.5rem;
   border-radius: ${rounded.md};
 
@@ -229,6 +231,9 @@ const wrapper = css`
 
 const CountryWrapper = styled.div`
   ${wrapper}
+
+  position: relative;
+  height: 15rem;
 `;
 
 const Country = styled.div`
@@ -237,6 +242,7 @@ const Country = styled.div`
   padding-top: 3.1rem;
   position: relative;
   cursor: pointer;
+  z-index: 999;
 `;
 
 const Arrow = styled(FaSort)`
@@ -268,6 +274,7 @@ const State = styled.div`
 `;
 const StateWrapper = styled.div`
   ${wrapper}
+  height: 15rem;
 `;
 
 //* Selected Flag and Country ============
