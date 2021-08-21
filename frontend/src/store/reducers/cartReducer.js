@@ -1,3 +1,4 @@
+import { addedShippingAdress } from '../../actions/cartAction';
 import {
   ADD_TO_CART,
   TOGGLE_DROPDOWN,
@@ -5,12 +6,13 @@ import {
   DECREASE_CART_QUANTITY,
   REMOVE_FROM_CART,
   TOGGLE_PROFILE_DROPDOWN,
+  ADDED_SHIPPING_ADRESS,
 } from '../../actions/types';
 
 import { addCartItem, incrementQty, decrementQty, removeItem } from '../../helper';
 
 export const cartReducer = (
-  state = { count: 0, showDropdown: false, cartItem: [], toggleProfileDropDown: false },
+  state = { count: 0, showDropdown: false, cartItem: [], toggleProfileDropDown: false, shippingAdress: {} },
   action
 ) => {
   switch (action.type) {
@@ -30,6 +32,8 @@ export const cartReducer = (
 
     case REMOVE_FROM_CART:
       return { ...state, cartItem: removeItem(state.cartItem, action.payload) };
+    case ADDED_SHIPPING_ADRESS:
+      return { ...state, shippingAdress: action.payload };
     default:
       return state;
   }

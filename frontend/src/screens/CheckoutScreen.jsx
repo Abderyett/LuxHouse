@@ -4,21 +4,26 @@ import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import axios from 'axios';
 import { FaSort } from 'react-icons/fa';
+import { GiMatterStates } from 'react-icons/gi';
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
+import { addedShippingAdress } from '../actions/cartAction';
 
 export function CheckoutScreen() {
   const [countries, setCountries] = useState(JSON.parse(localStorage.getItem('countries')));
+  const [city, setCity] = useState([]);
   // toggle Dorpdown
   const [showCountry, setShowCountry] = useState(false);
   const [showState, setShowState] = useState(false);
   //= =============
-  const [countryName, setCountryName] = useState('');
   const [flagUrl, setFlagUrl] = useState('');
 
-  const [city, setCity] = useState([]);
+  const [countryName, setCountryName] = useState('');
   const [selectCity, setSelectCity] = useState();
-
+  const [street, setStreet] = useState('');
+  const [postCode, setPostCode] = useState('');
+  const [token, setToken] = useState('');
+  const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
   const { user } = userDetails;
@@ -54,39 +59,74 @@ export function CheckoutScreen() {
     setFlagUrl(event.target.firstChild.src);
   };
 
-  //* Fetch state relative to selected Country
-  const config = {
+  //* Get Access Token to fetch data
+  const tokenConfig = {
     headers: {
-      Authorization: `Bearer ${process.env.REACT_APP_STATE_TOKEN}`,
+      Accept: 'application/json',
+      'api-token': process.env.REACT_APP_GET_TOKEN,
+      'user-email': 'com.admi2017@gmail.com',
     },
   };
-
-  const initialUrl = `https://www.universal-tutorial.com/api/states/canada`;
-  const selectedUrl = `https://www.universal-tutorial.com/api/states/${countryName}`;
-
-  const endPoint = countryName.length === 0 ? initialUrl : selectedUrl;
-  const getState = async () => {
+  const tokenUrl = 'https://www.universal-tutorial.com/api/getaccesstoken';
+  const getToken = async () => {
     try {
-      const { data } = await axios.get(endPoint, config);
-      setCity(data);
+      const { data } = await axios.get(tokenUrl, tokenConfig);
+      setToken(data.auth_token);
+      console.log(data.auth_token);
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   };
 
+  const getState = async () => {
+    const initialUrl = `https://www.universal-tutorial.com/api/states/canada`;
+    const selectedUrl = `https://www.universal-tutorial.com/api/states/${countryName}`;
+
+    const endPoint = countryName.length === 0 ? initialUrl : selectedUrl;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const res = await axios.get(endPoint, config);
+
+      console.log('city', res.data);
+      setCity(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //* Fetch state relative to selected Country
+  useEffect(() => {
+    getToken();
+  }, []);
+
   useEffect(() => {
     getState();
-  }, [countryName]);
+  }, [countryName, token]);
 
   //* Show and hide state, country Dropdown
 
-  const countryHandler = () => {
+  const toggleCountrie = () => {
     setShowCountry(!showCountry);
     setShowState(false);
   };
-  const stateHandler = () => {
+  const toggleCities = () => {
     setShowState(!showState);
     setShowCountry(false);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      addedShippingAdress({
+        country: countryName.length === 0 ? 'canada' : countryName,
+        city: selectCity,
+        street,
+        postalCode: postCode,
+      })
+    );
   };
 
   return (
@@ -96,7 +136,7 @@ export function CheckoutScreen() {
         <FirstHeading>Shipping Adress</FirstHeading>
         <Line />
         <Wrap>
-          <Country onClick={countryHandler}>
+          <Country onClick={toggleCountrie} showCountry={showCountry}>
             {countryName ? (
               <Selected>
                 <span>
@@ -114,38 +154,54 @@ export function CheckoutScreen() {
             )}
 
             <Arrow />
-            {showCountry && (
-              <CountryWrapper>
-                {countries &&
-                  countries.map((country) => (
-                    <ImgWrapper key={country._id} onClick={selectedCountry}>
-                      <span>
-                        <img src={country.flag} alt={country.name} />
 
-                        {country.name}
-                      </span>
-                    </ImgWrapper>
-                  ))}
-              </CountryWrapper>
-            )}
+            <CountryWrapper showCountry={showCountry}>
+              {countries &&
+                countries.map((country) => (
+                  <ImgWrapper key={country._id} onClick={selectedCountry}>
+                    <span>
+                      <img src={country.flag} alt={country.name} />
+
+                      {country.name}
+                    </span>
+                  </ImgWrapper>
+                ))}
+            </CountryWrapper>
           </Country>
-          <State onClick={stateHandler}>
+          <State onClick={toggleCities} showState={showState}>
             {selectCity ? <Text>{selectCity}</Text> : <Text>Select City</Text>}
             <Arrow />
-            {showState && (
-              <StateWrapper onClick={(e) => setSelectCity(e.target.textContent)}>
-                {city &&
-                  city.map((c, index) => (
-                    <ImgWrapper key={index}>
-                      <span>{c.state_name}</span>
-                    </ImgWrapper>
-                  ))}
-              </StateWrapper>
-            )}
-          </State>
 
-          <Input type="text" placeholder="Street" />
-          <Input type="text" placeholder="Postal Code" />
+            <StateWrapper showState={showState} onClick={(e) => setSelectCity(e.target.textContent)}>
+              {city &&
+                city.map((c, index) => (
+                  <ImgWrapper key={index}>
+                    <span>{c.state_name}</span>
+                  </ImgWrapper>
+                ))}
+            </StateWrapper>
+          </State>
+          <form onSubmit={submitHandler}>
+            <Input
+              type="text"
+              placeholder="Street"
+              name="street"
+              value={street}
+              required
+              onChange={(e) => setStreet(e.target.value)}
+            />
+            <Input
+              type="text"
+              placeholder="Postal Code"
+              name="postCode"
+              valu={postCode}
+              required
+              onChange={(e) => setPostCode(e.target.value)}
+            />
+            <ButtonWrapper>
+              <SubmitBtn type="submit">Continue</SubmitBtn>
+            </ButtonWrapper>
+          </form>
         </Wrap>
       </Container>
     </>
@@ -153,7 +209,7 @@ export function CheckoutScreen() {
 }
 
 const Container = styled.div`
-  width: 60vw;
+  width: 50%;
 
   border: 1px solid ${color.grey_400};
   border-radius: ${rounded.md};
@@ -173,7 +229,6 @@ const Line = styled.div`
 `;
 
 const Wrap = styled.div`
-  padding: 2rem;
   @media (max-width: 768px) {
     padding: 0.5rem;
   }
@@ -183,14 +238,14 @@ const Wrap = styled.div`
 const styledInput = css`
   border-radius: ${rounded.md};
   height: 3rem;
-  width: 30rem;
-  max-width: 30rem;
+  width: 35rem;
+  max-width: 35rem;
   text-indent: 5%;
   font-size: 1.2rem;
   color: ${color.grey_800};
   font-family: 'avenir_regular';
   box-shadow: ${shadow.lg};
-  margin-top: 1rem;
+  margin-top: 2rem;
   box-shadow: ${({ error }) => error && `0px 0px 0px 2px ${color.red_vivid_500}`};
   z-index: 1;
 
@@ -220,7 +275,7 @@ const wrapper = css`
   border-radius: ${rounded.md};
 
   img {
-    width: 8%;
+    width: 7%;
 
     margin-right: 1rem;
     border: 1px solid ${color.grey_300};
@@ -231,6 +286,7 @@ const wrapper = css`
 
 const CountryWrapper = styled.div`
   ${wrapper}
+  display:${({ showCountry }) => (showCountry ? 'block' : 'none')};
 
   position: relative;
   height: 15rem;
@@ -243,6 +299,8 @@ const Country = styled.div`
   position: relative;
   cursor: pointer;
   z-index: 999;
+
+  box-shadow: ${({ showCountry }) => (showCountry ? `0px 0px 0px 2px ${color.grey_400}` : '')};
 `;
 
 const Arrow = styled(FaSort)`
@@ -271,10 +329,12 @@ const State = styled.div`
   padding-top: 3.1rem;
   position: relative;
   cursor: pointer;
+  box-shadow: ${({ showState }) => (showState ? `0px 0px 0px 2px ${color.grey_400}` : '')};
 `;
 const StateWrapper = styled.div`
   ${wrapper}
   height: 15rem;
+  display: ${({ showState }) => (showState ? 'block' : 'none')};
 `;
 
 //* Selected Flag and Country ============
@@ -283,6 +343,7 @@ const Selected = styled.div`
   position: absolute;
   top: 0.75rem;
   left: 1rem;
+  width: 100%;
   span {
     img {
       width: 8%;
@@ -302,10 +363,6 @@ const Text = styled.p`
 `;
 //* ==========================
 
-const Select = styled.select`
-  ${styledInput}
-`;
-
 const SubmitBtn = styled.button`
   background: transparent;
   border: 2.5px solid ${color.black};
@@ -316,13 +373,16 @@ const SubmitBtn = styled.button`
   font-family: 'avenir_semi';
   cursor: pointer;
   margin-top: 1.5rem;
+  transition: all 0.6s ease-in-out;
   &:hover {
-    background-color: ${color.white};
+    background-color: ${color.black};
+    color: ${color.white};
   }
 `;
 
 const ButtonWrapper = styled.div`
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: flex-start;
+
   margin-top: 1rem;
 `;

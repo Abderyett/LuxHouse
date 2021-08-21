@@ -7,6 +7,7 @@ import {
   DECREASE_CART_QUANTITY,
   REMOVE_FROM_CART,
   TOGGLE_PROFILE_DROPDOWN,
+  ADDED_SHIPPING_ADRESS,
 } from './types';
 
 export const toggleCart = () => (dispatch) => {
@@ -47,5 +48,12 @@ export const removeItem = (id) => (dispatch, getState) => {
 export const toggleProfileDropdown = () => (dispatch) => {
   dispatch({
     type: TOGGLE_PROFILE_DROPDOWN,
+  });
+};
+
+export const addedShippingAdress = (data) => (dispatch) => {
+  dispatch({
+    type: ADDED_SHIPPING_ADRESS,
+    payload: data,
   });
 };
