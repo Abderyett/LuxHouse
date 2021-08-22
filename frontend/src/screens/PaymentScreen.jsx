@@ -5,22 +5,23 @@ import styled from 'styled-components';
 
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
-import { addedShippingAdress } from '../actions/cartAction';
+import { addedPaymentMethod } from '../actions/cartAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
 import pendant from '../utilities/svg/pendant.svg';
 
 export function PaymentScreen() {
-  // state to submit
-
-  const [street, setStreet] = useState('');
-  const [postCode, setPostCode] = useState('');
-
+  const [paymentMethod, setPaymentMethod] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
+  const cart = useSelector((state) => state.cart);
+  console.log(cart);
   const { user } = userDetails;
 
   //* Check if user is loged in
+  // if (!cart.ShippingAdress) {
+  //   history.push('/checkout');
+  // }
 
   useEffect(() => {
     if (Object.keys(user).length === 0) {
@@ -33,8 +34,8 @@ export function PaymentScreen() {
   //* Submit  Data to store
   const submitHandler = (e) => {
     e.preventDefault();
-
-    history.push('/payment');
+    dispatch(addedPaymentMethod(paymentMethod));
+    history.push('/placeorder');
   };
 
   return (
@@ -52,24 +53,41 @@ export function PaymentScreen() {
         <FirstHeading>Payment Method</FirstHeading>
         <Line />
         <Wrap>
-          <InputWrapper>
-            <div>
-              <label htmlFor="street">
-                <input id="street" type="radio" name="group1" value="Credit Card" required checked />
-                <span>Credit Card</span>
-              </label>
-            </div>
+          <form onSubmit={submitHandler}>
+            <InputWrapper>
+              <div>
+                <label htmlFor="street">
+                  <input
+                    id="street"
+                    type="radio"
+                    name="group1"
+                    value="Credit Card"
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                    required
+                    checked
+                  />
+                  <span>Credit Card</span>
+                </label>
+              </div>
 
-            <div>
-              <label htmlFor="postCode">
-                <input id="postCode" type="radio" name="group1" value="Paypal" required />
-                <span>Paypal</span>
-              </label>
-            </div>
-          </InputWrapper>
-          <ButtonWrapper>
-            <SubmitBtn type="submit">Continue</SubmitBtn>
-          </ButtonWrapper>
+              <div>
+                <label htmlFor="postCode">
+                  <input
+                    id="postCode"
+                    type="radio"
+                    name="group1"
+                    value="Paypal"
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                    required
+                  />
+                  <span>Paypal</span>
+                </label>
+              </div>
+            </InputWrapper>
+            <ButtonWrapper>
+              <SubmitBtn type="submit">Continue</SubmitBtn>
+            </ButtonWrapper>
+          </form>
         </Wrap>
       </Container>
     </>

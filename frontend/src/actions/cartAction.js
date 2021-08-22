@@ -8,6 +8,7 @@ import {
   REMOVE_FROM_CART,
   TOGGLE_PROFILE_DROPDOWN,
   ADDED_SHIPPING_ADRESS,
+  ADDED_PAYMENT_METHOD,
 } from './types';
 
 export const toggleCart = () => (dispatch) => {
@@ -54,6 +55,12 @@ export const toggleProfileDropdown = () => (dispatch) => {
 export const addedShippingAdress = (data) => (dispatch) => {
   dispatch({
     type: ADDED_SHIPPING_ADRESS,
+    payload: data,
+  });
+};
+export const addedPaymentMethod = (data) => (dispatch) => {
+  dispatch({
+    type: ADDED_PAYMENT_METHOD,
     payload: data,
   });
 };
