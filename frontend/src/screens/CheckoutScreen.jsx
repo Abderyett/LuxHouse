@@ -76,7 +76,6 @@ export function CheckoutScreen() {
     try {
       const { data } = await axios.get(tokenUrl, tokenConfig);
       setToken(data.auth_token);
-      console.log(data.auth_token);
     } catch (error) {
       console.log(error);
     }
@@ -139,6 +138,13 @@ export function CheckoutScreen() {
       <Header />
       <IMG src={sofa} alt="sofa" />
       <Pendant src={pendant} alt="Pendant" />
+      <ProgressWrapper>
+        <SignIn>Signin</SignIn>
+        <ShippingAdress>Shipping</ShippingAdress>
+        <Payment>Payement</Payment>
+        <PlaceOrder>Place Order</PlaceOrder>
+      </ProgressWrapper>
+
       <Container>
         <FirstHeading>Shipping Adress</FirstHeading>
         <Line />
@@ -394,6 +400,7 @@ const ButtonWrapper = styled.div`
   margin-top: 1rem;
 `;
 
+//* SVG ==========
 const IMG = styled.img`
   position: absolute;
   bottom: 0;
@@ -404,4 +411,34 @@ const Pendant = styled.img`
   position: absolute;
   top: 0;
   right: 20%;
+`;
+
+//* Progress Bar
+
+const ProgressWrapper = styled.div`
+  display: flex;
+  padding: 3rem 3rem 0 3rem;
+`;
+const SignIn = styled.div`
+  width: 11rem;
+  border-bottom: 2px solid ${color.scallop_shell};
+  padding-bottom: 1rem;
+  color: ${color.scallop_shell};
+`;
+
+const ShippingAdress = styled.div`
+  width: 11rem;
+  border-bottom: 2px solid ${color.scallop_shell};
+  padding-bottom: 1rem;
+  color: ${color.scallop_shell};
+`;
+const Payment = styled.div`
+  width: 11rem;
+  border-bottom: 2px solid ${color.grey_300};
+  padding-bottom: 1rem;
+`;
+const PlaceOrder = styled.div`
+  width: 10rem;
+  border-bottom: 2px solid ${color.grey_300};
+  padding-bottom: 1rem;
 `;

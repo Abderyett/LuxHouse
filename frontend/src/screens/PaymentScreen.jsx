@@ -1,12 +1,8 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import styled, { css } from 'styled-components';
-import axios from 'axios';
-import { FaSort } from 'react-icons/fa';
-import { VscDebugStackframeDot } from 'react-icons/vsc';
+import styled from 'styled-components';
+
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { addedShippingAdress } from '../actions/cartAction';
@@ -15,8 +11,7 @@ import pendant from '../utilities/svg/pendant.svg';
 
 export function PaymentScreen() {
   // state to submit
-  const [countryName, setCountryName] = useState('');
-  const [selectCity, setSelectCity] = useState();
+
   const [street, setStreet] = useState('');
   const [postCode, setPostCode] = useState('');
 
@@ -38,14 +33,7 @@ export function PaymentScreen() {
   //* Submit  Data to store
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      addedShippingAdress({
-        country: countryName.length === 0 ? 'Canada' : countryName,
-        city: selectCity,
-        street,
-        postalCode: postCode,
-      })
-    );
+
     history.push('/payment');
   };
 
@@ -54,43 +42,34 @@ export function PaymentScreen() {
       <Header />
       <IMG src={sofa} alt="sofa" />
       <Pendant src={pendant} alt="Pendant" />
+      <ProgressWrapper>
+        <SignIn>Signin</SignIn>
+        <ShippingAdress>Shipping</ShippingAdress>
+        <Payment>Payement</Payment>
+        <PlaceOrder>Place Order</PlaceOrder>
+      </ProgressWrapper>
       <Container>
         <FirstHeading>Payment Method</FirstHeading>
         <Line />
         <Wrap>
-          <form onSubmit={submitHandler}>
-            <InputWrapper>
-              <div>
-                <input
-                  type="checkbox"
-                  id="street"
-                  name="street"
-                  value={street}
-                  required
-                  onChange={(e) => setStreet(e.target.value)}
-                />
+          <InputWrapper>
+            <div>
+              <label htmlFor="street">
+                <input id="street" type="radio" name="group1" value="Credit Card" required checked />
+                <span>Credit Card</span>
+              </label>
+            </div>
 
-                <label htmlFor="street">Credit Card</label>
-              </div>
-
-              <div>
-                <input
-                  type="checkbox"
-                  id="postCode"
-                  name="postCode"
-                  value={postCode}
-                  required
-                  onChange={(e) => setPostCode(e.target.value)}
-                />
-                <label htmlFor="postCode"> Paypal</label>
-
-              </div>
-
-            </InputWrapper>
-            <ButtonWrapper>
-              <SubmitBtn type="submit">Continue</SubmitBtn>
-            </ButtonWrapper>
-          </form>
+            <div>
+              <label htmlFor="postCode">
+                <input id="postCode" type="radio" name="group1" value="Paypal" required />
+                <span>Paypal</span>
+              </label>
+            </div>
+          </InputWrapper>
+          <ButtonWrapper>
+            <SubmitBtn type="submit">Continue</SubmitBtn>
+          </ButtonWrapper>
         </Wrap>
       </Container>
     </>
@@ -123,18 +102,19 @@ const Wrap = styled.div`
   }
 `;
 const InputWrapper = styled.div`
-display:flex;
-flex-direction: column;
-margin-top:1rem;
-input{
-  margin-bottom:1rem;
-}
-label{
-  padding-left:1rem;
-  font-size:1.3rem;
-}
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  input {
+    margin-bottom: 1rem;
+  }
+  label {
+    span {
+      padding-left: 1rem;
+      font-size: 1.3rem;
+    }
+  }
 `;
-
 
 //* ==========================
 
@@ -172,4 +152,35 @@ const Pendant = styled.img`
   position: absolute;
   top: 0;
   right: 20%;
+`;
+
+//* Progress Bar
+
+const ProgressWrapper = styled.div`
+  display: flex;
+  padding: 3rem 3rem 0 3rem;
+`;
+const SignIn = styled.div`
+  width: 11rem;
+  border-bottom: 2px solid ${color.scallop_shell};
+  padding-bottom: 1rem;
+  color: ${color.scallop_shell};
+`;
+
+const ShippingAdress = styled.div`
+  width: 11rem;
+  border-bottom: 2px solid ${color.scallop_shell};
+  padding-bottom: 1rem;
+  color: ${color.scallop_shell};
+`;
+const Payment = styled.div`
+  width: 11rem;
+  border-bottom: 2px solid ${color.scallop_shell};
+  padding-bottom: 1rem;
+  color: ${color.scallop_shell};
+`;
+const PlaceOrder = styled.div`
+  width: 10rem;
+  border-bottom: 2px solid ${color.grey_300};
+  padding-bottom: 1rem;
 `;
