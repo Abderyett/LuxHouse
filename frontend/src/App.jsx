@@ -11,6 +11,7 @@ import {
   CartScreen,
   ProfileScreen,
   CheckoutScreen,
+  PaymentScreen,
 } from './screens';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/cart" exact component={CartScreen} />
         <Route path="/profile" exact component={ProfileScreen} />
         <Route path="/checkout" exact component={CheckoutScreen} />
+        <Route path="/payment" exact component={PaymentScreen} />
       </Switch>
 
       <GlobalStyle />

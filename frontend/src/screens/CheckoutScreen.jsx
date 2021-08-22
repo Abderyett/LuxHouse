@@ -4,10 +4,11 @@ import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import axios from 'axios';
 import { FaSort } from 'react-icons/fa';
-import { GiMatterStates } from 'react-icons/gi';
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { addedShippingAdress } from '../actions/cartAction';
+import sofa from '../utilities/svg/checkoutSofa.svg';
+import pendant from '../utilities/svg/pendant.svg';
 
 export function CheckoutScreen() {
   const [countries, setCountries] = useState(JSON.parse(localStorage.getItem('countries')));
@@ -18,17 +19,20 @@ export function CheckoutScreen() {
   //= =============
   const [flagUrl, setFlagUrl] = useState('');
 
+  // state to submit
   const [countryName, setCountryName] = useState('');
   const [selectCity, setSelectCity] = useState();
   const [street, setStreet] = useState('');
   const [postCode, setPostCode] = useState('');
   const [token, setToken] = useState('');
+
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
   const { user } = userDetails;
 
   //* Check if user is loged in
+
   useEffect(() => {
     if (Object.keys(user).length === 0) {
       history.push('/login');
@@ -59,7 +63,7 @@ export function CheckoutScreen() {
     setFlagUrl(event.target.firstChild.src);
   };
 
-  //* Get Access Token to fetch data
+  //* Get Access Token & Fetch state relative to selected Country
   const tokenConfig = {
     headers: {
       Accept: 'application/json',
@@ -79,7 +83,7 @@ export function CheckoutScreen() {
   };
 
   const getState = async () => {
-    const initialUrl = `https://www.universal-tutorial.com/api/states/canada`;
+    const initialUrl = `https://www.universal-tutorial.com/api/states/Canada`;
     const selectedUrl = `https://www.universal-tutorial.com/api/states/${countryName}`;
 
     const endPoint = countryName.length === 0 ? initialUrl : selectedUrl;
@@ -91,13 +95,12 @@ export function CheckoutScreen() {
     try {
       const res = await axios.get(endPoint, config);
 
-      console.log('city', res.data);
       setCity(res.data);
     } catch (error) {
       console.log(error);
     }
   };
-  //* Fetch state relative to selected Country
+
   useEffect(() => {
     getToken();
   }, []);
@@ -117,21 +120,25 @@ export function CheckoutScreen() {
     setShowCountry(false);
   };
 
+  //* Submit  Data to store
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
       addedShippingAdress({
-        country: countryName.length === 0 ? 'canada' : countryName,
+        country: countryName.length === 0 ? 'Canada' : countryName,
         city: selectCity,
         street,
         postalCode: postCode,
       })
     );
+    history.push('/payment');
   };
 
   return (
     <>
       <Header />
+      <IMG src={sofa} alt="sofa" />
+      <Pendant src={pendant} alt="Pendant" />
       <Container>
         <FirstHeading>Shipping Adress</FirstHeading>
         <Line />
@@ -194,7 +201,7 @@ export function CheckoutScreen() {
               type="text"
               placeholder="Postal Code"
               name="postCode"
-              valu={postCode}
+              value={postCode}
               required
               onChange={(e) => setPostCode(e.target.value)}
             />
@@ -209,13 +216,13 @@ export function CheckoutScreen() {
 }
 
 const Container = styled.div`
-  width: 50%;
+  width: 40%;
 
   border: 1px solid ${color.grey_400};
   border-radius: ${rounded.md};
   box-shadow: ${shadow.md};
   margin: 3rem;
-  padding: 2rem;
+  padding: 3rem;
 `;
 
 const FirstHeading = styled.h4`
@@ -382,7 +389,19 @@ const SubmitBtn = styled.button`
 
 const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
 
   margin-top: 1rem;
+`;
+
+const IMG = styled.img`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+`;
+const Pendant = styled.img`
+  position: absolute;
+  top: 0;
+  right: 20%;
 `;

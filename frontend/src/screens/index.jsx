@@ -7,3 +7,4 @@ export * from './SingleProduct';
 export * from './CartScreen';
 export * from './ProfileScreen';
 export * from './CheckoutScreen';
+export * from './PaymentScreen';
