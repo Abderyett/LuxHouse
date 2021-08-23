@@ -12,7 +12,7 @@ import sofa from '../utilities/svg/checkoutSofa.svg';
 import pendant from '../utilities/svg/pendant.svg';
 
 export function ShippingMethodScreen() {
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [shippingMethod, setShippingMethod] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
@@ -32,10 +32,15 @@ export function ShippingMethodScreen() {
   }, [user]);
 
   //* Submit  Data to store
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(addedPaymentMethod(paymentMethod));
-    history.push('/placeorder');
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+
+  //   history.push('/placeorder');
+  // };
+  const getInfo = (event) => {
+    // setShippingMethod(e.target.id);
+    // console.log(shippingMethod);
+    console.log('id', event.target.getAttribute('data-shipping'));
   };
 
   return (
@@ -53,31 +58,35 @@ export function ShippingMethodScreen() {
         <FirstHeading>Available Shipping Method</FirstHeading>
         <Line />
         <Wrap>
-          <form onSubmit={submitHandler}>
+          <form>
             <InputWrapper>
               <ShippingWrapper>
-                <Box>
+                <Box onClick={getInfo} data-shipping="Standard Shipping">
                   <h4>Standard Shipping</h4>
                   <p>
-                    $20 <StyledDot /> Estimated Delivery Date {moment().add(100, 'days').format('DD.MM.YYYY')}
+                    $20
+                    <StyledDot /> Estimated Delivery Date {moment().add(100, 'days').format('DD.MM.YYYY')}
                   </p>
                 </Box>
-                <Box>
+                <Box data-premium="Premium Delivery" onClick={getInfo}>
                   <h4>Premium Delivery</h4>
                   <p>
-                    $120 <StyledDot /> Estimated Delivery Date {moment().add(5, 'days').format('DD.MM.YYYY')}
+                    $120
+                    <StyledDot /> Estimated Delivery Date {moment().add(5, 'days').format('DD.MM.YYYY')}
                   </p>
                 </Box>
-                <Box>
+                <Box data-fedex="FedEx">
                   <h4>FedEx</h4>
                   <p>
-                    $70 <StyledDot /> Estimated Delivery Date {moment().add(30, 'days').format('DD.MM.YYYY')}
+                    $70
+                    <StyledDot /> Estimated Delivery Date {moment().add(30, 'days').format('DD.MM.YYYY')}
                   </p>
                 </Box>
-                <Box>
+                <Box data-express="Express Shipping">
                   <h4>Express Shipping</h4>
                   <p>
-                    $90 <StyledDot /> Estimated Delivery Date {moment().add(20, 'days').format('DD.MM.YYYY')}
+                    $90
+                    <StyledDot /> Estimated Delivery Date {moment().add(20, 'days').format('DD.MM.YYYY')}
                   </p>
                 </Box>
               </ShippingWrapper>

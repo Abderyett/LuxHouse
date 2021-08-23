@@ -25,6 +25,7 @@ export function CheckoutScreen() {
   const [street, setStreet] = useState('');
   const [postCode, setPostCode] = useState('');
   const [token, setToken] = useState('');
+  const [formValidate, setFormValidate] = useState(true);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -136,6 +137,13 @@ export function CheckoutScreen() {
     );
     history.push('/shippingmethod');
   };
+  useEffect(() => {
+    if (selectCity) {
+      setFormValidate(false);
+    } else {
+      setFormValidate(true);
+    }
+  }, [countryName, selectCity, street, postCode]);
 
   return (
     <>
@@ -216,7 +224,9 @@ export function CheckoutScreen() {
               onChange={(e) => setPostCode(e.target.value)}
             />
             <ButtonWrapper>
-              <SubmitBtn type="submit">Continue</SubmitBtn>
+              <SubmitBtn formValidate={formValidate} disabled={formValidate} type="submit">
+                Continue
+              </SubmitBtn>
             </ButtonWrapper>
           </form>
         </Wrap>
@@ -388,7 +398,7 @@ const SubmitBtn = styled.button`
   text-transform: uppercase;
   font-size: 1.2rem;
   font-family: 'avenir_semi';
-  cursor: pointer;
+  cursor: ${({ formValidate }) => (formValidate ? 'not-allowed' : 'pointer')};
   margin-top: 1.5rem;
   transition: all 0.6s ease-in-out;
   &:hover {
