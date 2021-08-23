@@ -1,15 +1,17 @@
+/* eslint-disable eqeqeq */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { BsDot } from 'react-icons/bs';
+import moment from 'moment';
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { addedPaymentMethod } from '../actions/cartAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
 import pendant from '../utilities/svg/pendant.svg';
 
-export function PaymentScreen() {
+export function ShippingMethodScreen() {
   const [paymentMethod, setPaymentMethod] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
@@ -28,8 +30,6 @@ export function PaymentScreen() {
       history.push('/login');
     }
   }, [user]);
-
-  // * Fetch countries and flag from Backend
 
   //* Submit  Data to store
   const submitHandler = (e) => {
@@ -50,39 +50,37 @@ export function PaymentScreen() {
         <PlaceOrder>Place Order</PlaceOrder>
       </ProgressWrapper>
       <Container>
-        <FirstHeading>Payment Method</FirstHeading>
+        <FirstHeading>Available Shipping Method</FirstHeading>
         <Line />
         <Wrap>
           <form onSubmit={submitHandler}>
             <InputWrapper>
-              <div>
-                <label htmlFor="street">
-                  <input
-                    id="street"
-                    type="radio"
-                    name="group1"
-                    value="Credit Card"
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                    required
-                    checked
-                  />
-                  <span>Credit Card</span>
-                </label>
-              </div>
-
-              <div>
-                <label htmlFor="postCode">
-                  <input
-                    id="postCode"
-                    type="radio"
-                    name="group1"
-                    value="Paypal"
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                    required
-                  />
-                  <span>Paypal</span>
-                </label>
-              </div>
+              <ShippingWrapper>
+                <Box>
+                  <h4>Standard Shipping</h4>
+                  <p>
+                    $20 <StyledDot /> Estimated Delivery Date {moment().add(100, 'days').format('DD.MM.YYYY')}
+                  </p>
+                </Box>
+                <Box>
+                  <h4>Premium Delivery</h4>
+                  <p>
+                    $120 <StyledDot /> Estimated Delivery Date {moment().add(5, 'days').format('DD.MM.YYYY')}
+                  </p>
+                </Box>
+                <Box>
+                  <h4>FedEx</h4>
+                  <p>
+                    $70 <StyledDot /> Estimated Delivery Date {moment().add(30, 'days').format('DD.MM.YYYY')}
+                  </p>
+                </Box>
+                <Box>
+                  <h4>Express Shipping</h4>
+                  <p>
+                    $90 <StyledDot /> Estimated Delivery Date {moment().add(20, 'days').format('DD.MM.YYYY')}
+                  </p>
+                </Box>
+              </ShippingWrapper>
             </InputWrapper>
             <ButtonWrapper>
               <SubmitBtn type="submit">Continue</SubmitBtn>
@@ -95,13 +93,14 @@ export function PaymentScreen() {
 }
 
 const Container = styled.div`
-  width: 40%;
+  width: 50%;
 
   border: 1px solid ${color.grey_400};
   border-radius: ${rounded.md};
   box-shadow: ${shadow.md};
   margin: 3rem;
   padding: 2rem;
+  background-color: ${color.white};
 `;
 
 const FirstHeading = styled.h4`
@@ -109,7 +108,7 @@ const FirstHeading = styled.h4`
   margin-bottom: 3rem;
 `;
 const Line = styled.div`
-  width: 90%;
+  width: 100%;
 
   border-top: 2px solid ${color.grey_300};
 `;
@@ -171,6 +170,37 @@ const Pendant = styled.img`
   top: 0;
   right: 20%;
 `;
+//* Shipping container
+
+const ShippingWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-gap: 1rem;
+  margin-top: 1rem;
+`;
+const Box = styled.div`
+  border: 2px solid ${color.black};
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  border-radius: ${rounded.sm};
+  transition: all 0.6s ease-in-out;
+  &:hover {
+    background-color: ${color.black};
+    color: ${color.white};
+    p {
+      color: ${color.white};
+    }
+  }
+`;
+
+const StyledDot = styled(BsDot)`
+  font-size: 2rem;
+  vertical-align: middle;
+`;
 
 //* Progress Bar
 
@@ -193,9 +223,9 @@ const ShippingMethod = styled.div`
 `;
 const Payment = styled.div`
   width: 11rem;
-  border-bottom: 2px solid ${color.scallop_shell};
+  border-bottom: 2px solid ${color.grey_500};
   padding-bottom: 1rem;
-  color: ${color.scallop_shell};
+  color: ${color.grey_500};
 `;
 const PlaceOrder = styled.div`
   width: 10rem;

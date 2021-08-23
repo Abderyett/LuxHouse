@@ -134,7 +134,7 @@ export function CheckoutScreen() {
         postalCode: postCode,
       })
     );
-    history.push('/payment');
+    history.push('/shippingmethod');
   };
 
   return (
@@ -143,8 +143,8 @@ export function CheckoutScreen() {
       <IMG src={sofa} alt="sofa" />
       <Pendant src={pendant} alt="Pendant" />
       <ProgressWrapper>
-        <SignIn>Signin</SignIn>
-        <ShippingAdress>Shipping</ShippingAdress>
+        <ShippingAdress>Shipping Adress</ShippingAdress>
+        <ShippingMethod>Shipping Method</ShippingMethod>
         <Payment>Payement</Payment>
         <PlaceOrder>Place Order</PlaceOrder>
       </ProgressWrapper>
@@ -240,7 +240,7 @@ const FirstHeading = styled.h4`
   margin-bottom: 3rem;
 `;
 const Line = styled.div`
-  width: 90%;
+  width: 100%;
 
   border-top: 2px solid ${color.grey_300};
 `;
@@ -423,26 +423,28 @@ const ProgressWrapper = styled.div`
   display: flex;
   padding: 3rem 3rem 0 3rem;
 `;
-const SignIn = styled.div`
-  width: 11rem;
-  border-bottom: 2px solid ${color.scallop_shell};
-  padding-bottom: 1rem;
-  color: ${color.scallop_shell};
-`;
-
 const ShippingAdress = styled.div`
   width: 11rem;
   border-bottom: 2px solid ${color.scallop_shell};
   padding-bottom: 1rem;
   color: ${color.scallop_shell};
 `;
+
+const ShippingMethod = styled.div`
+  width: 11rem;
+  border-bottom: 2px solid ${color.grey_500};
+  padding-bottom: 1rem;
+  color: ${color.grey_500};
+`;
 const Payment = styled.div`
   width: 11rem;
-  border-bottom: 2px solid ${color.grey_300};
+  border-bottom: 2px solid ${color.grey_500};
   padding-bottom: 1rem;
+  color: ${color.grey_500};
 `;
 const PlaceOrder = styled.div`
   width: 10rem;
-  border-bottom: 2px solid ${color.grey_300};
+  border-bottom: 2px solid ${color.grey_500};
   padding-bottom: 1rem;
+  color: ${color.grey_500};
 `;

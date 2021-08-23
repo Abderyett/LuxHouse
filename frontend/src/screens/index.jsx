@@ -8,3 +8,5 @@ export * from './CartScreen';
 export * from './ProfileScreen';
 export * from './CheckoutScreen';
 export * from './PaymentScreen';
+export * from './PlaceOrderScreen';
+export * from './ShippingMethodScreen';
