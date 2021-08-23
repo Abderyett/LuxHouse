@@ -78,8 +78,8 @@ export function SingleProduct() {
 
                 <ButtonWrapper>
                   <div>
-                    {product && product.shipping === 'true' ? <FiCheckCircle /> : <BsXCircle />} &nbsp;
-                    <span>{product && product.shipping === 'true' ? 'Available' : 'Not available'} for delivery</span>
+                    {product && product.shipping ? <FiCheckCircle /> : <BsXCircle />} &nbsp;
+                    <span>{product && product.shipping ? 'Available' : 'Not available'} for delivery</span>
                   </div>
 
                   {/* !Cart buttons */}

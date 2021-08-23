@@ -384,10 +384,10 @@ const Button = styled.button`
   }
 `;
 
-const Account = styled(Link)`
+const Account = styled.div`
   ${ListStyle}
   border-right:0.5px solid ${color.grey_300};
-
+  cursor: pointer;
   padding: 0 0.75rem;
 
   @media (max-width: 1030px) {

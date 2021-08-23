@@ -29,9 +29,13 @@ export function CheckoutScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
+  const cart = useSelector((state) => state.cart);
   const { user } = userDetails;
 
   //* Check if user is loged in
+  if (cart.cartItem.length === 0) {
+    history.push('/products');
+  }
 
   useEffect(() => {
     if (Object.keys(user).length === 0) {
