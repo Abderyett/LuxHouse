@@ -7,13 +7,13 @@ import { BsDot } from 'react-icons/bs';
 import moment from 'moment';
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
-import { addedPaymentMethod } from '../actions/cartAction';
+import { addedShippingMethod } from '../actions/cartAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
 import pendant from '../utilities/svg/pendant.svg';
 
 export function ShippingMethodScreen() {
-  const [shippingMethod, setShippingMethod] = useState('');
-  const [price, setPrice] = useState('');
+  const [shippingMethod, setShippingMethod] = useState();
+  const [price, setPrice] = useState();
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
@@ -33,16 +33,19 @@ export function ShippingMethodScreen() {
   }, [user]);
 
   //* Submit  Data to store
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (shippingMethod && price) {
+      dispatch(addedShippingMethod({ shippingPackage: shippingMethod, price }));
+    } else {
+      history.push('/shippingmethod');
+    }
 
-  //   history.push('/placeorder');
-  // };
+    history.push('/placeorder');
+  };
   const getPrice = (word) => {
     const index = word.indexOf('$');
-
     const iend = word.indexOf('Estimated');
-
     const newWord = parseInt(word.substring(index + 1, iend - 1));
     setPrice(newWord);
   };
@@ -85,7 +88,7 @@ export function ShippingMethodScreen() {
         <FirstHeading>Available Shipping Method</FirstHeading>
         <Line />
         <Wrap>
-          <form>
+          <form onSubmit={submitHandler}>
             <InputWrapper>
               <ShippingWrapper>
                 <FirstBox
@@ -131,7 +134,9 @@ export function ShippingMethodScreen() {
               </ShippingWrapper>
             </InputWrapper>
             <ButtonWrapper>
-              <SubmitBtn type="submit">Continue</SubmitBtn>
+              <SubmitBtn disabled={!shippingMethod} type="submit">
+                Continue
+              </SubmitBtn>
             </ButtonWrapper>
           </form>
         </Wrap>

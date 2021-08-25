@@ -8,6 +8,7 @@ import {
   TOGGLE_PROFILE_DROPDOWN,
   ADDED_SHIPPING_ADRESS,
   ADDED_PAYMENT_METHOD,
+  ADDED_SHIPPING_METHOD,
 } from '../../actions/types';
 
 import { addCartItem, incrementQty, decrementQty, removeItem } from '../../helper';
@@ -19,6 +20,7 @@ export const cartReducer = (
     cartItem: [],
     toggleProfileDropDown: false,
     shippingAdress: {},
+    shippingMethod: {},
     payment: '',
   },
   action
@@ -42,6 +44,8 @@ export const cartReducer = (
       return { ...state, cartItem: removeItem(state.cartItem, action.payload) };
     case ADDED_SHIPPING_ADRESS:
       return { ...state, shippingAdress: action.payload };
+    case ADDED_SHIPPING_METHOD:
+      return { ...state, shippingMethod: action.payload };
     case ADDED_PAYMENT_METHOD:
       return { ...state, payment: action.payload };
     default:
