@@ -86,18 +86,20 @@ export function SingleProduct() {
 
                   <CartBtn>
                     <Heart />
-                    <Button>
-                      {' '}
-                      Add to cart
-                      <span onClick={() => dispatch(incrementCartItem(product))}>
-                        <PlusIcon />
-                      </span>{' '}
-                      &nbsp; {quantity()}
-                      <span onClick={() => dispatch(decrementCartItem(product))}>
-                        &nbsp;
-                        <MinusIcon />
-                      </span>
-                    </Button>
+                    {product && product.shipping && (
+                      <Button>
+                        {' '}
+                        Add to cart
+                        <span onClick={() => dispatch(incrementCartItem(product))}>
+                          <PlusIcon />
+                        </span>{' '}
+                        &nbsp; {quantity()}
+                        <span onClick={() => dispatch(decrementCartItem(product))}>
+                          &nbsp;
+                          <MinusIcon />
+                        </span>
+                      </Button>
+                    )}
                   </CartBtn>
 
                   {/* !Cart buttons */}

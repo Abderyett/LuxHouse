@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { BsDot } from 'react-icons/bs';
 import moment from 'moment';
 import { Header } from '../components';
@@ -13,6 +13,7 @@ import pendant from '../utilities/svg/pendant.svg';
 
 export function ShippingMethodScreen() {
   const [shippingMethod, setShippingMethod] = useState('');
+
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
@@ -37,10 +38,22 @@ export function ShippingMethodScreen() {
 
   //   history.push('/placeorder');
   // };
-  const getInfo = (event) => {
-    // setShippingMethod(e.target.id);
-    // console.log(shippingMethod);
-    console.log('id', event.target.getAttribute('data-shipping'));
+  const standardInfo = (e) => {
+    const { standard } = e.currentTarget.dataset;
+    setShippingMethod(standard);
+  };
+
+  const premiumInfo = (e) => {
+    const { premium } = e.currentTarget.dataset;
+    setShippingMethod(premium);
+  };
+  const fedexInfo = (e) => {
+    const { fedex } = e.currentTarget.dataset;
+    setShippingMethod(fedex);
+  };
+  const expressInfo = (e) => {
+    const { express } = e.currentTarget.dataset;
+    setShippingMethod(express);
   };
 
   return (
@@ -61,34 +74,46 @@ export function ShippingMethodScreen() {
           <form>
             <InputWrapper>
               <ShippingWrapper>
-                <Box onClick={getInfo} data-shipping="Standard Shipping">
+                <FirstBox
+                  data-standard="Standard Shipping"
+                  onClick={standardInfo}
+                  selected={shippingMethod === 'Standard Shipping' ? 1 : 0}
+                >
                   <h4>Standard Shipping</h4>
                   <p>
                     $20
                     <StyledDot /> Estimated Delivery Date {moment().add(100, 'days').format('DD.MM.YYYY')}
                   </p>
-                </Box>
-                <Box data-premium="Premium Delivery" onClick={getInfo}>
+                </FirstBox>
+                <SecondBox
+                  data-premium="Premium Delivery"
+                  onClick={premiumInfo}
+                  selected={shippingMethod === 'Premium Delivery' ? 1 : 0}
+                >
                   <h4>Premium Delivery</h4>
                   <p>
                     $120
                     <StyledDot /> Estimated Delivery Date {moment().add(5, 'days').format('DD.MM.YYYY')}
                   </p>
-                </Box>
-                <Box data-fedex="FedEx">
+                </SecondBox>
+                <ThirdBox data-fedex="FedEx" onClick={fedexInfo} selected={shippingMethod === 'FedEx' ? 1 : 0}>
                   <h4>FedEx</h4>
                   <p>
                     $70
                     <StyledDot /> Estimated Delivery Date {moment().add(30, 'days').format('DD.MM.YYYY')}
                   </p>
-                </Box>
-                <Box data-express="Express Shipping">
+                </ThirdBox>
+                <ForthBox
+                  data-express="Express Shipping"
+                  onClick={expressInfo}
+                  selected={shippingMethod === 'Express Shipping' ? 1 : 0}
+                >
                   <h4>Express Shipping</h4>
                   <p>
                     $90
                     <StyledDot /> Estimated Delivery Date {moment().add(20, 'days').format('DD.MM.YYYY')}
                   </p>
-                </Box>
+                </ForthBox>
               </ShippingWrapper>
             </InputWrapper>
             <ButtonWrapper>
@@ -187,7 +212,7 @@ const ShippingWrapper = styled.div`
   grid-gap: 1rem;
   margin-top: 1rem;
 `;
-const Box = styled.div`
+const box = css`
   border: 2px solid ${color.black};
   width: 100%;
   height: 100%;
@@ -196,7 +221,7 @@ const Box = styled.div`
   flex-direction: column;
   cursor: pointer;
   border-radius: ${rounded.sm};
-  transition: all 0.6s ease-in-out;
+
   &:hover {
     background-color: ${color.black};
     color: ${color.white};
@@ -204,6 +229,23 @@ const Box = styled.div`
       color: ${color.white};
     }
   }
+  background-color: ${({ selected }) => (selected ? color.black : color.white)};
+  color: ${({ selected }) => (selected ? color.white : color.black)};
+  p {
+    color: ${({ selected }) => (selected ? color.white : color.black)};
+  }
+`;
+const FirstBox = styled.div`
+  ${box}
+`;
+const SecondBox = styled.div`
+  ${box}
+`;
+const ThirdBox = styled.div`
+  ${box}
+`;
+const ForthBox = styled.div`
+  ${box}
 `;
 
 const StyledDot = styled(BsDot)`

@@ -15,6 +15,7 @@ exports.logUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email }).select('+password');
   if (user && (await user.matchPassword(password))) {
     const { id } = user;
+
     const token = generateToken(id);
     redisClient.SET(id, token, 'EX', 2 * 24 * 60 * 60, (err, reply) => {
       if (err || !reply) {
@@ -27,7 +28,7 @@ exports.logUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      token: token,
     });
   } else {
     res.status(401);
@@ -61,7 +62,7 @@ exports.registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      token: token,
     });
   } else {
     res.status(400);
@@ -77,12 +78,19 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
   const profile = await User.findById(req.user);
 
   if (profile) {
+    const { id } = profile;
+    const token = generateToken(id);
+    redisClient.SET(id, token, 'EX', 2 * 24 * 60 * 60, (err, reply) => {
+      if (err || !reply) {
+        res.status(401).send('Unauthorized');
+      }
+    });
     res.status(200).json({
       _id: profile._id,
       name: profile.name,
       email: profile.email,
       isAdmin: profile.isAdmin,
-      token: generateToken(req.user),
+      token: token,
     });
   } else {
     res.status(404);
