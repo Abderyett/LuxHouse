@@ -13,7 +13,7 @@ import pendant from '../utilities/svg/pendant.svg';
 
 export function ShippingMethodScreen() {
   const [shippingMethod, setShippingMethod] = useState('');
-
+  const [price, setPrice] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
@@ -38,22 +38,36 @@ export function ShippingMethodScreen() {
 
   //   history.push('/placeorder');
   // };
+  const getPrice = (word) => {
+    const index = word.indexOf('$');
+
+    const iend = word.indexOf('Estimated');
+
+    const newWord = parseInt(word.substring(index + 1, iend - 1));
+    setPrice(newWord);
+  };
+
   const standardInfo = (e) => {
     const { standard } = e.currentTarget.dataset;
     setShippingMethod(standard);
+    getPrice(e.currentTarget.textContent);
   };
 
   const premiumInfo = (e) => {
     const { premium } = e.currentTarget.dataset;
+
     setShippingMethod(premium);
+    getPrice(e.currentTarget.textContent);
   };
   const fedexInfo = (e) => {
     const { fedex } = e.currentTarget.dataset;
     setShippingMethod(fedex);
+    getPrice(e.currentTarget.textContent);
   };
   const expressInfo = (e) => {
     const { express } = e.currentTarget.dataset;
     setShippingMethod(express);
+    getPrice(e.currentTarget.textContent);
   };
 
   return (
