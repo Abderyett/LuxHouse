@@ -14,6 +14,7 @@ import pendant from '../utilities/svg/pendant.svg';
 export function ShippingMethodScreen() {
   const [shippingMethod, setShippingMethod] = useState();
   const [price, setPrice] = useState();
+  const [deliveryDate, setDeliveryDate] = useState();
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
@@ -36,12 +37,12 @@ export function ShippingMethodScreen() {
   const submitHandler = (e) => {
     e.preventDefault();
     if (shippingMethod && price) {
-      dispatch(addedShippingMethod({ shippingPackage: shippingMethod, price }));
+      dispatch(addedShippingMethod({ shippingPackage: shippingMethod, price, deliveryDate }));
     } else {
       history.push('/shippingmethod');
     }
 
-    history.push('/placeorder');
+    history.push('/payment');
   };
   const getPrice = (word) => {
     const index = word.indexOf('$');
@@ -53,6 +54,7 @@ export function ShippingMethodScreen() {
   const standardInfo = (e) => {
     const { standard } = e.currentTarget.dataset;
     setShippingMethod(standard);
+    setDeliveryDate(moment().add(100, 'days').format('dddd, MMMM Do YYYY'));
     getPrice(e.currentTarget.textContent);
   };
 
@@ -60,16 +62,19 @@ export function ShippingMethodScreen() {
     const { premium } = e.currentTarget.dataset;
 
     setShippingMethod(premium);
+    setDeliveryDate(moment().add(5, 'days').format('dddd, MMMM Do YYYY'));
     getPrice(e.currentTarget.textContent);
   };
   const fedexInfo = (e) => {
     const { fedex } = e.currentTarget.dataset;
     setShippingMethod(fedex);
+    setDeliveryDate(moment().add(30, 'days').format('dddd, MMMM Do YYYY'));
     getPrice(e.currentTarget.textContent);
   };
   const expressInfo = (e) => {
     const { express } = e.currentTarget.dataset;
     setShippingMethod(express);
+    setDeliveryDate(moment().add(20, 'days').format('dddd, MMMM Do YYYY'));
     getPrice(e.currentTarget.textContent);
   };
 

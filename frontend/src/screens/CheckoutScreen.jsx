@@ -34,7 +34,7 @@ export function CheckoutScreen() {
   const { user } = userDetails;
 
   //* Check if user is loged in
-  if (cart.cartItem.length === 0) {
+  if (!cart.cartItem.length) {
     history.push('/products');
   }
 

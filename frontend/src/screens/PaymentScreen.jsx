@@ -10,7 +10,7 @@ import sofa from '../utilities/svg/checkoutSofa.svg';
 import pendant from '../utilities/svg/pendant.svg';
 
 export function PaymentScreen() {
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
@@ -85,7 +85,9 @@ export function PaymentScreen() {
               </div>
             </InputWrapper>
             <ButtonWrapper>
-              <SubmitBtn type="submit">Continue</SubmitBtn>
+              <SubmitBtn disabled={!paymentMethod} type="submit">
+                Continue
+              </SubmitBtn>
             </ButtonWrapper>
           </form>
         </Wrap>
