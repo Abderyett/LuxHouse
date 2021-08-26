@@ -5,12 +5,33 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { productListReducer, productDetailsReducer } from './reducers/productListReducers';
 import { loginReducer, registerReducer, userDetailsReducer, updateUserProfileReducer } from './reducers/userReducer'
 import { cartReducer } from './reducers/cartReducer';
+import { addedOrderReducer } from './reducers/orderReducer'
 
-const reducers = combineReducers({ porductList: productListReducer, productDetail: productDetailsReducer, cart: cartReducer, userLogin: loginReducer, registerUser: registerReducer, userDetails: userDetailsReducer, userUpdateProfile: updateUserProfileReducer });
+
+// ? Combine Reducer ======================================================
+
+const reducers = combineReducers(
+  {
+    porductList: productListReducer,
+    productDetail: productDetailsReducer,
+    cart: cartReducer,
+    userLogin: loginReducer,
+    registerUser: registerReducer,
+    userDetails: userDetailsReducer,
+    userUpdateProfile: updateUserProfileReducer,
+    addedOrder: addedOrderReducer
+  });
+
+
+// ? Local Storage ======================================================
+
 
 const cartItemsFromStorage = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
+
+
+// ? INITIAL STATE ======================================================
 
 const initialState = { cart: { cartItem: cartItemsFromStorage }, userLogin: { userInfo: userInfoFromStorage } };
 

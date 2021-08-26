@@ -55,3 +55,10 @@ export const ADDED_SHIPPING_METHOD = ' ADDED_SHIPPING_METHOD';
 
 // ? ADDED PAYMENT METHOD
 export const ADDED_PAYMENT_METHOD = ' ADDED_PAYMENT_METHOD';
+
+//! =================================================================
+
+// ? ADDED PAYMENT METHOD
+export const ADDED_ORDER_REQUEST = ' ADDED_ORDER_REQUEST';
+export const ADDED_ORDER_SUCCESS = ' ADDED_ORDER_SUCCESS';
+export const ADDED_ORDER_FAIL = ' ADDED_ORDER_FAIL';

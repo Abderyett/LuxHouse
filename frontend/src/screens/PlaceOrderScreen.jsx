@@ -87,7 +87,7 @@ export function PlaceOrderScreen() {
                     {el.name} &nbsp;({el.subcategory})
                   </ImageContent>
                   <PriceContent>
-                    {el.quantity} X $ {el.price} = $ {el.quantity * el.price}
+                    {`${el.quantity}  X  ${formatter.format(el.price)} = ${formatter.format(el.quantity * el.price)}`}
                   </PriceContent>
                 </Wrapper>
               ))}
