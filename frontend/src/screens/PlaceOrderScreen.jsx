@@ -1,12 +1,13 @@
 /* eslint-disable eqeqeq */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
+import { useHistory, Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { addedShippingMethod } from '../actions/cartAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
+import { formatter } from '../helper/CurrencyFormat';
 
 export function PlaceOrderScreen() {
   const dispatch = useDispatch();
@@ -33,6 +34,9 @@ export function PlaceOrderScreen() {
 
     history.push('/placeorder');
   };
+  const totalItems = () => (cartItem === [] ? 0 : cartItem.reduce((acc, item) => acc + item.quantity * item.price, 0));
+  const tax = () => totalItems() * 0.17;
+  const total = () => totalItems() + tax() + shippingMethod.price;
 
   return (
     <>
@@ -45,62 +49,89 @@ export function PlaceOrderScreen() {
         <Payment>Payement</Payment>
         <PlaceOrder>Place Order</PlaceOrder>
       </ProgressWrapper>
-      <Container>
-        <FirstHeading>Place Order</FirstHeading>
-        <Line />
-        <Wrap>
-          <form onSubmit={submitHandler}>
-            <Heading>Shipping Adress</Heading>
-            <Content>
-              <b>Adress:</b> &nbsp;{' '}
-              {shippingAdress &&
-                `${shippingAdress.street}, ${shippingAdress.city} ${shippingAdress.postalCode}, ${shippingAdress.country}`}
-            </Content>
-            <Line />
-            <Heading>Payment Method</Heading>
-            <Content>
-              <b>Method:</b> &nbsp;
-              {payment && payment}
-            </Content>
-            <Line />
-            <Heading>Shipping Method</Heading>
-            <Content>
-              <b>Choosed Package:</b> &nbsp;
-              {shippingMethod && shippingMethod.shippingPackage}
-            </Content>
-            <Content>
-              <b>Estimated delivery date:</b> &nbsp;
-              {shippingMethod && shippingMethod.deliveryDate}
-            </Content>
-            <Line />
-            <Heading>Order Items</Heading>
+      <MainWrapper>
+        <Container>
+          <FirstHeading>Place Order</FirstHeading>
+          <Line />
+          <Wrap>
+            <form onSubmit={submitHandler}>
+              <Heading>Shipping Adress</Heading>
+              <Content>
+                <b>Adress:</b> &nbsp;{' '}
+                {shippingAdress &&
+                  `${shippingAdress.street}, ${shippingAdress.city} ${shippingAdress.postalCode}, ${shippingAdress.country}`}
+              </Content>
+              <Line />
+              <Heading>Payment Method</Heading>
+              <Content>
+                <b>Method:</b> &nbsp;
+                {payment && payment}
+              </Content>
+              <Line />
+              <Heading>Shipping Method</Heading>
+              <Content>
+                <b>Choosed Package:</b> &nbsp;
+                {shippingMethod && shippingMethod.shippingPackage}
+              </Content>
+              <Content>
+                <b>Estimated delivery date:</b> &nbsp;
+                {shippingMethod && shippingMethod.deliveryDate}
+              </Content>
+              <Line />
+              <Heading>Order Items</Heading>
 
-            {cartItem.map((el) => (
-              <Wrapper key={el._id}>
-                <ImageContent>
-                  <Image src={el.image && el.image[0].url} alt={el.name} />
-                  {el.name} &nbsp;({el.subcategory})
-                </ImageContent>
-                <PriceContent>
-                  {el.quantity} X $ {el.price} = $ {el.quantity * el.price}
-                </PriceContent>
-              </Wrapper>
-            ))}
-
-            <ButtonWrapper>
-              <SubmitBtn disabled type="submit">
-                Continue
-              </SubmitBtn>
-            </ButtonWrapper>
-          </form>
-        </Wrap>
-      </Container>
+              {cartItem.map((el) => (
+                <Wrapper key={el._id}>
+                  <ImageContent>
+                    <Image src={el.image && el.image[0].url} alt={el.name} />
+                    {el.name} &nbsp;({el.subcategory})
+                  </ImageContent>
+                  <PriceContent>
+                    {el.quantity} X $ {el.price} = $ {el.quantity * el.price}
+                  </PriceContent>
+                </Wrapper>
+              ))}
+            </form>
+          </Wrap>
+        </Container>
+        <CheckoutSection>
+          <CheckoutWrapper>
+            <CheckoutHeader>Order summary</CheckoutHeader>
+            <Line />
+            <TotalPrice>
+              <p>Items :</p>
+              <p>{formatter.format(totalItems())}</p>
+            </TotalPrice>
+            <Shipping>
+              <p>Shipping :</p>
+              <p>{formatter.format(shippingMethod.price)}</p>
+            </Shipping>
+            <Tax>
+              <p>Tax :</p>
+              <p>{formatter.format(tax())}</p>
+            </Tax>
+            <Total>
+              <p>Total :</p>
+              <p>{formatter.format(total())}</p>
+            </Total>
+            <BtnWrapper>
+              <Btn to="/checkout">place order</Btn>
+            </BtnWrapper>
+          </CheckoutWrapper>
+        </CheckoutSection>
+      </MainWrapper>
     </>
   );
 }
 
+const MainWrapper = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 60% 30%;
+`;
+
 const Container = styled.div`
-  width: 50%;
+  width: 90%;
 
   border: 1px solid ${color.grey_400};
   border-radius: ${rounded.md};
@@ -108,7 +139,7 @@ const Container = styled.div`
   margin: 3rem;
   padding: 2rem;
   background-color: ${color.white};
-  z-index: 99;
+  z-index: 1;
 `;
 
 //* Heading
@@ -161,30 +192,6 @@ const Image = styled.img`
 
 //* ==========================
 
-const SubmitBtn = styled.button`
-  background: transparent;
-  border: 2.5px solid ${color.black};
-  border-radius: ${rounded.sm};
-  padding: 0.75rem 4rem;
-  text-transform: uppercase;
-  font-size: 1.2rem;
-  font-family: 'avenir_semi';
-  cursor: pointer;
-  margin-top: 1.5rem;
-  transition: all 0.6s ease-in-out;
-  &:hover {
-    background-color: ${color.black};
-    color: ${color.white};
-  }
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-
-  margin-top: 1rem;
-`;
-
 const IMG = styled.img`
   position: absolute;
   bottom: -50%;
@@ -223,4 +230,74 @@ const PlaceOrder = styled.div`
   border-bottom: 2px solid ${color.scallop_shell};
   padding-bottom: 1rem;
   color: ${color.scallop_shell};
+`;
+
+//* Place Order
+
+const CheckoutSection = styled.section`
+  width: 100%;
+  margin-top: 3rem;
+`;
+const CheckoutWrapper = styled.div`
+  width: auto;
+  height: auto;
+  border: 1px solid ${color.grey_400};
+  padding: 1rem;
+  border-radius: ${rounded.sm};
+  box-shadow: ${shadow.md};
+  /* margin: 1rem; */
+  background-color: ${color.white};
+`;
+const CheckoutHeader = styled.h3`
+  text-align: center;
+  font-size: 1.3rem;
+  padding: 1rem;
+  font-family: 'avenir_semi';
+`;
+
+const row = css`
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: ${color.grey_600};
+  padding: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid ${color.grey_400};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const TotalPrice = styled.div`
+  ${row}
+`;
+const Shipping = styled.div`
+  ${row}
+`;
+const Tax = styled.div`
+  ${row}
+`;
+const Total = styled.div`
+  ${row}
+`;
+
+const Btn = styled(Link)`
+  text-transform: uppercase;
+  background-color: ${color.black};
+  color: ${color.white};
+  padding: 1rem 3rem;
+  font-weight: bold;
+  border: 1px solid black;
+  transition: all 0.6s ease-in-out;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+`;
+
+const BtnWrapper = styled.div`
+  margin-top: 2.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
