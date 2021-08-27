@@ -12,7 +12,7 @@ import { BlueCircle, CheckCircle } from '../utilities/svg';
 export function ProductsScreen() {
   const dispatch = useDispatch();
   const porductList = useSelector((state) => state.porductList);
-  const isAdded = useSelector((state) => state.cart.cartItem);
+  const cartItem = useSelector((state) => state.cart.cartItem);
 
   const { loading, error, products } = porductList;
 
@@ -45,8 +45,8 @@ export function ProductsScreen() {
   }, [categorieText]);
 
   const isAddedProduct = (id) => {
-    const val = isAdded.length > 0 && isAdded.find((el) => el._id === id);
-
+    const val = cartItem.length > 0 && cartItem.find((el) => el._id === id);
+    console.log(val);
     const newVal = val && val.itemAdded;
     return newVal;
   };

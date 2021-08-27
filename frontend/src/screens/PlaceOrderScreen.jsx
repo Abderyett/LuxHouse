@@ -1,11 +1,11 @@
 /* eslint-disable eqeqeq */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
-import { addedShippingMethod } from '../actions/cartAction';
+import { addedOrder } from '../actions/orderAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
 import { formatter } from '../helper/CurrencyFormat';
 
@@ -28,15 +28,23 @@ export function PlaceOrderScreen() {
     }
   }, [user]);
 
-  //* Submit  Data to store
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    history.push('/placeorder');
-  };
   const totalItems = () => (cartItem === [] ? 0 : cartItem.reduce((acc, item) => acc + item.quantity * item.price, 0));
   const tax = () => totalItems() * 0.17;
   const total = () => totalItems() + tax() + shippingMethod.price;
+
+  //* Submit  Data to store
+  const submitHandler = () => {
+    dispatch(
+      addedOrder({
+        orderItems: cartItem,
+        shippingAdress,
+        shippingMethod,
+        paymentMethod: payment,
+        taxPrice: (totalItems() * 0.17).toFixed(2),
+        totalPrice: total(),
+      })
+    );
+  };
 
   return (
     <>
@@ -54,44 +62,42 @@ export function PlaceOrderScreen() {
           <FirstHeading>Place Order</FirstHeading>
           <Line />
           <Wrap>
-            <form onSubmit={submitHandler}>
-              <Heading>Shipping Adress</Heading>
-              <Content>
-                <b>Adress:</b> &nbsp;{' '}
-                {shippingAdress &&
-                  `${shippingAdress.street}, ${shippingAdress.city} ${shippingAdress.postalCode}, ${shippingAdress.country}`}
-              </Content>
-              <Line />
-              <Heading>Payment Method</Heading>
-              <Content>
-                <b>Method:</b> &nbsp;
-                {payment && payment}
-              </Content>
-              <Line />
-              <Heading>Shipping Method</Heading>
-              <Content>
-                <b>Choosed Package:</b> &nbsp;
-                {shippingMethod && shippingMethod.shippingPackage}
-              </Content>
-              <Content>
-                <b>Estimated delivery date:</b> &nbsp;
-                {shippingMethod && shippingMethod.deliveryDate}
-              </Content>
-              <Line />
-              <Heading>Order Items</Heading>
+            <Heading>Shipping Adress</Heading>
+            <Content>
+              <b>Adress:</b> &nbsp;{' '}
+              {shippingAdress &&
+                `${shippingAdress.street}, ${shippingAdress.city} ${shippingAdress.postalCode}, ${shippingAdress.country}`}
+            </Content>
+            <Line />
+            <Heading>Payment Method</Heading>
+            <Content>
+              <b>Method:</b> &nbsp;
+              {payment && payment}
+            </Content>
+            <Line />
+            <Heading>Shipping Method</Heading>
+            <Content>
+              <b>Choosed Package:</b> &nbsp;
+              {shippingMethod && shippingMethod.shippingPackage}
+            </Content>
+            <Content>
+              <b>Estimated delivery date:</b> &nbsp;
+              {shippingMethod && shippingMethod.deliveryDate}
+            </Content>
+            <Line />
+            <Heading>Order Items</Heading>
 
-              {cartItem.map((el) => (
-                <Wrapper key={el._id}>
-                  <ImageContent>
-                    <Image src={el.image && el.image[0].url} alt={el.name} />
-                    {el.name} &nbsp;({el.subcategory})
-                  </ImageContent>
-                  <PriceContent>
-                    {`${el.quantity}  X  ${formatter.format(el.price)} = ${formatter.format(el.quantity * el.price)}`}
-                  </PriceContent>
-                </Wrapper>
-              ))}
-            </form>
+            {cartItem.map((el) => (
+              <Wrapper key={el._id}>
+                <ImageContent>
+                  <Image src={el.image && el.image[0].url} alt={el.name} />
+                  {el.name} &nbsp;({el.subcategory})
+                </ImageContent>
+                <PriceContent>
+                  {`${el.quantity}  X  ${formatter.format(el.price)} = ${formatter.format(el.quantity * el.price)}`}
+                </PriceContent>
+              </Wrapper>
+            ))}
           </Wrap>
         </Container>
         <CheckoutSection>
@@ -104,7 +110,7 @@ export function PlaceOrderScreen() {
             </TotalPrice>
             <Shipping>
               <p>Shipping :</p>
-              <p>{formatter.format(shippingMethod.price)}</p>
+              <p>{shippingMethod.price && formatter.format(shippingMethod.price)}</p>
             </Shipping>
             <Tax>
               <p>Tax :</p>
@@ -115,7 +121,9 @@ export function PlaceOrderScreen() {
               <p>{formatter.format(total())}</p>
             </Total>
             <BtnWrapper>
-              <Btn to="/checkout">place order</Btn>
+              <Btn type="button" onClick={submitHandler}>
+                place order
+              </Btn>
             </BtnWrapper>
           </CheckoutWrapper>
         </CheckoutSection>
@@ -280,7 +288,7 @@ const Total = styled.div`
   ${row}
 `;
 
-const Btn = styled(Link)`
+const Btn = styled.button`
   text-transform: uppercase;
   background-color: ${color.black};
   color: ${color.white};
@@ -288,7 +296,10 @@ const Btn = styled(Link)`
   font-weight: bold;
   border: 1px solid black;
   transition: all 0.6s ease-in-out;
-
+  cursor: pointer;
+  font-family: 'avenir_semi';
+  letter-spacing: 0.125rem;
+  font-size: 1.1rem;
   &:hover {
     background-color: rgba(0, 0, 0, 0.8);
   }

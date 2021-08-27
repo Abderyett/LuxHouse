@@ -16,7 +16,7 @@ export const addedOrder = (order) => async (dispatch, getState) => {
   };
 
   try {
-    const data = await axios.post('/api/v1/orders', order, config);
+    const { data } = await axios.post('/api/v1/orders', order, config);
     dispatch({
       type: ADDED_ORDER_SUCCESS,
       payload: data,

@@ -7,16 +7,16 @@ const orderSchema = new mongoose.Schema(
       required: true,
       ref: 'User',
     },
-    orderItem: [
+    orderItems: [
       {
-        name: { type: String, required: true },
-        subcategory: { type: String, required: true },
-        quantity: { type: Number, required: true },
-        image: { type: String, required: true },
-        price: { type: Number, required: true },
-        product: {
+        name: { type: String, required: false },
+        subcategory: { type: String, required: false },
+        quantity: { type: Number, required: false },
+        image: { type: Array, required: false },
+        price: { type: Number, required: false },
+        product_id: {
           type: mongoose.Schema.Types.ObjectId,
-          required: true,
+          required: false,
           ref: 'Product',
         },
       },
@@ -30,8 +30,8 @@ const orderSchema = new mongoose.Schema(
     },
 
     shippingMethod: {
-      method: { type: String, required: true },
-      shippingPrice: { type: Number, required: true, default: 0.0 },
+      shippingPackage: { type: String, required: true },
+      price: { type: Number, required: true, default: 0.0 },
       deliveryDate: { type: String, required: true },
     },
     paymentMethod: {

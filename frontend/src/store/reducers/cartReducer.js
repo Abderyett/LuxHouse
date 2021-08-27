@@ -17,7 +17,7 @@ export const cartReducer = (
   state = {
     count: 0,
     showDropdown: false,
-    cartItem: [],
+    cartItem: [{ product_id: '' }],
     toggleProfileDropDown: false,
     shippingAdress: {},
     shippingMethod: {},

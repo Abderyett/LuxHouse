@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/products', productsRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/countries', countriesRouter);
-app.use('api/v1/orders', orderRoute);
+app.use('/api/v1/orders', orderRoute);
 
 app.use('*', notFound);
 

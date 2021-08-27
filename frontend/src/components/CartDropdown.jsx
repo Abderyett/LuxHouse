@@ -19,7 +19,7 @@ export function CartDropdown() {
           cartItem.map((el) => (
             <Wrapper key={el._id}>
               <ImgWrapper>
-                <img src={el.image[0].url} alt={el.subcategory} />
+                <img src={el.image && el.image[0].url} alt={el.subcategory} />
               </ImgWrapper>
               <Text>
                 <p>{el.name}</p>
