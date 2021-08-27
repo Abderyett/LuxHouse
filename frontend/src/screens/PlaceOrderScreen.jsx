@@ -5,17 +5,20 @@ import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
-import { addedOrder } from '../actions/orderAction';
+import { addOrder } from '../actions/orderAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
 import { formatter } from '../helper/CurrencyFormat';
+import { emptyCart } from '../actions/cartAction';
 
 export function PlaceOrderScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
   const cart = useSelector((state) => state.cart);
+  const addedOrder = useSelector((state) => state.addedOrder);
   const { user } = userDetails;
   const { shippingMethod, shippingAdress, cartItem, payment } = cart;
+  const { order } = addedOrder;
 
   //* Check if user is loged in
   if (!shippingAdress && !shippingMethod && !payment) {
@@ -35,7 +38,7 @@ export function PlaceOrderScreen() {
   //* Submit  Data to store
   const submitHandler = () => {
     dispatch(
-      addedOrder({
+      addOrder({
         orderItems: cartItem,
         shippingAdress,
         shippingMethod,
@@ -44,6 +47,8 @@ export function PlaceOrderScreen() {
         totalPrice: total(),
       })
     );
+    history.push(`order/${order._id}`);
+    dispatch(emptyCart());
   };
 
   return (

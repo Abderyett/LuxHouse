@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ADDED_ORDER_FAIL, ADDED_ORDER_SUCCESS, ADDED_ORDER_REQUEST } from './types';
 
-export const addedOrder = (order) => async (dispatch, getState) => {
+export const addOrder = (order) => async (dispatch, getState) => {
   dispatch({
     type: ADDED_ORDER_REQUEST,
   });

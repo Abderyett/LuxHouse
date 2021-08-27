@@ -9,6 +9,7 @@ import {
   ADDED_SHIPPING_ADRESS,
   ADDED_PAYMENT_METHOD,
   ADDED_SHIPPING_METHOD,
+  EMPTY_CART,
 } from '../../actions/types';
 
 import { addCartItem, incrementQty, decrementQty, removeItem } from '../../helper';
@@ -48,6 +49,8 @@ export const cartReducer = (
       return { ...state, shippingMethod: action.payload };
     case ADDED_PAYMENT_METHOD:
       return { ...state, payment: action.payload };
+    case EMPTY_CART:
+      return {};
     default:
       return state;
   }

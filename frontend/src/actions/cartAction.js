@@ -44,6 +44,12 @@ export const removeItem = (id) => (dispatch, getState) => {
   });
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItem));
 };
+export const emptyCart = () => (dispatch) => {
+  dispatch({
+    type: REMOVE_FROM_CART,
+  });
+  localStorage.removeItem('cartItems');
+};
 
 export const toggleProfileDropdown = () => (dispatch) => {
   dispatch({
