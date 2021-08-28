@@ -222,6 +222,7 @@ export function CheckoutScreen() {
               value={postCode}
               required
               onChange={(e) => setPostCode(e.target.value)}
+              postCode="PostCode"
             />
             <ButtonWrapper>
               <SubmitBtn formValidate={formValidate} disabled={formValidate} type="submit">
@@ -289,6 +290,7 @@ const styledInput = css`
 //* Select Country Section ========
 const Input = styled.input`
   ${styledInput}
+  text-transform:${({ PostCode }) => (PostCode ? 'uppercase' : 'capitalize')}
 `;
 const wrapper = css`
   width: auto;

@@ -38,7 +38,6 @@ exports.getOrder = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const order = await Order.findById(id).populate('user', 'name email ');
-  console.log(order);
 
   if (order) {
     res.status(200).json(order);

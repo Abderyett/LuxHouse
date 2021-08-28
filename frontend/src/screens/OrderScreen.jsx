@@ -1,70 +1,52 @@
 /* eslint-disable eqeqeq */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
-import { addOrder } from '../actions/orderAction';
-import sofa from '../utilities/svg/checkoutSofa.svg';
-import { formatter } from '../helper/CurrencyFormat';
-import { emptyCart } from '../actions/cartAction';
+import { getOrderDetails } from '../actions/orderAction';
 
-export function PlaceOrderScreen() {
+import { formatter } from '../helper/CurrencyFormat';
+
+export function OrderScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { id } = useParams();
+  console.log(id);
+
   const userDetails = useSelector((state) => state.userDetails);
   const cart = useSelector((state) => state.cart);
   const addedOrder = useSelector((state) => state.addedOrder);
   const { user } = userDetails;
   const { shippingMethod, shippingAdress, cartItem, payment } = cart;
-  const { order, success } = addedOrder;
+  const { order } = addedOrder;
 
   //* Check if user is loged in
-  if (!shippingAdress && !shippingMethod && !payment) {
-    history.push('/cart');
-  }
+  // if (!shippingAdress && !shippingMethod && !payment) {
+  //   history.push('/products');
+  // }
 
   useEffect(() => {
     if (Object.keys(user).length === 0) {
       history.push('/login');
     }
   }, [user]);
+  useEffect(() => {
+    dispatch(getOrderDetails(id));
+  }, []);
 
   const totalItems = () => (cartItem === [] ? 0 : cartItem.reduce((acc, item) => acc + item.quantity * item.price, 0));
   const tax = () => totalItems() * 0.17;
   const total = () => totalItems() + tax() + shippingMethod.price;
 
   //* Submit  Data to store
-  const submitHandler = () => {
-    dispatch(
-      addOrder({
-        orderItems: cartItem,
-        shippingAdress,
-        shippingMethod,
-        paymentMethod: payment,
-        taxPrice: (totalItems() * 0.17).toFixed(2),
-        totalPrice: totalItems(),
-      })
-    );
-  };
-  useEffect(() => {
-    if (success) {
-      history.push(`order/${order._id}`);
-    }
-  }, [success]);
+  const submitHandler = () => {};
 
   return (
     <>
       <Header />
-      <IMG src={sofa} alt="sofa" />
 
-      <ProgressWrapper>
-        <ShippingAdress>Shipping Adress</ShippingAdress>
-        <ShippingMethod>Shipping Method</ShippingMethod>
-        <Payment>Payement</Payment>
-        <PlaceOrder>Place Order</PlaceOrder>
-      </ProgressWrapper>
       <MainWrapper>
         <Container>
           <FirstHeading>Place Order</FirstHeading>
@@ -95,17 +77,18 @@ export function PlaceOrderScreen() {
             <Line />
             <Heading>Order Items</Heading>
 
-            {cartItem.map((el) => (
-              <Wrapper key={el._id}>
-                <ImageContent>
-                  <Image src={el.image && el.image[0].url} alt={el.name} />
-                  {el.name} &nbsp;({el.subcategory})
-                </ImageContent>
-                <PriceContent>
-                  {`${el.quantity}  X  ${formatter.format(el.price)} = ${formatter.format(el.quantity * el.price)}`}
-                </PriceContent>
-              </Wrapper>
-            ))}
+            {cartItem &&
+              cartItem.map((el) => (
+                <Wrapper key={el._id}>
+                  <ImageContent>
+                    <Image src={el.image && el.image[0].url} alt={el.name} />
+                    {el.name} &nbsp;({el.subcategory})
+                  </ImageContent>
+                  <PriceContent>
+                    {`${el.quantity}  X  ${formatter.format(el.price)} = ${formatter.format(el.quantity * el.price)}`}
+                  </PriceContent>
+                </Wrapper>
+              ))}
           </Wrap>
         </Container>
         <CheckoutSection>
@@ -114,11 +97,11 @@ export function PlaceOrderScreen() {
             <Line />
             <TotalPrice>
               <p>Items :</p>
-              <p>{formatter.format(totalItems())}</p>
+              <p>{shippingMethod && formatter.format(totalItems())}</p>
             </TotalPrice>
             <Shipping>
               <p>Shipping :</p>
-              <p>{shippingMethod.price && formatter.format(shippingMethod.price)}</p>
+              <p>{shippingMethod && formatter.format(shippingMethod.price)}</p>
             </Shipping>
             <Tax>
               <p>Tax :</p>
@@ -126,7 +109,7 @@ export function PlaceOrderScreen() {
             </Tax>
             <Total>
               <p>Total :</p>
-              <p>{formatter.format(total())}</p>
+              <p>{shippingMethod && formatter.format(total())}</p>
             </Total>
             <BtnWrapper>
               <Btn type="button" onClick={submitHandler}>
@@ -204,48 +187,6 @@ const Wrap = styled.div`
 
 const Image = styled.img`
   width: 5%;
-`;
-
-//* ==========================
-
-const IMG = styled.img`
-  position: absolute;
-  bottom: -50%;
-  right: 0;
-  width: 50%;
-  z-index: -1;
-`;
-
-//* Progress Bar
-
-const ProgressWrapper = styled.div`
-  display: flex;
-  padding: 3rem 3rem 0 3rem;
-`;
-const ShippingAdress = styled.div`
-  width: 11rem;
-  border-bottom: 2px solid ${color.scallop_shell};
-  padding-bottom: 1rem;
-  color: ${color.scallop_shell};
-`;
-
-const ShippingMethod = styled.div`
-  width: 11rem;
-  border-bottom: 2px solid ${color.scallop_shell};
-  padding-bottom: 1rem;
-  color: ${color.scallop_shell};
-`;
-const Payment = styled.div`
-  width: 11rem;
-  border-bottom: 2px solid ${color.scallop_shell};
-  padding-bottom: 1rem;
-  color: ${color.scallop_shell};
-`;
-const PlaceOrder = styled.div`
-  width: 10rem;
-  border-bottom: 2px solid ${color.scallop_shell};
-  padding-bottom: 1rem;
-  color: ${color.scallop_shell};
 `;
 
 //* Place Order

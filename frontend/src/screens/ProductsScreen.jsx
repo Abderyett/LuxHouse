@@ -46,7 +46,7 @@ export function ProductsScreen() {
 
   const isAddedProduct = (id) => {
     const val = cartItem.length > 0 && cartItem.find((el) => el._id === id);
-    console.log(val);
+
     const newVal = val && val.itemAdded;
     return newVal;
   };

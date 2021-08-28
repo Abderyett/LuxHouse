@@ -8,6 +8,7 @@ import {
   ADDED_SHIPPING_ADRESS,
   ADDED_PAYMENT_METHOD,
   ADDED_SHIPPING_METHOD,
+  EMPTY_CART,
 } from './types';
 
 export const toggleCart = () => (dispatch) => {
@@ -46,7 +47,7 @@ export const removeItem = (id) => (dispatch, getState) => {
 };
 export const emptyCart = () => (dispatch) => {
   dispatch({
-    type: REMOVE_FROM_CART,
+    type: EMPTY_CART,
   });
   localStorage.removeItem('cartItems');
 };

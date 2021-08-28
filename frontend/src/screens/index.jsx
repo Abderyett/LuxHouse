@@ -10,3 +10,4 @@ export * from './CheckoutScreen';
 export * from './PaymentScreen';
 export * from './PlaceOrderScreen';
 export * from './ShippingMethodScreen';
+export * from './OrderScreen';
