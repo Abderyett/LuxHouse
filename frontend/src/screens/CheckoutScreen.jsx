@@ -33,11 +33,10 @@ export function CheckoutScreen() {
   const cart = useSelector((state) => state.cart);
   const { user } = userDetails;
 
+  // if (cart.cartItems) {
+  //   history.push('/products');
+  // }
   //* Check if user is loged in
-  if (!cart.cartItem.length) {
-    history.push('/products');
-  }
-
   useEffect(() => {
     if (Object.keys(user).length === 0) {
       history.push('/login');
@@ -207,7 +206,7 @@ export function CheckoutScreen() {
             </StateWrapper>
           </State>
           <form onSubmit={submitHandler}>
-            <Input
+            <Street
               type="text"
               placeholder="Street"
               name="street"
@@ -215,14 +214,13 @@ export function CheckoutScreen() {
               required
               onChange={(e) => setStreet(e.target.value)}
             />
-            <Input
+            <PostCode
               type="text"
               placeholder="Postal Code"
               name="postCode"
               value={postCode}
               required
               onChange={(e) => setPostCode(e.target.value)}
-              postCode="PostCode"
             />
             <ButtonWrapper>
               <SubmitBtn formValidate={formValidate} disabled={formValidate} type="submit">
@@ -285,12 +283,21 @@ const styledInput = css`
     box-shadow: 0px 0px 0px 2px ${color.grey_400};
   }
 `;
+
+const PostCode = styled.input`
+  ${styledInput};
+  text-transform: uppercase;
+  ::placeholder {
+    text-transform: capitalize;
+  }
+`;
+
 //* =================
 
 //* Select Country Section ========
-const Input = styled.input`
+const Street = styled.input`
   ${styledInput}
-  text-transform:${({ PostCode }) => (PostCode ? 'uppercase' : 'capitalize')}
+  text-transform: capitalize;
 `;
 const wrapper = css`
   width: auto;

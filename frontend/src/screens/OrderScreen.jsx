@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { Header } from '../components';
+import { Header, Message, Loader } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { getOrderDetails } from '../actions/orderAction';
 
@@ -13,112 +13,144 @@ export function OrderScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  console.log(id);
 
   const userDetails = useSelector((state) => state.userDetails);
-  const cart = useSelector((state) => state.cart);
-  const addedOrder = useSelector((state) => state.addedOrder);
-  const { user } = userDetails;
-  const { shippingMethod, shippingAdress, cartItem, payment } = cart;
-  const { order } = addedOrder;
+
+  const orderDetails = useSelector((state) => state.orderDetails);
+  const { user: userInfo } = userDetails;
+  const { loading, details, success } = orderDetails;
+  const {
+    shippingAdress,
+    shippingMethod,
+    taxPrice,
+    totalPrice,
+    isPaid,
+    isDelivered,
+    user,
+    orderItems,
+    paymentMethod,
+  } = details;
 
   //* Check if user is loged in
-  // if (!shippingAdress && !shippingMethod && !payment) {
-  //   history.push('/products');
-  // }
 
   useEffect(() => {
-    if (Object.keys(user).length === 0) {
+    if (Object.keys(userInfo).length === 0) {
       history.push('/login');
     }
-  }, [user]);
+  }, [userInfo]);
+
   useEffect(() => {
     dispatch(getOrderDetails(id));
-  }, []);
+  }, [dispatch]);
 
-  const totalItems = () => (cartItem === [] ? 0 : cartItem.reduce((acc, item) => acc + item.quantity * item.price, 0));
-  const tax = () => totalItems() * 0.17;
-  const total = () => totalItems() + tax() + shippingMethod.price;
-
-  //* Submit  Data to store
-  const submitHandler = () => {};
+  const total = () => {
+    if (taxPrice && shippingMethod && totalPrice) {
+      return taxPrice + shippingMethod.price + totalPrice;
+    }
+  };
 
   return (
     <>
-      <Header />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <Header />
+          <MainWrapper>
+            <Container>
+              <FirstHeading>Your Order Id: {id}</FirstHeading>
+              <Line />
+              <Wrap>
+                <Heading>Shipping Adress</Heading>
+                <Content>
+                  <b>Adress:</b> &nbsp;{' '}
+                  {shippingAdress &&
+                    `${shippingAdress.street}, ${shippingAdress.city} ${shippingAdress.postalCode}, ${shippingAdress.country}`}
+                </Content>
+                <Content>
+                  <b>Name: </b> &nbsp;
+                  {user && user.name}
+                </Content>
+                <Content>
+                  <b>Email</b> &nbsp;
+                  {user && user.email}
+                </Content>
+                <Line />
+                <Heading>Order status</Heading>
+                <Content>
+                  <Message bg={isPaid ? 'success' : 'danger'}> {isPaid ? 'Paid' : 'Not  Paid'}</Message>
+                </Content>
+                <Line />
+                <Heading>Payment Method</Heading>
+                <Content>
+                  <b>Method:</b> &nbsp;
+                  {paymentMethod && paymentMethod}
+                </Content>
+                <Line />
+                <Heading>Shipping Method</Heading>
+                <Content>
+                  <b>Choosed Package:</b> &nbsp;
+                  {shippingMethod && shippingMethod.shippingPackage}
+                </Content>
+                <Content>
+                  <b>Estimated delivery date:</b> &nbsp;
+                  {shippingMethod && shippingMethod.deliveryDate}
+                </Content>
+                <Line />
+                <Heading>Order status</Heading>
+                <Content>
+                  <Message style={{ marginTop: 0 }} bg={isDelivered ? 'success' : 'danger'}>
+                    {' '}
+                    {isDelivered ? 'Delivered' : 'Not Delivered'}
+                  </Message>
+                </Content>
+                <Line />
+                <Heading>Order Items</Heading>
 
-      <MainWrapper>
-        <Container>
-          <FirstHeading>Place Order</FirstHeading>
-          <Line />
-          <Wrap>
-            <Heading>Shipping Adress</Heading>
-            <Content>
-              <b>Adress:</b> &nbsp;{' '}
-              {shippingAdress &&
-                `${shippingAdress.street}, ${shippingAdress.city} ${shippingAdress.postalCode}, ${shippingAdress.country}`}
-            </Content>
-            <Line />
-            <Heading>Payment Method</Heading>
-            <Content>
-              <b>Method:</b> &nbsp;
-              {payment && payment}
-            </Content>
-            <Line />
-            <Heading>Shipping Method</Heading>
-            <Content>
-              <b>Choosed Package:</b> &nbsp;
-              {shippingMethod && shippingMethod.shippingPackage}
-            </Content>
-            <Content>
-              <b>Estimated delivery date:</b> &nbsp;
-              {shippingMethod && shippingMethod.deliveryDate}
-            </Content>
-            <Line />
-            <Heading>Order Items</Heading>
-
-            {cartItem &&
-              cartItem.map((el) => (
-                <Wrapper key={el._id}>
-                  <ImageContent>
-                    <Image src={el.image && el.image[0].url} alt={el.name} />
-                    {el.name} &nbsp;({el.subcategory})
-                  </ImageContent>
-                  <PriceContent>
-                    {`${el.quantity}  X  ${formatter.format(el.price)} = ${formatter.format(el.quantity * el.price)}`}
-                  </PriceContent>
-                </Wrapper>
-              ))}
-          </Wrap>
-        </Container>
-        <CheckoutSection>
-          <CheckoutWrapper>
-            <CheckoutHeader>Order summary</CheckoutHeader>
-            <Line />
-            <TotalPrice>
-              <p>Items :</p>
-              <p>{shippingMethod && formatter.format(totalItems())}</p>
-            </TotalPrice>
-            <Shipping>
-              <p>Shipping :</p>
-              <p>{shippingMethod && formatter.format(shippingMethod.price)}</p>
-            </Shipping>
-            <Tax>
-              <p>Tax :</p>
-              <p>{formatter.format(tax())}</p>
-            </Tax>
-            <Total>
-              <p>Total :</p>
-              <p>{shippingMethod && formatter.format(total())}</p>
-            </Total>
-            <BtnWrapper>
-              <Btn type="button" onClick={submitHandler}>
-                place order
-              </Btn>
-            </BtnWrapper>
-          </CheckoutWrapper>
-        </CheckoutSection>
-      </MainWrapper>
+                {orderItems &&
+                  orderItems.map((el) => (
+                    <Wrapper key={el._id}>
+                      <ImageContent>
+                        <Image src={el.image && el.image[0].url} alt={el.name} />
+                        {el.name} &nbsp;({el.subcategory})
+                      </ImageContent>
+                      <PriceContent>
+                        {`${el.quantity}  X  ${formatter.format(el.price)} = ${formatter.format(
+                          el.quantity * el.price
+                        )}`}
+                      </PriceContent>
+                    </Wrapper>
+                  ))}
+              </Wrap>
+            </Container>
+            <CheckoutSection>
+              <CheckoutWrapper>
+                <CheckoutHeader>Order summary</CheckoutHeader>
+                <Line />
+                <TotalPrice>
+                  <p>Items :</p>
+                  <p>{formatter.format(totalPrice)}</p>
+                </TotalPrice>
+                <Shipping>
+                  <p>Shipping :</p>
+                  <p>{shippingMethod && formatter.format(shippingMethod.price)}</p>
+                </Shipping>
+                <Tax>
+                  <p>Tax :</p>
+                  <p>{taxPrice && formatter.format(taxPrice)}</p>
+                </Tax>
+                <Total>
+                  <p>Total :</p>
+                  <p>{formatter.format(total())}</p>
+                </Total>
+                <BtnWrapper>
+                  <Btn type="button">Procced payment</Btn>
+                </BtnWrapper>
+              </CheckoutWrapper>
+            </CheckoutSection>
+          </MainWrapper>
+        </>
+      )}
     </>
   );
 }

@@ -50,7 +50,7 @@ export const cartReducer = (
     case ADDED_PAYMENT_METHOD:
       return { ...state, payment: action.payload };
     case EMPTY_CART:
-      return {};
+      return { cartItem: [] };
     default:
       return state;
   }

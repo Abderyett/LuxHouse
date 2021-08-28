@@ -46,7 +46,9 @@ export function SingleProduct() {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message bg="danger">{error}</Message>
+        <Message mt="4rem" bg="danger">
+          {error}
+        </Message>
       ) : (
         <Container>
           <FirstSection>

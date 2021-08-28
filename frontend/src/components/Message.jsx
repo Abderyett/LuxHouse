@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { color, rounded } from '../utilities';
 
-export function Message({ bg, children }) {
+export function Message({ bg, children, mt = 0 }) {
   return <Alert bg={bg}>{children}</Alert>;
 }
 
@@ -14,7 +14,7 @@ const Alert = styled.div`
     bg === 'danger' ? `${color.red_100}` : bg === 'success' ? `${color.green_200}` : `${color.blue_200}`};
   margin: 0 auto;
   width: 100%;
-  margin-top: 4rem;
+  margin-top: mt;
   border-radius: ${rounded.md};
   color: ${({ bg }) =>
     bg === 'danger' ? `${color.red_400}` : bg === 'success' ? `${color.green_600}` : `${color.blue_500}`};
@@ -25,4 +25,5 @@ const Alert = styled.div`
 Message.propTypes = {
   bg: PropTypes.string,
   children: PropTypes.element,
+  mt: PropTypes.string,
 };

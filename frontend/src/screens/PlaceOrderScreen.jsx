@@ -51,6 +51,7 @@ export function PlaceOrderScreen() {
   useEffect(() => {
     if (success) {
       history.push(`order/${order._id}`);
+      dispatch(emptyCart());
     }
   }, [success]);
 
