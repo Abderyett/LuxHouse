@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { PAYMENT_REQUEST, PAYMENT_SUCCESS, PAYMENT_FAIL } from './types';
 
-export const payment = (item) => async (dispatch, getState) => {
+export const proceedPayment = (item) => async (dispatch, getState) => {
   dispatch({
     type: PAYMENT_REQUEST,
   });

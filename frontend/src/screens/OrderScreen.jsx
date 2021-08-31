@@ -1,20 +1,24 @@
+/* eslint-disable camelcase */
 /* eslint-disable eqeqeq */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { BiRightArrowAlt } from 'react-icons/bi';
+import { useStripe } from '@stripe/react-stripe-js';
 import { Header, Message, Loader } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { getOrderDetails } from '../actions/orderAction';
-
 import { formatter } from '../helper/CurrencyFormat';
+import { proceedPayment } from '../actions/paymentAction';
 
 export function OrderScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-
+  const stripe = useStripe();
   const userDetails = useSelector((state) => state.userDetails);
+  const payment = useSelector((state) => state.payment);
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { user: userInfo } = userDetails;
@@ -45,6 +49,37 @@ export function OrderScreen() {
 
   const total = () => taxPrice + shippingMethod.price + totalPrice;
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    const line_items = details.orderItems.map((el) => ({
+      quantity: el.quantity,
+      price_data: {
+        unit_amount: el.price * 100,
+        currency: 'usd',
+        product_data: {
+          name: `${el.name} ${el.subcategory}`,
+          images: [el.image[0].url],
+        },
+      },
+    }));
+    const item = {
+      line_items,
+      customer_email: details.user.email,
+    };
+
+    dispatch(proceedPayment(item));
+    if (payment) {
+      const redirect = async () => {
+        const { error } = await stripe.redirectToCheckout({ sessionId: payment.paymentStatus.sessionId });
+        if (error) {
+          console.log(error);
+        }
+      };
+      redirect();
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -52,6 +87,7 @@ export function OrderScreen() {
       ) : (
         <>
           <Header />
+
           <MainWrapper>
             <Container>
               <FirstHeading>Your Order Id: {id}</FirstHeading>
@@ -120,24 +156,34 @@ export function OrderScreen() {
             </Container>
             <CheckoutSection>
               <CheckoutWrapper>
-                <CheckoutHeader>Order summary</CheckoutHeader>
-                <Line />
-                <TotalPrice>
-                  <p>Items :</p>
-                  <p>{formatter.format(totalPrice)}</p>
-                </TotalPrice>
-                <Shipping>
-                  <p>Shipping :</p>
-                  <p>{formatter.format(shippingMethod.price)}</p>
-                </Shipping>
-                <Tax>
-                  <p>Tax :</p>
-                  <p>{formatter.format(taxPrice)}</p>
-                </Tax>
-                <Total>
-                  <p>Total :</p>
-                  <p>{formatter.format(total())}</p>
-                </Total>
+                <form onSubmit={submitHandler}>
+                  <CheckoutHeader>Order summary</CheckoutHeader>
+                  <Line />
+                  <TotalPrice>
+                    <p>Items :</p>
+                    <p>{formatter.format(totalPrice)}</p>
+                  </TotalPrice>
+                  <Shipping>
+                    <p>Shipping :</p>
+                    <p>{formatter.format(shippingMethod.price)}</p>
+                  </Shipping>
+                  <Tax>
+                    <p>Tax :</p>
+                    <p>{formatter.format(taxPrice)}</p>
+                  </Tax>
+                  <Total>
+                    <p>Total :</p>
+                    <p>{formatter.format(total())}</p>
+                  </Total>
+                  <BtnWrapper>
+                    <Btn type="submit">
+                      Pay now
+                      <span>
+                        <Arrow />
+                      </span>
+                    </Btn>
+                  </BtnWrapper>
+                </form>
               </CheckoutWrapper>
             </CheckoutSection>
           </MainWrapper>
@@ -262,7 +308,7 @@ const Total = styled.div`
 `;
 
 const Btn = styled.button`
-  text-transform: uppercase;
+  text-transform: capitalize;
   background-color: ${color.black};
   color: ${color.white};
   padding: 1rem 3rem;
@@ -277,11 +323,24 @@ const Btn = styled.button`
     background-color: rgba(0, 0, 0, 0.8);
   }
 `;
-
+const Arrow = styled(BiRightArrowAlt)`
+  opacity: 0;
+  color: ${color.white};
+  font-size: 1.5rem;
+  vertical-align: middle;
+`;
 const BtnWrapper = styled.div`
   margin-top: 2.5rem;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    ${Arrow} {
+      opacity: 1;
+      transform: translateX(5px);
+      transition: all 0.6s ease-in-out;
+    }
+  }
 `;
