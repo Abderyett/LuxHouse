@@ -4,8 +4,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { color, rounded } from '../utilities';
 
-export function Message({ bg, children, mt = 0 }) {
-  return <Alert bg={bg}>{children}</Alert>;
+export function Message({ bg, children, mt = '4rem' }) {
+  return (
+    <Alert bg={bg} mt={mt}>
+      {children}
+    </Alert>
+  );
 }
 
 const Alert = styled.div`

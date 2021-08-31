@@ -43,11 +43,7 @@ export function OrderScreen() {
     dispatch(getOrderDetails(id));
   }, [dispatch]);
 
-  const total = () => {
-    if (taxPrice && shippingMethod && totalPrice) {
-      return taxPrice + shippingMethod.price + totalPrice;
-    }
-  };
+  const total = () => taxPrice + shippingMethod.price + totalPrice;
 
   return (
     <>
@@ -64,42 +60,44 @@ export function OrderScreen() {
                 <Heading>Shipping Adress</Heading>
                 <Content>
                   <b>Adress:</b> &nbsp;{' '}
-                  {shippingAdress &&
-                    `${shippingAdress.street}, ${shippingAdress.city} ${shippingAdress.postalCode}, ${shippingAdress.country}`}
+                  {`${shippingAdress.street}, ${shippingAdress.city} ${shippingAdress.postalCode}, ${shippingAdress.country}`}
                 </Content>
                 <Content>
                   <b>Name: </b> &nbsp;
                   {user && user.name}
                 </Content>
-                <Content>
+                <Content style={{ textTransform: 'none' }}>
                   <b>Email</b> &nbsp;
                   {user && user.email}
                 </Content>
                 <Line />
                 <Heading>Order status</Heading>
                 <Content>
-                  <Message bg={isPaid ? 'success' : 'danger'}> {isPaid ? 'Paid' : 'Not  Paid'}</Message>
+                  <Message mt="0" bg={isPaid ? 'success' : 'danger'}>
+                    {' '}
+                    {isPaid ? 'Paid' : 'Not  Paid'}
+                  </Message>
                 </Content>
                 <Line />
                 <Heading>Payment Method</Heading>
                 <Content>
                   <b>Method:</b> &nbsp;
-                  {paymentMethod && paymentMethod}
+                  {paymentMethod}
                 </Content>
                 <Line />
                 <Heading>Shipping Method</Heading>
                 <Content>
                   <b>Choosed Package:</b> &nbsp;
-                  {shippingMethod && shippingMethod.shippingPackage}
+                  {shippingMethod.shippingPackage}
                 </Content>
                 <Content>
                   <b>Estimated delivery date:</b> &nbsp;
-                  {shippingMethod && shippingMethod.deliveryDate}
+                  {shippingMethod.deliveryDate}
                 </Content>
                 <Line />
-                <Heading>Order status</Heading>
+                <Heading>Delivery status</Heading>
                 <Content>
-                  <Message style={{ marginTop: 0 }} bg={isDelivered ? 'success' : 'danger'}>
+                  <Message mt="0" bg={isDelivered ? 'success' : 'danger'}>
                     {' '}
                     {isDelivered ? 'Delivered' : 'Not Delivered'}
                   </Message>
@@ -107,20 +105,17 @@ export function OrderScreen() {
                 <Line />
                 <Heading>Order Items</Heading>
 
-                {orderItems &&
-                  orderItems.map((el) => (
-                    <Wrapper key={el._id}>
-                      <ImageContent>
-                        <Image src={el.image && el.image[0].url} alt={el.name} />
-                        {el.name} &nbsp;({el.subcategory})
-                      </ImageContent>
-                      <PriceContent>
-                        {`${el.quantity}  X  ${formatter.format(el.price)} = ${formatter.format(
-                          el.quantity * el.price
-                        )}`}
-                      </PriceContent>
-                    </Wrapper>
-                  ))}
+                {orderItems.map((el) => (
+                  <Wrapper key={el._id}>
+                    <ImageContent>
+                      <Image src={el.image && el.image[0].url} alt={el.name} />
+                      {el.name} &nbsp;({el.subcategory})
+                    </ImageContent>
+                    <PriceContent>
+                      {`${el.quantity}  X  ${formatter.format(el.price)} = ${formatter.format(el.quantity * el.price)}`}
+                    </PriceContent>
+                  </Wrapper>
+                ))}
               </Wrap>
             </Container>
             <CheckoutSection>
@@ -133,19 +128,16 @@ export function OrderScreen() {
                 </TotalPrice>
                 <Shipping>
                   <p>Shipping :</p>
-                  <p>{shippingMethod && formatter.format(shippingMethod.price)}</p>
+                  <p>{formatter.format(shippingMethod.price)}</p>
                 </Shipping>
                 <Tax>
                   <p>Tax :</p>
-                  <p>{taxPrice && formatter.format(taxPrice)}</p>
+                  <p>{formatter.format(taxPrice)}</p>
                 </Tax>
                 <Total>
                   <p>Total :</p>
                   <p>{formatter.format(total())}</p>
                 </Total>
-                <BtnWrapper>
-                  <Btn type="button">Procced payment</Btn>
-                </BtnWrapper>
               </CheckoutWrapper>
             </CheckoutSection>
           </MainWrapper>
