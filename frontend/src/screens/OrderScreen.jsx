@@ -76,6 +76,8 @@ export function OrderScreen() {
     };
 
     dispatch(proceedPayment(item));
+  };
+  useEffect(() => {
     if (payment) {
       const redirect = async () => {
         const { error } = await stripe.redirectToCheckout({ sessionId: payment.paymentStatus.sessionId });
@@ -85,7 +87,7 @@ export function OrderScreen() {
       };
       redirect();
     }
-  };
+  }, [payment]);
 
   return (
     <>

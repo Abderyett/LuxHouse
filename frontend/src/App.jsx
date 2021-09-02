@@ -16,6 +16,8 @@ import {
   PlaceOrderScreen,
   OrderScreen,
 } from './screens';
+import CancelPaymentScreen from './screens/CancelPaymentScreen';
+import SuccessPaymentScreen from './screens/SuccessPaymentScreen';
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
         <Route path="/shippingmethod" exact component={ShippingMethodScreen} />
         <Route path="/placeorder" exact component={PlaceOrderScreen} />
         <Route path="/order/:id" exact component={OrderScreen} />
+        <Route path="/success" component={SuccessPaymentScreen} />
+        <Route path="/canceled" component={CancelPaymentScreen} />
       </Switch>
 
       <GlobalStyle />

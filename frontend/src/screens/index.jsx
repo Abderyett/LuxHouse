@@ -11,3 +11,4 @@ export * from './PaymentScreen';
 export * from './PlaceOrderScreen';
 export * from './ShippingMethodScreen';
 export * from './OrderScreen';
+export * from './SuccessPaymentScreen';
