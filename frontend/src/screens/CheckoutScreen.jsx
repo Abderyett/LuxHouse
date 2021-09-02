@@ -30,7 +30,7 @@ export function CheckoutScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
-  const cart = useSelector((state) => state.cart);
+  // const cart = useSelector((state) => state.cart);
   const { user } = userDetails;
 
   // if (cart.cartItems) {
@@ -41,7 +41,7 @@ export function CheckoutScreen() {
     if (Object.keys(user).length === 0) {
       history.push('/login');
     }
-  }, [user]);
+  }, [user, history]);
 
   // * Fetch countries and flag from Backend
 
@@ -142,7 +142,7 @@ export function CheckoutScreen() {
     } else {
       setFormValidate(true);
     }
-  }, [countryName, selectCity, street, postCode]);
+  }, [countryName, selectCity, street, postCode, history]);
 
   return (
     <>

@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
 import { Header } from '../components';
@@ -13,10 +13,8 @@ import { formatter } from '../helper/CurrencyFormat';
 export function CartScreen() {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const { cartItem } = cart;
-  useEffect(() => {}, []);
 
   return (
     <>

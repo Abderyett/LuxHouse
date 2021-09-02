@@ -27,7 +27,7 @@ export function PaymentScreen() {
     if (Object.keys(user).length === 0) {
       history.push('/login');
     }
-  }, [user]);
+  }, [user, history]);
 
   // * Fetch countries and flag from Backend
 

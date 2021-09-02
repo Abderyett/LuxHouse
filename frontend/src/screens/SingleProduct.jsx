@@ -38,7 +38,7 @@ export function SingleProduct() {
 
   useEffect(() => {
     dispatch(detailProduct(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   return (
     <>

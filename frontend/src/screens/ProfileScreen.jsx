@@ -31,7 +31,7 @@ export function ProfileScreen() {
     } else {
       dispatch(getUserDetails('profile'));
     }
-  }, [success, userInfo]);
+  }, [success, userInfo, dispatch, history]);
 
   return (
     <>

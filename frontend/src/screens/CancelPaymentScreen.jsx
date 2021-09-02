@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { FcCancel } from 'react-icons/fc';
 import { color } from '../utilities';
 
 export default function CancelPaymentScreen() {
@@ -8,7 +9,9 @@ export default function CancelPaymentScreen() {
 
   return (
     <Container>
-      <h3>Payment failed</h3>
+      <h4>
+        <CancelIcon /> &nbsp; Payment failed
+      </h4>
       <p>Payment was not successful</p>
       <BtnWrapper>
         <Btn type="button" onClick={() => history.push('/products')}>
@@ -57,4 +60,9 @@ const BtnWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const CancelIcon = styled(FcCancel)`
+  width: 2rem;
+  vertical-align: middle;
 `;

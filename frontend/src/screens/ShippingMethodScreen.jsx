@@ -31,7 +31,7 @@ export function ShippingMethodScreen() {
     if (Object.keys(user).length === 0) {
       history.push('/login');
     }
-  }, [user]);
+  }, [user, history]);
 
   //* Submit  Data to store
   const submitHandler = (e) => {

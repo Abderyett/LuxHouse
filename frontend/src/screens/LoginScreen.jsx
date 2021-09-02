@@ -22,7 +22,7 @@ export function LoginScreen() {
     if (userInfo) {
       history.push('/products');
     }
-  }, [userInfo]);
+  }, [userInfo, history]);
   useEffect(() => {
     let timerId;
     if (error) {

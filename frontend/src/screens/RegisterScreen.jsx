@@ -15,7 +15,7 @@ export function RegisterScreen() {
   const registerUser = useSelector((state) => state.registerUser);
   const [showMessage, setShowMessage] = useState(false);
   const history = useHistory();
-  const { loading, error, userInfo } = registerUser;
+  const { loading, error } = registerUser;
 
   useEffect(() => {
     let timerId;

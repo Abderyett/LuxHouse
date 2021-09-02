@@ -22,7 +22,7 @@ export function OrderScreen() {
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { user: userInfo } = userDetails;
-  const { loading, details, success } = orderDetails;
+  const { loading, details } = orderDetails;
   const {
     shippingAdress,
     shippingMethod,
@@ -41,11 +41,11 @@ export function OrderScreen() {
     if (Object.keys(userInfo).length === 0) {
       history.push('/login');
     }
-  }, [userInfo]);
+  }, [userInfo, history]);
 
   useEffect(() => {
     dispatch(getOrderDetails(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const total = () => {
     if (paymentMethod === 'Paypal') {
@@ -78,7 +78,7 @@ export function OrderScreen() {
     dispatch(proceedPayment(item));
   };
   useEffect(() => {
-    if (payment) {
+    if (payment.paymentStatus) {
       const redirect = async () => {
         const { error } = await stripe.redirectToCheckout({ sessionId: payment.paymentStatus.sessionId });
         if (error) {

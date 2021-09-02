@@ -11,7 +11,7 @@ export default function SuccessPaymentScreen() {
   const history = useHistory();
   useEffect(() => {
     dispatch(emptyCart());
-  }, []);
+  }, [dispatch]);
   return (
     <Container>
       <h4>

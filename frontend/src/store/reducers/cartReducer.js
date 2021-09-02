@@ -1,4 +1,3 @@
-import { addedShippingAdress } from '../../actions/cartAction';
 import {
   ADD_TO_CART,
   TOGGLE_DROPDOWN,

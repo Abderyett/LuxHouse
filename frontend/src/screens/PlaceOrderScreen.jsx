@@ -8,7 +8,6 @@ import { color, shadow, rounded } from '../utilities';
 import { addOrder } from '../actions/orderAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
 import { formatter } from '../helper/CurrencyFormat';
-import { emptyCart } from '../actions/cartAction';
 
 export function PlaceOrderScreen() {
   const dispatch = useDispatch();
@@ -29,7 +28,7 @@ export function PlaceOrderScreen() {
     if (Object.keys(user).length === 0) {
       history.push('/login');
     }
-  }, [user]);
+  }, [user, history]);
 
   const totalItems = () => (cartItem === [] ? 0 : cartItem.reduce((acc, item) => acc + item.quantity * item.price, 0));
   const tax = () => {
@@ -57,7 +56,7 @@ export function PlaceOrderScreen() {
     if (success) {
       history.push(`order/${order._id}`);
     }
-  }, [success]);
+  }, [success, history]);
 
   return (
     <>

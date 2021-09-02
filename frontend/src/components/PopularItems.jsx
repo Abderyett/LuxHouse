@@ -44,7 +44,7 @@ export function PopularItems() {
         },
       });
     }
-  }, [inView]);
+  }, [inView, animation]);
 
   return (
     <CardWrapper ref={ref}>
