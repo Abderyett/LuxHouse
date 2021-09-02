@@ -47,7 +47,12 @@ export function OrderScreen() {
     dispatch(getOrderDetails(id));
   }, [dispatch]);
 
-  const total = () => taxPrice + shippingMethod.price + totalPrice;
+  const total = () => {
+    if (paymentMethod === 'Paypal') {
+      return taxPrice + shippingMethod.price + totalPrice;
+    }
+    return shippingMethod.price + totalPrice;
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -57,6 +62,8 @@ export function OrderScreen() {
       price_data: {
         unit_amount: el.price * 100,
         currency: 'usd',
+        tax_behavior: 'exclusive',
+
         product_data: {
           name: `${el.name} ${el.subcategory}`,
           images: [el.image[0].url],
@@ -167,10 +174,13 @@ export function OrderScreen() {
                     <p>Shipping :</p>
                     <p>{formatter.format(shippingMethod.price)}</p>
                   </Shipping>
-                  <Tax>
-                    <p>Tax :</p>
-                    <p>{formatter.format(taxPrice)}</p>
-                  </Tax>
+                  {paymentMethod === 'Paypal' && (
+                    <Tax>
+                      <p>Tax :</p>
+                      <p>{formatter.format(taxPrice)}</p>
+                    </Tax>
+                  )}
+
                   <Total>
                     <p>Total :</p>
                     <p>{formatter.format(total())}</p>

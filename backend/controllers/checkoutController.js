@@ -15,6 +15,10 @@ exports.createCheckoutSession = asyncHandler(async (req, res) => {
   session = await stripeAPI.checkout.sessions.create({
     payment_method_types: ['card'],
     mode: 'payment',
+    automatic_tax: {
+      enabled: true,
+    },
+
     line_items,
     customer_email,
     success_url: `${domainUrl}/success/?session?session_id={CHECKOUT_SESSION_ID}`,

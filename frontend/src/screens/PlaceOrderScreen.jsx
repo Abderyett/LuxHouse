@@ -32,7 +32,12 @@ export function PlaceOrderScreen() {
   }, [user]);
 
   const totalItems = () => (cartItem === [] ? 0 : cartItem.reduce((acc, item) => acc + item.quantity * item.price, 0));
-  const tax = () => totalItems() * 0.17;
+  const tax = () => {
+    if (payment === 'Paypal') {
+      return totalItems() * 0.17;
+    }
+    return 0;
+  };
   const total = () => totalItems() + tax() + shippingMethod.price;
 
   //* Submit  Data to store
@@ -121,10 +126,12 @@ export function PlaceOrderScreen() {
               <p>Shipping :</p>
               <p>{shippingMethod.price && formatter.format(shippingMethod.price)}</p>
             </Shipping>
-            <Tax>
-              <p>Tax :</p>
-              <p>{formatter.format(tax())}</p>
-            </Tax>
+            {payment === 'Paypal' && (
+              <Tax>
+                <p>Tax :</p>
+                <p>{formatter.format(tax())}</p>
+              </Tax>
+            )}
             <Total>
               <p>Total :</p>
               <p>{formatter.format(total())}</p>
