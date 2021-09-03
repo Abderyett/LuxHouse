@@ -6,7 +6,7 @@ import { productListReducer, productDetailsReducer } from './reducers/productLis
 import { loginReducer, registerReducer, userDetailsReducer, updateUserProfileReducer } from './reducers/userReducer'
 import { cartReducer } from './reducers/cartReducer';
 import { addedOrderReducer, orderDetailsReducer } from './reducers/orderReducer';
-import { paymentReducer } from './reducers/paymentReducer';
+import { paymentReducer, updatePaymentReducer } from './reducers/paymentReducer';
 
 
 // ? Combine Reducer ======================================================
@@ -22,7 +22,8 @@ const reducers = combineReducers(
     userUpdateProfile: updateUserProfileReducer,
     addedOrder: addedOrderReducer,
     orderDetails: orderDetailsReducer,
-    payment: paymentReducer
+    payment: paymentReducer,
+    updatePayment: updatePaymentReducer
   });
 
 
