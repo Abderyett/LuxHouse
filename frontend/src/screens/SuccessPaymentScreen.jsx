@@ -9,6 +9,9 @@ import { color } from '../utilities';
 export default function SuccessPaymentScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const orderId = JSON.parse(localStorage.getItem('orderDetails'));
+
   useEffect(() => {
     dispatch(emptyCart());
   }, [dispatch]);

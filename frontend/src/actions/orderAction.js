@@ -51,6 +51,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 
   try {
     const { data } = await axios.get(`/api/v1/orders/${id}`, config);
+    localStorage.setItem('orderDetails', JSON.stringify(data._id));
 
     dispatch({
       type: ORDER_DETAILS_SUCCESS,

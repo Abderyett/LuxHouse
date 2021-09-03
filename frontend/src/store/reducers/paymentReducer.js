@@ -5,7 +5,7 @@ export const paymentReducer = (state = { paymentStatus: {} }, action) => {
     case PAYMENT_REQUEST:
       return { loading: true };
     case PAYMENT_SUCCESS:
-      return { loading: false, paymentStatus: action.payload };
+      return { loading: false, paymentStatus: action.payload, isPaid: true };
     case PAYMENT_FAIL:
       return { loading: false, error: action.payload };
 

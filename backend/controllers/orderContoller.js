@@ -46,3 +46,20 @@ exports.getOrder = asyncHandler(async (req, res) => {
     throw new Error('Order not found');
   }
 });
+
+exports.updateOrderPayment = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const order = await Order.findById(id);
+
+  if (order) {
+    order.isPaid = true;
+    await order.save();
+    res.status(200).json({
+      status: 'success',
+    });
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
