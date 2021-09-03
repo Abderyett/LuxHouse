@@ -3,9 +3,9 @@ import {
   PAYMENT_REQUEST,
   PAYMENT_SUCCESS,
   PAYMENT_FAIL,
-  PAYMENT_UPDATE_REQUEST,
-  PAYMENT_UPDATE_SUCCESS,
-  PAYMENT_UPDATE_FAIL,
+  PAYMENT_STRIPE_UPDATE_REQUEST,
+  PAYMENT_STRIPE_UPDATE_SUCCESS,
+  PAYMENT_STRIPE_UPDATE_FAIL,
 } from './types';
 
 export const proceedPayment = (item) => async (dispatch, getState) => {
@@ -38,7 +38,7 @@ export const proceedPayment = (item) => async (dispatch, getState) => {
 
 export const updatePayment = (id) => async (dispatch, getState) => {
   dispatch({
-    type: PAYMENT_UPDATE_REQUEST,
+    type: PAYMENT_STRIPE_UPDATE_REQUEST,
   });
   const { userInfo } = getState().userLogin;
 
@@ -50,15 +50,15 @@ export const updatePayment = (id) => async (dispatch, getState) => {
   };
 
   try {
-    const { data } = await axios.get(`/api/v1/orders/update/${id}`, config);
+    const { data } = await axios.get(`/api/v1/orders/${id}/stripe`, config);
 
     dispatch({
-      type: PAYMENT_UPDATE_SUCCESS,
+      type: PAYMENT_STRIPE_UPDATE_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: PAYMENT_UPDATE_FAIL,
+      type: PAYMENT_STRIPE_UPDATE_FAIL,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
