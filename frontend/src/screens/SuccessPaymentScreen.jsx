@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { FcOk } from 'react-icons/fc';
 import { emptyCart } from '../actions/cartAction';
-import { updatePayment } from '../actions/paymentAction';
+import { updateStripePayment } from '../actions/paymentAction';
 import { color } from '../utilities';
 
 export default function SuccessPaymentScreen() {
@@ -15,8 +15,8 @@ export default function SuccessPaymentScreen() {
 
   useEffect(() => {
     dispatch(emptyCart());
-    dispatch(updatePayment(orderId));
-  }, [dispatch]);
+    dispatch(updateStripePayment(orderId));
+  }, [dispatch, orderId]);
   return (
     <Container>
       <h4>
