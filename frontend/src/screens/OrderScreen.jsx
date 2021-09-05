@@ -1,16 +1,19 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 /* eslint-disable eqeqeq */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { BiRightArrowAlt } from 'react-icons/bi';
 import { useStripe } from '@stripe/react-stripe-js';
+import axios from 'axios';
+import { PayPalButton } from 'react-paypal-button-v2';
 import { Header, Message, Loader } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { getOrderDetails } from '../actions/orderAction';
 import { formatter } from '../helper/CurrencyFormat';
-import { proceedPayment } from '../actions/paymentAction';
+import { proceedPayment, updatePaypalPayment } from '../actions/paymentAction';
 
 export function OrderScreen() {
   const dispatch = useDispatch();
@@ -19,10 +22,12 @@ export function OrderScreen() {
   const stripe = useStripe();
   const userDetails = useSelector((state) => state.userDetails);
   const payment = useSelector((state) => state.payment);
-
+  const [sdkReady, setSdkReady] = useState(false);
   const orderDetails = useSelector((state) => state.orderDetails);
+  const updatePaypalState = useSelector((state) => state.updatePaypalPayment);
   const { user: userInfo } = userDetails;
   const { loading, details } = orderDetails;
+  const { loading: loadingPaypal, success } = updatePaypalState;
   const {
     shippingAdress,
     shippingMethod,
@@ -42,10 +47,29 @@ export function OrderScreen() {
       history.push('/login');
     }
   }, [userInfo, history]);
-
   useEffect(() => {
     dispatch(getOrderDetails(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    const addPaypalScript = async () => {
+      const { data: clientId } = await axios.get('/api/config/paypal');
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.async = true;
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
+      script.onload = () => setSdkReady(true);
+      document.body.appendChild(script);
+    };
+
+    if (!details.isPaid) {
+      if (!window.paypal) {
+        addPaypalScript();
+      }
+    } else {
+      setSdkReady(true);
+    }
+  }, [success, details]);
 
   const total = () => {
     if (paymentMethod === 'Paypal') {
@@ -88,6 +112,12 @@ export function OrderScreen() {
       redirect();
     }
   }, [payment]);
+
+  // Paypal
+
+  const successPaymentHandler = (paymentResult) => {
+    dispatch(updatePaypalPayment(id, paymentResult));
+  };
 
   return (
     <>
@@ -187,14 +217,20 @@ export function OrderScreen() {
                     <p>Total :</p>
                     <p>{formatter.format(total())}</p>
                   </Total>
-                  <BtnWrapper>
-                    <Btn type="submit">
-                      Pay now
-                      <span>
-                        <Arrow />
-                      </span>
-                    </Btn>
-                  </BtnWrapper>
+                  {paymentMethod !== 'Paypal' ? (
+                    <BtnWrapper>
+                      <Btn type="submit">
+                        Pay now
+                        <span>
+                          <Arrow />
+                        </span>
+                      </Btn>
+                    </BtnWrapper>
+                  ) : !sdkReady || loadingPaypal ? (
+                    'LOADING...'
+                  ) : (
+                    <PayPalButton amount={total()} onSuccess={successPaymentHandler} />
+                  )}
                 </form>
               </CheckoutWrapper>
             </CheckoutSection>
