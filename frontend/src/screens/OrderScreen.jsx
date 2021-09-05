@@ -14,7 +14,6 @@ import { color, shadow, rounded } from '../utilities';
 import { getOrderDetails } from '../actions/orderAction';
 import { formatter } from '../helper/CurrencyFormat';
 import { proceedPayment, updatePaypalPayment } from '../actions/paymentAction';
-import { ADDED_ORDER_RESET } from '../actions/types';
 
 export function OrderScreen() {
   const dispatch = useDispatch();
@@ -25,8 +24,6 @@ export function OrderScreen() {
   const payment = useSelector((state) => state.payment);
   const [sdkReady, setSdkReady] = useState(false);
   const orderDetails = useSelector((state) => state.orderDetails);
-
-  const { success: orderAddedSccessfully } = orderDetails;
   const updatePaypalState = useSelector((state) => state.updatePaypalPayment);
   const { user: userInfo } = userDetails;
   const { loading, details } = orderDetails;

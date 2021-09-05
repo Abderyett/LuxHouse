@@ -155,6 +155,7 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
   padding: 2rem;
+  margin-top: 4rem;
 `;
 const UserProfile = styled.section``;
 
@@ -169,7 +170,7 @@ const Heading = styled.h3`
 
 const InputWrapper = styled.div``;
 const Input = styled.input`
-  border-radius: ${rounded.full};
+  border-radius: ${rounded.md};
   height: 3rem;
   width: 25rem;
   max-width: 30rem;
@@ -179,14 +180,15 @@ const Input = styled.input`
   font-family: 'avenir_regular';
   box-shadow: ${shadow.lg};
   margin-top: 1rem;
-  box-shadow: ${({ error }) => error && `0px 0px 0px 2px ${color.red_vivid_500}`};
+  box-shadow: ${({ error }) =>
+    error ? `0px 0px 0px 2px ${color.red_vivid_500}` : `0px 0px 0px 2px ${color.grey_300}`};
 
   @media (max-width: 768px) {
     width: 90vw;
   }
   outline: none;
   &:focus {
-    box-shadow: 0px 0px 0px 2px ${color.grey_400};
+    box-shadow: 0px 0px 0px 2px ${color.grey_600};
   }
 `;
 
