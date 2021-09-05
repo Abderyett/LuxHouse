@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { Header, Error, Message } from '../components';
 import { color, rounded, shadow } from '../utilities';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
+import { getOrdersDetails } from '../actions/orderAction';
 
 export function ProfileScreen() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -30,6 +31,7 @@ export function ProfileScreen() {
       history.push('/login');
     } else {
       dispatch(getUserDetails('profile'));
+      dispatch(getOrdersDetails());
     }
   }, [success, userInfo, dispatch, history]);
 
