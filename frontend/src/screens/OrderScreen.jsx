@@ -6,14 +6,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { BiRightArrowAlt } from 'react-icons/bi';
+import { BsCreditCard } from 'react-icons/bs';
 import { useStripe } from '@stripe/react-stripe-js';
-import axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { Header, Message, Loader } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { getOrderDetails } from '../actions/orderAction';
 import { formatter } from '../helper/CurrencyFormat';
 import { proceedPayment, updatePaypalPayment } from '../actions/paymentAction';
+import { ADDED_ORDER_RESET } from '../actions/types';
 
 export function OrderScreen() {
   const dispatch = useDispatch();
@@ -24,21 +25,12 @@ export function OrderScreen() {
   const payment = useSelector((state) => state.payment);
   const [sdkReady, setSdkReady] = useState(false);
   const orderDetails = useSelector((state) => state.orderDetails);
+
+  const { success: orderAddedSccessfully } = orderDetails;
   const updatePaypalState = useSelector((state) => state.updatePaypalPayment);
   const { user: userInfo } = userDetails;
   const { loading, details } = orderDetails;
   const { loading: loadingPaypal, success } = updatePaypalState;
-  const {
-    shippingAdress,
-    shippingMethod,
-    taxPrice,
-    totalPrice,
-    isPaid,
-    isDelivered,
-    user,
-    orderItems,
-    paymentMethod,
-  } = details;
 
   //* Check if user is loged in
 
@@ -47,35 +39,23 @@ export function OrderScreen() {
       history.push('/login');
     }
   }, [userInfo, history]);
+
   useEffect(() => {
     dispatch(getOrderDetails(id));
-  }, [dispatch, id]);
+  }, [id]);
 
   useEffect(() => {
-    const addPaypalScript = async () => {
-      const { data: clientId } = await axios.get('/api/config/paypal');
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.async = true;
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
-      script.onload = () => setSdkReady(true);
-      document.body.appendChild(script);
-    };
-
-    if (!details.isPaid) {
-      if (!window.paypal) {
-        addPaypalScript();
-      }
-    } else {
-      setSdkReady(true);
+    if (success) {
+      history.push('/success');
+      // dispatch({ type: ADDED_ORDER_RESET });
     }
-  }, [success, details]);
+  }, [dispatch, id, success]);
 
   const total = () => {
-    if (paymentMethod === 'Paypal') {
-      return taxPrice + shippingMethod.price + totalPrice;
+    if (details.paymentMethod && details.paymentMethod === 'Paypal') {
+      return details.taxPrice + details.shippingMethod.price + details.totalPrice;
     }
-    return shippingMethod.price + totalPrice;
+    return details.shippingMethod.price + details.totalPrice;
   };
 
   const submitHandler = (e) => {
@@ -135,52 +115,53 @@ export function OrderScreen() {
                 <Heading>Shipping Adress</Heading>
                 <Content>
                   <b>Adress:</b> &nbsp;{' '}
-                  {`${shippingAdress.street}, ${shippingAdress.city} ${shippingAdress.postalCode}, ${shippingAdress.country}`}
+                  {details.shippingAdress &&
+                    `${details.shippingAdress.street}, ${details.shippingAdress.city} ${details.shippingAdress.postalCode}, ${details.shippingAdress.country}`}
                 </Content>
                 <Content>
                   <b>Name: </b> &nbsp;
-                  {user && user.name}
+                  {details.user && details.user.name}
                 </Content>
                 <Content style={{ textTransform: 'none' }}>
                   <b>Email</b> &nbsp;
-                  {user && user.email}
+                  {details.user && details.user.email}
                 </Content>
                 <Line />
                 <Heading>Order status</Heading>
                 <Content>
-                  <Message mt="0" bg={isPaid ? 'success' : 'danger'}>
+                  <Message mt="0" bg={details.isPaid ? 'success' : 'danger'}>
                     {' '}
-                    {isPaid ? 'Paid' : 'Not  Paid'}
+                    {details.isPaid ? 'Paid' : 'Not  Paid'}
                   </Message>
                 </Content>
                 <Line />
                 <Heading>Payment Method</Heading>
                 <Content>
                   <b>Method:</b> &nbsp;
-                  {paymentMethod}
+                  {details.paymentMethod}
                 </Content>
                 <Line />
                 <Heading>Shipping Method</Heading>
                 <Content>
                   <b>Choosed Package:</b> &nbsp;
-                  {shippingMethod.shippingPackage}
+                  {details.shippingMethod.shippingPackage}
                 </Content>
                 <Content>
                   <b>Estimated delivery date:</b> &nbsp;
-                  {shippingMethod.deliveryDate}
+                  {details.shippingMethod.deliveryDate}
                 </Content>
                 <Line />
                 <Heading>Delivery status</Heading>
                 <Content>
-                  <Message mt="0" bg={isDelivered ? 'success' : 'danger'}>
+                  <Message mt="0" bg={details.isDelivered ? 'success' : 'danger'}>
                     {' '}
-                    {isDelivered ? 'Delivered' : 'Not Delivered'}
+                    {details.isDelivered ? 'Delivered' : 'Not Delivered'}
                   </Message>
                 </Content>
                 <Line />
                 <Heading>Order Items</Heading>
 
-                {orderItems.map((el) => (
+                {details.orderItems.map((el) => (
                   <Wrapper key={el._id}>
                     <ImageContent>
                       <Image src={el.image && el.image[0].url} alt={el.name} />
@@ -200,16 +181,16 @@ export function OrderScreen() {
                   <Line />
                   <TotalPrice>
                     <p>Items :</p>
-                    <p>{formatter.format(totalPrice)}</p>
+                    <p>{formatter.format(details.totalPrice)}</p>
                   </TotalPrice>
                   <Shipping>
                     <p>Shipping :</p>
-                    <p>{formatter.format(shippingMethod.price)}</p>
+                    <p>{formatter.format(details.shippingMethod.price)}</p>
                   </Shipping>
-                  {paymentMethod === 'Paypal' && (
+                  {details.paymentMethod === 'Paypal' && (
                     <Tax>
                       <p>Tax :</p>
-                      <p>{formatter.format(taxPrice)}</p>
+                      <p>{formatter.format(details.taxPrice)}</p>
                     </Tax>
                   )}
 
@@ -217,17 +198,20 @@ export function OrderScreen() {
                     <p>Total :</p>
                     <p>{formatter.format(total())}</p>
                   </Total>
-                  {paymentMethod !== 'Paypal' ? (
+                  {details.paymentMethod !== 'Paypal' ? (
                     <BtnWrapper>
                       <Btn type="submit">
+                        <span>
+                          <Card />
+                        </span>
                         Pay now
                         <span>
                           <Arrow />
                         </span>
                       </Btn>
                     </BtnWrapper>
-                  ) : !sdkReady || loadingPaypal ? (
-                    'LOADING...'
+                  ) : sdkReady || loadingPaypal ? (
+                    <Loader />
                   ) : (
                     <PayPalButton amount={total()} onSuccess={successPaymentHandler} />
                   )}
@@ -391,4 +375,10 @@ const BtnWrapper = styled.div`
       transition: all 0.6s ease-in-out;
     }
   }
+`;
+const Card = styled(BsCreditCard)`
+  color: ${color.white};
+  font-size: 1.5rem;
+  vertical-align: middle;
+  margin-right: 1rem;
 `;

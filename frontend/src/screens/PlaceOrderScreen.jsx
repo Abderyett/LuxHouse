@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
-import { addOrder } from '../actions/orderAction';
+import { addOrder, getOrderDetails } from '../actions/orderAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
 import { formatter } from '../helper/CurrencyFormat';
 
@@ -13,6 +13,7 @@ export function PlaceOrderScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
+
   const cart = useSelector((state) => state.cart);
   const addedOrder = useSelector((state) => state.addedOrder);
   const { user } = userDetails;
@@ -54,6 +55,7 @@ export function PlaceOrderScreen() {
   };
   useEffect(() => {
     if (success) {
+      dispatch(getOrderDetails(order._id));
       history.push(`order/${order._id}`);
     }
   }, [success, history]);

@@ -1,22 +1,31 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { FcOk } from 'react-icons/fc';
 import { emptyCart } from '../actions/cartAction';
 import { updateStripePayment } from '../actions/paymentAction';
 import { color } from '../utilities';
+import { ORDER_DETAILS_RESET, PAYMENT_PAYPAL_RESET } from '../actions/types';
 
 export default function SuccessPaymentScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const orderDetails = useSelector((state) => state.orderDetails);
 
   const orderId = JSON.parse(localStorage.getItem('orderDetails'));
 
   useEffect(() => {
     dispatch(emptyCart());
     dispatch(updateStripePayment(orderId));
+    dispatch({ type: PAYMENT_PAYPAL_RESET });
   }, [dispatch, orderId]);
+
+  useEffect(() => {
+    if (orderDetails.success) {
+      dispatch({ type: ORDER_DETAILS_RESET });
+    }
+  }, [orderDetails.success]);
   return (
     <Container>
       <h4>

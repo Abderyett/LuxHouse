@@ -8,6 +8,7 @@ import { addItem } from '../actions/cartAction';
 import { Header, Accordion, Loader, Message } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { BlueCircle, CheckCircle } from '../utilities/svg';
+import { ORDER_DETAILS_RESET, ADDED_ORDER_RESET } from '../actions/types';
 
 export function ProductsScreen() {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ export function ProductsScreen() {
 
   useEffect(() => {
     dispatch(listProduct());
+    dispatch({ type: ORDER_DETAILS_RESET });
+    dispatch({ type: ADDED_ORDER_RESET });
   }, [dispatch]);
 
   useEffect(() => {
