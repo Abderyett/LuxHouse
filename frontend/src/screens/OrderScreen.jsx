@@ -209,6 +209,8 @@ export function OrderScreen() {
                     </BtnWrapper>
                   ) : sdkReady || loadingPaypal ? (
                     <Loader />
+                  ) : details.isPaid ? (
+                    ''
                   ) : (
                     <PayPalButton amount={total()} onSuccess={successPaymentHandler} />
                   )}

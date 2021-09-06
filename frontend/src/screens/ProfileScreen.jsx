@@ -10,7 +10,7 @@ import moment from 'moment';
 import { Header, Error, Message, Loader } from '../components';
 import { color, rounded, shadow } from '../utilities';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
-import { getOrdersDetails } from '../actions/orderAction';
+import { getOrdersDetails, getOrderDetails } from '../actions/orderAction';
 import { formatter } from '../helper/CurrencyFormat';
 
 export function ProfileScreen() {
@@ -177,7 +177,9 @@ export function ProfileScreen() {
                         <Td>{order.isPaid ? <Check /> : <Times />}</Td>
                         <Td>{order.isDelivered ? <Check /> : <Times />}</Td>
                         <Td>
-                          <StyledLink to={`/orders/${order.id}`}>Details</StyledLink>
+                          <StyledLink to={`/order/${order.id}`} onClick={() => dispatch(getOrderDetails(order.id))}>
+                            Details
+                          </StyledLink>
                         </Td>
                       </Tr>
                     ))}

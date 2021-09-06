@@ -90,7 +90,7 @@ export function Header() {
                   <ProfileDropdown>
                     {userInfo ? (
                       <>
-                        <ProfileLink to="profile">
+                        <ProfileLink to="/profile">
                           {' '}
                           <span>
                             <CgProfile />
@@ -105,7 +105,7 @@ export function Header() {
                         </button>
                       </>
                     ) : (
-                      <ProfileLink to="login">
+                      <ProfileLink to="/login">
                         {' '}
                         <span>
                           <RiUserReceivedLine />
