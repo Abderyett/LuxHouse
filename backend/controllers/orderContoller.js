@@ -103,7 +103,15 @@ exports.getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find({ user: req.user });
 
   if (orders) {
-    res.status(200).json(orders);
+    const filtredOrder = orders.map((order) => ({
+      id: order._id,
+      isPaid: order.isPaid,
+      isDelivred: order.isDelivred,
+      createdAt: order.createdAt,
+      totalPrice: order.totalPrice,
+      taxPrice: order.taxPrice,
+    }));
+    res.status(200).json(filtredOrder);
   } else {
     res.status(404);
     throw new Error('Order not found');

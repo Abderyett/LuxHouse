@@ -146,6 +146,25 @@ export function ProfileScreen() {
 
           <OrderSection>
             <Heading>My Orders</Heading>
+            <TableWrapper>
+              <Table>
+                <thead>
+                  <tr>
+                    <Th>Order ID</Th>
+                    <Th>Order Date</Th>
+                    <Th>Total</Th>
+                    <Th>Paid</Th>
+                    <Th>Delivred</Th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <Td>The table body</Td>
+                    <Td>with two columns</Td>
+                  </tr>
+                </tbody>
+              </Table>
+            </TableWrapper>
           </OrderSection>
         </Container>
       )}
@@ -213,4 +232,22 @@ const SubmitBtn = styled.button`
 
 const ButtonWrapper = styled.div`
   margin-top: 1rem;
+`;
+
+const TableWrapper = styled.div`
+  padding-top: 1rem;
+`;
+
+const Table = styled.table`
+  border: 1px solid ${color.grey_400};
+  width: 100%;
+`;
+const Td = styled.td`
+  border-top: 1px solid ${color.grey_400};
+  border-bottom: 1px solid ${color.grey_400};
+`;
+const Th = styled.th`
+  padding: 1rem;
+  text-align: start;
+  text-transform: uppercase;
 `;
