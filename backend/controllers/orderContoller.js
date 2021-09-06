@@ -106,7 +106,7 @@ exports.getOrders = asyncHandler(async (req, res) => {
     const filtredOrder = orders.map((order) => ({
       id: order._id,
       isPaid: order.isPaid,
-      isDelivred: order.isDelivred,
+      isDelivered: order.isDelivered,
       createdAt: order.createdAt,
       totalPrice: order.totalPrice,
       taxPrice: order.taxPrice,

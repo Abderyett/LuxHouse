@@ -3,18 +3,24 @@ import styled from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { Header, Error, Message } from '../components';
+import { Link, useHistory } from 'react-router-dom';
+import { FaRegTimesCircle } from 'react-icons/fa';
+import { FcOk } from 'react-icons/fc';
+import moment from 'moment';
+import { Header, Error, Message, Loader } from '../components';
 import { color, rounded, shadow } from '../utilities';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import { getOrdersDetails } from '../actions/orderAction';
+import { formatter } from '../helper/CurrencyFormat';
 
 export function ProfileScreen() {
   const userLogin = useSelector((state) => state.userLogin);
   const userDetails = useSelector((state) => state.userDetails);
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const ordersDetails = useSelector((state) => state.ordersDetails);
   const { success } = userUpdateProfile;
   const { user, error } = userDetails;
+  const { loading, orders } = ordersDetails;
 
   const { userInfo } = userLogin;
   const history = useHistory();
@@ -146,25 +152,39 @@ export function ProfileScreen() {
 
           <OrderSection>
             <Heading>My Orders</Heading>
-            <TableWrapper>
-              <Table>
-                <thead>
-                  <tr>
-                    <Th>Order ID</Th>
-                    <Th>Order Date</Th>
-                    <Th>Total</Th>
-                    <Th>Paid</Th>
-                    <Th>Delivred</Th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <Td>The table body</Td>
-                    <Td>with two columns</Td>
-                  </tr>
-                </tbody>
-              </Table>
-            </TableWrapper>
+            {loading ? (
+              <Loader />
+            ) : (
+              <TableWrapper>
+                <Table>
+                  <thead>
+                    <tr>
+                      <Th>Order ID</Th>
+                      <Th>Order Date</Th>
+                      <Th>Total</Th>
+                      <Th>Paid</Th>
+                      <Th>Delivred</Th>
+                      <Th>{}</Th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders.map((order) => (
+                      <Tr key={order.id}>
+                        <Td>{order.id}</Td>
+
+                        <Td>{moment(order.createdAt).format('MMMM Do YYYY')}</Td>
+                        <Td>{formatter.format(order.totalPrice + order.taxPrice)}</Td>
+                        <Td>{order.isPaid ? <Check /> : <Times />}</Td>
+                        <Td>{order.isDelivered ? <Check /> : <Times />}</Td>
+                        <Td>
+                          <StyledLink to={`/orders/${order.id}`}>Details</StyledLink>
+                        </Td>
+                      </Tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </TableWrapper>
+            )}
           </OrderSection>
         </Container>
       )}
@@ -241,13 +261,46 @@ const TableWrapper = styled.div`
 const Table = styled.table`
   border: 1px solid ${color.grey_400};
   width: 100%;
+  border-collapse: collapse;
+  box-shadow: ${shadow.md};
 `;
 const Td = styled.td`
-  border-top: 1px solid ${color.grey_400};
+  /* border-top: 1px solid ${color.grey_400}; */
   border-bottom: 1px solid ${color.grey_400};
+  padding: 1rem;
 `;
 const Th = styled.th`
   padding: 1rem;
   text-align: start;
   text-transform: uppercase;
+  border-bottom: 2px solid ${color.grey_400};
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${color.grey_700};
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  &:hover {
+    color: ${color.scallop_shell};
+  }
+`;
+const Tr = styled.tr`
+  padding: 1rem;
+
+  &:hover {
+    background-color: ${color.grey_100};
+    box-shadow: ${shadow.md};
+    ${StyledLink} {
+      color: ${color.scallop_shell};
+    }
+  }
+`;
+
+const Times = styled(FaRegTimesCircle)`
+  color: ${color.red_vivid_500};
+  font-size: 1.3rem;
+`;
+const Check = styled(FcOk)`
+  font-size: 1.3rem;
 `;
