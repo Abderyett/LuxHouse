@@ -134,3 +134,17 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error('User Not found');
   }
 });
+
+//* @desc Get Users
+//* @route GET api/v1/users
+//* @access Private/Admin
+
+exports.getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+
+  if (users) {
+    return res.status(200).json({ users });
+  }
+  res.status(404);
+  throw new Error("User Profile Doesn't exist");
+});

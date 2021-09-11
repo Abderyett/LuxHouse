@@ -46,7 +46,7 @@ export function Header() {
                   <RiArrowDropRightLine />
                 </span>
               </NavLink>
-              <NavLink to="blog">
+              <NavLink to="/blog">
                 stories
                 <span>
                   <RiArrowDropRightLine />
@@ -68,7 +68,7 @@ export function Header() {
           </ListWrapper>
           <ListWrapper onClick={() => setIsOpen(false)}>
             <ul>
-              <ActionLink to="wichlist">
+              <ActionLink to="/wichlist">
                 <span>
                   <FiHeart />
                   My Wichlist
