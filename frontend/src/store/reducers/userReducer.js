@@ -13,6 +13,9 @@ const {
   USER_PROFILE_DETAILS_SUCCESS,
   USER_PROFILE_DETAILS_FAIL,
   USER_PROFILE_DETAILS_CLEAR,
+  USERS_LIST_REQUEST,
+  USERS_LIST_SUCCESS,
+  USERS_LIST_FAIL,
 } = require('../../actions/types');
 
 export const loginReducer = (state = { userInfo: {} }, action) => {
@@ -68,6 +71,19 @@ export const updateUserProfileReducer = (state = {}, action) => {
     case USER_UPDATE_PROFILE_SUCCESS:
       return { loading: false, success: true, userInfo: action.payload };
     case USER_UPDATE_PROFILE_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+export const userListReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case USERS_LIST_REQUEST:
+      return { loading: true };
+    case USERS_LIST_SUCCESS:
+      return { loading: false, users: action.payload };
+    case USERS_LIST_FAIL:
       return { loading: false, error: action.payload };
 
     default:
