@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FiHeart, FiUser } from 'react-icons/fi';
+import { FiHeart, FiUser, FiUsers, FiPackage } from 'react-icons/fi';
+import { FaClipboardList } from 'react-icons/fa';
+import { RiAdminLine, RiArrowDropRightLine, RiUserReceivedLine } from 'react-icons/ri';
 import { HiX } from 'react-icons/hi';
-import { RiArrowDropRightLine, RiUserReceivedLine } from 'react-icons/ri';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { BsCaretDownFill } from 'react-icons/bs';
@@ -24,6 +25,7 @@ export function Header() {
   const userLogin = useSelector((state) => state.userLogin);
   const userDetails = useSelector((state) => state.userDetails);
   const { showDropdown, toggleProfileDropDown } = toggleDropdown;
+  const [toggleDropDown, setToggleDropDown] = useState(false);
 
   const { userInfo } = userLogin;
   const { user } = userDetails;
@@ -68,16 +70,18 @@ export function Header() {
           </ListWrapper>
           <ListWrapper onClick={() => setIsOpen(false)}>
             <ul>
-              <ActionLink to="/wichlist">
-                <span>
-                  <FiHeart />
-                  My Wichlist
-                </span>
+              {!user.isAdmin && (
+                <ActionLink to="/wichlist">
+                  <span>
+                    <FiHeart />
+                    My Wichlist
+                  </span>
 
-                <Arrow second="second">
-                  <RiArrowDropRightLine />
-                </Arrow>
-              </ActionLink>
+                  <Arrow second="second">
+                    <RiArrowDropRightLine />
+                  </Arrow>
+                </ActionLink>
+              )}
               <Account onClick={() => dispatch(toggleProfileDropdown())}>
                 <span>
                   <FiUser />
@@ -116,13 +120,53 @@ export function Header() {
                   </ProfileDropdown>
                 )}
               </Account>
-              <ShoppingCart onClick={() => dispatch(toggleCart())}>
-                <CartIcon />
-                <span>shoping cart</span>
-                <Arrow>
-                  <RiArrowDropRightLine />
-                </Arrow>
-              </ShoppingCart>
+              {user.isAdmin && (
+                <Account onClick={() => setToggleDropDown(!toggleDropDown)}>
+                  <span>
+                    <RiAdminLine />
+                    {user && user.isAdmin && 'Admin'}
+                  </span>
+
+                  <StyledArrowDropdown />
+                  <Arrow />
+                  {toggleDropDown && (
+                    <ProfileDropdown>
+                      {user && user.isAdmin && (
+                        <>
+                          <UsersLink to="/admin/userslist">
+                            {' '}
+                            <span>
+                              <FiUsers />
+                            </span>
+                            Users
+                          </UsersLink>
+                          <ProductsLink to="/admin/products">
+                            <span>
+                              <FiPackage />
+                            </span>
+                            Products
+                          </ProductsLink>
+                          <OrdersLink to="/admin/orders">
+                            <span>
+                              <FaClipboardList />
+                            </span>
+                            orders
+                          </OrdersLink>
+                        </>
+                      )}
+                    </ProfileDropdown>
+                  )}
+                </Account>
+              )}
+              {!user.isAdmin && (
+                <ShoppingCart onClick={() => dispatch(toggleCart())}>
+                  <CartIcon />
+                  <span>shoping cart</span>
+                  <Arrow>
+                    <RiArrowDropRightLine />
+                  </Arrow>
+                </ShoppingCart>
+              )}
             </ul>
           </ListWrapper>
         </Wrapper>
@@ -250,13 +294,17 @@ const StyledArrowDropdown = styled(BsCaretDownFill)`
   opacity: 1;
 `;
 
-const ProfileLink = styled(Link)`
+const StyledLinks = css`
   cursor: pointer;
   color: ${color.black};
 
   &:hover {
     color: ${color.grey_600};
   }
+`;
+
+const ProfileLink = styled(Link)`
+  ${StyledLinks}
 `;
 
 const ListStyle = css`
@@ -428,4 +476,16 @@ const Account = styled.div`
     font-weight: 600;
     vertical-align: bottom;
   }
+`;
+
+const UsersLink = styled(Link)`
+  ${StyledLinks}
+`;
+const ProductsLink = styled(Link)`
+  ${StyledLinks}
+  padding-top:0.5rem
+`;
+const OrdersLink = styled(Link)`
+  ${StyledLinks}
+  padding-top:0.5rem
 `;
