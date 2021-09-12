@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { FcCancel } from 'react-icons/fc';
 import { color } from '../utilities';
 
-export default function CancelPaymentScreen() {
+export function CancelPaymentScreen() {
   const history = useHistory();
 
   return (

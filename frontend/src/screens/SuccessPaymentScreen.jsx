@@ -8,7 +8,7 @@ import { updateStripePayment } from '../actions/paymentAction';
 import { color } from '../utilities';
 import { ORDER_DETAILS_RESET, PAYMENT_PAYPAL_RESET } from '../actions/types';
 
-export default function SuccessPaymentScreen() {
+export function SuccessPaymentScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
   const orderDetails = useSelector((state) => state.orderDetails);
