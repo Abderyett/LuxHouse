@@ -18,6 +18,8 @@ import {
   USERS_LIST_REQUEST,
   USERS_LIST_SUCCESS,
   USERS_LIST_FAIL,
+  USERS_LIST_RESET,
+  ORDERS_DETAILS_RESET,
 } from './types';
 
 //* ------------------------  LOG USER -----------------
@@ -56,6 +58,10 @@ export const logOut = () => (dispatch) => {
   dispatch({
     type: USER_PROFILE_DETAILS_CLEAR,
   });
+  dispatch({
+    type: USERS_LIST_RESET,
+  });
+  dispatch({ type: ORDERS_DETAILS_RESET });
   localStorage.removeItem('userInfo');
 };
 

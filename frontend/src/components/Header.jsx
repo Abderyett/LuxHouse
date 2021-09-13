@@ -2,12 +2,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiHeart, FiUser, FiUsers, FiPackage } from 'react-icons/fi';
 import { FaClipboardList } from 'react-icons/fa';
 import { RiAdminLine, RiArrowDropRightLine, RiUserReceivedLine } from 'react-icons/ri';
 import { HiX } from 'react-icons/hi';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { BsCaretDownFill } from 'react-icons/bs';
 import { CgProfile, CgLogOut } from 'react-icons/cg';
@@ -21,6 +20,7 @@ import { logOut, getUserDetails } from '../actions/userActions';
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
   const toggleDropdown = useSelector((state) => state.cart);
   const userLogin = useSelector((state) => state.userLogin);
   const userDetails = useSelector((state) => state.userDetails);
@@ -33,6 +33,12 @@ export function Header() {
   useEffect(() => {
     dispatch(getUserDetails('profile'));
   }, [userInfo, dispatch]);
+
+  const logOutHandler = () => {
+    dispatch(logOut());
+
+    history.push('/');
+  };
 
   return (
     <>
@@ -101,7 +107,7 @@ export function Header() {
                           </span>
                           Profile
                         </ProfileLink>
-                        <button type="button" onClick={() => dispatch(logOut())}>
+                        <button type="button" onClick={logOutHandler}>
                           <span>
                             <CgLogOut />
                           </span>
@@ -483,9 +489,9 @@ const UsersLink = styled(Link)`
 `;
 const ProductsLink = styled(Link)`
   ${StyledLinks}
-  padding-top:0.5rem
+  padding-top:1rem
 `;
 const OrdersLink = styled(Link)`
   ${StyledLinks}
-  padding-top:0.5rem
+  padding-top:1rem
 `;

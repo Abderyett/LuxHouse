@@ -30,16 +30,18 @@ export function CheckoutScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
-  // const cart = useSelector((state) => state.cart);
+  const userLogin = useSelector((state) => state.userLogin);
+  const cart = useSelector((state) => state.cart);
   const { user } = userDetails;
+  const { userInfo } = userLogin;
+  const { cartItem } = cart;
 
-  // if (cart.cartItems) {
-  //   history.push('/products');
-  // }
   //* Check if user is loged in
   useEffect(() => {
-    if (Object.keys(user).length === 0) {
+    if (!userInfo) {
       history.push('/login');
+    } else if (cartItem.length === 0) {
+      history.push('/products');
     }
   }, [user, history]);
 

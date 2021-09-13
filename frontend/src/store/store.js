@@ -15,18 +15,18 @@ const reducers = combineReducers(
   {
     porductList: productListReducer,
     productDetail: productDetailsReducer,
-    cart: cartReducer,
-    userLogin: loginReducer,
     registerUser: registerReducer,
+    userLogin: loginReducer,
     userDetails: userDetailsReducer,
     userUpdateProfile: updateUserProfileReducer,
+    usersList: userListReducer,
+    cart: cartReducer,
     addedOrder: addedOrderReducer,
     orderDetails: orderDetailsReducer,
     ordersDetails: ordersDetailsReducer,
     payment: paymentReducer,
     updateStripePayment: updateStripePaymentReducer,
     updatePaypalPayment: updatePaypalPaymentReducer,
-    usersList: userListReducer,
   });
 
 

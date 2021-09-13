@@ -2,20 +2,33 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { FaRegTimesCircle } from 'react-icons/fa';
+import { Link, useHistory } from 'react-router-dom';
+import { FaRegTimesCircle, FaTrashAlt } from 'react-icons/fa';
 import { FcOk } from 'react-icons/fc';
+import { FiEdit } from 'react-icons/fi';
+
 import { getUsersList } from '../actions/userActions';
 import { Loader, Message, Header } from '../components';
 import { color, shadow } from '../utilities';
 
 export function UsersListScreen() {
   const usersList = useSelector((state) => state.usersList);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const history = useHistory();
   const { error, users, loading } = usersList;
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getUsersList());
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(getUsersList());
+    } else {
+      history.push('/login');
+    }
   }, [dispatch]);
+
+  const deleteHandler = (id) => {
+    console.log('delete');
+  };
 
   return (
     <>
@@ -50,7 +63,13 @@ export function UsersListScreen() {
                   </Td>
                   <Td>{user.isAdmin ? <Check /> : <Times />}</Td>
                   <Td>
-                    <StyledLink to={`/user/${user._id}/edit`}>Details</StyledLink>
+                    <span>
+                      <Link to={`/user/${user._id}`}>
+                        {' '}
+                        <Edit />
+                      </Link>
+                      <Trash onClick={() => deleteHandler(user._id)} />
+                    </span>
                   </Td>
                 </Tr>
               ))}
@@ -119,5 +138,16 @@ const Check = styled(FcOk)`
 `;
 const A = styled.a`
   text-decoration: none;
+  color: ${color.grey_700};
+`;
+
+const Trash = styled(FaTrashAlt)`
+  margin-left: 1.5rem;
+  font-size: 1.2rem;
+  color: ${color.red_vivid_500};
+  cursor: pointer;
+`;
+const Edit = styled(FiEdit)`
+  font-size: 1.2rem;
   color: ${color.grey_700};
 `;

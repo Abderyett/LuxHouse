@@ -1,7 +1,7 @@
 /* eslint-disable eqeqeq */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { Header } from '../components';
 import { color, shadow, rounded } from '../utilities';
@@ -13,7 +13,8 @@ export function PlaceOrderScreen() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
-
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const cart = useSelector((state) => state.cart);
   const addedOrder = useSelector((state) => state.addedOrder);
   const { user } = userDetails;
@@ -21,15 +22,19 @@ export function PlaceOrderScreen() {
   const { order, success } = addedOrder;
 
   //* Check if user is loged in
-  if (!shippingAdress && !shippingMethod && !payment) {
-    history.push('/cart');
+
+  if (!userInfo) {
+    history.push('/login');
+    if (cartItem.length === 0) {
+      history.push('/products');
+    }
   }
 
-  useEffect(() => {
-    if (Object.keys(user).length === 0) {
-      history.push('/login');
-    }
-  }, [user, history]);
+  // useEffect(() => {
+
+  // }, [shippingAdress, shippingMethod, payment, cartItem, user, history]);
+
+  useEffect(() => {}, [user, history]);
 
   const totalItems = () => (cartItem === [] ? 0 : cartItem.reduce((acc, item) => acc + item.quantity * item.price, 0));
   const tax = () => {
@@ -59,7 +64,15 @@ export function PlaceOrderScreen() {
       history.push(`order/${order._id}`);
     }
   }, [success, history]);
+  if (!shippingAdress && !shippingMethod && !payment) {
+    return (
+      <TextWrapper>
+        <h3>Shipping Adress & Method is missing</h3>
 
+        <StyledLink to="/checkout"> &larr; Back to Cart</StyledLink>
+      </TextWrapper>
+    );
+  }
   return (
     <>
       <Header />
@@ -124,7 +137,7 @@ export function PlaceOrderScreen() {
             </TotalPrice>
             <Shipping>
               <p>Shipping :</p>
-              <p>{shippingMethod.price && formatter.format(shippingMethod.price)}</p>
+              <p>{shippingMethod && formatter.format(shippingMethod.price)}</p>
             </Shipping>
             {payment === 'Paypal' && (
               <Tax>
@@ -327,4 +340,23 @@ const BtnWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+// Wrapper
+
+const TextWrapper = styled.div`
+  display: grid;
+  justify-content: center;
+  margin-top: 5rem;
+`;
+
+const StyledLink = styled(Link)`
+  padding-top: 3rem;
+  font-size: 1.2rem;
+  color: ${color.grey_700};
+  &:hover {
+    color: ${color.scallop_shell};
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
 `;

@@ -16,9 +16,10 @@ const {
   USERS_LIST_REQUEST,
   USERS_LIST_SUCCESS,
   USERS_LIST_FAIL,
+  USERS_LIST_RESET,
 } = require('../../actions/types');
 
-export const loginReducer = (state = { userInfo: {} }, action) => {
+export const loginReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { ...state, loading: true };
@@ -85,6 +86,8 @@ export const userListReducer = (state = { users: [] }, action) => {
       return { loading: false, users: action.payload };
     case USERS_LIST_FAIL:
       return { loading: false, error: action.payload };
+    case USERS_LIST_RESET:
+      return { users: [] };
 
     default:
       return state;
