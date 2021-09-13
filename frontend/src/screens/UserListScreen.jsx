@@ -6,15 +6,15 @@ import { Link, useHistory } from 'react-router-dom';
 import { FaRegTimesCircle, FaTrashAlt } from 'react-icons/fa';
 import { FcOk } from 'react-icons/fc';
 import { FiEdit } from 'react-icons/fi';
-
-import { getUsersList, removeUser } from '../actions/userActions';
-import { Loader, Message, Header } from '../components';
+import { getUsersList, removeUser, showModal } from '../actions/userActions';
+import { Loader, Message, Header, Modal } from '../components';
 import { color, shadow } from '../utilities';
 
 export function UsersListScreen() {
   const usersList = useSelector((state) => state.usersList);
   const userLogin = useSelector((state) => state.userLogin);
   const deleteUser = useSelector((state) => state.deleteUser);
+
   const { userInfo } = userLogin;
   const { success: successDelete } = deleteUser;
   const history = useHistory();
@@ -29,12 +29,14 @@ export function UsersListScreen() {
   }, [dispatch, successDelete, dispatch]);
 
   const deleteHandler = (id) => {
-    dispatch(removeUser(id));
+    // dispatch(removeUser(id));
+    dispatch(showModal());
   };
 
   return (
     <>
       <Header />
+      <Modal text="Do you want to delete this user?" />
       <Heading>Users</Heading>
       {loading ? (
         <Loader />

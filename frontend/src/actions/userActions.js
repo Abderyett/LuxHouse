@@ -23,6 +23,8 @@ import {
   REMOVE_USER_REQUEST,
   REMOVE_USER_SUCCESS,
   REMOVE_USER_FAIL,
+  SHOW_MODAL,
+  HIDE_MODAL,
 } from './types';
 
 //* ------------------------  LOG USER -----------------
@@ -208,4 +210,15 @@ export const removeUser = (id) => async (dispatch, getState) => {
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
+};
+
+export const showModal = () => (dispatch) => {
+  dispatch({
+    type: SHOW_MODAL,
+  });
+};
+export const hideModal = () => (dispatch) => {
+  dispatch({
+    type: HIDE_MODAL,
+  });
 };

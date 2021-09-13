@@ -141,7 +141,7 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
 
 exports.getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
-  console.log(req.user);
+
   if (users) {
     return res.status(200).json(users);
   }

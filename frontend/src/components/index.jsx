@@ -10,3 +10,4 @@ export * from './Loader';
 export * from './Message';
 export * from './CartIcon';
 export * from './PaypalButton';
+export * from './Modal';

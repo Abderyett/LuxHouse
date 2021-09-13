@@ -101,3 +101,7 @@ export const USERS_LIST_RESET = ' USERS_LIST_RESET';
 export const REMOVE_USER_REQUEST = ' REMOVE_USER_REQUEST';
 export const REMOVE_USER_SUCCESS = ' REMOVE_USER_SUCCESS';
 export const REMOVE_USER_FAIL = ' REMOVE_USER_FAIL';
+
+// SHOW and Hide Modal
+export const SHOW_MODAL = ' SHOW_MODAL';
+export const HIDE_MODAL = ' HIDE_MODAL';

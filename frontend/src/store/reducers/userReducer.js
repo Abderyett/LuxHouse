@@ -20,6 +20,8 @@ const {
   REMOVE_USER_REQUEST,
   REMOVE_USER_SUCCESS,
   REMOVE_USER_FAIL,
+  SHOW_MODAL,
+  HIDE_MODAL,
 } = require('../../actions/types');
 
 export const loginReducer = (state = {}, action) => {
@@ -108,6 +110,17 @@ export const deleteUserReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case REMOVE_USER_FAIL:
       return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+export const modalReducer = (state = { show: false }, action) => {
+  switch (action.type) {
+    case SHOW_MODAL:
+      return { show: true };
+    case HIDE_MODAL:
+      return { show: false };
 
     default:
       return state;
