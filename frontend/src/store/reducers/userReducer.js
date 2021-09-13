@@ -17,6 +17,9 @@ const {
   USERS_LIST_SUCCESS,
   USERS_LIST_FAIL,
   USERS_LIST_RESET,
+  REMOVE_USER_REQUEST,
+  REMOVE_USER_SUCCESS,
+  REMOVE_USER_FAIL,
 } = require('../../actions/types');
 
 export const loginReducer = (state = {}, action) => {
@@ -78,6 +81,9 @@ export const updateUserProfileReducer = (state = {}, action) => {
       return state;
   }
 };
+
+//! Admin section
+
 export const userListReducer = (state = { users: [] }, action) => {
   switch (action.type) {
     case USERS_LIST_REQUEST:
@@ -88,6 +94,20 @@ export const userListReducer = (state = { users: [] }, action) => {
       return { loading: false, error: action.payload };
     case USERS_LIST_RESET:
       return { users: [] };
+
+    default:
+      return state;
+  }
+};
+
+export const deleteUserReducer = (state = {}, action) => {
+  switch (action.type) {
+    case REMOVE_USER_REQUEST:
+      return { loading: true };
+    case REMOVE_USER_SUCCESS:
+      return { loading: false, success: true };
+    case REMOVE_USER_FAIL:
+      return { loading: false, error: action.payload };
 
     default:
       return state;

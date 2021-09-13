@@ -7,14 +7,16 @@ import { FaRegTimesCircle, FaTrashAlt } from 'react-icons/fa';
 import { FcOk } from 'react-icons/fc';
 import { FiEdit } from 'react-icons/fi';
 
-import { getUsersList } from '../actions/userActions';
+import { getUsersList, removeUser } from '../actions/userActions';
 import { Loader, Message, Header } from '../components';
 import { color, shadow } from '../utilities';
 
 export function UsersListScreen() {
   const usersList = useSelector((state) => state.usersList);
   const userLogin = useSelector((state) => state.userLogin);
+  const deleteUser = useSelector((state) => state.deleteUser);
   const { userInfo } = userLogin;
+  const { success: successDelete } = deleteUser;
   const history = useHistory();
   const { error, users, loading } = usersList;
   const dispatch = useDispatch();
@@ -24,10 +26,10 @@ export function UsersListScreen() {
     } else {
       history.push('/login');
     }
-  }, [dispatch]);
+  }, [dispatch, successDelete, dispatch]);
 
   const deleteHandler = (id) => {
-    console.log('delete');
+    dispatch(removeUser(id));
   };
 
   return (
@@ -68,7 +70,9 @@ export function UsersListScreen() {
                         {' '}
                         <Edit />
                       </Link>
-                      <Trash onClick={() => deleteHandler(user._id)} />
+                      <Button type="button" onClick={() => deleteHandler(user._id)}>
+                        <Trash />
+                      </Button>
                     </span>
                   </Td>
                 </Tr>
@@ -150,4 +154,8 @@ const Trash = styled(FaTrashAlt)`
 const Edit = styled(FiEdit)`
   font-size: 1.2rem;
   color: ${color.grey_700};
+`;
+
+const Button = styled.button`
+  background: transparent;
 `;

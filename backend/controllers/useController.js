@@ -141,7 +141,7 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
 
 exports.getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
-
+  console.log(req.user);
   if (users) {
     return res.status(200).json(users);
   }
@@ -158,7 +158,7 @@ exports.deleteUser = asyncHandler(async (req, res) => {
 
   if (user) {
     await user.remove();
-    res.json({ message: 'User removed' });
+    res.json('User removed');
   }
   res.status(404);
   throw new Error('User Not Found');

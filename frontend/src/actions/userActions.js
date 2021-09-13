@@ -20,6 +20,9 @@ import {
   USERS_LIST_FAIL,
   USERS_LIST_RESET,
   ORDERS_DETAILS_RESET,
+  REMOVE_USER_REQUEST,
+  REMOVE_USER_SUCCESS,
+  REMOVE_USER_FAIL,
 } from './types';
 
 //* ------------------------  LOG USER -----------------
@@ -152,7 +155,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   }
 };
 
-// ? ------------------------  GET USER DETAILS-----------------
+// ? ------------------------  GET USERS LIST-----------------
 
 export const getUsersList = () => async (dispatch, getState) => {
   try {
@@ -175,6 +178,33 @@ export const getUsersList = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USERS_LIST_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+// ? ------------------------  GET USERS LIST-----------------
+
+export const removeUser = (id) => async (dispatch, getState) => {
+  try {
+    const { userInfo } = getState().userLogin;
+    dispatch({
+      type: REMOVE_USER_REQUEST,
+    });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    await axios.delete(`/api/v1/users/${id}`, config);
+
+    dispatch({
+      type: REMOVE_USER_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: REMOVE_USER_FAIL,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
