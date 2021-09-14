@@ -28,15 +28,15 @@ export function UsersListScreen() {
     }
   }, [dispatch, successDelete, dispatch]);
 
-  const deleteHandler = (id) => {
-    // dispatch(removeUser(id));
-    dispatch(showModal());
-  };
+  // const deleteHandler = (id) => {
+  //   dispatch(removeUser(id));
+  //   dispatch(showModal());
+  // };
 
   return (
     <>
       <Header />
-      <Modal text="Do you want to delete this user?" />
+
       <Heading>Users</Heading>
       {loading ? (
         <Loader />
@@ -72,11 +72,12 @@ export function UsersListScreen() {
                         {' '}
                         <Edit />
                       </Link>
-                      <Button type="button" onClick={() => deleteHandler(user._id)}>
+                      <Button type="button" onClick={() => dispatch(showModal())}>
                         <Trash />
                       </Button>
                     </span>
                   </Td>
+                  <Modal text="Do you want to delete this user ?" id={user._id} />
                 </Tr>
               ))}
             </tbody>
