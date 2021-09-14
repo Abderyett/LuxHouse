@@ -100,7 +100,7 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
 
 //* @desc Update User
 //* @route PUT api/v1/users/Porfile
-//* @access Public
+//* @access Private
 
 exports.updateUserProfile = asyncHandler(async (req, res) => {
   //* 1-  We find user by ID attached by token in req
@@ -162,4 +162,52 @@ exports.deleteUser = asyncHandler(async (req, res) => {
   }
   res.status(404);
   throw new Error('User Not Found');
+});
+
+//* @desc Get User By ID
+//* @route GET api/v1/users/:id
+//* @access Private/Admin
+
+exports.getUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User  Doesn't exist");
+  }
+});
+
+//* @desc Update User
+//* @route PUT api/v1/users/:id
+//* @access admin/private
+
+exports.updateUser = asyncHandler(async (req, res) => {
+  //* 1-  We find user by ID attached by token in req
+  const user = await User.findById(req.params.id);
+  //* 2- Verify if there is user and update it
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin;
+    //* 3-  Save and send updated user info to the frontend
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User Not found');
+  }
 });
