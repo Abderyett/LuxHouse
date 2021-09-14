@@ -170,6 +170,7 @@ exports.deleteUser = asyncHandler(async (req, res) => {
 
 exports.getUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
+  console.log(user);
 
   if (user) {
     res.status(200).json({
@@ -201,7 +202,6 @@ exports.updateUser = asyncHandler(async (req, res) => {
     const updatedUser = await user.save();
 
     res.status(200).json({
-      _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,

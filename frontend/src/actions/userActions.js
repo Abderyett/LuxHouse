@@ -244,7 +244,7 @@ export const getUser = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`/api/v1/users/:${id}`, config);
+    const { data } = await axios.get(`/api/v1/users/${id}`, config);
 
     dispatch({
       type: USER_SUCCESS,

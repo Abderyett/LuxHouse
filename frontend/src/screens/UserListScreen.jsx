@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
@@ -14,19 +14,21 @@ export function UsersListScreen() {
   const usersList = useSelector((state) => state.usersList);
   const userLogin = useSelector((state) => state.userLogin);
   const deleteUser = useSelector((state) => state.deleteUser);
+  const userInfo = useSelector((state) => state.userInfo);
+  const { user } = userInfo;
 
-  const { userInfo } = userLogin;
+  const { userInfo: isLogin } = userLogin;
   const { success: successDelete } = deleteUser;
   const history = useHistory();
   const { error, users, loading } = usersList;
   const dispatch = useDispatch();
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
+    if (isLogin && isLogin.isAdmin) {
       dispatch(getUsersList());
     } else {
       history.push('/login');
     }
-  }, [dispatch, successDelete, dispatch]);
+  }, [dispatch, successDelete, dispatch, user]);
 
   // const deleteHandler = (id) => {
   //   dispatch(removeUser(id));
@@ -58,17 +60,17 @@ export function UsersListScreen() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <Tr key={user._id}>
-                  <Td>{user._id}</Td>
-                  <Td>{user.name}</Td>
+              {users.map((usr) => (
+                <Tr key={usr._id}>
+                  <Td>{usr._id}</Td>
+                  <Td>{usr.name}</Td>
                   <Td>
-                    <A href={`mailto:${user.email}`}>{user.email}</A>
+                    <A href={`mailto:${usr.email}`}>{usr.email}</A>
                   </Td>
-                  <Td>{user.isAdmin ? <Check /> : <Times />}</Td>
+                  <Td>{usr.isAdmin ? <Check /> : <Times />}</Td>
                   <Td>
                     <span>
-                      <Link to={`/user/${user._id}`}>
+                      <Link to={`/admin/user/${usr._id}`}>
                         {' '}
                         <Edit />
                       </Link>
@@ -77,7 +79,7 @@ export function UsersListScreen() {
                       </Button>
                     </span>
                   </Td>
-                  <Modal text="Do you want to delete this user ?" id={user._id} />
+                  <Modal text="Do you want to delete this user ?" id={useRef._id} />
                 </Tr>
               ))}
             </tbody>

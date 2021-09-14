@@ -18,6 +18,7 @@ import {
   SuccessPaymentScreen,
   CancelPaymentScreen,
   UsersListScreen,
+  UserScreen,
 } from './screens';
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         <Route path="/success" component={SuccessPaymentScreen} />
         <Route path="/canceled" component={CancelPaymentScreen} />
         <Route path="/admin/userslist" component={UsersListScreen} />
+        <Route path="/admin/user/:id" component={UserScreen} />
       </Switch>
 
       <GlobalStyle />

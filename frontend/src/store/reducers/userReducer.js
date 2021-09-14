@@ -134,7 +134,7 @@ export const userReducer = (state = { user: {} }, action) => {
       return state;
   }
 };
-export const updateUser = (state = {}, action) => {
+export const updateUserReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_UPDATE_REQUEST:
       return { loading: true };

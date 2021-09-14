@@ -14,3 +14,4 @@ export * from './OrderScreen';
 export * from './SuccessPaymentScreen';
 export * from './CancelPaymentScreen';
 export * from './UserListScreen';
+export * from './UserScreen';
