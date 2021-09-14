@@ -25,6 +25,12 @@ import {
   REMOVE_USER_FAIL,
   SHOW_MODAL,
   HIDE_MODAL,
+  USER_REQUEST,
+  USER_SUCCESS,
+  USER_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
 } from './types';
 
 //* ------------------------  LOG USER -----------------
@@ -157,7 +163,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   }
 };
 
-// ? ------------------------  GET USERS LIST-----------------
+// ? ------------------------  GET USERS LIST ADMIN ONLY -----------------
 
 export const getUsersList = () => async (dispatch, getState) => {
   try {
@@ -185,7 +191,7 @@ export const getUsersList = () => async (dispatch, getState) => {
   }
 };
 
-// ? ------------------------  GET USERS LIST-----------------
+// ? ------------------------  REMOVE USER ADMIN ONLY-----------------
 
 export const removeUser = (id) => async (dispatch, getState) => {
   try {
@@ -212,6 +218,7 @@ export const removeUser = (id) => async (dispatch, getState) => {
   }
 };
 
+//! MODAL===============
 export const showModal = () => (dispatch) => {
   dispatch({
     type: SHOW_MODAL,
@@ -221,4 +228,60 @@ export const hideModal = () => (dispatch) => {
   dispatch({
     type: HIDE_MODAL,
   });
+};
+
+// ?================== GET USER ById ADMIN ONLY ================
+
+export const getUser = (id) => async (dispatch, getState) => {
+  try {
+    const { userInfo } = getState().userLogin;
+    dispatch({
+      type: USER_REQUEST,
+    });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/v1/users/:${id}`, config);
+
+    dispatch({
+      type: USER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+// ? ------------------------ UPDATE USER ADMIN ONLY-----------------
+
+export const updateUser = (id, user) => async (dispatch, getState) => {
+  try {
+    const { userInfo } = getState().userLogin;
+    dispatch({
+      type: USER_UPDATE_REQUEST,
+    });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(`/api/v1/users/${id}`, user, config);
+
+    dispatch({
+      type: USER_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
 };

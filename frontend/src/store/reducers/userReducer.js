@@ -22,6 +22,12 @@ const {
   REMOVE_USER_FAIL,
   SHOW_MODAL,
   HIDE_MODAL,
+  USER_REQUEST,
+  USER_SUCCESS,
+  USER_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
 } = require('../../actions/types');
 
 export const loginReducer = (state = {}, action) => {
@@ -84,7 +90,7 @@ export const updateUserProfileReducer = (state = {}, action) => {
   }
 };
 
-//! Admin section
+//! ADMIN SECTION
 
 export const userListReducer = (state = { users: [] }, action) => {
   switch (action.type) {
@@ -115,6 +121,33 @@ export const deleteUserReducer = (state = {}, action) => {
       return state;
   }
 };
+export const userReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case USER_REQUEST:
+      return { loading: true };
+    case USER_SUCCESS:
+      return { loading: false, user: action.payload };
+    case USER_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+export const updateUser = (state = {}, action) => {
+  switch (action.type) {
+    case USER_UPDATE_REQUEST:
+      return { loading: true };
+    case USER_UPDATE_SUCCESS:
+      return { loading: false, UupdatedUser: action.payload };
+    case USER_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
 export const modalReducer = (state = { show: false }, action) => {
   switch (action.type) {
     case SHOW_MODAL:
