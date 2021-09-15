@@ -63,7 +63,7 @@ export function PlaceOrderScreen() {
       dispatch(getOrderDetails(order._id));
       history.push(`order/${order._id}`);
     }
-  }, [success, history]);
+  }, [success, history, dispatch]);
   if (!shippingAdress && !shippingMethod && !payment) {
     return (
       <TextWrapper>

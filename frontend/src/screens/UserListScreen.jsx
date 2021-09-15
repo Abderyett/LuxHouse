@@ -1,12 +1,12 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { FaRegTimesCircle, FaTrashAlt } from 'react-icons/fa';
 import { FcOk } from 'react-icons/fc';
 import { FiEdit } from 'react-icons/fi';
-import { getUsersList, removeUser, showModal } from '../actions/userActions';
+import { getUsersList, showModal } from '../actions/userActions';
 import { Loader, Message, Header, Modal } from '../components';
 import { color, shadow } from '../utilities';
 
@@ -22,18 +22,14 @@ export function UsersListScreen() {
   const history = useHistory();
   const { error, users, loading } = usersList;
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (isLogin && isLogin.isAdmin) {
       dispatch(getUsersList());
     } else {
       history.push('/login');
     }
-  }, [dispatch, successDelete, dispatch, user]);
-
-  // const deleteHandler = (id) => {
-  //   dispatch(removeUser(id));
-  //   dispatch(showModal());
-  // };
+  }, [dispatch, successDelete, user, history, isLogin]);
 
   return (
     <>
@@ -79,7 +75,7 @@ export function UsersListScreen() {
                       </Button>
                     </span>
                   </Td>
-                  <Modal text="Do you want to delete this user ?" id={useRef._id} />
+                  <Modal text="Do you want to delete this user ?" id={usr._id} />
                 </Tr>
               ))}
             </tbody>

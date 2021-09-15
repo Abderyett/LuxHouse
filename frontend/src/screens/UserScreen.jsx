@@ -25,7 +25,7 @@ export function UserScreen() {
       dispatch({ type: USER_UPDATE_RESET });
       history.push('/admin/userslist');
     }
-  }, [dispatch, success]);
+  }, [dispatch, success, id, history]);
 
   let currentValues;
   if (user) {

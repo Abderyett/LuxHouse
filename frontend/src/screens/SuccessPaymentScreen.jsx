@@ -25,7 +25,7 @@ export function SuccessPaymentScreen() {
     if (orderDetails.success) {
       dispatch({ type: ORDER_DETAILS_RESET });
     }
-  }, [orderDetails.success]);
+  }, [orderDetails.success, dispatch]);
   return (
     <Container>
       <h4>

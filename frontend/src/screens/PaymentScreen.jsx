@@ -8,7 +8,6 @@ import { color, shadow, rounded } from '../utilities';
 import { addedPaymentMethod } from '../actions/cartAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
 import pendant from '../utilities/svg/pendant.svg';
-import { ADDED_ORDER_RESET } from '../actions/types';
 
 export function PaymentScreen() {
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
