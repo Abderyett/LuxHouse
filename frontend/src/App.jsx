@@ -19,6 +19,7 @@ import {
   CancelPaymentScreen,
   UsersListScreen,
   UserScreen,
+  ProductsListScreen,
 } from './screens';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/canceled" component={CancelPaymentScreen} />
         <Route path="/admin/userslist" component={UsersListScreen} />
         <Route path="/admin/user/:id" component={UserScreen} />
+        <Route path="/admin/products" component={ProductsListScreen} />
       </Switch>
 
       <GlobalStyle />
