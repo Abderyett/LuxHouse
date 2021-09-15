@@ -6,18 +6,26 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
 import { Header, Loader, Message, Error } from '../components';
-import { getUser, updateUser } from '../actions/userActions';
+import { getUser, updateUserAC } from '../actions/userActions';
 import { color, rounded, shadow } from '../utilities';
+import { USER_UPDATE_RESET } from '../actions/types';
 
 export function UserScreen() {
   const userInfo = useSelector((state) => state.userInfo);
   const { loading, user, error } = userInfo;
+  const updateUser = useSelector((state) => state.updateUser);
+  const { success } = updateUser;
   const dispatch = useDispatch();
   const { id } = useParams();
   const history = useHistory();
+
   useEffect(() => {
     dispatch(getUser(id));
-  }, [dispatch]);
+    if (success) {
+      dispatch({ type: USER_UPDATE_RESET });
+      history.push('/admin/userslist');
+    }
+  }, [dispatch, success]);
 
   let currentValues;
   if (user) {
@@ -50,13 +58,12 @@ export function UserScreen() {
                 })}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                   setSubmitting(true);
-                  const newUser = updateUser(id, { name: values.name, email: values.email, isAdmin: values.isAdmin });
+                  const newUser = updateUserAC(id, { name: values.name, email: values.email, isAdmin: values.isAdmin });
 
                   dispatch(newUser);
 
                   resetForm();
                   setSubmitting(false);
-                  history.push('/admin/userslist');
                 }}
                 enableReinitialize
               >

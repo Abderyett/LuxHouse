@@ -260,7 +260,7 @@ export const getUser = (id) => async (dispatch, getState) => {
 
 // ? ------------------------ UPDATE USER ADMIN ONLY-----------------
 
-export const updateUser = (id, user) => async (dispatch, getState) => {
+export const updateUserAC = (id, user) => async (dispatch, getState) => {
   try {
     const { userInfo } = getState().userLogin;
     dispatch({
@@ -276,8 +276,8 @@ export const updateUser = (id, user) => async (dispatch, getState) => {
 
     dispatch({
       type: USER_UPDATE_SUCCESS,
-      payload: data,
     });
+    dispatch({ type: USER_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: USER_UPDATE_FAIL,
