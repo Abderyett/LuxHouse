@@ -1,8 +1,9 @@
 const express = require('express');
-
+const { protect, isAdmin } = require('../middleware/authMiddleware');
 const {
   getPrducts,
   getSingleProducts,
+  deleteProduct,
 } = require('../controllers/productsController.js');
 
 const router = express.Router();
@@ -29,6 +30,9 @@ router.route('/').get(getPrducts);
 //* @route GET api/v1/products/:id
 //* @access Public
 
-router.get('/:id', getSingleProducts);
+router
+  .route('/:id')
+  .get(getSingleProducts)
+  .delete(protect, isAdmin, deleteProduct);
 
 module.exports = router;

@@ -27,4 +27,19 @@ const getSingleProducts = asyncHandler(async (req, res) => {
   res.status(200).json(products);
 });
 
-module.exports = { getPrducts, getSingleProducts };
+//* @desc Delete Product
+//* @route GET api/v1/products/:id
+//* @access Private AdminOnly
+
+const deleteProduct = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    await product.remove();
+    res.json('Product deleted successfully');
+  } else {
+    res.status(404).json('Product Not Found');
+  }
+});
+
+module.exports = { getPrducts, getSingleProducts, deleteProduct };
