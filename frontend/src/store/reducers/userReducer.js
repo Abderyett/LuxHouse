@@ -29,6 +29,8 @@ const {
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
   USER_UPDATE_RESET,
+  SHOW_MODAL_PRODUCTS,
+  HIDE_MODAL_PRODUCTS,
 } = require('../../actions/types');
 
 export const loginReducer = (state = {}, action) => {
@@ -156,6 +158,10 @@ export const modalReducer = (state = { show: false }, action) => {
     case SHOW_MODAL:
       return { show: true };
     case HIDE_MODAL:
+      return { show: false };
+    case SHOW_MODAL_PRODUCTS:
+      return { show: true };
+    case HIDE_MODAL_PRODUCTS:
       return { show: false };
 
     default:

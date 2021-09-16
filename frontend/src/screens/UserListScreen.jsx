@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { FiEdit } from 'react-icons/fi';
 import { getUsersList, showModal } from '../actions/userActions';
 import { Loader, Message, Header, Modal } from '../components';
 import { color, shadow } from '../utilities';
+import { GET_ID } from '../actions/types';
 
 export function UsersListScreen() {
   const usersList = useSelector((state) => state.usersList);
@@ -30,6 +31,11 @@ export function UsersListScreen() {
       history.push('/login');
     }
   }, [dispatch, successDelete, user, history, isLogin]);
+
+  const deleteHandler = (id) => {
+    dispatch(showModal());
+    dispatch({ type: GET_ID, payload: id });
+  };
 
   return (
     <>
@@ -70,12 +76,12 @@ export function UsersListScreen() {
                         {' '}
                         <Edit />
                       </Link>
-                      <Button type="button" onClick={() => dispatch(showModal())}>
+                      <Button type="button" onClick={() => deleteHandler(usr._id)}>
                         <Trash />
                       </Button>
                     </span>
                   </Td>
-                  <Modal text="Do you want to delete this user ?" id={usr._id} />
+                  <Modal text="Do you want to delete this user ?" />
                 </Tr>
               ))}
             </tbody>

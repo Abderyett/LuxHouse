@@ -1,20 +1,23 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
-import { showModal } from '../actions/userActions';
+import { showModal, showModalProduct } from '../actions/userActions';
 import { Loader, Message, Header, Modal } from '../components';
 import { color, shadow, rounded } from '../utilities';
-import { listProduct } from '../actions/productActions';
+import { listProduct, removeProduct } from '../actions/productActions';
 import { formatter } from '../helper/CurrencyFormat';
+import { GET_ID } from '../actions/types';
 
 export function ProductsListScreen() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo: isLogin } = userLogin;
   const porductList = useSelector((state) => state.porductList);
+  const removeSingleProduct = useSelector((state) => state.removeSingleProduct);
+  const { success } = removeSingleProduct;
   const { loading, error, products } = porductList;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -24,10 +27,17 @@ export function ProductsListScreen() {
     } else {
       history.push('/login');
     }
-  }, [dispatch, isLogin, history]);
+  }, [dispatch, isLogin, history, success]);
 
   const addProductHandler = () => {
     console.log('created');
+  };
+
+  const deleteHandler = (id) => {
+    dispatch(showModalProduct());
+    dispatch({ type: GET_ID, payload: id });
+
+    console.log('this is from state in productListScreen', id);
   };
 
   return (
@@ -64,7 +74,7 @@ export function ProductsListScreen() {
               <tbody>
                 {products.map((product) => (
                   <Tr key={product._id}>
-                    <Td>{`${product._id.substring(0, 10)}...`}</Td>
+                    <Td>{product._id}</Td>
                     <Td>{product.name}</Td>
                     <Td>
                       <IMG src={product.image[0].url} alt={product.name} />
@@ -77,12 +87,12 @@ export function ProductsListScreen() {
                           {' '}
                           <Edit />
                         </Link>
-                        <TrashButton type="button" onClick={() => dispatch(showModal())}>
+                        <TrashButton type="button" onClick={() => deleteHandler(product._id)}>
                           <Trash />
                         </TrashButton>
                       </span>
                     </Td>
-                    <Modal text="Do you want to delete this product ?" id={product._id} />
+                    <Modal text="Do you want to delete this product ?" products="deleteProduct" />
                   </Tr>
                 ))}
               </tbody>

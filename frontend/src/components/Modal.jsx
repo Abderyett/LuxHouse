@@ -5,16 +5,28 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { IoClose } from 'react-icons/io5';
 import { color, rounded } from '../utilities';
-import { hideModal, removeUser } from '../actions/userActions';
+import { hideModal, hideModalProduct, removeUser } from '../actions/userActions';
+import { removeProduct } from '../actions/productActions';
 
-export function Modal({ text, id }) {
+export function Modal({ text, products }) {
   const toggleModal = useSelector((state) => state.toggleModal);
+  const selectedId = useSelector((state) => state.selectedId);
+
   const dispatch = useDispatch();
   const { show } = toggleModal;
 
-  const deleteHandler = (Id) => {
-    dispatch(removeUser(Id));
-    dispatch(hideModal());
+  const deleteHandler = () => {
+    if (products === 'deleteProduct') {
+      dispatch(removeProduct(selectedId.id));
+      dispatch(hideModalProduct());
+      console.log('productId', selectedId.id);
+      console.log('removed');
+    } else {
+      dispatch(removeUser(selectedId.id));
+      dispatch(hideModal());
+      console.log('not removed');
+      console.log(selectedId.id, 'userId');
+    }
   };
   return ReactDOM.createPortal(
     <Wrapper show={show}>
@@ -24,7 +36,7 @@ export function Modal({ text, id }) {
           <b>{text}</b>
         </Content>
         <BtnWrapper>
-          <Button type="button" onClick={() => deleteHandler(id)}>
+          <Button type="button" onClick={() => deleteHandler()}>
             Delete
           </Button>
         </BtnWrapper>
@@ -49,7 +61,7 @@ const Wrapper = styled.div`
 const Container = styled.div`
   display: flex;
   width: 35%;
-  height: 20%;
+  height: 25%;
   max-width: 400px;
   background: ${color.white};
   border-radius: ${rounded.sm};
@@ -68,10 +80,6 @@ const Button = styled.button`
   cursor: pointer;
   letter-spacing: 0.1rem;
   font-size: 1.1rem;
-  &:hover {
-    transition: all 0.6s ease-in-out;
-    background: ${color.red_vivid_400};
-  }
 `;
 
 const Close = styled(IoClose)`
@@ -91,4 +99,5 @@ const BtnWrapper = styled.div`
 Modal.propTypes = {
   text: PropTypes.string,
   id: PropTypes.string,
+  products: PropTypes.string,
 };

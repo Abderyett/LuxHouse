@@ -6,6 +6,9 @@ import {
   PRODUCT_DETAIL_REQUEST,
   PRODUCT_DETAIL_SUCCESS,
   PRODUCT_DETAIL_FAIL,
+  REMOVE_PRODUCT_REQUEST,
+  REMOVE_PRODUCT_SUCCESS,
+  REMOVE_PRODUCT_FAIL,
 } from './types';
 
 export const listProduct = () => async (dispatch) => {
@@ -34,6 +37,33 @@ export const detailProduct = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAIL_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+// ? ------------------------  REMOVE PRODUCT ADMIN ONLY-----------------
+
+export const removeProduct = (id) => async (dispatch, getState) => {
+  try {
+    const { userInfo } = getState().userLogin;
+    dispatch({
+      type: REMOVE_PRODUCT_REQUEST,
+    });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    await axios.delete(`/api/v1/products/${id}`, config);
+
+    dispatch({
+      type: REMOVE_PRODUCT_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: REMOVE_PRODUCT_FAIL,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }

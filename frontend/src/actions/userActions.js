@@ -31,6 +31,8 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
+  HIDE_MODAL_PRODUCTS,
+  SHOW_MODAL_PRODUCTS,
 } from './types';
 
 //* ------------------------  LOG USER -----------------
@@ -218,18 +220,6 @@ export const removeUser = (id) => async (dispatch, getState) => {
   }
 };
 
-//! MODAL===============
-export const showModal = () => (dispatch) => {
-  dispatch({
-    type: SHOW_MODAL,
-  });
-};
-export const hideModal = () => (dispatch) => {
-  dispatch({
-    type: HIDE_MODAL,
-  });
-};
-
 // ?================== GET USER ById ADMIN ONLY ================
 
 export const getUser = (id) => async (dispatch, getState) => {
@@ -284,4 +274,26 @@ export const updateUserAC = (id, user) => async (dispatch, getState) => {
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
+};
+
+//! MODAL===============
+export const showModal = () => (dispatch) => {
+  dispatch({
+    type: SHOW_MODAL,
+  });
+};
+export const hideModal = () => (dispatch) => {
+  dispatch({
+    type: HIDE_MODAL,
+  });
+};
+export const showModalProduct = () => (dispatch) => {
+  dispatch({
+    type: SHOW_MODAL_PRODUCTS,
+  });
+};
+export const hideModalProduct = () => (dispatch) => {
+  dispatch({
+    type: HIDE_MODAL_PRODUCTS,
+  });
 };
