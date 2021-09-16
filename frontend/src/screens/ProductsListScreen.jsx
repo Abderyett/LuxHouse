@@ -1,36 +1,43 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
-import { showModal, showModalProduct } from '../actions/userActions';
+import { showModalProduct } from '../actions/userActions';
 import { Loader, Message, Header, Modal } from '../components';
 import { color, shadow, rounded } from '../utilities';
-import { listProduct, removeProduct } from '../actions/productActions';
+import { listProduct, createProductAC } from '../actions/productActions';
 import { formatter } from '../helper/CurrencyFormat';
-import { GET_ID } from '../actions/types';
+import { CREATE_PRODUCT_RESET, GET_ID } from '../actions/types';
 
 export function ProductsListScreen() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo: isLogin } = userLogin;
   const porductList = useSelector((state) => state.porductList);
   const removeSingleProduct = useSelector((state) => state.removeSingleProduct);
-  const { success } = removeSingleProduct;
+  const { success, loading: loadingDelete, error: errorDelete } = removeSingleProduct;
+  const createProduct = useSelector((state) => state.createProduct);
+  const { success: successCreate, loading: loadingCreate, error: errorCreate, createdProduct } = createProduct;
   const { loading, error, products } = porductList;
   const history = useHistory();
   const dispatch = useDispatch();
+
   useEffect(() => {
-    if (isLogin && isLogin.isAdmin) {
-      dispatch(listProduct());
-    } else {
+    dispatch({ type: CREATE_PRODUCT_RESET });
+    if (!isLogin.isAdmin) {
       history.push('/login');
     }
-  }, [dispatch, isLogin, history, success]);
+    if (successCreate) {
+      history.push(`/admin/products/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProduct());
+    }
+  }, [dispatch, isLogin, history, success, createdProduct, successCreate]);
 
   const addProductHandler = () => {
-    console.log('created');
+    dispatch(createProductAC());
   };
 
   const deleteHandler = (id) => {
@@ -45,6 +52,10 @@ export function ProductsListScreen() {
       <Header />
 
       <Heading>Products</Heading>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message bg="danger">{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message bg="danger">{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (

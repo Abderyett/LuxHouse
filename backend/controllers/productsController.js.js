@@ -52,7 +52,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   //* 2- Verify if there is product and update it
   if (product) {
     product.name = req.body.name || product.name;
-
+    product.user = req.body.user || product.user;
     product.description = req.body.description || product.description;
     product.price = req.body.price || product.price;
     product.subcategory = req.body.subcategory || product.subcategory;

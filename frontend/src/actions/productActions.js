@@ -9,6 +9,9 @@ import {
   REMOVE_PRODUCT_REQUEST,
   REMOVE_PRODUCT_SUCCESS,
   REMOVE_PRODUCT_FAIL,
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_FAIL,
 } from './types';
 
 export const listProduct = () => async (dispatch) => {
@@ -64,6 +67,34 @@ export const removeProduct = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: REMOVE_PRODUCT_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+// ? ------------------------  CREATE PRODUCT ADMIN ONLY-----------------
+
+export const createProductAC = () => async (dispatch, getState) => {
+  try {
+    const { userInfo } = getState().userLogin;
+    dispatch({
+      type: CREATE_PRODUCT_REQUEST,
+    });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.post(`/api/v1/products`, {}, config);
+
+    dispatch({
+      type: CREATE_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_PRODUCT_FAIL,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }

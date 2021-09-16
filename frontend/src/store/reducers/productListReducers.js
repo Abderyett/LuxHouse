@@ -9,6 +9,10 @@ import {
   REMOVE_PRODUCT_SUCCESS,
   REMOVE_PRODUCT_FAIL,
   GET_ID,
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_FAIL,
+  CREATE_PRODUCT_RESET,
 } from '../../actions/types';
 
 export const productListReducer = (state = { products: [], loading: false }, action) => {
@@ -42,6 +46,8 @@ export const productDetailsReducer = (state = { product: {}, loading: false }, a
   }
 };
 
+//! ===================== AdminOnly ==============
+
 export const removeSingleProductReducer = (state = {}, action) => {
   switch (action.type) {
     case REMOVE_PRODUCT_REQUEST:
@@ -58,6 +64,26 @@ export const removeSingleProductReducer = (state = {}, action) => {
       return state;
   }
 };
+export const createProductReducer = (state = { loading: false }, action) => {
+  switch (action.type) {
+    case CREATE_PRODUCT_REQUEST:
+      return { loading: true };
+    case CREATE_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        createdProduct: action.payload,
+        success: true,
+      };
+    case CREATE_PRODUCT_FAIL:
+      return { loading: false, error: action.payload };
+    case CREATE_PRODUCT_RESET:
+      return {};
+
+    default:
+      return state;
+  }
+};
+
 export const selectedIdReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_ID:
