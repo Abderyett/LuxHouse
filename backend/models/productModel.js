@@ -53,6 +53,7 @@ const productSchema = new mongoose.Schema(
     shipping: {
       type: Boolean,
       required: true,
+      default: false,
     },
     available: {
       type: Boolean,

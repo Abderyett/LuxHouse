@@ -1,10 +1,13 @@
 const express = require('express');
-const { protect, isAdmin } = require('../middleware/authMiddleware');
+
 const {
   getPrducts,
   getSingleProducts,
   deleteProduct,
+  createProduct,
+  updateProduct,
 } = require('../controllers/productsController.js');
+const { protect, isAdmin } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -12,7 +15,7 @@ const router = express.Router();
 //* @route GET api/v1/products
 //* @access Public
 
-router.route('/').get(getPrducts);
+router.route('/').get(getPrducts).post(protect, isAdmin, createProduct);
 
 // @desc Fetch Single Category
 //@route GET api/v1/products/categories
@@ -33,6 +36,7 @@ router.route('/').get(getPrducts);
 router
   .route('/:id')
   .get(getSingleProducts)
-  .delete(protect, isAdmin, deleteProduct);
+  .delete(protect, isAdmin, deleteProduct)
+  .put(protect, isAdmin, updateProduct);
 
 module.exports = router;
