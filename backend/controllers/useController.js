@@ -137,7 +137,7 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
 
 //* @desc Get Users
 //* @route GET api/v1/users
-//* @access Private/Admin
+//! @access Private/Admin
 
 exports.getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
@@ -151,7 +151,7 @@ exports.getUsers = asyncHandler(async (req, res) => {
 
 //* @desc Delete User
 //* @route DELETE api/v1/users/:id
-//* @access Private/Admin
+//! @access Private/Admin
 
 exports.deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
@@ -166,11 +166,10 @@ exports.deleteUser = asyncHandler(async (req, res) => {
 
 //* @desc Get User By ID
 //* @route GET api/v1/users/:id
-//* @access Private/Admin
+//! @access Private/Admin
 
 exports.getUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
-  console.log(user);
 
   if (user) {
     res.status(200).json({
@@ -187,7 +186,7 @@ exports.getUser = asyncHandler(async (req, res) => {
 
 //* @desc Update User
 //* @route PUT api/v1/users/:id
-//* @access admin/private
+//! @access AdminOnly
 
 exports.updateUser = asyncHandler(async (req, res) => {
   //* 1-  We find user by ID attached by token in req
