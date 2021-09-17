@@ -20,6 +20,7 @@ import {
   UsersListScreen,
   UserScreen,
   ProductsListScreen,
+  ProductEditScreen,
 } from './screens';
 
 function App() {
@@ -39,11 +40,12 @@ function App() {
         <Route path="/shippingmethod" exact component={ShippingMethodScreen} />
         <Route path="/placeorder" exact component={PlaceOrderScreen} />
         <Route path="/order/:id" exact component={OrderScreen} />
-        <Route path="/success" component={SuccessPaymentScreen} />
-        <Route path="/canceled" component={CancelPaymentScreen} />
-        <Route path="/admin/userslist" component={UsersListScreen} />
-        <Route path="/admin/user/:id" component={UserScreen} />
-        <Route path="/admin/products" component={ProductsListScreen} />
+        <Route path="/success" exact component={SuccessPaymentScreen} />
+        <Route path="/canceled" exact component={CancelPaymentScreen} />
+        <Route path="/admin/userslist" exact component={UsersListScreen} />
+        <Route path="/admin/user/:id" exact component={UserScreen} />
+        <Route path="/admin/products" exact component={ProductsListScreen} />
+        <Route path="/admin/products/:id/edit" exact component={ProductEditScreen} />
       </Switch>
 
       <GlobalStyle />

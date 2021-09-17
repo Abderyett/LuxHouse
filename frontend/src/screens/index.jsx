@@ -16,3 +16,4 @@ export * from './CancelPaymentScreen';
 export * from './UserListScreen';
 export * from './UserScreen';
 export * from './ProductsListScreen';
+export * from './ProductEditScreen';

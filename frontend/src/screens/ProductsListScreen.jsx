@@ -94,7 +94,7 @@ export function ProductsListScreen() {
                     <Td>{formatter.format(product.price)}</Td>
                     <Td>
                       <span>
-                        <Link to={`/admin/products/${product._id}`}>
+                        <Link to={`/admin/products/${product._id}/edit`}>
                           {' '}
                           <Edit />
                         </Link>
