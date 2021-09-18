@@ -10,15 +10,19 @@ import * as Yup from 'yup';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { FaSort } from 'react-icons/fa';
+import { FiPlus } from 'react-icons/fi';
+import { CgClose } from 'react-icons/cg';
 import { Header, Loader, Message, Error } from '../components';
 import { updateUserAC } from '../actions/userActions';
 import { color, rounded, shadow } from '../utilities';
 import { USER_UPDATE_RESET } from '../actions/types';
 import { detailProduct } from '../actions/productActions';
 
-uuidv4();
 export function ProductEditScreen() {
   const [showColor, setShowColor] = useState(false);
+  const [colorsList, setColorsList] = useState([]);
+  const [addedColor, setAddedColor] = useState('');
+  const [validatedColor, setValidatedColor] = useState(false);
   const userInfo = useSelector((state) => state.userInfo);
   const { loading, user, error } = userInfo;
   const updateUser = useSelector((state) => state.updateUser);
@@ -41,6 +45,14 @@ export function ProductEditScreen() {
     available,
     category,
   } = product;
+
+  const letters = ['g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+  useEffect(() => {
+    if (product) {
+      setColorsList(colors);
+    }
+  }, [product]);
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -90,7 +102,18 @@ export function ProductEditScreen() {
       category: '',
     };
   }
-  console.log(showColor);
+
+  const addColorHandler = (e) => {
+    const addColor = e.target.value.toLowerCase();
+    const clrs = [...addColor];
+    const isFounded = clrs.some((cl) => letters.includes(cl));
+    if (isFounded) {
+      setValidatedColor(true);
+    } else {
+      setValidatedColor(false);
+      setAddedColor(addColor);
+    }
+  };
 
   return (
     <>
@@ -202,14 +225,31 @@ export function ProductEditScreen() {
                         <ColorContent>
                           {colors && colors.length === 0 ? 'No Colors for this item' : 'Colors'}
                         </ColorContent>
-                        <AddColorInput type="text" />
-                        {colors &&
-                          colors.map((clr) => (
-                            <Colors showColor={showColor} onClick={() => setShowColor(!showColor)} key={uuidv4()}>
-                              <ColorBox bg={clr} />
-                              &nbsp;&nbsp;<span>{clr}</span>
-                            </Colors>
-                          ))}
+                        <Wrap showColor={showColor}>
+                          <AddColorInput
+                            type="text"
+                            onClick={(e) => e.stopPropagation()}
+                            showColor={showColor}
+                            value={addedColor}
+                            onChange={addColorHandler}
+                            maxLength="6"
+                          />
+                          <Add />
+                          {colorsList &&
+                            colorsList.map((clr) => (
+                              <Colors showColor={showColor} onClick={() => setShowColor(!showColor)} key={uuidv4()}>
+                                <Div>
+                                  <ColorDiv>
+                                    <ColorBox bg={clr} />
+                                    &nbsp;&nbsp;<span>{clr}</span>
+                                  </ColorDiv>
+                                  <div>
+                                    <Close />
+                                  </div>
+                                </Div>
+                              </Colors>
+                            ))}
+                        </Wrap>
                       </ColorWrapper>
                     </ColorsInput>
 
@@ -234,7 +274,7 @@ const Container = styled.div`
   place-items: center;
   padding: 2rem;
   margin-top: 4rem;
-  height: 200vh;
+  height: 150vh;
 `;
 const UserProfile = styled.section``;
 
@@ -320,30 +360,29 @@ const ColorWrapper = styled.div`
 `;
 
 const wrapper = css`
-  width: auto;
-  height: 100%;
-  padding-top: 1rem;
+  width: 30rem;
+
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   padding-right: 1rem;
 
   overflow-y: scroll;
   background-color: ${color.white};
-  box-shadow: ${shadow.lg};
-
-  margin-top: 3rem;
 `;
 
 const Colors = styled.div`
   ${wrapper}
   display:${({ showColor }) => (showColor ? 'block' : 'none')};
-
   position: relative;
   span {
     vertical-align: super;
-    &:first-child {
-      color: red;
-    }
   }
-
+  &:first-of-type {
+    margin-top: 3rem;
+  }
+  &:last-of-type {
+    margin-bottom: 0.5rem;
+  }
   &:hover {
     background-color: ${color.grey_100};
   }
@@ -387,7 +426,55 @@ const AddColorInput = styled.input`
   height: 2rem;
   width: 28rem;
   position: absolute;
-  top: 3rem;
-  border: 3px solid red;
-  /* z-index: 9999; */
+  text-transform: uppercase;
+  top: 4rem;
+  right: 1rem;
+  box-shadow: 0px 0px 0px 2px ${color.grey_300};
+  opacity: ${({ showColor }) => (showColor ? 1 : 0)};
+  &:focus {
+    box-shadow: 0px 0px 0px 2px ${color.scallop_shell};
+  }
+`;
+
+const Wrap = styled.div`
+  width: 30rem;
+
+  background-color: ${color.white};
+  padding-top: 1.5rem;
+  padding-right: 1rem;
+  box-shadow: ${shadow.lg};
+  margin-top: 0.125rem;
+  opacity: ${({ showColor }) => (showColor ? 1 : 0)};
+`;
+
+const Add = styled(FiPlus)`
+  color: ${color.grey_500};
+  position: absolute;
+  top: 5.5rem;
+  right: 1.7rem;
+  z-index: 9999;
+  cursor: pointer;
+  &:hover {
+    color: ${color.green_500};
+  }
+`;
+const Close = styled(CgClose)`
+  vertical-align: middle;
+  margin-right: 0.8rem;
+  color: ${color.grey_500};
+  &:hover {
+    color: ${color.red_vivid_500};
+  }
+`;
+
+const Div = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ColorDiv = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
 `;
