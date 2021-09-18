@@ -337,6 +337,7 @@ const Inputstyle = css`
   font-family: 'avenir_regular';
   box-shadow: ${shadow.lg};
   margin-top: 1rem;
+  margin-bottom: 0.5rem;
   box-shadow: ${({ error }) => error && `0px 0px 0px 2px ${color.red_vivid_500}`};
 
   @media (max-width: 768px) {

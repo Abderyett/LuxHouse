@@ -22,7 +22,7 @@ export function ProductEditScreen() {
   const [showColor, setShowColor] = useState(false);
   const [colorsList, setColorsList] = useState([]);
   const [addedColor, setAddedColor] = useState('');
-  const [validatedColor, setValidatedColor] = useState(false);
+  // const [validatedColor, setValidatedColor] = useState(false);
   const userInfo = useSelector((state) => state.userInfo);
   const { loading, user, error } = userInfo;
   const updateUser = useSelector((state) => state.updateUser);
@@ -107,12 +107,30 @@ export function ProductEditScreen() {
     const addColor = e.target.value.toLowerCase();
     const clrs = [...addColor];
     const isFounded = clrs.some((cl) => letters.includes(cl));
-    if (isFounded) {
-      setValidatedColor(true);
-    } else {
-      setValidatedColor(false);
+    if (!isFounded) {
       setAddedColor(addColor);
     }
+  };
+
+  const submitColorsHandler = (event) => {
+    if (event.key === 'Enter') {
+      if (addedColor.length === 6) {
+        setColorsList((prevState) => [...prevState, `#${addedColor}`]);
+        setAddedColor('');
+      }
+    }
+  };
+  const addColorFromBtn = (e) => {
+    e.stopPropagation();
+    if (addedColor.length === 6) {
+      setColorsList((prevState) => [...prevState, `#${addedColor}`]);
+      setAddedColor('');
+    }
+  };
+  const removeColorHandler = (ID, event) => {
+    console.log(ID);
+    const newList = colorsList.filter((el) => el.id !== ID);
+    setColorsList(newList);
   };
 
   return (
@@ -233,19 +251,24 @@ export function ProductEditScreen() {
                             value={addedColor}
                             onChange={addColorHandler}
                             maxLength="6"
+                            onKeyPress={submitColorsHandler}
                           />
-                          <Add />
+                          <Add onClick={addColorFromBtn} />
                           {colorsList &&
                             colorsList.map((clr) => (
-                              <Colors showColor={showColor} onClick={() => setShowColor(!showColor)} key={uuidv4()}>
+                              <Colors showColor={showColor} key={uuidv4()} onClick={(e) => e.stopPropagation()}>
                                 <Div>
                                   <ColorDiv>
                                     <ColorBox bg={clr} />
-                                    &nbsp;&nbsp;<span>{clr}</span>
+                                    &nbsp;&nbsp;
+                                    <span>
+                                      {clr}
+                                      {uuidv4()}
+                                    </span>
                                   </ColorDiv>
-                                  <div>
+                                  <button type="button" onClick={() => removeColorHandler(uuidv4())}>
                                     <Close />
-                                  </div>
+                                  </button>
                                 </Div>
                               </Colors>
                             ))}
@@ -298,6 +321,7 @@ const styledInput = css`
   font-family: 'avenir_regular';
   box-shadow: ${shadow.lg};
   margin-top: 1rem;
+  margin-bottom: 2rem;
   box-shadow: ${({ error }) =>
     error ? `0px 0px 0px 2px ${color.red_vivid_500}` : `0px 0px 0px 2px ${color.grey_300}`};
 
@@ -376,6 +400,7 @@ const Colors = styled.div`
   position: relative;
   span {
     vertical-align: super;
+    text-transform: uppercase;
   }
   &:first-of-type {
     margin-top: 3rem;
@@ -408,7 +433,7 @@ const Arrow = styled(FaSort)`
 const ColorContent = styled.div`
   position: absolute;
   top: 0.75rem;
-  left: 1rem;
+  left: 0;
   width: 100%;
 `;
 
@@ -451,7 +476,7 @@ const Add = styled(FiPlus)`
   color: ${color.grey_500};
   position: absolute;
   top: 5.5rem;
-  right: 1.7rem;
+  right: 2.4rem;
   z-index: 9999;
   cursor: pointer;
   &:hover {
@@ -462,6 +487,7 @@ const Close = styled(CgClose)`
   vertical-align: middle;
   margin-right: 0.8rem;
   color: ${color.grey_500};
+  font-size: 1.5rem;
   &:hover {
     color: ${color.red_vivid_500};
   }
@@ -471,6 +497,10 @@ const Div = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  button {
+    cursor: pointer;
+    background: transparent;
+  }
 `;
 
 const ColorDiv = styled.div`
