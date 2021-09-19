@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { FaSort } from 'react-icons/fa';
 import { FiPlus } from 'react-icons/fi';
 import { CgClose } from 'react-icons/cg';
-import { Header, Loader, Message, Error } from '../components';
+import { Header, Loader, Message, Error, DropDownInput } from '../components';
 import { updateUserAC } from '../actions/userActions';
 import { color, rounded, shadow } from '../utilities';
 import { USER_UPDATE_RESET } from '../actions/types';
@@ -22,6 +22,8 @@ export function ProductEditScreen() {
   const [showColor, setShowColor] = useState(false);
   const [colorsList, setColorsList] = useState([]);
   const [addedColor, setAddedColor] = useState('');
+  const [featuresList, setFeaturesList] = useState([]);
+  const [addedFeature, setAddedFeature] = useState('');
   // const [validatedColor, setValidatedColor] = useState(false);
   const userInfo = useSelector((state) => state.userInfo);
   const { loading, user, error } = userInfo;
@@ -47,14 +49,6 @@ export function ProductEditScreen() {
   } = product;
 
   const letters = ['a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-
-  useEffect(() => {
-    if (product) {
-      const cl = colors.map((el) => ({ objectID: uuidv4(), color: el }));
-
-      setColorsList(cl);
-    }
-  }, [product]);
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -105,6 +99,7 @@ export function ProductEditScreen() {
     };
   }
 
+  //!   Colors functions
   const addColorHandler = (e) => {
     const addColor = e.target.value.toLowerCase();
     const clrs = [...addColor];
@@ -131,10 +126,53 @@ export function ProductEditScreen() {
   };
   const removeColorHandler = (ID) => {
     if (ID) {
-      const newList = colorsList.filter((el) => el.objectID !== ID);
+      const newList = featuresList.filter((el) => el.objectID !== ID);
       setColorsList(newList);
     }
   };
+
+  useEffect(() => {
+    if (product && colors) {
+      const cl = colors.map((el) => ({ objectID: uuidv4(), color: el }));
+
+      setColorsList(cl);
+    }
+  }, [product, colors]);
+
+  //! Features Functions
+  const addFeatureHandler = (e) => {
+    setAddedFeature(e.target.value.toLowerCase());
+  };
+
+  const submitFeatureHandler = (event) => {
+    if (event.key === 'Enter') {
+      if (addedFeature.length > 0) {
+        setFeaturesList((prevState) => [...prevState, { Features: { addedFeature }, objectID: uuidv4() }]);
+        setAddedFeature('');
+      }
+    }
+  };
+  const addFeatureFromBtn = (e) => {
+    e.stopPropagation();
+    if (addedFeature.length > 0) {
+      setFeaturesList((prevState) => [...prevState, { Features: { addedFeature }, objectID: uuidv4() }]);
+      setAddedFeature('');
+    }
+  };
+  const removeFeatureHandler = (ID) => {
+    if (ID) {
+      const newList = featuresList.filter((el) => el.objectID !== ID);
+      setFeaturesList(newList);
+    }
+  };
+
+  useEffect(() => {
+    if (product && Features) {
+      const newFeatureArray = Features.map((el) => ({ objectID: uuidv4(), Features: el }));
+      console.log(newFeatureArray);
+      setFeaturesList(newFeatureArray);
+    }
+  }, [product, Features]);
 
   return (
     <>
@@ -203,6 +241,18 @@ export function ProductEditScreen() {
                       />
                       <Error touched={touched.name} message={errors.name} />
                     </InputWrapper>
+                    <DropDownInput
+                      itemListFromState={Features}
+                      itemsList={featuresList}
+                      itemToAdd={addedFeature}
+                      addItemHandler={addFeatureHandler}
+                      addItemFromBtn={addFeatureFromBtn}
+                      keyPressItemHandler={submitFeatureHandler}
+                      removeItemHandler={removeFeatureHandler}
+                      inputTextContent="Features"
+                      colors={false}
+                      maxLength={30}
+                    />
 
                     <InputWrapper>
                       <div>
