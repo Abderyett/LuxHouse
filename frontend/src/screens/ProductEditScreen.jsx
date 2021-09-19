@@ -46,11 +46,13 @@ export function ProductEditScreen() {
     category,
   } = product;
 
-  const letters = ['g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  const letters = ['a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
   useEffect(() => {
     if (product) {
-      setColorsList(colors);
+      const cl = colors.map((el) => ({ objectID: uuidv4(), color: el }));
+
+      setColorsList(cl);
     }
   }, [product]);
 
@@ -106,7 +108,7 @@ export function ProductEditScreen() {
   const addColorHandler = (e) => {
     const addColor = e.target.value.toLowerCase();
     const clrs = [...addColor];
-    const isFounded = clrs.some((cl) => letters.includes(cl));
+    const isFounded = clrs.some((cl) => !letters.includes(cl));
     if (!isFounded) {
       setAddedColor(addColor);
     }
@@ -115,7 +117,7 @@ export function ProductEditScreen() {
   const submitColorsHandler = (event) => {
     if (event.key === 'Enter') {
       if (addedColor.length === 6) {
-        setColorsList((prevState) => [...prevState, `#${addedColor}`]);
+        setColorsList((prevState) => [...prevState, { color: `#${addedColor}`, objectID: uuidv4() }]);
         setAddedColor('');
       }
     }
@@ -123,14 +125,15 @@ export function ProductEditScreen() {
   const addColorFromBtn = (e) => {
     e.stopPropagation();
     if (addedColor.length === 6) {
-      setColorsList((prevState) => [...prevState, `#${addedColor}`]);
+      setColorsList((prevState) => [...prevState, { color: `#${addedColor}`, objectID: uuidv4() }]);
       setAddedColor('');
     }
   };
-  const removeColorHandler = (ID, event) => {
-    console.log(ID);
-    const newList = colorsList.filter((el) => el.id !== ID);
-    setColorsList(newList);
+  const removeColorHandler = (ID) => {
+    if (ID) {
+      const newList = colorsList.filter((el) => el.objectID !== ID);
+      setColorsList(newList);
+    }
   };
 
   return (
@@ -243,7 +246,7 @@ export function ProductEditScreen() {
                         <ColorContent>
                           {colors && colors.length === 0 ? 'No Colors for this item' : 'Colors'}
                         </ColorContent>
-                        <Wrap showColor={showColor}>
+                        <Wrap showColor={showColor} showWrapper={colorsList.length === 0 ? 0 : 1}>
                           <AddColorInput
                             type="text"
                             onClick={(e) => e.stopPropagation()}
@@ -252,21 +255,19 @@ export function ProductEditScreen() {
                             onChange={addColorHandler}
                             maxLength="6"
                             onKeyPress={submitColorsHandler}
+                            showInput={colorsList.length === 0 ? 0 : 1}
                           />
                           <Add onClick={addColorFromBtn} />
                           {colorsList &&
                             colorsList.map((clr) => (
-                              <Colors showColor={showColor} key={uuidv4()} onClick={(e) => e.stopPropagation()}>
+                              <Colors showColor={showColor} key={clr.objectID} onClick={(e) => e.stopPropagation()}>
                                 <Div>
                                   <ColorDiv>
-                                    <ColorBox bg={clr} />
+                                    <ColorBox bg={clr.color} />
                                     &nbsp;&nbsp;
-                                    <span>
-                                      {clr}
-                                      {uuidv4()}
-                                    </span>
+                                    <span>{clr.color}</span>
                                   </ColorDiv>
-                                  <button type="button" onClick={() => removeColorHandler(uuidv4())}>
+                                  <button type="button" onClick={() => removeColorHandler(clr.objectID)}>
                                     <Close />
                                   </button>
                                 </Div>
@@ -340,6 +341,7 @@ const Input = styled.input`
 const Textarea = styled.textarea`
   ${styledInput}
   height: 10rem;
+  padding: 1rem;
 `;
 
 const SubmitBtn = styled.button`
@@ -403,7 +405,7 @@ const Colors = styled.div`
     text-transform: uppercase;
   }
   &:first-of-type {
-    margin-top: 3rem;
+    margin-top: 3.5rem;
   }
   &:last-of-type {
     margin-bottom: 0.5rem;
@@ -448,7 +450,7 @@ const ColorBox = styled.div`
 
 const AddColorInput = styled.input`
   ${styledInput}
-  height: 2rem;
+  height: 2.5rem;
   width: 28rem;
   position: absolute;
   text-transform: uppercase;
@@ -463,7 +465,7 @@ const AddColorInput = styled.input`
 
 const Wrap = styled.div`
   width: 30rem;
-
+  height: ${({ showWrapper }) => (showWrapper ? 'auto' : '6rem')};
   background-color: ${color.white};
   padding-top: 1.5rem;
   padding-right: 1rem;
@@ -478,6 +480,7 @@ const Add = styled(FiPlus)`
   top: 5.5rem;
   right: 2.4rem;
   z-index: 9999;
+  font-size: 1.5rem;
   cursor: pointer;
   &:hover {
     color: ${color.green_500};
