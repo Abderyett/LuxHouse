@@ -147,7 +147,8 @@ export function ProductEditScreen() {
   const submitFeatureHandler = (event) => {
     if (event.key === 'Enter') {
       if (addedFeature.length > 0) {
-        setFeaturesList((prevState) => [...prevState, { Features: { addedFeature }, objectID: uuidv4() }]);
+        setFeaturesList((prevState) => [...prevState, { Features: addedFeature, objectID: uuidv4() }]);
+        console.log('featuresList', featuresList);
         setAddedFeature('');
       }
     }
@@ -155,7 +156,7 @@ export function ProductEditScreen() {
   const addFeatureFromBtn = (e) => {
     e.stopPropagation();
     if (addedFeature.length > 0) {
-      setFeaturesList((prevState) => [...prevState, { Features: { addedFeature }, objectID: uuidv4() }]);
+      setFeaturesList((prevState) => [...prevState, { Features: addedFeature, objectID: uuidv4() }]);
       setAddedFeature('');
     }
   };

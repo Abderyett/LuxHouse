@@ -23,14 +23,14 @@ export function DropDownInput({
   return (
     <MainInput show={show} onClick={() => setShow(!show)}>
       <Arrow />
-      <ColorWrapper>
-        <ColorContent>
+      <ItemWrapper>
+        <ItemContent>
           {(itemListFromState && itemListFromState.length === 0) || itemsList.length === 0
             ? `No ${inputTextContent} for this item`
             : inputTextContent}
-        </ColorContent>
+        </ItemContent>
         <Wrap show={show} showWrapper={itemsList.length === 0 ? 0 : 1}>
-          <AddColorInput
+          <AddItemInput
             type="text"
             onClick={(e) => e.stopPropagation()}
             show={show}
@@ -43,21 +43,21 @@ export function DropDownInput({
           <Add onClick={addItemFromBtn} />
           {itemsList &&
             itemsList.map((item) => (
-              <Colors show={show} key={item.objectID} onClick={(e) => e.stopPropagation()}>
+              <Items show={show} key={item.objectID} onClick={(e) => e.stopPropagation()}>
                 <Div>
-                  <ColorDiv>
+                  <ItemDiv>
                     {colors && <ColorBox bg={item.color} />}
                     &nbsp;&nbsp;
                     <span>{item.Features}</span>
-                  </ColorDiv>
+                  </ItemDiv>
                   <button type="button" onClick={() => removeItemHandler(item.objectID)}>
                     <Close />
                   </button>
                 </Div>
-              </Colors>
+              </Items>
             ))}
         </Wrap>
-      </ColorWrapper>
+      </ItemWrapper>
     </MainInput>
   );
 }
@@ -85,7 +85,7 @@ const styledInput = css`
     box-shadow: 0px 0px 0px 2px ${color.grey_600};
   }
 `;
-const ColorWrapper = styled.div`
+const ItemWrapper = styled.div`
   display: grid;
   padding-bottom: 1rem;
 
@@ -105,7 +105,7 @@ const wrapper = css`
   background-color: ${color.white};
 `;
 
-const Colors = styled.div`
+const Items = styled.div`
   ${wrapper}
   display:${({ show }) => (show ? 'block' : 'none')};
   position: relative;
@@ -142,7 +142,7 @@ const Arrow = styled(FaSort)`
   right: 1rem;
 `;
 
-const ColorContent = styled.div`
+const ItemContent = styled.div`
   position: absolute;
   top: 0.75rem;
   left: 0;
@@ -158,7 +158,7 @@ const ColorBox = styled.div`
   display: inline-block;
 `;
 
-const AddColorInput = styled.input`
+const AddItemInput = styled.input`
   ${styledInput}
   height: 2.5rem;
   width: 28rem;
@@ -216,7 +216,7 @@ const Div = styled.div`
   }
 `;
 
-const ColorDiv = styled.div`
+const ItemDiv = styled.div`
   display: flex;
   align-items: center;
   padding-left: 1rem;
