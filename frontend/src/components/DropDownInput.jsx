@@ -15,8 +15,10 @@ export function DropDownInput({
   keyPressItemHandler,
   removeItemHandler,
   inputTextContent,
-  colors,
+  uppercase,
   maxLength,
+  featureBool,
+  colorBool,
 }) {
   const [show, setShow] = useState(false);
 
@@ -29,7 +31,7 @@ export function DropDownInput({
             ? `No ${inputTextContent} for this item`
             : inputTextContent}
         </ItemContent>
-        <Wrap show={show} showWrapper={itemsList.length === 0 ? 0 : 1}>
+        <Wrap show={show} showWrapper={itemsList.length === 0 ? 0 : 1} colorBool={colorBool}>
           <AddItemInput
             type="text"
             onClick={(e) => e.stopPropagation()}
@@ -39,16 +41,33 @@ export function DropDownInput({
             maxLength={maxLength}
             onKeyPress={keyPressItemHandler}
             showInput={itemsList.length === 0 ? 0 : 1}
+            uppercase={uppercase}
           />
           <Add onClick={addItemFromBtn} />
           {itemsList &&
+            colorBool &&
             itemsList.map((item) => (
               <Items show={show} key={item.objectID} onClick={(e) => e.stopPropagation()}>
                 <Div>
                   <ItemDiv>
-                    {colors && <ColorBox bg={item.color} />}
+                    <ColorBox bg={item.color} />
                     &nbsp;&nbsp;
-                    <span>{item.Features}</span>
+                    <span style={{ textTransform: 'uppercase' }}>{item.color}</span>
+                  </ItemDiv>
+                  <button type="button" onClick={() => removeItemHandler(item.objectID)}>
+                    <Close />
+                  </button>
+                </Div>
+              </Items>
+            ))}
+          {itemsList &&
+            featureBool &&
+            itemsList.map((item) => (
+              <Items show={show} key={item.objectID} onClick={(e) => e.stopPropagation()}>
+                <Div>
+                  <ItemDiv>
+                    &nbsp;&nbsp;
+                    <span style={{ textTransform: 'capitalize' }}>{item.Features}</span>
                   </ItemDiv>
                   <button type="button" onClick={() => removeItemHandler(item.objectID)}>
                     <Close />
@@ -74,6 +93,7 @@ const styledInput = css`
   box-shadow: ${shadow.lg};
   margin-top: 1rem;
   margin-bottom: 2rem;
+
   box-shadow: ${({ error }) =>
     error ? `0px 0px 0px 2px ${color.red_vivid_500}` : `0px 0px 0px 2px ${color.grey_300}`};
 
@@ -109,9 +129,10 @@ const Items = styled.div`
   ${wrapper}
   display:${({ show }) => (show ? 'block' : 'none')};
   position: relative;
+
   span {
     vertical-align: super;
-    text-transform: ${({ colors }) => (colors ? 'uppercase' : 'capitalize')};
+
     width: 30ch;
   }
   &:first-of-type {
@@ -127,11 +148,10 @@ const Items = styled.div`
 
 const MainInput = styled.div`
   ${styledInput}
-
+  background-color: ${color.white};
   padding-top: 3.1rem;
   position: relative;
   cursor: pointer;
-  z-index: 999;
 
   box-shadow: ${({ show }) => (show ? `0px 0px 0px 2px ${color.grey_400}` : '')};
 `;
@@ -163,11 +183,13 @@ const AddItemInput = styled.input`
   height: 2.5rem;
   width: 28rem;
   position: absolute;
-  text-transform: ${({ colors }) => (colors ? 'uppercase' : 'capitalize')};
+  text-transform: ${({ uppercase }) => (!uppercase ? 'capitalize' : 'uppercase')};
   top: 4rem;
   right: 1rem;
+  background-color: ${color.white};
   box-shadow: 0px 0px 0px 2px ${color.grey_300};
   opacity: ${({ show }) => (show ? 1 : 0)};
+
   &:focus {
     box-shadow: 0px 0px 0px 2px ${color.scallop_shell};
   }
@@ -181,7 +203,7 @@ const Wrap = styled.div`
   padding-right: 1rem;
   box-shadow: ${shadow.lg};
   margin-top: 0.125rem;
-  opacity: ${({ show }) => (show ? 1 : 0)};
+  display: ${({ show }) => (show ? 'block' : 'none')};
 `;
 
 const Add = styled(FiPlus)`
@@ -189,7 +211,7 @@ const Add = styled(FiPlus)`
   position: absolute;
   top: 5.5rem;
   right: 2.4rem;
-  z-index: 9999;
+
   font-size: 1.5rem;
   cursor: pointer;
   &:hover {
@@ -210,6 +232,7 @@ const Div = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   button {
     cursor: pointer;
     background: transparent;
@@ -231,6 +254,9 @@ DropDownInput.propTypes = {
   keyPressItemHandler: PropTypes.func,
   removeItemHandler: PropTypes.func,
   inputTextContent: PropTypes.string,
-  colors: PropTypes.bool,
+  uppercase: PropTypes.bool,
+
+  featureBool: PropTypes.bool,
+  colorBool: PropTypes.bool,
   maxLength: PropTypes.number,
 };

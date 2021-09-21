@@ -9,9 +9,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { FaSort } from 'react-icons/fa';
-import { FiPlus } from 'react-icons/fi';
-import { CgClose } from 'react-icons/cg';
+import { FaDollarSign, FaSort } from 'react-icons/fa';
 import { Header, Loader, Message, Error, DropDownInput } from '../components';
 import { updateUserAC } from '../actions/userActions';
 import { color, rounded, shadow } from '../utilities';
@@ -19,12 +17,14 @@ import { USER_UPDATE_RESET } from '../actions/types';
 import { detailProduct } from '../actions/productActions';
 
 export function ProductEditScreen() {
-  const [showColor, setShowColor] = useState(false);
   const [colorsList, setColorsList] = useState([]);
   const [addedColor, setAddedColor] = useState('');
   const [featuresList, setFeaturesList] = useState([]);
   const [addedFeature, setAddedFeature] = useState('');
-  // const [validatedColor, setValidatedColor] = useState(false);
+  const [showDropDown, setShowDropDown] = useState(false);
+  const [showDropDownCategory, setShowDropDownCategory] = useState(false);
+  const [selectedSubcategory, setSelectedSubcategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const userInfo = useSelector((state) => state.userInfo);
   const { loading, user, error } = userInfo;
   const updateUser = useSelector((state) => state.updateUser);
@@ -99,7 +99,23 @@ export function ProductEditScreen() {
     };
   }
 
-  //!   Colors functions
+  const subcategoryList = [
+    'decoration',
+    'dining chair',
+    'lounge chair',
+    'coffe table',
+    'dining table',
+    'wall lamp',
+    'bar stool',
+    'sofa',
+    'tableware',
+    'cushion',
+    'foor lamp',
+  ];
+  const categories = ['furniture', 'accessories', 'lighting'];
+
+  //!   Colors functions /////////////////////////
+
   const addColorHandler = (e) => {
     const addColor = e.target.value.toLowerCase();
     const clrs = [...addColor];
@@ -126,7 +142,7 @@ export function ProductEditScreen() {
   };
   const removeColorHandler = (ID) => {
     if (ID) {
-      const newList = featuresList.filter((el) => el.objectID !== ID);
+      const newList = colorsList.filter((el) => el.objectID !== ID);
       setColorsList(newList);
     }
   };
@@ -139,7 +155,8 @@ export function ProductEditScreen() {
     }
   }, [product, colors]);
 
-  //! Features Functions
+  //! Features Functions ////////////////////////////
+
   const addFeatureHandler = (e) => {
     setAddedFeature(e.target.value.toLowerCase());
   };
@@ -172,8 +189,19 @@ export function ProductEditScreen() {
       const newFeatureArray = Features.map((el) => ({ objectID: uuidv4(), Features: el }));
       console.log(newFeatureArray);
       setFeaturesList(newFeatureArray);
+      setSelectedSubcategory(subcategory);
+      setSelectedCategory(category);
     }
-  }, [product, Features]);
+  }, [product, Features, subcategory, category]);
+
+  const selectedSubcategoryHandler = (e) => {
+    setSelectedSubcategory(e.target.textContent);
+    setShowDropDown(!showDropDown);
+  };
+  const selectedCategoryHandler = (e) => {
+    setSelectedCategory(e.target.textContent);
+    setShowDropDownCategory(!showDropDownCategory);
+  };
 
   return (
     <>
@@ -191,12 +219,12 @@ export function ProductEditScreen() {
               <Formik
                 initialValues={currentValues}
                 validationSchema={Yup.object({
-                  Features: Yup.string().required('Please enter your Name'),
+                  Features: Yup.array().required('Please enter your features'),
                   name: Yup.string()
                     .min(2, 'Must at least 2 characters long.')
                     .max(255, 'Name Must less than 255 characters')
                     .required('Please enter your Name'),
-                  colors: Yup.string(),
+                  colors: Yup.array(),
                   shipping: Yup.boolean().required('Please confim if shipping is included'),
                   image: Yup.array().required('Please add main image'),
                   description: Yup.string().required('Please add description'),
@@ -220,9 +248,7 @@ export function ProductEditScreen() {
                 {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
                   <form autoComplete="off" onSubmit={handleSubmit}>
                     <Back to="/admin/products"> &larr; Go Back</Back>
-
                     <Heading>Product Details</Heading>
-
                     <InputWrapper>
                       <div>
                         <label htmlFor="name">
@@ -230,7 +256,7 @@ export function ProductEditScreen() {
                           <b>Name</b>
                         </label>
                       </div>
-                      <Input
+                      <NameInput
                         error={touched.name && errors.name}
                         id="name"
                         type="text"
@@ -243,18 +269,19 @@ export function ProductEditScreen() {
                       <Error touched={touched.name} message={errors.name} />
                     </InputWrapper>
                     <DropDownInput
-                      itemListFromState={Features}
-                      itemsList={featuresList}
-                      itemToAdd={addedFeature}
-                      addItemHandler={addFeatureHandler}
-                      addItemFromBtn={addFeatureFromBtn}
-                      keyPressItemHandler={submitFeatureHandler}
-                      removeItemHandler={removeFeatureHandler}
-                      inputTextContent="Features"
-                      colors={false}
-                      maxLength={30}
+                      itemListFromState={colors}
+                      itemsList={colorsList}
+                      itemToAdd={addedColor}
+                      addItemHandler={addColorHandler}
+                      addItemFromBtn={addColorFromBtn}
+                      keyPressItemHandler={submitColorsHandler}
+                      removeItemHandler={removeColorHandler}
+                      inputTextContent="Colors"
+                      colorBool
+                      featureBool={false}
+                      maxLength={6}
+                      uppercase
                     />
-
                     <InputWrapper>
                       <div>
                         <label htmlFor="description">
@@ -276,58 +303,105 @@ export function ProductEditScreen() {
 
                       <Error touched={touched.email} message={errors.email} />
                     </InputWrapper>
-
                     <InputWrapper>
-                      <label htmlFor="isAdmin">
+                      <label htmlFor="shipping">
                         <input
-                          id="isAdmin"
+                          id="shipping"
                           type="checkbox"
-                          name="isAdmin"
+                          name="shipping"
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          checked={values.isAdmin}
+                          checked={values.shipping}
                         />{' '}
-                        &nbsp; Is Admin
+                        &nbsp; Shipping
                       </label>
                     </InputWrapper>
+                    <DropDownInput
+                      itemListFromState={Features}
+                      itemsList={featuresList}
+                      itemToAdd={addedFeature}
+                      addItemHandler={addFeatureHandler}
+                      addItemFromBtn={addFeatureFromBtn}
+                      keyPressItemHandler={submitFeatureHandler}
+                      removeItemHandler={removeFeatureHandler}
+                      inputTextContent="Features"
+                      featureBool
+                      colorBool={false}
+                      maxLength={30}
+                    />
+                    <PriceInputWrapper>
+                      <div>
+                        <label htmlFor="price">
+                          {' '}
+                          <b>Price</b>
+                        </label>
+                      </div>
+                      <PriceInput
+                        error={touched.price && errors.price}
+                        id="price"
+                        type="text"
+                        price="price"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.price}
+                        placeholder="Price"
+                      />
+                      <Dollar />
+                      <Error touched={touched.price} message={errors.price} />
+                    </PriceInputWrapper>
+                    <AvailableInput>
+                      <label htmlFor="available">
+                        <input
+                          id="available"
+                          type="checkbox"
+                          name="available"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          checked={values.available}
+                        />{' '}
+                        &nbsp; Available
+                      </label>
+                    </AvailableInput>
+                    <InputWrapper>
+                      <label>
+                        &nbsp; <b>Subcategory</b>
+                      </label>
+                      <SubcategoryInput
+                        showDropDownSubCategory={showDropDown}
+                        onClick={() => setShowDropDown(!showDropDown)}
+                      >
+                        <Arrow />
 
-                    <ColorsInput showColor={showColor} onClick={() => setShowColor(!showColor)}>
-                      <Arrow />
-                      <ColorWrapper>
-                        <ColorContent>
-                          {colors && colors.length === 0 ? 'No Colors for this item' : 'Colors'}
-                        </ColorContent>
-                        <Wrap showColor={showColor} showWrapper={colorsList.length === 0 ? 0 : 1}>
-                          <AddColorInput
-                            type="text"
-                            onClick={(e) => e.stopPropagation()}
-                            showColor={showColor}
-                            value={addedColor}
-                            onChange={addColorHandler}
-                            maxLength="6"
-                            onKeyPress={submitColorsHandler}
-                            showInput={colorsList.length === 0 ? 0 : 1}
-                          />
-                          <Add onClick={addColorFromBtn} />
-                          {colorsList &&
-                            colorsList.map((clr) => (
-                              <Colors showColor={showColor} key={clr.objectID} onClick={(e) => e.stopPropagation()}>
-                                <Div>
-                                  <ColorDiv>
-                                    <ColorBox bg={clr.color} />
-                                    &nbsp;&nbsp;
-                                    <span>{clr.color}</span>
-                                  </ColorDiv>
-                                  <button type="button" onClick={() => removeColorHandler(clr.objectID)}>
-                                    <Close />
-                                  </button>
-                                </Div>
-                              </Colors>
-                            ))}
-                        </Wrap>
-                      </ColorWrapper>
-                    </ColorsInput>
+                        <ItemContent>{selectedSubcategory}</ItemContent>
+                      </SubcategoryInput>
+                      <SubcategoryWrap showDropDownSubCategory={showDropDown} onClick={selectedSubcategoryHandler}>
+                        {subcategoryList.map((item, index) => (
+                          <SubCategoryItems showDropDownSubCategory={showDropDown} key={index}>
+                            <span>{item}</span>
+                          </SubCategoryItems>
+                        ))}
+                      </SubcategoryWrap>
+                    </InputWrapper>
 
+                    <InputWrapper>
+                      <label>
+                        &nbsp; <b>Category</b>
+                      </label>
+                      <CategoryInput
+                        showDropDownCategory={showDropDownCategory}
+                        onClick={() => setShowDropDownCategory(!showDropDownCategory)}
+                      >
+                        <Arrow />
+                        <ItemContent>{selectedCategory}</ItemContent>
+                      </CategoryInput>
+                      <CategoryWrap showDropDownCategory={showDropDownCategory} onClick={selectedCategoryHandler}>
+                        {categories.map((item, i) => (
+                          <CategoryItems showDropDownCategory={showDropDownCategory} key={i}>
+                            <span>{item}</span>
+                          </CategoryItems>
+                        ))}
+                      </CategoryWrap>
+                    </InputWrapper>
                     <ButtonWrapper>
                       <SubmitBtn className="submit-btn" type="submit" disabled={isSubmitting}>
                         Update
@@ -370,10 +444,11 @@ const styledInput = css`
   text-indent: 5%;
   font-size: 1.2rem;
   color: ${color.grey_800};
+  background-color: ${color.white};
   font-family: 'avenir_regular';
   box-shadow: ${shadow.lg};
   margin-top: 1rem;
-  margin-bottom: 2rem;
+  ${'' /* margin-bottom: 2rem; */}
   box-shadow: ${({ error }) =>
     error ? `0px 0px 0px 2px ${color.red_vivid_500}` : `0px 0px 0px 2px ${color.grey_300}`};
 
@@ -386,9 +461,32 @@ const styledInput = css`
   }
 `;
 
-const Input = styled.input`
+const NameInput = styled.input`
   ${styledInput}
+  margin-bottom:2rem;
 `;
+
+const PriceInput = styled.input`
+  ${styledInput}
+  margin-bottom:2rem;
+`;
+const AvailableInput = styled.div`
+  margin-bottom: 3rem;
+  margin-top: 1rem;
+`;
+
+const PriceInputWrapper = styled.div`
+  position: relative;
+`;
+
+const Dollar = styled(FaDollarSign)`
+  position: absolute;
+  top: 3rem;
+  right: 1.2rem;
+  color: ${color.grey_500};
+  font-size: 1.2rem;
+`;
+
 const Textarea = styled.textarea`
   ${styledInput}
   height: 10rem;
@@ -427,138 +525,95 @@ const Back = styled(Link)`
   }
 `;
 
-const ColorWrapper = styled.div`
-  display: grid;
-  padding-bottom: 1rem;
-
-  cursor: pointer;
-
-  border-radius: ${rounded.md};
-`;
-
-const wrapper = css`
-  width: 30rem;
-
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-right: 1rem;
-
-  overflow-y: scroll;
-  background-color: ${color.white};
-`;
-
-const Colors = styled.div`
-  ${wrapper}
-  display:${({ showColor }) => (showColor ? 'block' : 'none')};
-  position: relative;
-  span {
-    vertical-align: super;
-    text-transform: uppercase;
-  }
-  &:first-of-type {
-    margin-top: 3.5rem;
-  }
-  &:last-of-type {
-    margin-bottom: 0.5rem;
-  }
-  &:hover {
-    background-color: ${color.grey_100};
-  }
-`;
-
-const ColorsInput = styled.div`
-  ${styledInput}
-
-  padding-top: 3.1rem;
-  position: relative;
-  cursor: pointer;
-  z-index: 999;
-
-  box-shadow: ${({ showColor }) => (showColor ? `0px 0px 0px 2px ${color.grey_400}` : '')};
-`;
-
 const Arrow = styled(FaSort)`
   position: absolute;
   top: 1rem;
   right: 1rem;
 `;
 
-const ColorContent = styled.div`
+const SubcategoryInputMain = css`
+  position: relative;
+  cursor: pointer;
+`;
+const ItemContent = styled.div`
   position: absolute;
   top: 0.75rem;
   left: 0;
   width: 100%;
+  text-transform: capitalize;
 `;
-
-const ColorBox = styled.div`
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: ${rounded.sm};
-  border: 1px solid ${color.grey_400};
-  background-color: ${({ bg }) => bg};
-  display: inline-block;
-`;
-
-const AddColorInput = styled.input`
-  ${styledInput}
-  height: 2.5rem;
-  width: 28rem;
-  position: absolute;
-  text-transform: uppercase;
-  top: 4rem;
-  right: 1rem;
-  box-shadow: 0px 0px 0px 2px ${color.grey_300};
-  opacity: ${({ showColor }) => (showColor ? 1 : 0)};
-  &:focus {
-    box-shadow: 0px 0px 0px 2px ${color.scallop_shell};
-  }
-`;
-
-const Wrap = styled.div`
+const wrapper = css`
   width: 30rem;
-  height: ${({ showWrapper }) => (showWrapper ? 'auto' : '6rem')};
-  background-color: ${color.white};
-  padding-top: 1.5rem;
+  height: 100%;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
   padding-right: 1rem;
-  box-shadow: ${shadow.lg};
-  margin-top: 0.125rem;
-  opacity: ${({ showColor }) => (showColor ? 1 : 0)};
-`;
-
-const Add = styled(FiPlus)`
-  color: ${color.grey_500};
-  position: absolute;
-  top: 5.5rem;
-  right: 2.4rem;
-  z-index: 9999;
-  font-size: 1.5rem;
   cursor: pointer;
-  &:hover {
-    color: ${color.green_500};
-  }
+  background-color: ${color.white};
 `;
-const Close = styled(CgClose)`
-  vertical-align: middle;
-  margin-right: 0.8rem;
-  color: ${color.grey_500};
-  font-size: 1.5rem;
+
+const items = css`
+  position: relative;
+
+  span {
+    text-transform: capitalize;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    width: 30ch;
+  }
+  &:first-of-type {
+    margin-top: 1.2rem;
+  }
+  &:last-of-type {
+    margin-bottom: 1rem;
+  }
   &:hover {
-    color: ${color.red_vivid_500};
+    background-color: ${color.grey_100};
   }
 `;
 
-const Div = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  button {
-    cursor: pointer;
-    background: transparent;
-  }
+const wrap = css`
+  width: 30rem;
+  height: auto;
+  background-color: ${color.white};
+  padding-top: 0.125rem;
+
+  box-shadow: ${shadow.lg};
 `;
 
-const ColorDiv = styled.div`
-  display: flex;
-  align-items: center;
-  padding-left: 1rem;
+//! ////////////////////////////////
+
+const SubcategoryInput = styled.div`
+  ${styledInput}
+  ${SubcategoryInputMain}
+  margin-bottom:3rem;
+`;
+
+const SubCategoryItems = styled.div`
+  ${wrapper}
+  ${items}
+  display: ${({ showDropDownSubCategory }) => (showDropDownSubCategory ? 'block' : 'none')};
+`;
+
+const SubcategoryWrap = styled.div`
+  ${wrap}
+
+  display: ${({ showDropDownSubCategory }) => (showDropDownSubCategory ? 'block' : 'none')};
+`;
+
+const CategoryInput = styled.div`
+  ${styledInput}
+  ${SubcategoryInputMain}
+  margin-bottom:3rem;
+`;
+
+const CategoryItems = styled.div`
+  ${wrapper}
+  ${items}
+  display: ${({ showDropDownCategory }) => (showDropDownCategory ? 'block' : 'none')};
+`;
+
+const CategoryWrap = styled.div`
+  ${wrap}
+  display: ${({ showDropDownCategory }) => (showDropDownCategory ? 'block' : 'none')};
 `;
