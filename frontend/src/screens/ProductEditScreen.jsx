@@ -383,7 +383,7 @@ export function ProductEditScreen() {
                       </SubcategoryWrap>
                     </InputWrapper>
 
-                    <InputWrapper>
+                    <InputWrapper style={{ marginTop: '3rem' }}>
                       <label>
                         &nbsp; <b>Category</b>
                       </label>
@@ -578,7 +578,7 @@ const wrap = css`
   background-color: ${color.white};
   padding-top: 0.125rem;
 
-  box-shadow: ${shadow.lg};
+  box-shadow: ${shadow.xl};
 `;
 
 //! ////////////////////////////////
@@ -586,7 +586,6 @@ const wrap = css`
 const SubcategoryInput = styled.div`
   ${styledInput}
   ${SubcategoryInputMain}
-  margin-bottom:3rem;
 `;
 
 const SubCategoryItems = styled.div`
@@ -604,7 +603,6 @@ const SubcategoryWrap = styled.div`
 const CategoryInput = styled.div`
   ${styledInput}
   ${SubcategoryInputMain}
-  margin-bottom:3rem;
 `;
 
 const CategoryItems = styled.div`

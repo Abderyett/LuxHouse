@@ -108,14 +108,15 @@ const styledInput = css`
 const ItemWrapper = styled.div`
   display: grid;
   padding-bottom: 1rem;
-
+  position: static;
   cursor: pointer;
-
+  z-index: 999;
   border-radius: ${rounded.md};
 `;
 
 const wrapper = css`
   width: 30rem;
+  position: relative;
 
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -203,6 +204,7 @@ const Wrap = styled.div`
   padding-right: 1rem;
   box-shadow: ${shadow.lg};
   margin-top: 0.125rem;
+  z-index: 9999;
   display: ${({ show }) => (show ? 'block' : 'none')};
 `;
 
