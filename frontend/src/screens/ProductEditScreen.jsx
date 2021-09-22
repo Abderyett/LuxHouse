@@ -9,7 +9,9 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { FaDollarSign, FaSort } from 'react-icons/fa';
+import { FaDollarSign, FaSort, FaTimes } from 'react-icons/fa';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
+import { BsTrash } from 'react-icons/bs';
 import { Header, Loader, Message, Error, DropDownInput } from '../components';
 import { updateUserAC } from '../actions/userActions';
 import { color, rounded, shadow } from '../utilities';
@@ -25,6 +27,8 @@ export function ProductEditScreen() {
   const [showDropDownCategory, setShowDropDownCategory] = useState(false);
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [mainImage, setMainImage] = useState('');
+  const [imageList, setImageList] = useState([]);
   const userInfo = useSelector((state) => state.userInfo);
   const { loading, user, error } = userInfo;
   const updateUser = useSelector((state) => state.updateUser);
@@ -187,12 +191,15 @@ export function ProductEditScreen() {
   useEffect(() => {
     if (product && Features) {
       const newFeatureArray = Features.map((el) => ({ objectID: uuidv4(), Features: el }));
-      console.log(newFeatureArray);
+
       setFeaturesList(newFeatureArray);
       setSelectedSubcategory(subcategory);
       setSelectedCategory(category);
+      setMainImage(image[0].url);
     }
-  }, [product, Features, subcategory, category]);
+
+    setImageList(images);
+  }, [product, Features, subcategory, category, image, images]);
 
   const selectedSubcategoryHandler = (e) => {
     setSelectedSubcategory(e.target.textContent);
@@ -201,6 +208,11 @@ export function ProductEditScreen() {
   const selectedCategoryHandler = (e) => {
     setSelectedCategory(e.target.textContent);
     setShowDropDownCategory(!showDropDownCategory);
+  };
+
+  const deleteImageHandeler = (Id) => {
+    const newImageList = imageList.filter((el) => el._id !== Id);
+    setImageList(newImageList);
   };
 
   return (
@@ -402,6 +414,54 @@ export function ProductEditScreen() {
                         ))}
                       </CategoryWrap>
                     </InputWrapper>
+                    <InputWrapper>
+                      <div style={{ marginTop: '3rem' }}>
+                        <b>Add Main Image</b>
+                      </div>
+                      <ImgLabel htmlFor="image">
+                        <span>
+                          <AiOutlineCloudUpload />
+                          &nbsp;
+                        </span>{' '}
+                        Upload Image
+                      </ImgLabel>
+
+                      <ImageInput type="file" id="image" />
+                    </InputWrapper>
+
+                    <ImageWrapper image={mainImage.length > 0}>
+                      <Image url={mainImage} />
+
+                      <RemoveBtn onClick={() => setMainImage('')} />
+                    </ImageWrapper>
+
+                    <InputWrapper>
+                      <div style={{ marginTop: '3rem' }}>
+                        <b>Add Images</b>
+                      </div>
+                      <ImgLabel htmlFor="images">
+                        <span>
+                          <AiOutlineCloudUpload />
+                          &nbsp;
+                        </span>{' '}
+                        Upload Images
+                      </ImgLabel>
+
+                      <ImageInput type="file" id="images" />
+                    </InputWrapper>
+                    <RightBlur>
+                      <ImagesContainer>
+                        {imageList &&
+                          imageList.map((img) => (
+                            <ImagesWrapper key={img._id}>
+                              <Image url={img.url} />
+
+                              <RemoveBtn onClick={() => deleteImageHandeler(img._id)} />
+                            </ImagesWrapper>
+                          ))}
+                      </ImagesContainer>
+                    </RightBlur>
+
                     <ButtonWrapper>
                       <SubmitBtn className="submit-btn" type="submit" disabled={isSubmitting}>
                         Update
@@ -423,7 +483,7 @@ const Container = styled.div`
   place-items: center;
   padding: 2rem;
   margin-top: 4rem;
-  height: 150vh;
+  height: 200vh;
 `;
 const UserProfile = styled.section``;
 
@@ -458,6 +518,34 @@ const styledInput = css`
   outline: none;
   &:focus {
     box-shadow: 0px 0px 0px 2px ${color.grey_600};
+  }
+`;
+const ImageInput = styled.input`
+  ${styledInput}
+  display:none
+`;
+
+const ImgLabel = styled.label`
+  border: 2px solid ${color.grey_300};
+  display: inline-block;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  border-radius: ${rounded.md};
+  margin: 3rem 0;
+  font-size: 1.2rem;
+  transition: all 0.3s ease-in-out;
+  svg {
+    vertical-align: middle;
+    font-size: 1.6rem;
+    color: ${color.grey_600};
+  }
+
+  &:hover {
+    background-color: ${color.black};
+    color: ${color.white};
+    svg {
+      color: ${color.white};
+    }
   }
 `;
 
@@ -614,4 +702,74 @@ const CategoryItems = styled.div`
 const CategoryWrap = styled.div`
   ${wrap}
   display: ${({ showDropDownCategory }) => (showDropDownCategory ? 'block' : 'none')};
+`;
+
+const RemoveBtn = styled(BsTrash)`
+  font-size: 1.2rem;
+  color: ${color.red_vivid_500};
+  cursor: pointer;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  opacity: 0;
+`;
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 10rem;
+  transition: all 0.3s ease-in-out;
+  display: ${({ image }) => (image ? 'block' : 'none')};
+  &:hover {
+    ${RemoveBtn} {
+      opacity: 1;
+    }
+  }
+`;
+const Image = styled.div`
+  width: 10rem;
+  height: 10rem;
+
+  border: 2px solid ${color.grey_400};
+  border-radius: ${rounded.sm};
+  cursor: pointer;
+  background-image: url(${({ url }) => url});
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: all 0.6s ease-in-out;
+`;
+
+const ImagesWrapper = styled.div`
+  position: relative;
+  width: 10rem;
+  transition: all 0.3s ease-in-out;
+  display: block;
+  margin-right: 1rem;
+  &:last-of-type {
+    margin-right: 7rem;
+  }
+  &:hover {
+    ${RemoveBtn} {
+      opacity: 1;
+    }
+  }
+`;
+
+const ImagesContainer = styled.div`
+  display: flex;
+  width: 40rem;
+  overflow-x: scroll;
+  overflow-y: hidden;
+`;
+const RightBlur = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #fff 100%);
+  }
 `;
