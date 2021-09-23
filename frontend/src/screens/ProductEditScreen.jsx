@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -29,6 +30,8 @@ export function ProductEditScreen() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [mainImage, setMainImage] = useState('');
   const [imageList, setImageList] = useState([]);
+  const [imageArray, setImageArray] = useState('');
+
   const userInfo = useSelector((state) => state.userInfo);
   const { loading, user, error } = userInfo;
   const updateUser = useSelector((state) => state.updateUser);
@@ -214,6 +217,49 @@ export function ProductEditScreen() {
     const newImageList = imageList.filter((el) => el._id !== Id);
     setImageList(newImageList);
   };
+
+  // Display Uploaded Main Image
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setMainImage(reader.result);
+    };
+  };
+
+  const handleInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+  };
+
+  const fileToDataUri = (img) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onloadend = () => {
+      setImageArray(reader.result);
+      if (imageArray) {
+        const imgs = imageList.map((el) => ({ _id: uuidv4(), url: el }));
+        setImageList((prevState) => [...prevState, { imgs }]);
+      }
+    };
+  };
+
+  console.log(imageList);
+
+  const uploadImages = async (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const newImagesPromises = [];
+      for (let i = 0; i < e.target.files.length; i++) {
+        newImagesPromises.push(fileToDataUri(e.target.files[i]));
+      }
+      // const newImages = await Promise.all(newImagesPromises);
+      // console.log(newImages);
+      // setImageArray([...imageArray, ...newImages]);
+    }
+    e.target.value = '';
+  };
+  console.log(imageList);
 
   return (
     <>
@@ -426,10 +472,12 @@ export function ProductEditScreen() {
                         Upload Image
                       </ImgLabel>
 
-                      <ImageInput type="file" id="image" />
+                      <ImageInput type="file" id="image" onChange={handleInputChange} value="" />
                     </InputWrapper>
 
                     <ImageWrapper image={mainImage.length > 0}>
+                      <ImgWrapp />
+
                       <Image url={mainImage} />
 
                       <RemoveBtn onClick={() => setMainImage('')} />
@@ -447,13 +495,14 @@ export function ProductEditScreen() {
                         Upload Images
                       </ImgLabel>
 
-                      <ImageInput type="file" id="images" />
+                      <ImageInput type="file" id="images" value="" onChange={uploadImages} multiple />
                     </InputWrapper>
                     <RightBlur>
                       <ImagesContainer>
                         {imageList &&
                           imageList.map((img) => (
                             <ImagesWrapper key={img._id}>
+                              <ImgWrapp />
                               <Image url={img.url} />
 
                               <RemoveBtn onClick={() => deleteImageHandeler(img._id)} />
@@ -521,8 +570,8 @@ const styledInput = css`
   }
 `;
 const ImageInput = styled.input`
-  ${styledInput}
-  display:none
+  ${styledInput};
+  display: none;
 `;
 
 const ImgLabel = styled.label`
@@ -570,7 +619,7 @@ const PriceInputWrapper = styled.div`
 const Dollar = styled(FaDollarSign)`
   position: absolute;
   top: 3rem;
-  right: 1.2rem;
+  right: 12rem;
   color: ${color.grey_500};
   font-size: 1.2rem;
 `;
@@ -704,15 +753,34 @@ const CategoryWrap = styled.div`
   display: ${({ showDropDownCategory }) => (showDropDownCategory ? 'block' : 'none')};
 `;
 
+const ImgWrapp = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: ${rounded.sm};
+  z-index: 3;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+    transition: all 0.4s ease-in;
+  }
+`;
 const RemoveBtn = styled(BsTrash)`
   font-size: 1.2rem;
-  color: ${color.red_vivid_500};
+  color: ${color.white};
   cursor: pointer;
   position: absolute;
-  right: 0.5rem;
-  top: 0.5rem;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
   opacity: 0;
+  z-index: 3;
 `;
+
 const ImageWrapper = styled.div`
   position: relative;
   width: 10rem;
@@ -721,6 +789,10 @@ const ImageWrapper = styled.div`
   &:hover {
     ${RemoveBtn} {
       opacity: 1;
+    }
+    ${ImgWrapp} {
+      opacity: 1;
+      transition: all 0.4s ease-in;
     }
   }
 `;
@@ -735,6 +807,7 @@ const Image = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   transition: all 0.6s ease-in-out;
+  position: relative;
 `;
 
 const ImagesWrapper = styled.div`
@@ -749,6 +822,10 @@ const ImagesWrapper = styled.div`
   &:hover {
     ${RemoveBtn} {
       opacity: 1;
+    }
+    ${ImgWrapp} {
+      opacity: 1;
+      transition: all 0.4s ease-in;
     }
   }
 `;

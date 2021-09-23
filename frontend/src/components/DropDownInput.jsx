@@ -250,7 +250,7 @@ const ItemDiv = styled.div`
 DropDownInput.propTypes = {
   itemListFromState: PropTypes.array,
   itemsList: PropTypes.array,
-  itemToAdd: PropTypes.func,
+  itemToAdd: PropTypes.string,
   addItemHandler: PropTypes.func,
   addItemFromBtn: PropTypes.func,
   keyPressItemHandler: PropTypes.func,
