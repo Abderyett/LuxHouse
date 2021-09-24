@@ -10,9 +10,10 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { FaDollarSign, FaSort, FaTimes } from 'react-icons/fa';
+import { FaDollarSign, FaSort } from 'react-icons/fa';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BsTrash, BsChevronRight } from 'react-icons/bs';
+import axios from 'axios';
 import { Header, Loader, Message, Error, DropDownInput } from '../components';
 import { updateUserAC } from '../actions/userActions';
 import { color, rounded, shadow } from '../utilities';
@@ -30,7 +31,7 @@ export function ProductEditScreen() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [mainImage, setMainImage] = useState('');
   const [imageList, setImageList] = useState([]);
-  const [imageArray, setImageArray] = useState('');
+  const [addedImages, setAddedImages] = useState([]);
 
   const ref = useRef();
   const userInfo = useSelector((state) => state.userInfo);
@@ -122,7 +123,7 @@ export function ProductEditScreen() {
   ];
   const categories = ['furniture', 'accessories', 'lighting'];
 
-  //!   Colors functions /////////////////////////
+  //*   Colors functions /////////////////////////
 
   const addColorHandler = (e) => {
     const addColor = e.target.value.toLowerCase();
@@ -163,7 +164,7 @@ export function ProductEditScreen() {
     }
   }, [product, colors]);
 
-  //! Features Functions ////////////////////////////
+  //* Features Functions ////////////////////////////
 
   const addFeatureHandler = (e) => {
     setAddedFeature(e.target.value.toLowerCase());
@@ -173,7 +174,7 @@ export function ProductEditScreen() {
     if (event.key === 'Enter') {
       if (addedFeature.length > 0) {
         setFeaturesList((prevState) => [...prevState, { Features: addedFeature, objectID: uuidv4() }]);
-        console.log('featuresList', featuresList);
+
         setAddedFeature('');
       }
     }
@@ -205,6 +206,8 @@ export function ProductEditScreen() {
     setImageList(images);
   }, [product, Features, subcategory, category, image, images]);
 
+  //* Category & Subcategory Dropdown ////////////////////////
+
   const selectedSubcategoryHandler = (e) => {
     setSelectedSubcategory(e.target.textContent);
     setShowDropDown(!showDropDown);
@@ -219,7 +222,7 @@ export function ProductEditScreen() {
     setImageList(newImageList);
   };
 
-  // Display Uploaded Main Image
+  //* Display Uploaded Main Image  ////////////////////////
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -249,7 +252,7 @@ export function ProductEditScreen() {
       reader.readAsDataURL(imgs);
     });
 
-  const uploadImage = async (e) => {
+  const uploadImageHandler = async (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const newImagesPromises = [];
       for (let i = 0; i < e.target.files.length; i++) {
@@ -257,15 +260,34 @@ export function ProductEditScreen() {
       }
       const newImages = await Promise.all(newImagesPromises);
       const newImgArray = newImages.map((el) => ({ _id: uuidv4(), url: el.url }));
-
+      setAddedImages(newImgArray);
       setImageList([...imageList, ...newImgArray]);
     }
     e.target.value = '';
   };
 
   const scrollRight = () => {
-    ref.current.scrollBy(100, 0);
+    ref.current.scrollBy(350, 0);
   };
+
+  //* Submitting to Uploaded photos to backend ///////////////
+
+  const uploadImage = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const base64EncodedImage = addedImages.map((el) => el.url);
+
+    try {
+      const { data } = await axios.post('/api/upload', base64EncodedImage, config);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  uploadImage();
 
   return (
     <>
@@ -501,7 +523,7 @@ export function ProductEditScreen() {
                         Upload Images
                       </ImgLabel>
 
-                      <ImageInput type="file" id="images" value="" onChange={uploadImage} multiple />
+                      <ImageInput type="file" id="images" value="" onChange={uploadImageHandler} multiple />
                     </InputWrapper>
                     <RightBlur>
                       <ImagesContainer ref={ref}>

@@ -7,6 +7,7 @@ const countriesRouter = require('./routes/countriesRouter');
 const orderRoute = require('./routes/orderRoutes');
 const userRoutes = require('./routes/userRoutes');
 const checkoutRoute = require('./routes/checkoutRoute');
+const uploadRoutes = require('./routes/uploadRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 require('./utils/init-redis');
 
@@ -27,6 +28,7 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/countries', countriesRouter);
 app.use('/api/v1/orders', orderRoute);
 app.use('/create-checkout-session', checkoutRoute);
+app.use('/api/v1/upload', uploadRoutes);
 
 app.use('*', notFound);
 
