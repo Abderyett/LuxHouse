@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
@@ -12,7 +12,7 @@ import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { FaDollarSign, FaSort, FaTimes } from 'react-icons/fa';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
-import { BsTrash } from 'react-icons/bs';
+import { BsTrash, BsChevronRight } from 'react-icons/bs';
 import { Header, Loader, Message, Error, DropDownInput } from '../components';
 import { updateUserAC } from '../actions/userActions';
 import { color, rounded, shadow } from '../utilities';
@@ -32,6 +32,7 @@ export function ProductEditScreen() {
   const [imageList, setImageList] = useState([]);
   const [imageArray, setImageArray] = useState('');
 
+  const ref = useRef();
   const userInfo = useSelector((state) => state.userInfo);
   const { loading, user, error } = userInfo;
   const updateUser = useSelector((state) => state.updateUser);
@@ -233,33 +234,38 @@ export function ProductEditScreen() {
     previewFile(file);
   };
 
-  const fileToDataUri = (img) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(img);
-    reader.onloadend = () => {
-      setImageArray(reader.result);
-      if (imageArray) {
-        const imgs = imageList.map((el) => ({ _id: uuidv4(), url: el }));
-        setImageList((prevState) => [...prevState, { imgs }]);
-      }
-    };
-  };
+  const fileToDataUri = (imgs) =>
+    new Promise((res) => {
+      const reader = new FileReader();
+      const { type, imgName, size } = imgs;
+      reader.addEventListener('load', () => {
+        res({
+          url: reader.result,
+          imgName,
+          type,
+          size,
+        });
+      });
+      reader.readAsDataURL(imgs);
+    });
 
-  console.log(imageList);
-
-  const uploadImages = async (e) => {
+  const uploadImage = async (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const newImagesPromises = [];
       for (let i = 0; i < e.target.files.length; i++) {
         newImagesPromises.push(fileToDataUri(e.target.files[i]));
       }
-      // const newImages = await Promise.all(newImagesPromises);
-      // console.log(newImages);
-      // setImageArray([...imageArray, ...newImages]);
+      const newImages = await Promise.all(newImagesPromises);
+      const newImgArray = newImages.map((el) => ({ _id: uuidv4(), url: el.url }));
+
+      setImageList([...imageList, ...newImgArray]);
     }
     e.target.value = '';
   };
-  console.log(imageList);
+
+  const scrollRight = () => {
+    ref.current.scrollBy(100, 0);
+  };
 
   return (
     <>
@@ -495,10 +501,10 @@ export function ProductEditScreen() {
                         Upload Images
                       </ImgLabel>
 
-                      <ImageInput type="file" id="images" value="" onChange={uploadImages} multiple />
+                      <ImageInput type="file" id="images" value="" onChange={uploadImage} multiple />
                     </InputWrapper>
                     <RightBlur>
-                      <ImagesContainer>
+                      <ImagesContainer ref={ref}>
                         {imageList &&
                           imageList.map((img) => (
                             <ImagesWrapper key={img._id}>
@@ -509,6 +515,7 @@ export function ProductEditScreen() {
                             </ImagesWrapper>
                           ))}
                       </ImagesContainer>
+                      {imageList && imageList.length > 2 && <Chevron onClick={scrollRight} />}
                     </RightBlur>
 
                     <ButtonWrapper>
@@ -832,9 +839,10 @@ const ImagesWrapper = styled.div`
 
 const ImagesContainer = styled.div`
   display: flex;
-  width: 40rem;
+  width: 30rem;
   overflow-x: scroll;
   overflow-y: hidden;
+  scroll-behavior: smooth;
 `;
 const RightBlur = styled.div`
   width: 100%;
@@ -849,4 +857,13 @@ const RightBlur = styled.div`
     height: 100%;
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #fff 100%);
   }
+`;
+
+const Chevron = styled(BsChevronRight)`
+  font-size: 2rem;
+  color: ${color.grey_500};
+  position: absolute;
+  right: -2.5rem;
+  top: 4rem;
+  cursor: pointer;
 `;
