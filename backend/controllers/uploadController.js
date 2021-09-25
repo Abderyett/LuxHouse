@@ -6,5 +6,7 @@ const { generateToken } = require('../utils/generateJwt');
 //* @access Public
 
 exports.uploadController = asyncHandler(async (req, res) => {
-  res.send('uploaded');
+  const data = req.body.uri;
+
+  res.json(data);
 });

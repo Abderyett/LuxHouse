@@ -35,6 +35,8 @@ export function ProductEditScreen() {
 
   const ref = useRef();
   const userInfo = useSelector((state) => state.userInfo);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo: userInfos } = userLogin;
   const { loading, user, error } = userInfo;
   const updateUser = useSelector((state) => state.updateUser);
   const { success } = updateUser;
@@ -221,6 +223,47 @@ export function ProductEditScreen() {
     const newImageList = imageList.filter((el) => el._id !== Id);
     setImageList(newImageList);
   };
+  //* Submitting to Uploaded photos to backend ///////////////
+
+  const uploadImage = async (base64EncodedImage) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfos.token}`,
+      },
+    };
+
+    const jsonData = JSON.stringify({ uri: base64EncodedImage });
+
+    try {
+      const { data } = await axios.post('/api/v1/upload', jsonData, config);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  //* Upload Multiple Images //////////////////////////////
+
+  const uploadMultipleImages = async (imgArr) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfos.token}`,
+      },
+    };
+    let jsonData;
+    if (addedImages.length > 0) {
+      const arr = imgArr.map((el) => ({ uri: el.url }));
+      jsonData = JSON.stringify({ ...arr });
+    }
+    console.log(jsonData);
+
+    try {
+      const { data } = await axios.post('/api/v1/upload', jsonData, config);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   //* Display Uploaded Main Image  ////////////////////////
 
@@ -229,6 +272,7 @@ export function ProductEditScreen() {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setMainImage(reader.result);
+      uploadImage(reader.result);
     };
   };
 
@@ -249,6 +293,7 @@ export function ProductEditScreen() {
           size,
         });
       });
+
       reader.readAsDataURL(imgs);
     });
 
@@ -261,6 +306,7 @@ export function ProductEditScreen() {
       const newImages = await Promise.all(newImagesPromises);
       const newImgArray = newImages.map((el) => ({ _id: uuidv4(), url: el.url }));
       setAddedImages(newImgArray);
+      uploadMultipleImages(newImgArray);
       setImageList([...imageList, ...newImgArray]);
     }
     e.target.value = '';
@@ -269,25 +315,6 @@ export function ProductEditScreen() {
   const scrollRight = () => {
     ref.current.scrollBy(350, 0);
   };
-
-  //* Submitting to Uploaded photos to backend ///////////////
-
-  const uploadImage = async () => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const base64EncodedImage = addedImages.map((el) => el.url);
-
-    try {
-      const { data } = await axios.post('/api/upload', base64EncodedImage, config);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  uploadImage();
 
   return (
     <>

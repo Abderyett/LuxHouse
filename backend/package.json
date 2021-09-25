@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Abderyett/LuxHouse#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.27.0",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
