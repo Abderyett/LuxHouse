@@ -32,6 +32,7 @@ export function ProductEditScreen() {
   const [mainImage, setMainImage] = useState('');
   const [imageList, setImageList] = useState([]);
   const [addedImages, setAddedImages] = useState([]);
+  const [cloudinaryMainImg, setCloudinaryMainImg] = useState([]);
 
   const ref = useRef();
   const userInfo = useSelector((state) => state.userInfo);
@@ -237,10 +238,12 @@ export function ProductEditScreen() {
 
     try {
       const { data } = await axios.post('/api/v1/upload', jsonData, config);
+      setCloudinaryMainImg([{ url: data }]);
     } catch (error) {
       console.error(error);
     }
   };
+  console.log(cloudinaryMainImg);
 
   //* Upload Multiple Images //////////////////////////////
 
@@ -251,15 +254,14 @@ export function ProductEditScreen() {
         Authorization: `Bearer ${userInfos.token}`,
       },
     };
-    let jsonData;
+    let arr;
     if (addedImages.length > 0) {
-      const arr = imgArr.map((el) => ({ uri: el.url }));
-      jsonData = JSON.stringify({ ...arr });
+      arr = imgArr.map((el) => ({ uri: el.url }));
     }
-    console.log(jsonData);
+    console.log(arr);
 
     try {
-      const { data } = await axios.post('/api/v1/upload', jsonData, config);
+      const { data } = await axios.post('/api/v1/upload/multiple', { arr }, config);
     } catch (error) {
       console.error(error);
     }
