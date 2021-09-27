@@ -258,10 +258,15 @@ export function ProductEditScreen() {
     if (addedImages.length > 0) {
       arr = imgArr.map((el) => ({ uri: el.url }));
     }
-    console.log(arr);
+    const payload = { dataList: arr };
+    // const formData = new FormData();
+    // for (let i = 0; i < arr.length; i++) {
+    //   formData.append('image', arr[i]);
+    // }
 
     try {
-      const { data } = await axios.post('/api/v1/upload/multiple', { arr }, config);
+      const { data } = await axios.post('/api/v1/upload/multiple', payload, config);
+      console.log('upload from multiple', data);
     } catch (error) {
       console.error(error);
     }
