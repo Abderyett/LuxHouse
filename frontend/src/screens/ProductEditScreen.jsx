@@ -14,7 +14,7 @@ import { FaDollarSign, FaSort } from 'react-icons/fa';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BsTrash, BsChevronRight } from 'react-icons/bs';
 import axios from 'axios';
-import { Header, Loader, Message, Error, DropDownInput } from '../components';
+import { Header, Loader, Message, Error, DropDownInput, LoaderSemiCircle } from '../components';
 import { updateUserAC } from '../actions/userActions';
 import { color, rounded, shadow } from '../utilities';
 import { USER_UPDATE_RESET } from '../actions/types';
@@ -32,7 +32,11 @@ export function ProductEditScreen() {
   const [mainImage, setMainImage] = useState('');
   const [imageList, setImageList] = useState([]);
   const [addedImages, setAddedImages] = useState([]);
+  const [loadingMainImg, setLoadingMainImg] = useState(false);
+  const [loadingImgs, setloadingImgs] = useState(false);
+
   const [cloudinaryMainImg, setCloudinaryMainImg] = useState([]);
+  const [cloudinaryImgs, setCloudinaryImgs] = useState([]);
 
   const ref = useRef();
   const userInfo = useSelector((state) => state.userInfo);
@@ -227,6 +231,7 @@ export function ProductEditScreen() {
   //* Submitting to Uploaded photos to backend ///////////////
 
   const uploadImage = async (base64EncodedImage) => {
+    setLoadingMainImg(true);
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -239,15 +244,18 @@ export function ProductEditScreen() {
     try {
       const { data } = await axios.post('/api/v1/upload', jsonData, config);
       setCloudinaryMainImg([{ url: data }]);
+      setLoadingMainImg(false);
     } catch (error) {
       console.error(error);
+      setLoadingMainImg(false);
     }
   };
-  console.log(cloudinaryMainImg);
+  console.log('Main Image', cloudinaryMainImg);
 
   //* Upload Multiple Images //////////////////////////////
 
   const uploadMultipleImages = async (imgArr) => {
+    setloadingImgs(true);
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -255,7 +263,7 @@ export function ProductEditScreen() {
       },
     };
     let arr;
-    if (addedImages.length > 0) {
+    if (imgArr.length > 0) {
       arr = imgArr.map((el) => ({ uri: el.url }));
     }
     const payload = { dataList: arr };
@@ -263,14 +271,20 @@ export function ProductEditScreen() {
     // for (let i = 0; i < arr.length; i++) {
     //   formData.append('image', arr[i]);
     // }
+    console.log('payload', payload);
 
     try {
       const { data } = await axios.post('/api/v1/upload/multiple', payload, config);
-      console.log('upload from multiple', data);
+      setCloudinaryImgs([data]);
+      setloadingImgs(false);
+      console.log('data', data);
     } catch (error) {
       console.error(error);
+      setloadingImgs(false);
     }
   };
+
+  console.log('receivedArray', cloudinaryImgs);
 
   //* Display Uploaded Main Image  ////////////////////////
 
@@ -312,8 +326,8 @@ export function ProductEditScreen() {
       }
       const newImages = await Promise.all(newImagesPromises);
       const newImgArray = newImages.map((el) => ({ _id: uuidv4(), url: el.url }));
-      setAddedImages(newImgArray);
       uploadMultipleImages(newImgArray);
+      setAddedImages(newImgArray);
       setImageList([...imageList, ...newImgArray]);
     }
     e.target.value = '';
@@ -465,6 +479,7 @@ export function ProductEditScreen() {
                         onBlur={handleBlur}
                         value={values.price}
                         placeholder="Price"
+                        name="price"
                       />
                       <Dollar />
                       <Error touched={touched.price} message={errors.price} />
@@ -533,8 +548,9 @@ export function ProductEditScreen() {
                         </span>{' '}
                         Upload Image
                       </ImgLabel>
+                      {loadingMainImg && <LoaderSemiCircle />}
 
-                      <ImageInput type="file" id="image" onChange={handleInputChange} value="" />
+                      <ImageInput type="file" id="image" onChange={handleInputChange} value="" name="image" />
                     </InputWrapper>
 
                     <ImageWrapper image={mainImage.length > 0}>
@@ -556,8 +572,16 @@ export function ProductEditScreen() {
                         </span>{' '}
                         Upload Images
                       </ImgLabel>
+                      {loadingImgs && <LoaderSemiCircle />}
 
-                      <ImageInput type="file" id="images" value="" onChange={uploadImageHandler} multiple />
+                      <ImageInput
+                        type="file"
+                        id="images"
+                        value=""
+                        onChange={uploadImageHandler}
+                        multiple
+                        name="images"
+                      />
                     </InputWrapper>
                     <RightBlur>
                       <ImagesContainer ref={ref}>

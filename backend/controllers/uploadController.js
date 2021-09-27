@@ -26,13 +26,20 @@ exports.uploadController = asyncHandler(async (req, res) => {
 //* @access Private/Admin
 exports.uploadMultipleController = asyncHandler(async (req, res) => {
   const data = req.body.dataList;
+  console.log(data.length);
 
-  console.log(data);
+  const imgUrl = [];
 
-  data.map((image) => {
-    const receivedUrls = cloudinary.uploader.upload(image.uri);
-    return receivedUrls.then((response) => console.log(response));
-  });
+  if (data && data.length > 0) {
+    data.map(async (image) => {
+      const receivedUrls = await cloudinary.uploader.upload(image.uri);
+      imgUrl.push(receivedUrls);
+      if (imgUrl.length === data.length) {
+        console.log(imgUrl);
+        return res.send(imgUrl);
+      }
+    });
+  }
 });
 
 // for (let i = 0; i < req.body.length; i++) {
