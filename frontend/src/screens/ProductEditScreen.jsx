@@ -32,6 +32,7 @@ export function ProductEditScreen() {
   const [mainImage, setMainImage] = useState('');
   const [imageList, setImageList] = useState([]);
   const [addedImages, setAddedImages] = useState([]);
+
   const [loadingMainImg, setLoadingMainImg] = useState(false);
   const [loadingImgs, setloadingImgs] = useState(false);
 
@@ -250,7 +251,6 @@ export function ProductEditScreen() {
       setLoadingMainImg(false);
     }
   };
-  console.log('Main Image', cloudinaryMainImg);
 
   //* Upload Multiple Images //////////////////////////////
 
@@ -267,24 +267,16 @@ export function ProductEditScreen() {
       arr = imgArr.map((el) => ({ uri: el.url }));
     }
     const payload = { dataList: arr };
-    // const formData = new FormData();
-    // for (let i = 0; i < arr.length; i++) {
-    //   formData.append('image', arr[i]);
-    // }
-    console.log('payload', payload);
 
     try {
       const { data } = await axios.post('/api/v1/upload/multiple', payload, config);
       setCloudinaryImgs([data]);
       setloadingImgs(false);
-      console.log('data', data);
     } catch (error) {
       console.error(error);
       setloadingImgs(false);
     }
   };
-
-  console.log('receivedArray', cloudinaryImgs);
 
   //* Display Uploaded Main Image  ////////////////////////
 
@@ -749,7 +741,10 @@ const SubmitBtn = styled.button`
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+  display: flex;
+  justify-content: center;
 `;
 
 const Back = styled(Link)`
