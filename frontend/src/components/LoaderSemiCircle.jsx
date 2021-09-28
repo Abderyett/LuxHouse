@@ -23,7 +23,7 @@ export function LoaderSemiCircle() {
           attributeName="transform"
           type="rotate"
           repeatCount="indefinite"
-          dur="1s"
+          dur="0.6s"
           values="0 50 50;360 50 50"
           keyTimes="0;1"
         />

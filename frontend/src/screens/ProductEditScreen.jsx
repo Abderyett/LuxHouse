@@ -541,14 +541,21 @@ export function ProductEditScreen() {
                       <div style={{ marginTop: '3rem' }}>
                         <b>Add Main Image</b>
                       </div>
-                      <ImgLabel htmlFor="image">
-                        <span>
-                          <AiOutlineCloudUpload />
-                          &nbsp;
-                        </span>{' '}
-                        Upload Image
-                      </ImgLabel>
-                      {loadingMainImg && <LoaderSemiCircle />}
+                      <UploadBtn>
+                        <ImgLabel htmlFor="image">
+                          <span>
+                            <AiOutlineCloudUpload />
+                            &nbsp;
+                          </span>{' '}
+                          Upload Image
+                        </ImgLabel>
+                        {loadingMainImg && (
+                          <>
+                            <span style={{ paddingLeft: '1rem' }}> Uploading Image...</span>
+                            <LoaderSemiCircle />
+                          </>
+                        )}
+                      </UploadBtn>
 
                       <ImageInput type="file" id="image" onChange={handleInputChange} value="" name="image" />
                     </InputWrapper>
@@ -565,14 +572,21 @@ export function ProductEditScreen() {
                       <div style={{ marginTop: '3rem' }}>
                         <b>Add Images</b>
                       </div>
-                      <ImgLabel htmlFor="images">
-                        <span>
-                          <AiOutlineCloudUpload />
-                          &nbsp;
-                        </span>{' '}
-                        Upload Images
-                      </ImgLabel>
-                      {loadingImgs && <LoaderSemiCircle />}
+                      <UploadBtn>
+                        <ImgLabel htmlFor="images">
+                          <span>
+                            <AiOutlineCloudUpload />
+                            &nbsp;
+                          </span>{' '}
+                          Upload Images
+                        </ImgLabel>
+                        {loadingImgs && (
+                          <>
+                            <span style={{ paddingLeft: '1rem' }}> Uploading Image...</span>
+                            <LoaderSemiCircle />
+                          </>
+                        )}
+                      </UploadBtn>
 
                       <ImageInput
                         type="file"
@@ -706,7 +720,7 @@ const PriceInputWrapper = styled.div`
 const Dollar = styled(FaDollarSign)`
   position: absolute;
   top: 3rem;
-  right: 12rem;
+  right: 1rem;
   color: ${color.grey_500};
   font-size: 1.2rem;
 `;
@@ -946,4 +960,9 @@ const Chevron = styled(BsChevronRight)`
   right: -2.5rem;
   top: 4rem;
   cursor: pointer;
+`;
+
+const UploadBtn = styled.div`
+  display: flex;
+  align-items: center;
 `;
