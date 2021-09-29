@@ -15,16 +15,16 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BsTrash, BsChevronRight } from 'react-icons/bs';
 import axios from 'axios';
 import { Header, Loader, Message, Error, DropDownInput, LoaderSemiCircle } from '../components';
-import { updateUserAC } from '../actions/userActions';
+import { updateProductAC, detailProduct } from '../actions/productActions';
 import { color, rounded, shadow } from '../utilities';
 import { USER_UPDATE_RESET } from '../actions/types';
-import { detailProduct } from '../actions/productActions';
 
 export function ProductEditScreen() {
   const [colorsList, setColorsList] = useState([]);
   const [addedColor, setAddedColor] = useState('');
   const [featuresList, setFeaturesList] = useState([]);
   const [addedFeature, setAddedFeature] = useState('');
+
   const [showDropDown, setShowDropDown] = useState(false);
   const [showDropDownCategory, setShowDropDownCategory] = useState(false);
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
@@ -38,14 +38,18 @@ export function ProductEditScreen() {
 
   const [cloudinaryMainImg, setCloudinaryMainImg] = useState([]);
   const [cloudinaryImgs, setCloudinaryImgs] = useState([]);
+  const [submitFeature, setSubmitFeature] = useState([]);
+  const [submitColors, setSubmitColors] = useState([]);
+  const [submitMainImg, setSubmitMainImg] = useState();
+  const [submitImgs, setSubmitImgs] = useState([]);
 
   const ref = useRef();
   const userInfo = useSelector((state) => state.userInfo);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo: userInfos } = userLogin;
   const { loading, user, error } = userInfo;
-  const updateUser = useSelector((state) => state.updateUser);
-  const { success } = updateUser;
+  const updateProduct = useSelector((state) => state.updateProduct);
+  const { success } = updateProduct;
   const productDetail = useSelector((state) => state.productDetail);
   const { loading: loadingProduct, error: errorProduct, product } = productDetail;
   const {
@@ -74,10 +78,10 @@ export function ProductEditScreen() {
   useEffect(() => {
     dispatch(detailProduct(id));
     if (success) {
-      dispatch({ type: USER_UPDATE_RESET });
-      history.push('/admin/userslist');
+      // dispatch({ type: USER_UPDATE_RESET });
+      history.push('/admin/products');
     }
-  }, [dispatch, success, id, history]);
+  }, [dispatch, id]);
 
   let currentValues;
   if (user) {
@@ -130,6 +134,36 @@ export function ProductEditScreen() {
     'foor lamp',
   ];
   const categories = ['furniture', 'accessories', 'lighting'];
+
+  useEffect(() => {
+    const featuresArr = featuresList.map((el) => el.Features.charAt(0).toUpperCase() + el.Features.slice(1));
+    setSubmitFeature(featuresArr);
+    const colorsArr = colorsList.map((el) => el.color.toUpperCase());
+    setSubmitColors(colorsArr);
+
+    // let array = [];
+    // if (imageList.length > 0) {
+    //   array = imageList.map((el) => el.url);
+    // }
+
+    // if (cloudinaryMainImg.length > 0) {
+    //   setSubmitMainImg(cloudinaryMainImg);
+    // } else {
+    //   setSubmitMainImg([{ url: mainImage }]);
+    // }
+    // if (cloudinaryImgs.length > 0) {
+    //   const getIndex = imageList.findIndex((el) => el.url.includes('data'));
+    //   if (getIndex === -1) {
+    //     setSubmitImgs(imageList);
+    //     console.log('submitImgs', submitImgs);
+    //   } else {
+    //     const arr = imageList.slice(0, getIndex);
+    //     setSubmitImgs(arr);
+    //   }
+    // } else if (imageList.length > 0) {
+    //   setSubmitImgs(array);
+    // }
+  }, [featuresList, colorsList, cloudinaryMainImg, cloudinaryImgs, mainImage, submitImgs, imageList]);
 
   //*   Colors functions /////////////////////////
 
@@ -270,7 +304,7 @@ export function ProductEditScreen() {
 
     try {
       const { data } = await axios.post('/api/v1/upload/multiple', payload, config);
-      setCloudinaryImgs([data]);
+      setCloudinaryImgs(data);
       setloadingImgs(false);
     } catch (error) {
       console.error(error);
@@ -362,9 +396,34 @@ export function ProductEditScreen() {
                 })}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                   setSubmitting(true);
-                  // const newUser = updateUserAC(id, { name: values.name, email: values.email, isAdmin: values.isAdmin });
+                  const updatedProduct = updateProductAC(id, {
+                    name: values.name,
+                    colors: submitColors,
+                    description: values.description,
+                    shipping: values.shipping,
+                    Features: featuresList,
+                    price: values.price,
+                    available: values.available,
+                    subcategory: selectedSubcategory,
+                    category: selectedCategory,
+                    image: submitMainImg,
+                    images: submitImgs,
+                  });
 
-                  // dispatch(newUser);
+                  // dispatch(updatedProduct);
+                  console.log({
+                    name: values.name,
+                    colors: submitColors,
+                    description: values.description,
+                    shipping: values.shipping,
+                    Features: submitFeature,
+                    price: values.price,
+                    available: values.available,
+                    subcategory: selectedSubcategory,
+                    category: selectedCategory,
+                    image: submitMainImg,
+                    images: submitImgs,
+                  });
 
                   resetForm();
                   setSubmitting(false);

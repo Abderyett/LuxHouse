@@ -33,7 +33,7 @@ exports.uploadMultipleController = asyncHandler(async (req, res) => {
   if (data && data.length > 0) {
     data.map(async (image) => {
       const receivedUrls = await cloudinary.uploader.upload(image.uri);
-      imgUrl.push(receivedUrls);
+      imgUrl.push({ url: receivedUrls.url });
       if (imgUrl.length === data.length) {
         console.log(imgUrl);
         return res.send(imgUrl);

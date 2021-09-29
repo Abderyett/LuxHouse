@@ -82,7 +82,12 @@ export function ProductsScreen() {
             </FilterWrapper>
             <div>
               <HeaderDetails>
-                <span>{filtredProducts.length === 0 ? products.length : filtredProducts.length} Results </span>
+                <span>
+                  {filtredProducts && filtredProducts.length === 0
+                    ? products.length
+                    : filtredProducts && filtredProducts.length}{' '}
+                  Results{' '}
+                </span>
                 <hr /> <span>Sort By</span>
               </HeaderDetails>
 
@@ -91,7 +96,7 @@ export function ProductsScreen() {
                   ? products.map((el) => (
                       <Card key={el._id}>
                         <Link to={`/products/${el._id}`}>
-                          <StyledImg src={el.image[0].url} alt={el.subcategory} />
+                          <StyledImg src={el.image && el.image[0].url} alt={el.subcategory} />
                           <Title>
                             <h3>{el.name}</h3>
                             <PriceText category={el.category}>${el.price}</PriceText>
