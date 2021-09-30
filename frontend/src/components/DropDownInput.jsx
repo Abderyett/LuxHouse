@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
@@ -39,9 +40,12 @@ export function DropDownInput({
             value={itemToAdd}
             onChange={addItemHandler}
             maxLength={maxLength}
-            onKeyPress={keyPressItemHandler}
+            onKeyDown={keyPressItemHandler}
             showInput={itemsList.length === 0 ? 0 : 1}
             uppercase={uppercase}
+            onKeyPress={(e) => {
+              e.key === 'Enter' && e.preventDefault();
+            }}
           />
           <Add onClick={addItemFromBtn} />
           {itemsList &&

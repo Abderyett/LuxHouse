@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-plusplus */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -17,7 +18,7 @@ import axios from 'axios';
 import { Header, Loader, Message, Error, DropDownInput, LoaderSemiCircle } from '../components';
 import { updateProductAC, detailProduct } from '../actions/productActions';
 import { color, rounded, shadow } from '../utilities';
-import { USER_UPDATE_RESET } from '../actions/types';
+import { UPDATE_PRODUCT_RESET, USER_UPDATE_RESET } from '../actions/types';
 
 export function ProductEditScreen() {
   const [colorsList, setColorsList] = useState([]);
@@ -31,7 +32,6 @@ export function ProductEditScreen() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [mainImage, setMainImage] = useState('');
   const [imageList, setImageList] = useState([]);
-  const [addedImages, setAddedImages] = useState([]);
 
   const [loadingMainImg, setLoadingMainImg] = useState(false);
   const [loadingImgs, setloadingImgs] = useState(false);
@@ -50,7 +50,7 @@ export function ProductEditScreen() {
   const { userInfo: userInfos } = userLogin;
   const { loading, user, error } = userInfo;
   const updateProduct = useSelector((state) => state.updateProduct);
-  const { success } = updateProduct;
+  const { success: updateSuccess } = updateProduct;
   const productDetail = useSelector((state) => state.productDetail);
   const { loading: loadingProduct, error: errorProduct, product } = productDetail;
   const {
@@ -78,11 +78,16 @@ export function ProductEditScreen() {
 
   useEffect(() => {
     dispatch(detailProduct(id));
-    if (success) {
-      // dispatch({ type: USER_UPDATE_RESET });
+    if (updateSuccess) {
+      dispatch({ type: UPDATE_PRODUCT_RESET });
+    }
+  }, [dispatch, id, updateSuccess]);
+
+  useEffect(() => {
+    if (updateSuccess) {
       history.push('/admin/products');
     }
-  }, [dispatch, id]);
+  }, [updateSuccess, history]);
 
   let currentValues;
   if (user) {
@@ -136,11 +141,14 @@ export function ProductEditScreen() {
   ];
   const categories = ['furniture', 'accessories', 'lighting'];
 
+  //* Preparing data to be submitted ======================
   useEffect(() => {
     const featuresArr = featuresList.map((el) => el.Features.charAt(0).toUpperCase() + el.Features.slice(1));
     setSubmitFeature(featuresArr);
-    const colorsArr = colorsList.map((el) => el.color.toUpperCase());
-    setSubmitColors(colorsArr);
+    if (colorsList.length > 0) {
+      const colorsArr = colorsList.map((el) => el.color.toUpperCase());
+      setSubmitColors(colorsArr);
+    }
 
     if (cloudinaryMainImg.length > 0) {
       setSubmitMainImg(cloudinaryMainImg);
@@ -179,7 +187,9 @@ export function ProductEditScreen() {
   };
 
   const submitColorsHandler = (event) => {
-    if (event.key === 'Enter') {
+    event.stopPropagation();
+
+    if (event.code === 'Enter') {
       if (addedColor.length === 6) {
         setColorsList((prevState) => [...prevState, { color: `#${addedColor}`, objectID: uuidv4() }]);
         setAddedColor('');
@@ -219,7 +229,8 @@ export function ProductEditScreen() {
   };
 
   const submitFeatureHandler = (event) => {
-    if (event.key === 'Enter') {
+    event.stopPropagation();
+    if (event.code === 'Enter') {
       if (addedFeature.length > 0) {
         setFeaturesList((prevState) => [...prevState, { Features: addedFeature, objectID: uuidv4() }]);
 
@@ -359,7 +370,7 @@ export function ProductEditScreen() {
       const newImages = await Promise.all(newImagesPromises);
       const newImgArray = newImages.map((el) => ({ _id: uuidv4(), url: el.url }));
       uploadMultipleImages(newImgArray);
-      setAddedImages(newImgArray);
+
       setImageList([...imageList, ...newImgArray]);
     }
     e.target.value = '';
@@ -390,7 +401,7 @@ export function ProductEditScreen() {
                     .min(2, 'Must at least 2 characters long.')
                     .max(255, 'Name Must less than 255 characters')
                     .required('Please enter your Name'),
-                  colors: Yup.array(),
+                  colors: Yup.array().required('Please add colors'),
                   shipping: Yup.boolean().required('Please confim if shipping is included'),
                   image: Yup.array().required('Please add main image'),
                   description: Yup.string().required('Please add description'),
@@ -407,7 +418,7 @@ export function ProductEditScreen() {
                     colors: submitColors,
                     description: values.description,
                     shipping: values.shipping,
-                    Features: featuresList,
+                    Features: submitFeature,
                     price: values.price,
                     available: values.available,
                     subcategory: selectedSubcategory,
@@ -416,7 +427,7 @@ export function ProductEditScreen() {
                     images: submitImgs,
                   });
 
-                  // dispatch(updatedProduct);
+                  dispatch(updatedProduct);
                   console.log({
                     name: values.name,
                     colors: submitColors,
@@ -437,7 +448,12 @@ export function ProductEditScreen() {
                 enableReinitialize
               >
                 {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-                  <form autoComplete="off" onSubmit={handleSubmit}>
+                  <form
+                    autoComplete="off"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                    }}
+                  >
                     <Back to="/admin/products"> &larr; Go Back</Back>
                     <Heading>Product Details</Heading>
                     <InputWrapper>
@@ -670,7 +686,7 @@ export function ProductEditScreen() {
                     </RightBlur>
 
                     <ButtonWrapper>
-                      <SubmitBtn className="submit-btn" type="submit" disabled={isSubmitting}>
+                      <SubmitBtn className="submit-btn" type="submit" onClick={handleSubmit} disabled={isSubmitting}>
                         Update
                       </SubmitBtn>
                     </ButtonWrapper>

@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema(
     },
     name: {
       type: String,
-      required: [true, 'User must have name'],
+      required: [true, 'Product must have name'],
     },
     image: {
       type: [imgSchema],
@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: [true, 'User must have price'],
+      required: [true, 'Product must have price'],
     },
     images: [imgSchema],
 
@@ -33,6 +33,7 @@ const productSchema = new mongoose.Schema(
     },
     colors: {
       type: Array,
+      required: [true, 'Product must have name'],
     },
     Features: {
       type: Array,
