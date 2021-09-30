@@ -42,6 +42,7 @@ export function ProductEditScreen() {
   const [submitColors, setSubmitColors] = useState([]);
   const [submitMainImg, setSubmitMainImg] = useState();
   const [submitImgs, setSubmitImgs] = useState([]);
+  const [imgWithoutId, setImgWithoutId] = useState([]);
 
   const ref = useRef();
   const userInfo = useSelector((state) => state.userInfo);
@@ -141,29 +142,30 @@ export function ProductEditScreen() {
     const colorsArr = colorsList.map((el) => el.color.toUpperCase());
     setSubmitColors(colorsArr);
 
-    // let array = [];
-    // if (imageList.length > 0) {
-    //   array = imageList.map((el) => el.url);
-    // }
+    if (cloudinaryMainImg.length > 0) {
+      setSubmitMainImg(cloudinaryMainImg);
+    } else {
+      setSubmitMainImg(image && [{ url: image[0].url }]);
+    }
 
-    // if (cloudinaryMainImg.length > 0) {
-    //   setSubmitMainImg(cloudinaryMainImg);
-    // } else {
-    //   setSubmitMainImg([{ url: mainImage }]);
-    // }
-    // if (cloudinaryImgs.length > 0) {
-    //   const getIndex = imageList.findIndex((el) => el.url.includes('data'));
-    //   if (getIndex === -1) {
-    //     setSubmitImgs(imageList);
-    //     console.log('submitImgs', submitImgs);
-    //   } else {
-    //     const arr = imageList.slice(0, getIndex);
-    //     setSubmitImgs(arr);
-    //   }
-    // } else if (imageList.length > 0) {
-    //   setSubmitImgs(array);
-    // }
-  }, [featuresList, colorsList, cloudinaryMainImg, cloudinaryImgs, mainImage, submitImgs, imageList]);
+    let getIndex;
+
+    if (cloudinaryImgs.length > 0) {
+      getIndex = imageList.findIndex((el) => el.url.includes('data'));
+
+      if (getIndex === -1) {
+        setSubmitImgs(imgWithoutId);
+      } else if (getIndex === 0) {
+        setSubmitImgs(cloudinaryImgs);
+      } else {
+        const arr = imgWithoutId.slice(0, getIndex);
+
+        setSubmitImgs([...arr, ...cloudinaryImgs]);
+      }
+    } else {
+      setSubmitImgs(imgWithoutId);
+    }
+  }, [featuresList, colorsList, cloudinaryMainImg, cloudinaryImgs, mainImage, imageList, imgWithoutId, image]);
 
   //*   Colors functions /////////////////////////
 
@@ -204,7 +206,11 @@ export function ProductEditScreen() {
 
       setColorsList(cl);
     }
-  }, [product, colors]);
+    if (imageList) {
+      const im = imageList.map((el) => ({ url: el.url }));
+      setImgWithoutId(im);
+    }
+  }, [product, colors, imageList]);
 
   //* Features Functions ////////////////////////////
 
