@@ -59,6 +59,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.subcategory = req.body.subcategory || product.subcategory;
     product.category = req.body.category || product.category;
     product.image = req.body.image || product.image[0].url;
+    product.images = req.body.images || product.images;
     product.Features = req.body.Features || product.Features;
     product.shipping = req.body.shipping || product.shipping;
     product.available = req.body.available || product.available;
@@ -86,6 +87,11 @@ const createProduct = asyncHandler(async (req, res) => {
     subcategory: 'Sofa',
     category: 'Furniture',
     image: [
+      {
+        url: 'https://www.warmnordic.com/dw/image/v2/BCCS_PRD/on/demandware.static/-/Sites-warmnordic-master-catalog/default/dw7184d277/images/hi-res/Furniture/Mr_olsen/MMROLSENSOFA/2101021/packshot/2101021-warmnordic-furniture-mrolsen-sofa-walnut-oiled-oak-darkturqouise-1700x1700.jpg?sw=1001&sh=1001&sm=fit',
+      },
+    ],
+    images: [
       {
         url: 'https://www.warmnordic.com/dw/image/v2/BCCS_PRD/on/demandware.static/-/Sites-warmnordic-master-catalog/default/dw7184d277/images/hi-res/Furniture/Mr_olsen/MMROLSENSOFA/2101021/packshot/2101021-warmnordic-furniture-mrolsen-sofa-walnut-oiled-oak-darkturqouise-1700x1700.jpg?sw=1001&sh=1001&sm=fit',
       },
