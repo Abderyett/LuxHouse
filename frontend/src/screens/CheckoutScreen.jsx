@@ -27,6 +27,10 @@ export function CheckoutScreen() {
   const [token, setToken] = useState('');
   const [formValidate, setFormValidate] = useState(true);
 
+  // Search Country
+  const [term, setTerm] = useState('');
+  const [newCountries, setNewCountries] = useState(countries);
+
   const dispatch = useDispatch();
   const history = useHistory();
   const userDetails = useSelector((state) => state.userDetails);
@@ -119,6 +123,8 @@ export function CheckoutScreen() {
   const toggleCountrie = () => {
     setShowCountry(!showCountry);
     setShowState(false);
+    setTerm('');
+    setNewCountries(countries);
   };
   const toggleCities = () => {
     setShowState(!showState);
@@ -145,6 +151,16 @@ export function CheckoutScreen() {
       setFormValidate(true);
     }
   }, [countryName, selectCity, street, postCode, history]);
+
+  const searchedCountry = (e) => {
+    setTerm(e.target.value);
+    const newCountry = countries.filter((el) => el.name.toLowerCase().includes(term.toLowerCase()));
+    if (term.length > 0) {
+      setNewCountries(newCountry);
+    } else {
+      setNewCountries(countries);
+    }
+  };
 
   return (
     <>
@@ -173,7 +189,7 @@ export function CheckoutScreen() {
             ) : (
               <Selected>
                 <span>
-                  <img src="https://restcountries.eu/data/can.svg" alt="Canada" />
+                  <img src="https://www.countryflags.io/ca/shiny/64.png" alt="Canada" />
                   Canada
                 </span>
               </Selected>
@@ -182,8 +198,9 @@ export function CheckoutScreen() {
             <Arrow />
 
             <CountryWrapper showCountry={showCountry}>
-              {countries &&
-                countries.map((country) => (
+              <SearchCounrty type="text" onClick={(e) => e.stopPropagation()} onChange={searchedCountry} value={term} />
+              {newCountries &&
+                newCountries.map((country) => (
                   <ImgWrapper key={country._id} onClick={selectedCountry}>
                     <span>
                       <img src={country.flag} alt={country.name} />
@@ -201,9 +218,9 @@ export function CheckoutScreen() {
             <StateWrapper showState={showState} onClick={(e) => setSelectCity(e.target.textContent)}>
               {city &&
                 city.map((c, index) => (
-                  <ImgWrapper key={index}>
+                  <StateWarpp key={index}>
                     <span>{c.state_name}</span>
-                  </ImgWrapper>
+                  </StateWarpp>
                 ))}
             </StateWrapper>
           </State>
@@ -313,11 +330,10 @@ const wrapper = css`
   border-radius: ${rounded.md};
 
   img {
-    width: 7%;
+    width: 40px;
 
     margin-right: 1rem;
-    border: 1px solid ${color.grey_300};
-    border-radius: ${rounded.sm};
+
     vertical-align: middle;
   }
 `;
@@ -327,7 +343,7 @@ const CountryWrapper = styled.div`
   display:${({ showCountry }) => (showCountry ? 'block' : 'none')};
 
   position: relative;
-  height: 15rem;
+  height: 20rem;
 `;
 
 const Country = styled.div`
@@ -348,8 +364,7 @@ const Arrow = styled(FaSort)`
 `;
 //* =============================
 
-//* Coutries Flags Wrapper
-const ImgWrapper = styled.div`
+const wrapp = css`
   display: grid;
   padding-bottom: 1rem;
   padding-top: 1rem;
@@ -359,6 +374,18 @@ const ImgWrapper = styled.div`
     background-color: ${color.grey_100};
   }
 `;
+//* Coutries Flags Wrapper
+const ImgWrapper = styled.div`
+  ${wrapp}
+  &:first-of-type {
+    margin-top: 3.5rem;
+  }
+`;
+
+const StateWarpp = styled.div`
+  ${wrapp}
+`;
+
 //* State selection =============
 
 const State = styled.div`
@@ -379,16 +406,15 @@ const StateWrapper = styled.div`
 
 const Selected = styled.div`
   position: absolute;
-  top: 0.75rem;
-  left: 1rem;
+  top: 0.2rem;
+
   width: 100%;
   span {
     img {
-      width: 8%;
+      width: 40px;
 
       margin-right: 1rem;
-      border: 1px solid ${color.grey_300};
-      border-radius: ${rounded.sm};
+
       vertical-align: middle;
     }
   }
@@ -468,4 +494,22 @@ const PlaceOrder = styled.div`
   border-bottom: 2px solid ${color.grey_500};
   padding-bottom: 1rem;
   color: ${color.grey_500};
+`;
+
+const Div = styled.div``;
+
+const SearchCounrty = styled.input`
+  ${styledInput}
+  height: 2.5rem;
+  width: 28rem;
+  position: absolute;
+  top: 0;
+
+  background-color: ${color.white};
+  box-shadow: 0px 0px 0px 2px ${color.grey_300};
+  /* opacity: ${({ show }) => (show ? 1 : 0)}; */
+
+  &:focus {
+    box-shadow: 0px 0px 0px 2px ${color.scallop_shell};
+  }
 `;

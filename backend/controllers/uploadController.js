@@ -26,7 +26,6 @@ exports.uploadController = asyncHandler(async (req, res) => {
 //* @access Private/Admin
 exports.uploadMultipleController = asyncHandler(async (req, res) => {
   const data = req.body.dataList;
-  console.log(data.length);
 
   const imgUrl = [];
 
@@ -35,7 +34,6 @@ exports.uploadMultipleController = asyncHandler(async (req, res) => {
       const receivedUrls = await cloudinary.uploader.upload(image.uri);
       imgUrl.push({ url: receivedUrls.url });
       if (imgUrl.length === data.length) {
-        console.log(imgUrl);
         return res.send(imgUrl);
       }
     });
