@@ -117,3 +117,18 @@ exports.getOrders = asyncHandler(async (req, res) => {
     throw new Error('Order not found');
   }
 });
+
+//* @desc Get All Orders
+//* @route GET /api/v1/orders
+//! @access Private AdminOnly
+
+exports.getAllOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({});
+
+  if (orders) {
+    res.status(200).json(orders);
+  } else {
+    res.status(404);
+    throw new Error('The order list is empty');
+  }
+});
