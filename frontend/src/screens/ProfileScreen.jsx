@@ -168,21 +168,22 @@ export function ProfileScreen() {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.map((order) => (
-                      <Tr key={order.id}>
-                        <Td>{order.id}</Td>
+                    {orders &&
+                      orders.map((order) => (
+                        <Tr key={order.id}>
+                          <Td>{order.id}</Td>
 
-                        <Td>{moment(order.createdAt).format('MMMM Do YYYY')}</Td>
-                        <Td>{formatter.format(order.totalPrice + order.taxPrice)}</Td>
-                        <Td>{order.isPaid ? <Check /> : <Times />}</Td>
-                        <Td>{order.isDelivered ? <Check /> : <Times />}</Td>
-                        <Td>
-                          <StyledLink to={`/order/${order.id}`} onClick={() => dispatch(getOrderDetails(order.id))}>
-                            Details
-                          </StyledLink>
-                        </Td>
-                      </Tr>
-                    ))}
+                          <Td>{moment(order.createdAt).format('MMMM Do YYYY')}</Td>
+                          <Td>{formatter.format(order.totalPrice + order.taxPrice)}</Td>
+                          <Td>{order.isPaid ? <Check /> : <Times />}</Td>
+                          <Td>{order.isDelivered ? <Check /> : <Times />}</Td>
+                          <Td>
+                            <StyledLink to={`/order/${order.id}`} onClick={() => dispatch(getOrderDetails(order.id))}>
+                              Details
+                            </StyledLink>
+                          </Td>
+                        </Tr>
+                      ))}
                   </tbody>
                 </Table>
               </TableWrapper>

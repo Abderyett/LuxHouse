@@ -28,7 +28,7 @@ const reducers = combineReducers(
     userInfo: userReducer,
     toggleModal: modalReducer,
     cart: cartReducer,
-    allOrdersers: allOrdersReducer,
+    allOrders: allOrdersReducer,
     addedOrder: addedOrderReducer,
     orderDetails: orderDetailsReducer,
     ordersDetails: ordersDetailsReducer,

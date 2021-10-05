@@ -21,6 +21,7 @@ import {
   UserScreen,
   ProductsListScreen,
   ProductEditScreen,
+  OrdersScreen,
 } from './screens';
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/admin/user/:id" exact component={UserScreen} />
         <Route path="/admin/products" exact component={ProductsListScreen} />
         <Route path="/admin/products/:id/edit" exact component={ProductEditScreen} />
+        <Route path="/admin/orders" exact component={OrdersScreen} />
       </Switch>
 
       <GlobalStyle />

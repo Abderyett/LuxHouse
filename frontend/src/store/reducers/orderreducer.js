@@ -70,7 +70,7 @@ export const allOrdersReducer = (state = { loading: true, orders: {} }, action) 
     case GET_ALL_ORDERS_REQUEST:
       return { ...state, loading: true };
     case GET_ALL_ORDERS_SUCCESS:
-      return { ...state, loading: false, success: true, details: action.payload };
+      return { ...state, loading: false, success: true, orders: action.payload };
 
     case GET_ALL_ORDERS_FAIL:
       return { ...state, loading: false, error: action.payload };
