@@ -79,3 +79,18 @@ export const allOrdersReducer = (state = { loading: true, orders: {} }, action) 
       return state;
   }
 };
+
+export const deliveryUpdateReducer = (state = { loading: true }, action) => {
+  switch (action.type) {
+    case GET_ALL_ORDERS_REQUEST:
+      return { ...state, loading: true };
+    case GET_ALL_ORDERS_SUCCESS:
+      return { ...state, loading: false, success: true };
+
+    case GET_ALL_ORDERS_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
