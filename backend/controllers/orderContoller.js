@@ -132,3 +132,24 @@ exports.getAllOrders = asyncHandler(async (req, res) => {
     throw new Error('The order list is empty');
   }
 });
+
+//* @desc Update order to delivered
+//* @route GET api/v1/orders/delivered/:id
+//! * @access Private Admin only
+exports.updateOrderDelivery = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const order = await Order.findById(id);
+
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+    await order.save();
+    res.status(200).json({
+      status: 'success',
+    });
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
