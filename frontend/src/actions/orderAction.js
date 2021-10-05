@@ -10,6 +10,9 @@ import {
   ORDERS_DETAILS_SUCCESS,
   ORDERS_DETAILS_FAIL,
   ORDERS_DETAILS_REQUEST,
+  GET_ALL_ORDERS_REQUEST,
+  GET_ALL_ORDERS_SUCCESS,
+  GET_ALL_ORDERS_FAIL,
 } from './types';
 
 export const addOrder = (order) => async (dispatch, getState) => {
@@ -91,6 +94,33 @@ export const getOrdersDetails = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDERS_DETAILS_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+export const getAllOrders = () => async (dispatch, getState) => {
+  dispatch({
+    type: GET_ALL_ORDERS_REQUEST,
+  });
+  const { userInfo } = getState().userLogin;
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+
+  try {
+    const { data } = await axios.get('/api/v1/orders/all', config);
+    dispatch({
+      type: GET_ALL_ORDERS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_ORDERS_FAIL,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }

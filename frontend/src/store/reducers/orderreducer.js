@@ -11,6 +11,9 @@ import {
   ORDERS_DETAILS_SUCCESS,
   ORDERS_DETAILS_REQUEST,
   ORDERS_DETAILS_RESET,
+  GET_ALL_ORDERS_REQUEST,
+  GET_ALL_ORDERS_SUCCESS,
+  GET_ALL_ORDERS_FAIL,
 } from '../../actions/types';
 
 export const addedOrderReducer = (state = { order: {} }, action) => {
@@ -56,6 +59,21 @@ export const ordersDetailsReducer = (state = { loading: true, orders: {} }, acti
       return { ...state, loading: false, error: action.payload };
     case ORDERS_DETAILS_RESET:
       return {};
+
+    default:
+      return state;
+  }
+};
+
+export const allOrdersReducer = (state = { loading: true, orders: {} }, action) => {
+  switch (action.type) {
+    case GET_ALL_ORDERS_REQUEST:
+      return { ...state, loading: true };
+    case GET_ALL_ORDERS_SUCCESS:
+      return { ...state, loading: false, success: true, details: action.payload };
+
+    case GET_ALL_ORDERS_FAIL:
+      return { ...state, loading: false, error: action.payload };
 
     default:
       return state;

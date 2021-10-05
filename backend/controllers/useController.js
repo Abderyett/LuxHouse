@@ -17,7 +17,7 @@ exports.logUser = asyncHandler(async (req, res) => {
     const { id } = user;
 
     const token = generateToken(id);
-    redisClient.SET(id, token, 'EX', 2 * 24 * 60 * 60, (err, reply) => {
+    redisClient.SET(id, token, 'EX', 7 * 24 * 60 * 60, (err, reply) => {
       if (err || !reply) {
         console.log(err.message);
       }
@@ -51,7 +51,7 @@ exports.registerUser = asyncHandler(async (req, res) => {
   if (user) {
     const { id } = user;
     const token = generateToken(id);
-    redisClient.SET(id, token, 'EX', 2 * 24 * 60 * 60, (err, reply) => {
+    redisClient.SET(id, token, 'EX', 7 * 24 * 60 * 60, (err, reply) => {
       if (err || !reply) {
         res.status(401).send('Unauthorized');
       }
@@ -80,7 +80,7 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
   if (profile) {
     const { id } = profile;
     const token = generateToken(id);
-    redisClient.SET(id, token, 'EX', 2 * 24 * 60 * 60, (err, reply) => {
+    redisClient.SET(id, token, 'EX', 7 * 24 * 60 * 60, (err, reply) => {
       if (err || !reply) {
         res.status(401).send('Unauthorized');
       }
