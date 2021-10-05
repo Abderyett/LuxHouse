@@ -123,7 +123,7 @@ exports.getOrders = asyncHandler(async (req, res) => {
 //! @access Private AdminOnly
 
 exports.getAllOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({});
+  const orders = await Order.find({}).populate('user', 'name');
 
   if (orders) {
     res.status(200).json(orders);

@@ -1,23 +1,23 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
-import { FaRegTimesCircle, FaTrashAlt } from 'react-icons/fa';
+import { FaRegTimesCircle } from 'react-icons/fa';
 import { FcOk } from 'react-icons/fc';
-import { FiEdit } from 'react-icons/fi';
+
 import moment from 'moment';
-import { showModal } from '../actions/userActions';
-import { getAllOrders, getOrdersDetails, getOrderDetails } from '../actions/orderAction';
-import { Loader, Message, Header, Modal } from '../components';
-import { color, shadow, rounded } from '../utilities';
-import { GET_ID } from '../actions/types';
+
+import { getAllOrders, getOrderDetails } from '../actions/orderAction';
+import { Loader, Header } from '../components';
+import { color, shadow } from '../utilities';
+
 import { formatter } from '../helper/CurrencyFormat';
 
 export function OrdersScreen() {
   const allOrders = useSelector((state) => state.allOrders);
   const userLogin = useSelector((state) => state.userLogin);
-  const deleteUser = useSelector((state) => state.deleteUser);
+
   const userInfo = useSelector((state) => state.userInfo);
   const { user } = userInfo;
 
@@ -62,14 +62,17 @@ export function OrdersScreen() {
                   orders.map((order) => (
                     <Tr key={order._id}>
                       <Td>{order._id}</Td>
-                      <Td>username</Td>
+                      <Td>{order.user.name}</Td>
 
                       <Td>{moment(order.createdAt).format('MMMM Do YYYY')}</Td>
                       <Td>{formatter.format(order.totalPrice + order.taxPrice)}</Td>
                       <Td>{order.isPaid ? <Check /> : <Times />}</Td>
                       <Td>{order.isDelivered ? <Check /> : <Times />}</Td>
                       <Td>
-                        <StyledLink to={`/order/${order.id}`} onClick={() => dispatch(getOrderDetails(order.id))}>
+                        <StyledLink
+                          to={`/admin/orders/${order._id}`}
+                          onClick={() => dispatch(getOrderDetails(order._id))}
+                        >
                           Details
                         </StyledLink>
                       </Td>
@@ -94,12 +97,13 @@ const TableWrapper = styled.div`
 `;
 
 const OrderSection = styled.section`
-  padding-left: 3rem;
+  padding-left: 2rem;
+  margin-top: 5rem;
 `;
 
 const Table = styled.table`
   border: 1px solid ${color.grey_400};
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
   box-shadow: ${shadow.md};
 `;

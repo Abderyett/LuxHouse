@@ -851,7 +851,7 @@ const countries = [
   },
   {
     id: 834,
-    name: 'Tanzania, United Republic of',
+    name: 'Tanzania',
     flag: 'https://www.countryflags.io/tz/shiny/64.png',
   },
   {
@@ -916,12 +916,12 @@ const countries = [
   },
   {
     id: 826,
-    name: 'United Kingdom of Great Britain and Northern Ireland',
+    name: 'United Kingdom',
     flag: 'https://www.countryflags.io/gb/shiny/64.png',
   },
   {
     id: 840,
-    name: 'United States of America',
+    name: 'United States',
     flag: 'https://www.countryflags.io/us/shiny/64.png',
   },
   {
