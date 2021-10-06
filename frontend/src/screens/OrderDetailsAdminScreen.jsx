@@ -1,19 +1,17 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 /* eslint-disable eqeqeq */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { BiRightArrowAlt } from 'react-icons/bi';
-import { BsCreditCard } from 'react-icons/bs';
-import { useStripe } from '@stripe/react-stripe-js';
 
-import { Header, Message, Loader } from '../components';
+import { Header, Message, Loader, LoaderSemiCircle } from '../components';
 import { color, shadow, rounded } from '../utilities';
-import { getOrderDetails } from '../actions/orderAction';
+import { getOrderDetails, updateDeliveryStatus } from '../actions/orderAction';
 import { formatter } from '../helper/CurrencyFormat';
-import { proceedPayment, updatePaypalPayment } from '../actions/paymentAction';
+import { UPDATE_DELIVERY_ORDER_RESET } from '../actions/types';
 
 export function OrderDetailsAdminScreen() {
   const dispatch = useDispatch();
@@ -22,8 +20,10 @@ export function OrderDetailsAdminScreen() {
 
   const userDetails = useSelector((state) => state.userDetails);
   const orderDetails = useSelector((state) => state.orderDetails);
+  const deliveryUpdate = useSelector((state) => state.deliveryUpdate);
   const { user: userInfo } = userDetails;
   const { loading, details } = orderDetails;
+  const { loading: updateLoading, success, error } = deliveryUpdate;
 
   //* Check if user is loged in
 
@@ -35,14 +35,10 @@ export function OrderDetailsAdminScreen() {
 
   useEffect(() => {
     dispatch(getOrderDetails(id));
-  }, [id, dispatch]);
-
-  // useEffect(() => {
-  //   if (success) {
-  //     history.push('/success');
-  //     // dispatch({ type: ADDED_ORDER_RESET });
-  //   }
-  // }, [dispatch, id, success]);
+    if (success) {
+      dispatch({ type: UPDATE_DELIVERY_ORDER_RESET });
+    }
+  }, [id, dispatch, success]);
 
   const total = () => {
     if (details.paymentMethod && details.paymentMethod === 'Paypal') {
@@ -51,26 +47,14 @@ export function OrderDetailsAdminScreen() {
     return details.shippingMethod.price + details.totalPrice;
   };
 
-  const submitHandler = (e) => {
+  const handleDeliver = (e) => {
     e.preventDefault();
+    dispatch(updateDeliveryStatus(id));
   };
-
-  // const line_items = details.orderItems.map((el) => ({
-  //   quantity: el.quantity,
-  //   price_data: {
-  //     unit_amount: el.price * 100,
-  //     currency: 'usd',
-  //     tax_behavior: 'exclusive',
-
-  //     product_data: {
-  //       name: `${el.name} ${el.subcategory}`,
-  //       images: [el.image[0].url],
-  //     },
-  //   },
-  // }));
 
   return (
     <>
+      {error && <Message bg="danger">{error}</Message>}
       {loading ? (
         <Loader />
       ) : (
@@ -146,7 +130,7 @@ export function OrderDetailsAdminScreen() {
             </Container>
             <CheckoutSection>
               <CheckoutWrapper>
-                <form onSubmit={submitHandler}>
+                <form>
                   <CheckoutHeader>Order summary</CheckoutHeader>
                   <Line />
                   <TotalPrice>
@@ -172,7 +156,10 @@ export function OrderDetailsAdminScreen() {
                     <>
                       {' '}
                       <BtnWrapper>
-                        <Btn>Mark As Delivred</Btn>
+                        {updateLoading && <LoaderSemiCircle />}
+                        <Btn type="submit" onClick={handleDeliver}>
+                          Mark As Delivred
+                        </Btn>
                       </BtnWrapper>
                     </>
                   ) : (

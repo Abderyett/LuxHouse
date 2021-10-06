@@ -14,6 +14,10 @@ import {
   GET_ALL_ORDERS_REQUEST,
   GET_ALL_ORDERS_SUCCESS,
   GET_ALL_ORDERS_FAIL,
+  UPDATE_DELIVERY_ORDER_REQUEST,
+  UPDATE_DELIVERY_ORDER_SUCCESS,
+  UPDATE_DELIVERY_ORDER_FAIL,
+  UPDATE_DELIVERY_ORDER_RESET,
 } from '../../actions/types';
 
 export const addedOrderReducer = (state = { order: {} }, action) => {
@@ -80,15 +84,17 @@ export const allOrdersReducer = (state = { loading: true, orders: {} }, action) 
   }
 };
 
-export const deliveryUpdateReducer = (state = { loading: true }, action) => {
+export const deliveryUpdateReducer = (state = { loading: false }, action) => {
   switch (action.type) {
-    case GET_ALL_ORDERS_REQUEST:
+    case UPDATE_DELIVERY_ORDER_REQUEST:
       return { ...state, loading: true };
-    case GET_ALL_ORDERS_SUCCESS:
+    case UPDATE_DELIVERY_ORDER_SUCCESS:
       return { ...state, loading: false, success: true };
 
-    case GET_ALL_ORDERS_FAIL:
+    case UPDATE_DELIVERY_ORDER_FAIL:
       return { ...state, loading: false, error: action.payload };
+    case UPDATE_DELIVERY_ORDER_RESET:
+      return {};
 
     default:
       return state;

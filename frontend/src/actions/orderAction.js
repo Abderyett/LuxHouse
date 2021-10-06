@@ -143,7 +143,7 @@ export const updateDeliveryStatus = (id) => async (dispatch, getState) => {
   };
 
   try {
-    const { data } = await axios.get(`/api/v1/orders/delivered/:${id}`, config);
+    const { data } = await axios.get(`/api/v1/orders/delivered/${id}`, config);
     dispatch({
       type: UPDATE_DELIVERY_ORDER_SUCCESS,
       payload: data,
