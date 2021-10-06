@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const morgan = require('morgan');
 const connectDB = require('./config/db');
 const productsRoutes = require('./routes/productsRoutes');
 const countriesRouter = require('./routes/countriesRouter');
@@ -13,6 +14,9 @@ require('./utils/init-redis');
 
 dotenv.config();
 const app = express();
+
+app.use(morgan('dev'));
+
 connectDB();
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));

@@ -3,10 +3,9 @@
 /* eslint-disable eqeqeq */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { BiRightArrowAlt } from 'react-icons/bi';
-
 import { Header, Message, Loader, LoaderSemiCircle } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { getOrderDetails, updateDeliveryStatus } from '../actions/orderAction';
@@ -61,6 +60,7 @@ export function OrderDetailsAdminScreen() {
         <>
           <Header />
 
+          <Back to="/admin/orders"> &larr; Go Back</Back>
           <MainWrapper>
             <Container>
               <FirstHeading>Your Order Id: {id}</FirstHeading>
@@ -324,5 +324,18 @@ const BtnWrapper = styled.div`
       transform: translateX(5px);
       transition: all 0.6s ease-in-out;
     }
+  }
+`;
+
+const Back = styled(Link)`
+  padding-left: 3rem;
+  padding-top: 3rem;
+  font-size: 1.2rem;
+  color: ${color.grey_700};
+  display: block;
+  &:hover {
+    color: ${color.scallop_shell};
+    text-decoration: underline;
+    text-underline-offset: 5px;
   }
 `;

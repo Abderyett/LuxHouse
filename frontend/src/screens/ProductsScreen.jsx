@@ -20,6 +20,8 @@ export function ProductsScreen() {
   const [subCategories, setsubCategories] = useState([]);
   const [filtredProducts, setfiltredProducts] = useState([]);
   const [categorieText, setCategorieText] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchedProducts, setSearchedProducts] = useState([]);
 
   useEffect(() => {
     dispatch(listProduct());
@@ -32,7 +34,9 @@ export function ProductsScreen() {
       const newArr = products.map((el) => el.subcategory);
       const categories = ['all', ...new Set(newArr)];
       setsubCategories(categories);
+      setfiltredProducts(products);
     }
+    setSearchedProducts(products);
   }, [products]);
 
   const filterProducts = (category) => {
@@ -53,6 +57,19 @@ export function ProductsScreen() {
     const newVal = val && val.itemAdded;
     return newVal;
   };
+
+  const searchHandler = (e) => {
+    setSearchTerm(e.target.value);
+    const searchedProduct = filtredProducts.filter((el) => el.name === searchTerm);
+    if (searchTerm.length === 0) {
+      setSearchedProducts(products);
+    } else {
+      setSearchedProducts(searchedProduct);
+    }
+  };
+
+  console.log('FiltredProducts', filtredProducts);
+  console.log('SearchedProducts', searchedProducts);
 
   return (
     <>
@@ -76,6 +93,7 @@ export function ProductsScreen() {
           </Div>
           <ContentWrapper>
             <FilterWrapper>
+              <Input type="text" value={searchTerm} onChange={searchHandler} />
               <Accordion />
 
               <ClearBtn type="button">Clear Filters</ClearBtn>
@@ -92,39 +110,22 @@ export function ProductsScreen() {
               </HeaderDetails>
 
               <GridContainer>
-                {categorieText === 'all'
-                  ? products.map((el) => (
-                      <Card key={el._id}>
-                        <Link to={`/products/${el._id}`}>
-                          <StyledImg src={el.image && el.image[0].url} alt={el.subcategory} />
-                          <Title>
-                            <h3>{el.name}</h3>
-                            <PriceText category={el.category}>${el.price}</PriceText>
-                          </Title>
-                          <Subcategory category={el.category}>{el.subcategory} </Subcategory>
-                          <Description>{el.description.substring(0, 100)}...</Description>
-                        </Link>
-                        <IconWrapper type="button" onClick={() => dispatch(addItem(el))}>
-                          {isAddedProduct(el._id) === true ? <CheckCircle /> : <BlueCircle />}
-                        </IconWrapper>
-                      </Card>
-                    ))
-                  : filtredProducts.map((el) => (
-                      <Card key={el._id}>
-                        <Link to={`/products/${el._id}`}>
-                          <StyledImg src={el.image[0].url} alt={el.subcategory} />
-                          <Title>
-                            <h3>{el.name}</h3>
-                            <PriceText category={el.category}>${el.price}</PriceText>
-                          </Title>
-                          <Subcategory category={el.category}>{el.subcategory}</Subcategory>
-                          <Description>{el.description.substring(0, 100)}...</Description>
-                        </Link>
-                        <IconWrapper type="submit" onClick={() => dispatch(addItem(el))}>
-                          {isAddedProduct(el._id) === true ? <CheckCircle /> : <BlueCircle />}
-                        </IconWrapper>
-                      </Card>
-                    ))}
+                {filtredProducts.map((el) => (
+                  <Card key={el._id}>
+                    <Link to={`/products/${el._id}`}>
+                      <StyledImg src={el.image && el.image[0].url} alt={el.subcategory} />
+                      <Title>
+                        <h3>{el.name}</h3>
+                        <PriceText category={el.category}>${el.price}</PriceText>
+                      </Title>
+                      <Subcategory category={el.category}>{el.subcategory} </Subcategory>
+                      <Description>{el.description.substring(0, 100)}...</Description>
+                    </Link>
+                    <IconWrapper type="button" onClick={() => dispatch(addItem(el))}>
+                      {isAddedProduct(el._id) === true ? <CheckCircle /> : <BlueCircle />}
+                    </IconWrapper>
+                  </Card>
+                ))}
               </GridContainer>
             </div>
           </ContentWrapper>
@@ -298,4 +299,26 @@ const Div = styled.div`
 
 const IconWrapper = styled.button`
   background-color: transparent;
+`;
+
+const Input = styled.input`
+  border-radius: ${rounded.md};
+  height: 2rem;
+  width: 13rem;
+  max-width: 13rem;
+  text-indent: 5%;
+  font-size: 1.2rem;
+  color: ${color.grey_800};
+  font-family: 'avenir_regular';
+  box-shadow: ${shadow.lg};
+  margin-top: 1rem;
+  box-shadow: 0px 0px 0px 2px ${color.grey_300};
+  margin-left: 1.5rem;
+  @media (max-width: 768px) {
+    width: 90vw;
+  }
+  outline: none;
+  &:focus {
+    box-shadow: 0px 0px 0px 2px ${color.grey_600};
+  }
 `;
