@@ -20,7 +20,7 @@ export function ProductsScreen() {
   const [subCategories, setsubCategories] = useState([]);
   const [filtredProducts, setfiltredProducts] = useState([]);
   const [categorieText, setCategorieText] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState();
   const [searchedProducts, setSearchedProducts] = useState([]);
 
   useEffect(() => {
@@ -39,17 +39,16 @@ export function ProductsScreen() {
     setSearchedProducts(products);
   }, [products]);
 
-  const filterProducts = (category) => {
-    if (category === 'all') {
-      setfiltredProducts(products);
-    } else {
-      const newProducts = products.filter((el) => el.subcategory === category);
-      setfiltredProducts(newProducts);
-    }
-  };
   useEffect(() => {
-    filterProducts(categorieText);
-  }, [categorieText]);
+    if (categorieText === 'all') {
+      setSearchedProducts(products);
+    } else if (subCategories.includes(categorieText)) {
+      setSearchedProducts(filtredProducts);
+      const newProducts = filtredProducts.filter((el) => el.subcategory === categorieText);
+      console.log('newProducts', newProducts);
+      setSearchedProducts(newProducts);
+    }
+  }, [categorieText, subCategories, filtredProducts]);
 
   const isAddedProduct = (id) => {
     const val = cartItem.length > 0 && cartItem.find((el) => el._id === id);
@@ -60,16 +59,12 @@ export function ProductsScreen() {
 
   const searchHandler = (e) => {
     setSearchTerm(e.target.value);
-    const searchedProduct = filtredProducts.filter((el) => el.name === searchTerm);
-    if (searchTerm.length === 0) {
-      setSearchedProducts(products);
-    } else {
-      setSearchedProducts(searchedProduct);
+    const filtred = filtredProducts.filter((el) => el.name.toLowerCase().startsWith(e.target.value.toLowerCase()));
+    if (searchTerm) {
+      setSearchedProducts(filtredProducts);
     }
+    setSearchedProducts(filtred);
   };
-
-  console.log('FiltredProducts', filtredProducts);
-  console.log('SearchedProducts', searchedProducts);
 
   return (
     <>
@@ -93,7 +88,7 @@ export function ProductsScreen() {
           </Div>
           <ContentWrapper>
             <FilterWrapper>
-              <Input type="text" value={searchTerm} onChange={searchHandler} />
+              <Input type="text" value={searchTerm} onChange={searchHandler} placeholder="Search" />
               <Accordion />
 
               <ClearBtn type="button">Clear Filters</ClearBtn>
@@ -101,16 +96,16 @@ export function ProductsScreen() {
             <div>
               <HeaderDetails>
                 <span>
-                  {filtredProducts && filtredProducts.length === 0
-                    ? products.length
-                    : filtredProducts && filtredProducts.length}{' '}
+                  {searchedProducts && searchedProducts.length === 0
+                    ? searchedProducts.length
+                    : searchedProducts && searchedProducts.length}{' '}
                   Results{' '}
                 </span>
                 <hr /> <span>Sort By</span>
               </HeaderDetails>
 
               <GridContainer>
-                {filtredProducts.map((el) => (
+                {searchedProducts.map((el) => (
                   <Card key={el._id}>
                     <Link to={`/products/${el._id}`}>
                       <StyledImg src={el.image && el.image[0].url} alt={el.subcategory} />
@@ -280,6 +275,10 @@ const Button = styled.button`
   &:hover {
     background: rgba(244, 244, 244, 0.9);
   }
+  &:focus {
+    background-color: ${color.black};
+    color: ${color.white};
+  }
 `;
 
 const Div = styled.div`
@@ -307,7 +306,7 @@ const Input = styled.input`
   width: 13rem;
   max-width: 13rem;
   text-indent: 5%;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: ${color.grey_800};
   font-family: 'avenir_regular';
   box-shadow: ${shadow.lg};
