@@ -95,13 +95,19 @@ export function ProductsScreen() {
             </FilterWrapper>
             <div>
               <HeaderDetails>
-                <span>
+                <ResultsNumber>
                   {searchedProducts && searchedProducts.length === 0
                     ? searchedProducts.length
                     : searchedProducts && searchedProducts.length}{' '}
                   Results{' '}
-                </span>
-                <hr /> <span>Sort By</span>
+                </ResultsNumber>
+                <hr /> <SortText>Sort By</SortText>{' '}
+                <Select name="sort" id="sort">
+                  <option value="lowest">Price (Lowest) &nbsp;</option>
+                  <option value="highest">Price (Highest) &nbsp;</option>
+                  <option value="name-a">Name (A -Z) &nbsp;</option>
+                  <option value="name-z">Name (Z-A) &nbsp;</option>
+                </Select>
               </HeaderDetails>
 
               <GridContainer>
@@ -172,10 +178,7 @@ const HeaderDetails = styled.div`
   align-items: center;
   margin-bottom: 3rem;
   hr {
-    width: 75%;
-  }
-  span {
-    padding: 0 1rem;
+    width: 56%;
   }
 `;
 
@@ -320,4 +323,38 @@ const Input = styled.input`
   &:focus {
     box-shadow: 0px 0px 0px 2px ${color.grey_600};
   }
+`;
+//* Select ===================
+
+const Select = styled.select`
+  appearance: none;
+
+  background-color: transparent;
+  border: none;
+
+  margin: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  border: 1px solid ${color.grey_400};
+  border-radius: ${rounded.md};
+  padding: 0.5rem;
+  &:focus {
+    outline: none;
+    border: 1px solid ${color.grey_600};
+  }
+`;
+
+const SortText = styled.span`
+  display: inline-block;
+  width: 7ch;
+  margin-left: 1rem;
+`;
+const ResultsNumber = styled.span`
+  display: inline-block;
+  width: 10ch;
+  margin-left: 3rem;
+  margin-right: 1rem;
 `;
