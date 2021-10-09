@@ -15,6 +15,9 @@ import {
   UPDATE_PRODUCT_REQUEST,
   UPDATE_PRODUCT_SUCCESS,
   UPDATE_PRODUCT_FAIL,
+  SELECT_COLOR,
+  SELECT_PRICE,
+  SELECT_SHIPPING,
 } from './types';
 
 export const listProduct = () => async (dispatch) => {
@@ -129,4 +132,23 @@ export const updateProductAC = (id, product) => async (dispatch, getState) => {
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
+};
+
+export const selectColor = (color) => (dispatch) => {
+  dispatch({
+    type: SELECT_COLOR,
+    payload: color,
+  });
+};
+export const selectPrice = (price) => (dispatch) => {
+  dispatch({
+    type: SELECT_PRICE,
+    payload: price,
+  });
+};
+export const selectShipping = (shipping) => (dispatch) => {
+  dispatch({
+    type: SELECT_SHIPPING,
+    payload: shipping,
+  });
 };

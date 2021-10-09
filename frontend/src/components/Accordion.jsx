@@ -82,32 +82,36 @@ export function Accordion() {
                   }}
                   transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
                 >
-                  {el.iterable &&
-                    el.iterable.map((item, i) => {
-                      if (item && item.includes('#')) {
+                  <ColorWrapper>
+                    {el.iterable &&
+                      el.iterable.map((item, i) => {
+                        if (item && item.includes('#')) {
+                          return (
+                            <Circle key={i} colored={item} onClick={() => colorsHandler(item)}>
+                              {item === selectedColor && <FiCheck />}
+                            </Circle>
+                          );
+                        }
+
                         return (
-                          <Circle key={i} colored={item} onClick={() => colorsHandler(item)}>
-                            {item === selectedColor && <FiCheck />}
-                          </Circle>
+                          <Wrapper key={i}>
+                            <Price>
+                              <input
+                                type="checkbox"
+                                onClick={() => setSelectedIndex(i)}
+                                onChange={(e) => handleChange(e, i)}
+                                checked={selectedIndex === i && checked}
+                                id="price"
+                              />
+                              <PriceLabel htmlFor="price">
+                                {' '}
+                                &nbsp;{typeof item[0] === 'string' ? item[0] : `$ ${item[0]}`} - ${item[1]}
+                              </PriceLabel>
+                            </Price>
+                          </Wrapper>
                         );
-                      }
-                      return (
-                        <Wrapper key={i}>
-                          <Price>
-                            <input
-                              type="checkbox"
-                              onClick={() => setSelectedIndex(i)}
-                              onChange={(e) => handleChange(e, i)}
-                              checked={selectedIndex === i && checked}
-                            />
-                            <label>
-                              {' '}
-                              &nbsp;{typeof item[0] === 'string' ? item[0] : `$ ${item[0]}`} - ${item[1]}
-                            </label>
-                          </Price>
-                        </Wrapper>
-                      );
-                    })}
+                      })}
+                  </ColorWrapper>
                 </Details>
               )}
             </Container>
@@ -170,6 +174,18 @@ const Shipping = styled.div`
 
 const Price = styled.div`
   padding-top: 1rem;
+  /* display: inline-block; */
+  /* margin-right: 1rem; */
+`;
+
+const ColorWrapper = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 `;
 
 const Wrapper = styled.div``;
+
+const PriceLabel = styled.label`
+  font-size: 0.9rem;
+`;

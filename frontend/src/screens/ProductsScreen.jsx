@@ -165,7 +165,7 @@ const ContentWrapper = styled.div`
   padding-top: 5rem;
 
   display: grid;
-  grid-template-columns: 20% 1fr;
+  grid-template-columns: 24% 1fr;
 `;
 const FilterWrapper = styled.div`
   padding-left: 4rem;

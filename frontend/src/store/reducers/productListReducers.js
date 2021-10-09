@@ -17,6 +17,10 @@ import {
   UPDATE_PRODUCT_SUCCESS,
   UPDATE_PRODUCT_FAIL,
   UPDATE_PRODUCT_RESET,
+  SELECT_COLOR,
+  SELECT_PRICE,
+  SELECT_SHIPPING,
+  CLEAR_FILTER,
 } from '../../actions/types';
 
 export const productListReducer = (state = { products: [], loading: false, success: false }, action) => {
@@ -111,6 +115,25 @@ export const updateProductReducer = (state = { loading: false }, action) => {
     case UPDATE_PRODUCT_FAIL:
       return { loading: false, error: action.payload };
     case UPDATE_PRODUCT_RESET:
+      return {};
+
+    default:
+      return state;
+  }
+};
+
+export const filterProductsReducer = (state = { color: '', price: [], freeShipping: false }, action) => {
+  switch (action.type) {
+    case SELECT_COLOR:
+      return { ...state, color: action.payload };
+    case SELECT_PRICE:
+      return {
+        ...state,
+        price: action.payload,
+      };
+    case SELECT_SHIPPING:
+      return { ...state, freeShipping: !state.freeShipping };
+    case CLEAR_FILTER:
       return {};
 
     default:
