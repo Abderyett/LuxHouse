@@ -1,54 +1,46 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { FiCheck } from 'react-icons/fi';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useSelector, useDispatch } from 'react-redux';
 import { color } from '../utilities';
-
-const data = [
-  {
-    title: 'Colors',
-    iterable: [
-      '#1E1D1C',
-      '#A04824',
-      '#B8B6AC',
-      '#7A8187',
-      '#2D4136',
-      '#CABCAE',
-      '#424C4D',
-      '#CB895C',
-      '#104149',
-      '#592E1C',
-      '#EDDFD2',
-      '#706641',
-      '#B99557',
-      '#C6B9AA',
-      '#2C301F',
-      '#F7EDE9',
-      '#97A798',
-      '#F3DE93',
-    ],
-  },
-  {
-    title: 'Price',
-    iterable: [
-      ['Under', 250],
-      [250, 500],
-      [500, 1000],
-      [1000, 2000],
-      [2000, 3000],
-      ['Above', 3000],
-    ],
-  },
-];
+import { listProduct } from '../actions/productActions';
 
 export function Accordion() {
   const [activeIndex, setactiveIndex] = useState(null);
-
+  const [colorsList, setColorsList] = useState([]);
   const [selectedColor, setSelectedColor] = useState('1E1D1C');
   const [checked, setChecked] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const porductList = useSelector((state) => state.porductList);
+
+  const dispatch = useDispatch();
+  const data = [
+    {
+      title: 'Colors',
+      iterable: colorsList,
+    },
+    {
+      title: 'Price',
+      iterable: [
+        ['Under', 250],
+        [250, 500],
+        [500, 1000],
+        [1000, 2000],
+        [2000, 3000],
+        ['Above', 3000],
+      ],
+    },
+  ];
+
+  useEffect(() => {
+    const colors = porductList.products.map((el) => el.colors);
+    const flat = colors.flat();
+    const uniqueColors = [...new Set(flat)];
+    setColorsList(uniqueColors);
+  }, [porductList]);
 
   const toggle = (i) => {
     if (activeIndex === i) {
@@ -62,6 +54,10 @@ export function Accordion() {
       return setChecked(null);
     }
     setChecked(true);
+  };
+
+  const colorsHandler = (item) => {
+    setSelectedColor(item);
   };
 
   return (
@@ -90,7 +86,7 @@ export function Accordion() {
                     el.iterable.map((item, i) => {
                       if (item && item.includes('#')) {
                         return (
-                          <Circle key={i} colored={item} onClick={() => setSelectedColor(item)}>
+                          <Circle key={i} colored={item} onClick={() => colorsHandler(item)}>
                             {item === selectedColor && <FiCheck />}
                           </Circle>
                         );

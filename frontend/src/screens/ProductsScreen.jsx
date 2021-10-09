@@ -49,7 +49,7 @@ export function ProductsScreen() {
       console.log('newProducts', newProducts);
       setSearchedProducts(newProducts);
     }
-  }, [categorieText, subCategories, filtredProducts, products, sortBy]);
+  }, [categorieText, subCategories, filtredProducts, products]);
 
   const isAddedProduct = (id) => {
     const val = cartItem.length > 0 && cartItem.find((el) => el._id === id);
@@ -67,36 +67,19 @@ export function ProductsScreen() {
     setSearchedProducts(filtred);
   };
 
-  // const sortHandler = (e) => {
-  //   setSortBy(e.target.value);
-  // };
-
-  // useEffect(() => {
-  //   setSearchedProducts(filtredProducts);
-
-  //   switch (sortBy) {
-  //     case 'lowest':
-  //       return setSearchedProducts(lowest);
-
-  //     default:
-  //       break;
-  //   }
-  // }, [sortBy, searchedProducts, filtredProducts]);
-
   const selectedSort = (e) => {
     setSortBy(e.target.value);
-
-    if (sortBy === 'lowest') {
-      setSearchedProducts(filtredProducts);
-      setSearchedProducts(searchedProducts.sort((a, b) => b.price - a.price));
-    } else if (sortBy === 'highest') {
+    if (e.target.value === 'lowest') {
       setSearchedProducts(filtredProducts);
       setSearchedProducts(searchedProducts.sort((a, b) => a.price - b.price));
-    } else if (sortBy === 'name-a') {
+    } else if (e.target.value === 'highest') {
+      setSearchedProducts(filtredProducts);
+      setSearchedProducts(searchedProducts.sort((a, b) => b.price - a.price));
+    } else if (e.target.value === 'name-a') {
       setSearchedProducts(filtredProducts);
       const tempProducts = searchedProducts.sort((a, b) => a.name.localeCompare(b.name));
       setSearchedProducts(tempProducts);
-    } else if (sortBy === 'name-z') {
+    } else if (e.target.value === 'name-z') {
       setSearchedProducts(filtredProducts);
       const tempProducts = searchedProducts.sort((a, b) => b.name.localeCompare(a.name));
       setSearchedProducts(tempProducts);
@@ -139,7 +122,7 @@ export function ProductsScreen() {
                   Results{' '}
                 </ResultsNumber>
                 <hr /> <SortText>Sort By</SortText>{' '}
-                <Select name="sort" id="sort" onChange={selectedSort}>
+                <Select value={sortBy} id="sort" onChange={selectedSort}>
                   <option value="highest">Price (Highest) &nbsp;</option>
                   <option value="lowest">Price (Lowest) &nbsp;</option>
                   <option value="name-a">Name (A -Z) &nbsp;</option>

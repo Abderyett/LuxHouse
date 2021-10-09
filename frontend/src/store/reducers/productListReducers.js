@@ -19,12 +19,12 @@ import {
   UPDATE_PRODUCT_RESET,
 } from '../../actions/types';
 
-export const productListReducer = (state = { products: [], loading: false }, action) => {
+export const productListReducer = (state = { products: [], loading: false, success: false }, action) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
       return { loading: true, products: [] };
     case PRODUCT_LIST_SUCCESS:
-      return { loading: false, products: action.payload };
+      return { loading: false, products: action.payload, success: true };
     case PRODUCT_LIST_FAIL:
       return { loading: false, error: action.payload };
 
