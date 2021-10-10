@@ -47,7 +47,7 @@ export function ProductsScreen() {
     } else if (subCategories.includes(categorieText)) {
       setSearchedProducts(filtredProducts);
       const newProducts = filtredProducts.filter((el) => el.subcategory === categorieText);
-      console.log('newProducts', newProducts);
+
       setSearchedProducts(newProducts);
     }
   }, [categorieText, subCategories, filtredProducts, products]);
@@ -98,12 +98,31 @@ export function ProductsScreen() {
 
   useEffect(() => {
     if (freeShipping) {
-      const tempProducts = filtredProducts.filter((product) => product.shipping === true);
+      const tempProducts = searchedProducts.filter((product) => product.shipping === true);
       setSearchedProducts(tempProducts);
     } else {
       setSearchedProducts(filtredProducts);
     }
   }, [freeShipping]);
+  useEffect(() => {
+    if (selectedPrice && selectedPrice[0] === 'Under') {
+      const tempProducts = filtredProducts.filter((product) => product.price <= selectedPrice[1]);
+      setSearchedProducts(tempProducts);
+    } else if (selectedPrice && selectedPrice[0] === 'Above') {
+      const tempProducts = filtredProducts.filter((product) => product.price >= selectedPrice[1]);
+      setSearchedProducts(tempProducts);
+    } else {
+      const tempProducts = filtredProducts.filter(
+        (product) => product.price >= selectedPrice[0] && product.price <= selectedPrice[1]
+      );
+      setSearchedProducts(tempProducts);
+    }
+  }, [selectedPrice]);
+
+  const clearHandler = () => {
+    dispatch(clearFilters());
+    dispatch(listProduct());
+  };
 
   return (
     <>
@@ -130,7 +149,7 @@ export function ProductsScreen() {
               <Input type="text" value={searchTerm} onChange={searchHandler} placeholder="Search" />
               <Accordion />
 
-              <ClearBtn type="button" onClick={() => dispatch(clearFilters())}>
+              <ClearBtn type="button" onClick={clearHandler}>
                 Clear Filters
               </ClearBtn>
             </FilterWrapper>
