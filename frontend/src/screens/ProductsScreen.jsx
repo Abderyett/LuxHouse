@@ -94,7 +94,16 @@ export function ProductsScreen() {
       console.log('tempProducts', tempProducts);
       setSearchedProducts(tempProducts);
     }
-  }, [pickedColor, selectedPrice, freeShipping]);
+  }, [pickedColor]);
+
+  useEffect(() => {
+    if (freeShipping) {
+      const tempProducts = filtredProducts.filter((product) => product.shipping === true);
+      setSearchedProducts(tempProducts);
+    } else {
+      setSearchedProducts(filtredProducts);
+    }
+  }, [freeShipping]);
 
   return (
     <>
