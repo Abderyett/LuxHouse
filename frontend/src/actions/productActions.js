@@ -18,6 +18,7 @@ import {
   SELECT_COLOR,
   SELECT_PRICE,
   SELECT_SHIPPING,
+  CLEAR_FILTER,
 } from './types';
 
 export const listProduct = () => async (dispatch) => {
@@ -150,5 +151,10 @@ export const selectShipping = (shipping) => (dispatch) => {
   dispatch({
     type: SELECT_SHIPPING,
     payload: shipping,
+  });
+};
+export const clearFilters = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_FILTER,
   });
 };

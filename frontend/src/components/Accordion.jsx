@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
@@ -6,16 +7,19 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import { color } from '../utilities';
-import { listProduct } from '../actions/productActions';
+import { selectColor, selectPrice, selectShipping } from '../actions/productActions';
 
 export function Accordion() {
   const [activeIndex, setactiveIndex] = useState(null);
   const [colorsList, setColorsList] = useState([]);
-  const [selectedColor, setSelectedColor] = useState('1E1D1C');
+
   const [checked, setChecked] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const porductList = useSelector((state) => state.porductList);
+  const filterProduct = useSelector((state) => state.filterProduct);
 
+  const { color: pickedColor, price: selectedPrice, freeShipping } = filterProduct;
+  const [selectedColor, setSelectedColor] = useState(pickedColor);
   const dispatch = useDispatch();
   const data = [
     {
@@ -40,7 +44,7 @@ export function Accordion() {
     const flat = colors.flat();
     const uniqueColors = [...new Set(flat)];
     setColorsList(uniqueColors);
-  }, [porductList]);
+  }, [porductList, pickedColor, selectPrice, freeShipping]);
 
   const toggle = (i) => {
     if (activeIndex === i) {
@@ -58,6 +62,12 @@ export function Accordion() {
 
   const colorsHandler = (item) => {
     setSelectedColor(item);
+    dispatch(selectColor(item));
+  };
+  const priceHandler = (event, index, price) => {
+    handleChange(event, index);
+
+    dispatch(selectPrice(price));
   };
 
   return (
@@ -88,7 +98,7 @@ export function Accordion() {
                         if (item && item.includes('#')) {
                           return (
                             <Circle key={i} colored={item} onClick={() => colorsHandler(item)}>
-                              {item === selectedColor && <FiCheck />}
+                              {item === selectedColor && pickedColor.length > 0 ? <FiCheck /> : ''}
                             </Circle>
                           );
                         }
@@ -98,12 +108,13 @@ export function Accordion() {
                             <Price>
                               <input
                                 type="checkbox"
+                                value={item}
                                 onClick={() => setSelectedIndex(i)}
-                                onChange={(e) => handleChange(e, i)}
-                                checked={selectedIndex === i && checked}
-                                id="price"
+                                onChange={(event) => priceHandler(event, i, item)}
+                                checked={selectedIndex === i && checked && selectedPrice.length > 0}
+                                id={i}
                               />
-                              <PriceLabel htmlFor="price">
+                              <PriceLabel htmlFor={i}>
                                 {' '}
                                 &nbsp;{typeof item[0] === 'string' ? item[0] : `$ ${item[0]}`} - ${item[1]}
                               </PriceLabel>
@@ -118,7 +129,12 @@ export function Accordion() {
           ))}
           <Shipping>
             <label htmlFor="free-shipping">Free Shipping</label>
-            <input type="checkbox" id="free-shipping" />
+            <input
+              type="checkbox"
+              id="free-shipping"
+              checked={freeShipping}
+              onChange={(e) => dispatch(selectShipping(e.target.checked))}
+            />
           </Shipping>
         </Content>
       </SingleFilter>

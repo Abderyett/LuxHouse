@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProduct } from '../actions/productActions';
+import { clearFilters, listProduct } from '../actions/productActions';
 import { addItem } from '../actions/cartAction';
-import { Header, Accordion, Loader, Message } from '../components';
+import { Header, Loader, Message, Accordion } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { BlueCircle, CheckCircle } from '../utilities/svg';
 import { ORDER_DETAILS_RESET, ADDED_ORDER_RESET } from '../actions/types';
@@ -111,7 +111,9 @@ export function ProductsScreen() {
               <Input type="text" value={searchTerm} onChange={searchHandler} placeholder="Search" />
               <Accordion />
 
-              <ClearBtn type="button">Clear Filters</ClearBtn>
+              <ClearBtn type="button" onClick={() => dispatch(clearFilters())}>
+                Clear Filters
+              </ClearBtn>
             </FilterWrapper>
             <div>
               <HeaderDetails>
@@ -182,6 +184,7 @@ const ClearBtn = styled.button`
   border-radius: ${rounded.xxl};
   margin-top: 1rem;
   margin-left: 1rem;
+  cursor: pointer;
 `;
 
 const GridContainer = styled.div`

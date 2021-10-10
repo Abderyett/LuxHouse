@@ -132,9 +132,9 @@ export const filterProductsReducer = (state = { color: '', price: [], freeShippi
         price: action.payload,
       };
     case SELECT_SHIPPING:
-      return { ...state, freeShipping: !state.freeShipping };
+      return { ...state, freeShipping: action.payload };
     case CLEAR_FILTER:
-      return {};
+      return { ...state, color: '', price: [], freeShipping: false };
 
     default:
       return state;
