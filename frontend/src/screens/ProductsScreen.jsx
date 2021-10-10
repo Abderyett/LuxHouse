@@ -14,7 +14,8 @@ export function ProductsScreen() {
   const dispatch = useDispatch();
   const porductList = useSelector((state) => state.porductList);
   const cartItem = useSelector((state) => state.cart.cartItem);
-
+  const filterProduct = useSelector((state) => state.filterProduct);
+  const { color: pickedColor, price: selectedPrice, freeShipping } = filterProduct;
   const { loading, error, products } = porductList;
 
   const [subCategories, setsubCategories] = useState([]);
@@ -85,6 +86,15 @@ export function ProductsScreen() {
       setSearchedProducts(tempProducts);
     }
   };
+
+  useEffect(() => {
+    setSearchedProducts(filtredProducts);
+    if (pickedColor !== 'all') {
+      const tempProducts = filtredProducts.filter((product) => product.colors.find((c) => c === pickedColor));
+      console.log('tempProducts', tempProducts);
+      setSearchedProducts(tempProducts);
+    }
+  }, [pickedColor, selectedPrice, freeShipping]);
 
   return (
     <>
