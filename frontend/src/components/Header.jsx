@@ -5,10 +5,16 @@ import styled, { css } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { FiHeart, FiUser, FiUsers, FiPackage } from 'react-icons/fi';
 import { FaClipboardList } from 'react-icons/fa';
-import { RiAdminLine, RiArrowDropRightLine, RiUserReceivedLine } from 'react-icons/ri';
+import {
+  RiAdminLine,
+  RiArrowDropRightLine,
+  RiUserReceivedLine,
+  RiArrowDropDownLine,
+  RiArrowDropUpLine,
+} from 'react-icons/ri';
 import { HiX } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
-import { BsCaretDownFill } from 'react-icons/bs';
+
 import { CgProfile, CgLogOut } from 'react-icons/cg';
 import { Menu } from '../utilities/svg';
 import { shadow, color } from '../utilities';
@@ -38,6 +44,16 @@ export function Header() {
     dispatch(logOut());
 
     history.push('/');
+  };
+
+  const dropDownHandler = (e) => {
+    e.stopPropagation();
+    dispatch(toggleProfileDropdown());
+  };
+  const adminDropdown = (e) => {
+    e.stopPropagation();
+
+    setToggleDropDown(!toggleDropDown);
   };
 
   return (
@@ -88,14 +104,19 @@ export function Header() {
                   </Arrow>
                 </ActionLink>
               )}
-              <Account onClick={() => dispatch(toggleProfileDropdown())}>
-                <span>
-                  <FiUser />
-                  {user && user.name ? user.name : 'Account'}
-                </span>
+              <Account onClick={dropDownHandler}>
+                <Div>
+                  <div>
+                    <span>
+                      <FiUser />
+                      {user && user.name ? user.name : 'Account'}
+                    </span>
+                  </div>
+                  <div>{toggleProfileDropDown ? <StyledArrowUpLine /> : <StyledArrowDropdown />}</div>
+                </Div>
 
-                <StyledArrowDropdown />
                 <Arrow />
+
                 {toggleProfileDropDown && (
                   <ProfileDropdown>
                     {userInfo ? (
@@ -127,16 +148,20 @@ export function Header() {
                 )}
               </Account>
               {user.isAdmin && (
-                <Account onClick={() => setToggleDropDown(!toggleDropDown)}>
-                  <span>
-                    <RiAdminLine />
-                    {user && user.isAdmin && 'Admin'}
-                  </span>
+                <AccountAdmin onClick={adminDropdown}>
+                  <Div>
+                    <div>
+                      <span style={{ width: '15ch' }}>
+                        <RiAdminLine />
+                        {user && user.isAdmin && 'Admin'}
+                      </span>
+                    </div>
+                    <div>{toggleDropDown ? <StyledArrowUpLine /> : <StyledArrowDropdown />}</div>
+                  </Div>
 
-                  <StyledArrowDropdown />
                   <Arrow />
                   {toggleDropDown && (
-                    <ProfileDropdown>
+                    <AdminDropdown>
                       {user && user.isAdmin && (
                         <>
                           <UsersLink to="/admin/userslist">
@@ -160,9 +185,9 @@ export function Header() {
                           </OrdersLink>
                         </>
                       )}
-                    </ProfileDropdown>
+                    </AdminDropdown>
                   )}
-                </Account>
+                </AccountAdmin>
               )}
               {!user.isAdmin && (
                 <ShoppingCart onClick={() => dispatch(toggleCart())}>
@@ -220,7 +245,7 @@ const Wrapper = styled.div`
     box-shadow: ${shadow.lg};
     opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
     transition: all 0.3s ease-in-out;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   @media (max-width: 768px) {
     width: 100vw;
@@ -236,83 +261,6 @@ const Logo = styled.h4`
     font-size: 1.3rem;
   }
 `;
-const ListWrapper = styled.div`
-  font-weight: 600;
-  font-family: 'avenir_regular';
-
-  span {
-    font-size: 1rem;
-  }
-  @media (max-width: 1111px) {
-    ul {
-      padding-left: 0;
-    }
-  }
-
-  ul {
-    display: flex;
-
-    @media (max-width: 1030px) {
-      flex-direction: column;
-      padding-left: 0;
-    }
-  }
-`;
-
-const ProfileDropdown = styled.div`
-  width: 9rem;
-  height: auto;
-  background-color: ${color.white};
-  padding: 1rem;
-  position: fixed;
-  top: 4.5rem;
-  box-shadow: ${shadow.xxl};
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  &:hover {
-    color: ${color.grey_800};
-  }
-
-  button {
-    cursor: pointer;
-    color: ${color.black};
-    background-color: transparent;
-    font-size: 1rem;
-    margin-top: 1rem;
-    padding-left: 0;
-    span {
-      svg {
-        vertical-align: middle;
-      }
-    }
-    &:hover {
-      color: ${color.grey_600};
-    }
-  }
-`;
-
-const StyledArrowDropdown = styled(BsCaretDownFill)`
-  font-size: 1.5rem;
-  padding: 0;
-  margin-left: 1rem;
-  opacity: 1;
-`;
-
-const StyledLinks = css`
-  cursor: pointer;
-  color: ${color.black};
-
-  &:hover {
-    color: ${color.grey_600};
-  }
-`;
-
-const ProfileLink = styled(Link)`
-  ${StyledLinks}
-`;
-
 const ListStyle = css`
   text-decoration: none;
   color: inherit;
@@ -345,6 +293,192 @@ const ListStyle = css`
     width: 100vw;
   }
 `;
+const ListWrapper = styled.div`
+  font-weight: 600;
+  font-family: 'avenir_regular';
+
+  span {
+    font-size: 1rem;
+  }
+  @media (max-width: 1111px) {
+    ul {
+      padding-left: 0;
+    }
+  }
+
+  ul {
+    display: flex;
+
+    @media (max-width: 1030px) {
+      flex-direction: column;
+      padding-left: 0;
+    }
+  }
+`;
+const Arrow = styled.span`
+  opacity: 0;
+  font-size: 1.5rem;
+`;
+const dropDown = css`
+  width: 9rem;
+  height: auto;
+  background-color: ${color.white};
+  padding: 1rem;
+  position: fixed;
+  top: 4.5rem;
+  box-shadow: ${shadow.xxl};
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  @media (max-width: 1030px) {
+    width: 50vw;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 24.5rem;
+    z-index: 9999;
+    box-shadow: none;
+  }
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
+
+  &:hover {
+    color: ${color.grey_800};
+  }
+
+  button {
+    cursor: pointer;
+    color: ${color.black};
+    background-color: transparent;
+    font-size: 1rem;
+    margin-top: 1rem;
+    padding-left: 0;
+    span {
+      svg {
+        vertical-align: middle;
+      }
+    }
+    &:hover {
+      color: ${color.grey_600};
+    }
+  }
+`;
+
+const ProfileDropdown = styled.div`
+  ${dropDown}
+  @media (max-width: 1030px) {
+    width: 50vw;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 3.5rem;
+    z-index: 9999;
+    box-shadow: none;
+  }
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
+`;
+
+const AdminDropdown = styled.div`
+  ${dropDown}
+  @media (max-width: 1030px) {
+    width: 50vw;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 3.5rem;
+    z-index: 9999;
+    box-shadow: none;
+  }
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
+`;
+
+const StyledArrowDropdown = styled(RiArrowDropDownLine)`
+  width: 2rem;
+
+  margin-left: 1rem;
+  opacity: 1;
+`;
+
+const StyledArrowUpLine = styled(RiArrowDropUpLine)`
+  width: 2rem;
+
+  margin-left: 1rem;
+  opacity: 1;
+`;
+
+const account = css`
+  border-right: 0.5px solid ${color.grey_300};
+  cursor: pointer;
+  padding: 0 0.75rem;
+
+  @media (max-width: 1030px) {
+    border: none;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    border: 0.5px solid ${color.grey_300};
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    &:hover {
+      ${Arrow} {
+        opacity: 1;
+        transition: all 0.6s ease-in-out;
+      }
+      ${StyledArrowDropdown} {
+        opacity: 1;
+      }
+    }
+    ${Arrow} {
+      svg {
+        font-size: 2rem;
+      }
+    }
+
+    :last-child {
+      padding-bottom: 1rem;
+    }
+  }
+  :last-child {
+    border: none;
+    padding-right: 1rem;
+  }
+  svg {
+    font-size: 1.6rem;
+
+    padding-right: 0.5rem;
+    font-weight: 600;
+    vertical-align: bottom;
+  }
+`;
+
+const Account = styled.div`
+  ${ListStyle}
+  ${account}
+`;
+
+const AccountAdmin = styled.div`
+  ${ListStyle}
+  ${account}
+`;
+
+const StyledLinks = css`
+  cursor: pointer;
+  color: ${color.black};
+
+  &:hover {
+    color: ${color.grey_600};
+  }
+`;
+
+const ProfileLink = styled(Link)`
+  ${StyledLinks}
+`;
 
 const NavLink = styled(Link)`
   ${ListStyle}
@@ -370,10 +504,7 @@ const NavLink = styled(Link)`
     }
   }
 `;
-const Arrow = styled.span`
-  opacity: 0;
-  font-size: 1.5rem;
-`;
+
 const ShoppingCart = styled.a`
   display: flex;
   align-items: center;
@@ -438,52 +569,6 @@ const Button = styled.button`
   }
 `;
 
-const Account = styled.div`
-  ${ListStyle}
-  border-right:0.5px solid ${color.grey_300};
-  cursor: pointer;
-  padding: 0 0.75rem;
-
-  @media (max-width: 1030px) {
-    border: none;
-    padding-top: 1rem;
-    padding-left: 1rem;
-    border: 0.5px solid ${color.grey_300};
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    &:hover {
-      ${Arrow} {
-        opacity: 1;
-        transition: all 0.6s ease-in-out;
-      }
-      ${StyledArrowDropdown} {
-        opacity: 1;
-      }
-    }
-    ${Arrow} {
-      svg {
-        font-size: 2rem;
-      }
-    }
-
-    :last-child {
-      padding-bottom: 1rem;
-    }
-  }
-  :last-child {
-    border: none;
-    padding-right: 1rem;
-  }
-  svg {
-    font-size: 1.6rem;
-
-    padding-right: 0.5rem;
-    font-weight: 600;
-    vertical-align: bottom;
-  }
-`;
-
 const UsersLink = styled(Link)`
   ${StyledLinks}
 `;
@@ -494,4 +579,10 @@ const ProductsLink = styled(Link)`
 const OrdersLink = styled(Link)`
   ${StyledLinks}
   padding-top:1rem
+`;
+
+const Div = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;

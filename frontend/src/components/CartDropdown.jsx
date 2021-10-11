@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { IoClose } from 'react-icons/io5';
 import { color, shadow } from '../utilities';
 import { toggleCart } from '../actions/cartAction';
 
@@ -12,6 +13,7 @@ export function CartDropdown() {
 
   return (
     <Container>
+      <Close onClick={() => dispatch(toggleCart())} />
       <Content>
         {cartItem.length === 0 ? (
           <EmptyText>Your cart is empty</EmptyText>
@@ -114,4 +116,12 @@ const EmptyText = styled.p`
   padding: 3rem;
   font-weight: bold;
   font-size: 1.2rem;
+`;
+
+const Close = styled(IoClose)`
+  z-index: 9999;
+  position: absolute;
+  font-size: 1.5rem;
+  right: 1rem;
+  cursor: pointer;
 `;
