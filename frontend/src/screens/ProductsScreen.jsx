@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +24,7 @@ export function ProductsScreen() {
   const [searchTerm, setSearchTerm] = useState();
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [sortBy, setSortBy] = useState('highest');
-
+  const ref = useRef();
   useEffect(() => {
     dispatch(listProduct());
     dispatch({ type: ORDER_DETAILS_RESET });
@@ -136,7 +136,7 @@ export function ProductsScreen() {
       ) : (
         <Container>
           <Div>
-            <CategorieWrapper>
+            <CategorieWrapper ref={ref}>
               {subCategories.map((el, index) => (
                 <Button key={index} type="button" onClick={(e) => setCategorieText(e.target.textContent.toLowerCase())}>
                   {el}
@@ -206,6 +206,10 @@ const ContentWrapper = styled.div`
 
   display: grid;
   grid-template-columns: 24% 1fr;
+  @media (max-width: 1030px) {
+    grid-template-columns: 1fr;
+    padding-top: 2rem;
+  }
 `;
 const FilterWrapper = styled.div`
   padding-left: 4rem;
@@ -240,6 +244,12 @@ const HeaderDetails = styled.div`
   margin-bottom: 3rem;
   hr {
     width: 56%;
+    @media (max-width: 1030px) {
+      width: 30%;
+    }
+  }
+  @media (max-width: 1030px) {
+    margin-top: 2rem;
   }
 `;
 
@@ -320,6 +330,11 @@ const CategorieWrapper = styled.div`
   white-space: nowrap;
   width: 100vw;
   border-bottom: 1px solid ${color.warm_grey_100};
+  @media (max-width: 1030px) {
+    padding-right: 2rem;
+    padding-left: 2rem;
+    justify-content: flex-start;
+  }
 
   &::-webkit-scrollbar {
     width: 0;
@@ -349,6 +364,7 @@ const Div = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+
   &::after {
     content: '';
     position: absolute;
@@ -403,6 +419,9 @@ const Select = styled.select`
   border-radius: ${rounded.md};
   padding: 0.5rem;
   position: relative;
+  @media (max-width: 1030px) {
+    margin-right: 1rem;
+  }
 
   &:focus {
     outline: none;
