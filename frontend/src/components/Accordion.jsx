@@ -94,17 +94,15 @@ export function Accordion() {
                 >
                   <ColorWrapper>
                     {el.iterable &&
-                      el.iterable.map((item, i) => {
-                        if (item && item.includes('#')) {
-                          return (
+                      el.iterable.map((item, i) =>
+                        item && item.includes('#') ? (
+                          <Div>
                             <Circle key={i} colored={item} onClick={() => colorsHandler(item)}>
                               {item === selectedColor && pickedColor.length > 0 ? <FiCheck /> : ''}
                             </Circle>
-                          );
-                        }
-
-                        return (
-                          <Wrapper key={i}>
+                          </Div>
+                        ) : (
+                          <Wrapper key={i} style={{ display: 'flex' }}>
                             <Price>
                               <input
                                 type="checkbox"
@@ -120,8 +118,8 @@ export function Accordion() {
                               </PriceLabel>
                             </Price>
                           </Wrapper>
-                        );
-                      })}
+                        )
+                      )}
                   </ColorWrapper>
                 </Details>
               )}
@@ -142,9 +140,12 @@ export function Accordion() {
   );
 }
 
+const Wrapper = styled.div``;
+
 const SingleFilter = styled.article`
   cursor: pointer;
 `;
+const Div = styled.div``;
 
 const Title = styled.div`
   display: flex;
@@ -190,6 +191,8 @@ const Shipping = styled.div`
 
 const Price = styled.div`
   padding-top: 1rem;
+  width: 20ch;
+
   /* display: inline-block; */
   /* margin-right: 1rem; */
 `;
@@ -198,9 +201,13 @@ const ColorWrapper = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-`;
 
-const Wrapper = styled.div``;
+  @media (max-width: 1030px) {
+    grid-template-columns: repeat(auto-fit, 7rem);
+    justify-items: start;
+    grid-gap: 1rem;
+  }
+`;
 
 const PriceLabel = styled.label`
   font-size: 0.9rem;
