@@ -71,7 +71,7 @@ export function UsersListScreen() {
                   </Td>
                   <Td>{usr.isAdmin ? <Check /> : <Times />}</Td>
                   <Td>
-                    <span>
+                    <IconsWrapper>
                       <Link to={`/admin/user/${usr._id}`}>
                         {' '}
                         <Edit />
@@ -79,7 +79,7 @@ export function UsersListScreen() {
                       <Button type="button" onClick={() => deleteHandler(usr._id)}>
                         <Trash />
                       </Button>
-                    </span>
+                    </IconsWrapper>
                   </Td>
                   <Modal text="Do you want to delete this user ?" />
                 </Tr>
@@ -99,6 +99,9 @@ const Heading = styled.h2`
 const TableWrapper = styled.div`
   padding-top: 1rem;
   padding-left: 2rem;
+  @media (max-width: 868px) {
+    overflow-x: scroll;
+  }
 `;
 
 const Table = styled.table`
@@ -165,4 +168,8 @@ const Edit = styled(FiEdit)`
 
 const Button = styled.button`
   background: transparent;
+`;
+
+const IconsWrapper = styled.div`
+  display: flex;
 `;

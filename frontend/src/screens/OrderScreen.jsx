@@ -16,10 +16,10 @@ import { formatter } from '../helper/CurrencyFormat';
 import { proceedPayment, updatePaypalPayment } from '../actions/paymentAction';
 
 export function OrderScreen() {
+  const stripe = useStripe();
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const stripe = useStripe();
   const userDetails = useSelector((state) => state.userDetails);
   const payment = useSelector((state) => state.payment);
   const [sdkReady, setSdkReady] = useState(false);
@@ -79,7 +79,7 @@ export function OrderScreen() {
     dispatch(proceedPayment(item));
   };
   useEffect(() => {
-    if (payment.paymentStatus) {
+    if (Object.entries(payment.paymentStatus).length > 0) {
       const redirect = async () => {
         const { error } = await stripe.redirectToCheckout({ sessionId: payment.paymentStatus.sessionId });
         if (error) {
@@ -88,7 +88,7 @@ export function OrderScreen() {
       };
       redirect();
     }
-  }, [payment]);
+  }, [payment, stripe]);
 
   // Paypal
 
@@ -196,7 +196,7 @@ export function OrderScreen() {
                     <p>{formatter.format(total())}</p>
                   </Total>
                   {details.paymentMethod !== 'Paypal' ? (
-                    <BtnWrapper>
+                    <BtnWrapper isPaid={details.isPaid}>
                       <Btn type="submit">
                         <span>
                           <Card />
@@ -228,11 +228,15 @@ const MainWrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 60% 30%;
+  @media (max-width: 1030px) {
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    place-items: center;
+  }
 `;
 
 const Container = styled.div`
   width: 90%;
-
   border: 1px solid ${color.grey_400};
   border-radius: ${rounded.md};
   box-shadow: ${shadow.md};
@@ -253,7 +257,6 @@ const Heading = styled.h5`
 `;
 const Line = styled.div`
   width: 100%;
-
   border-top: 2px solid ${color.grey_300};
 `;
 
@@ -363,7 +366,7 @@ const Arrow = styled(BiRightArrowAlt)`
 const BtnWrapper = styled.div`
   margin-top: 2.5rem;
   width: 100%;
-  display: flex;
+  display: ${({ isPaid }) => (isPaid ? 'none' : 'flex')};
   justify-content: center;
   align-items: center;
 

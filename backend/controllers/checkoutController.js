@@ -10,9 +10,8 @@ exports.createCheckoutSession = asyncHandler(async (req, res) => {
   if (!line_items || !customer_email) {
     res.status(404).json({ error: 'Missing required session parameters' });
   }
-  let session;
 
-  session = await stripeAPI.checkout.sessions.create({
+  const session = await stripeAPI.checkout.sessions.create({
     payment_method_types: ['card'],
     mode: 'payment',
     automatic_tax: {

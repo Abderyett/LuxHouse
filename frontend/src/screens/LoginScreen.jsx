@@ -219,6 +219,9 @@ const RegisterContainer = styled.div`
   h2 {
     font-family: 'avenir_bold';
     margin-bottom: 1rem;
+    @media (max-width: 1030px) {
+      margin-top: 2rem;
+    }
   }
   p {
     width: 40ch;
@@ -233,6 +236,9 @@ const RgisterWrapper = styled.div`
 const Heading = styled.h3`
   font-family: 'avenir_bold';
   line-height: 1rem;
+  @media (max-width: 768px) {
+    margin-top: 2rem;
+  }
 `;
 const TextHeading = styled.p`
   color: ${color.grey_700};
@@ -287,6 +293,11 @@ const SubmitBtn = styled.button`
   font-size: 1.2rem;
   font-family: 'avenir_semi';
   cursor: pointer;
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 999;
+  }
   a {
     text-decoration: none;
     color: ${color.black};

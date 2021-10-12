@@ -93,7 +93,7 @@ export function ProductsListScreen() {
                     <Td>{product.subcategory}</Td>
                     <Td>{formatter.format(product.price)}</Td>
                     <Td>
-                      <span>
+                      <IconWrapper>
                         <Link to={`/admin/products/${product._id}/edit`}>
                           {' '}
                           <Edit />
@@ -101,7 +101,7 @@ export function ProductsListScreen() {
                         <TrashButton type="button" onClick={() => deleteHandler(product._id)}>
                           <Trash />
                         </TrashButton>
-                      </span>
+                      </IconWrapper>
                     </Td>
                     <Modal text="Do you want to delete this product ?" products="deleteProduct" />
                   </Tr>
@@ -124,6 +124,9 @@ const TableWrapper = styled.div`
   padding-left: 2rem;
   position: relative;
   margin-top: 4rem;
+  @media (max-width: 1030px) {
+    overflow-x: scroll;
+  }
 `;
 
 const Table = styled.table`
@@ -203,4 +206,8 @@ const BtnWrapper = styled.button`
   position: absolute;
   right: 10%;
   background: transparent;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
 `;

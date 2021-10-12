@@ -200,11 +200,20 @@ const Container = styled.div`
   grid-template-columns: 1fr 3fr;
   padding: 2rem;
   margin-top: 4rem;
+  @media (max-width: 1030px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 4rem;
+    overflow-x: scroll;
+  }
 `;
 const UserProfile = styled.section``;
 
 const OrderSection = styled.section`
   padding-left: 3rem;
+  @media (max-width: 1030px) {
+    padding-left: 0.5rem;
+  }
 `;
 
 const Heading = styled.h3`

@@ -278,6 +278,7 @@ const ContactImg = styled.div`
     background-size: contain;
     background-repeat: no-repeat;
     height: 50vh;
+    width: 100%;
     top: 0;
   }
 

@@ -9,7 +9,7 @@ import { FcOk } from 'react-icons/fc';
 import moment from 'moment';
 
 import { getAllOrders, getOrderDetails } from '../actions/orderAction';
-import { Loader, Header } from '../components';
+import { Loader, Header, Message } from '../components';
 import { color, shadow } from '../utilities';
 
 import { formatter } from '../helper/CurrencyFormat';
@@ -38,7 +38,7 @@ export function OrdersScreen() {
   return (
     <>
       <Header />
-
+      {error && <Message bg="danger">{error}</Message>}
       <OrderSection>
         <Heading>My Orders</Heading>
         {loading ? (
@@ -94,6 +94,9 @@ const Heading = styled.h3`
 
 const TableWrapper = styled.div`
   padding-top: 1rem;
+  @media (max-width: 1030px) {
+    overflow-x: scroll;
+  }
 `;
 
 const OrderSection = styled.section`
