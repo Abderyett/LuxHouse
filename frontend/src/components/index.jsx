@@ -13,3 +13,4 @@ export * from './PaypalButton';
 export * from './Modal';
 export * from './DropDownInput';
 export * from './LoaderSemiCircle';
+export * from './ScrollTop';

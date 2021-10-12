@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearFilters, listProduct } from '../actions/productActions';
 import { addItem } from '../actions/cartAction';
-import { Header, Loader, Message, Accordion } from '../components';
+import { Header, Loader, Message, Accordion, ScrollTop } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { BlueCircle, CheckCircle } from '../utilities/svg';
 import { ORDER_DETAILS_RESET, ADDED_ORDER_RESET } from '../actions/types';
@@ -127,6 +127,7 @@ export function ProductsScreen() {
   return (
     <>
       <Header productList />
+      <ScrollTop />
       {loading ? (
         <Loader />
       ) : error ? (
