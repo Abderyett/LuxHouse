@@ -254,7 +254,8 @@ const DescriptionText = styled.p`
 
 const ColorWrapper = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   color: ${color.black};
   font-size: 1rem;
   @media (max-width: 600px) {

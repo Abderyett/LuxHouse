@@ -268,6 +268,7 @@ const ListStyle = css`
   font-size: 1rem;
   text-transform: capitalize;
   transition: all 0.6s ease-in-out;
+  -webkit-transition: all 0.6s ease-in-out;
   color: ${color.black};
   font-weight: 600;
   display: flex;
@@ -429,6 +430,7 @@ const account = css`
       ${Arrow} {
         opacity: 1;
         transition: all 0.6s ease-in-out;
+        -webkit-transition: all 0.6s ease-in-out;
       }
       ${StyledArrowDropdown} {
         opacity: 1;
@@ -499,6 +501,7 @@ const NavLink = styled(Link)`
       span {
         opacity: 1;
         transition: all 0.6s ease-in-out;
+        -webkit-transition: all 0.6s ease-in-out;
       }
       vertical-align: middle;
     }
@@ -531,6 +534,7 @@ const ActionLink = styled(Link)`
       ${Arrow} {
         opacity: 1;
         transition: all 0.6s ease-in-out;
+        -webkit-transition: all 0.6s ease-in-out;
       }
     }
     ${Arrow} {
