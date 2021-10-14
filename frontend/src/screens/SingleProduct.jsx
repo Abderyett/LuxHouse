@@ -93,7 +93,7 @@ export function SingleProduct() {
                       type="button"
                       onClick={() => dispatch(addToWichlist(id))}
                     >
-                      <Heart />
+                      <Heart id={id} />
                     </button>
 
                     {product && product.shipping && (

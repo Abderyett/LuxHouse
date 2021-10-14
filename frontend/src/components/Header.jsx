@@ -16,6 +16,7 @@ import { HiX } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { CgProfile, CgLogOut } from 'react-icons/cg';
+import { BsHeart, BsFillHeartFill } from 'react-icons/bs';
 import { Menu } from '../utilities/svg';
 import { shadow, color } from '../utilities';
 import { CartIcon } from './CartIcon';
@@ -32,7 +33,8 @@ export function Header() {
   const userDetails = useSelector((state) => state.userDetails);
   const { showDropdown, toggleProfileDropDown } = toggleDropdown;
   const [toggleDropDown, setToggleDropDown] = useState(false);
-
+  const wichlist = useSelector((state) => state.wichlist);
+  const { items } = wichlist;
   const { userInfo } = userLogin;
   const { user } = userDetails;
 
@@ -95,7 +97,7 @@ export function Header() {
               {!user.isAdmin && (
                 <ActionLink to="/wichlist">
                   <span>
-                    <FiHeart />
+                    {items.length > 0 ? <FilledHearth /> : <BsHeart />}
                     My Wichlist
                   </span>
 
@@ -589,4 +591,8 @@ const Div = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+`;
+
+const FilledHearth = styled(BsFillHeartFill)`
+  color: ${color.red_vivid_500};
 `;
