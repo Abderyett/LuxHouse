@@ -12,6 +12,7 @@ export const addToWichlist = (id) => async (dispatch, getState) => {
       image: data.image,
       price: data.price,
       subcategory: data.subcategory,
+      description: data.description,
     },
   });
 

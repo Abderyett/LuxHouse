@@ -23,6 +23,7 @@ import {
   ProductEditScreen,
   OrdersScreen,
   OrderDetailsAdminScreen,
+  WichListScreen,
 } from './screens';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/contact" exact component={ContactScreen} />
         <Route path="/products" exact component={ProductsScreen} />
         <Route path="/products/:id" exact component={SingleProduct} />
+        <Route path="/wichlist" exact component={WichListScreen} />
         <Route path="/cart" exact component={CartScreen} />
         <Route path="/profile" exact component={ProfileScreen} />
         <Route path="/checkout" exact component={CheckoutScreen} />

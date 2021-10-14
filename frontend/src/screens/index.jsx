@@ -19,3 +19,4 @@ export * from './ProductsListScreen';
 export * from './ProductEditScreen';
 export * from './OrdersScreen';
 export * from './OrderDetailsAdminScreen';
+export * from './WichListScreen';
