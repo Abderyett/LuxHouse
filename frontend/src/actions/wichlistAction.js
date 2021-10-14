@@ -24,7 +24,7 @@ export const removeFromWichlist = (id) => (dispatch, getState) => {
     type: REMOVE_FROM_WICHLIST,
     payload: id,
   });
-  localStorage.setItem('wichlist', JSON.stringify(getState().cart.cartItem));
+  localStorage.setItem('wichlist', JSON.stringify(getState().wichlist.items));
 };
 export const emptyWichList = () => (dispatch) => {
   dispatch({

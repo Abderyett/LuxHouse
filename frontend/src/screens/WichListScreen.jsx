@@ -1,23 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FaTrashAlt } from 'react-icons/fa';
 import { color, shadow, rounded } from '../utilities';
 import { Header } from '../components';
 import { formatter } from '../helper/CurrencyFormat';
+import { removeFromWichlist, emptyWichList } from '../actions/wichlistAction';
 
 export function WichListScreen() {
   const wichlist = useSelector((state) => state.wichlist);
+  const dispatch = useDispatch();
   const { items } = wichlist;
   return (
     <>
       <Header />
       <Container>
         <Heading>My Wichlist</Heading>
+
+        {items.length > 0 && (
+          <ClearBtn type="button" onClick={() => dispatch(emptyWichList())}>
+            Clear All
+          </ClearBtn>
+        )}
         <WrapperList>
           {items && items.length > 0 ? (
             items.map((el) => (
-              <Card>
+              <Card key={el.id}>
                 <ImgWrapper>
                   <Img src={el.image[0].url} alt={el.name} />
                   <Name>
@@ -28,7 +36,7 @@ export function WichListScreen() {
                   </Name>
                   <Description>{`${el.description.substring(0, 150)} ...`}</Description>
                 </ImgWrapper>
-                <RemoveBtn type="button">
+                <RemoveBtn type="button" onClick={() => dispatch(removeFromWichlist(el.id))}>
                   <FaTrashAlt />
                 </RemoveBtn>
               </Card>
@@ -46,6 +54,7 @@ const Container = styled.div`
   padding-top: 2rem;
   padding-left: 2rem;
   margin-bottom: 5rem;
+  position: relative;
 `;
 
 const Heading = styled.h3`
@@ -107,4 +116,19 @@ const RemoveBtn = styled.button`
   top: 3rem;
   left: 90%;
   cursor: pointer;
+`;
+
+const ClearBtn = styled.button`
+  background-color: ${color.red_vivid_500};
+  color: ${color.white};
+  padding: 0.5rem 1rem;
+  border-radius: ${rounded.sm};
+  margin-bottom: 2rem;
+  position: absolute;
+  top: 4rem;
+  left: 60%;
+  cursor: pointer;
+  &:hover {
+    background-color: ${color.red_vivid_400};
+  }
 `;
