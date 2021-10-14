@@ -47,13 +47,14 @@ const reducers = combineReducers(
 
 
 const cartItemsFromStorage = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
+const wichlistFromStorage = localStorage.getItem('wichlist') ? JSON.parse(localStorage.getItem('wichlist')) : []
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
 
 
 // ? INITIAL STATE ======================================================
 
-const initialState = { cart: { cartItem: cartItemsFromStorage }, userLogin: { userInfo: userInfoFromStorage } };
+const initialState = { cart: { cartItem: cartItemsFromStorage }, userLogin: { userInfo: userInfoFromStorage }, wichlist: { items: wichlistFromStorage } };
 
 const middleware = [thunk]
 
