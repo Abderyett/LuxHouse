@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
+
 import { showModalProduct } from '../actions/userActions';
 import { Loader, Message, Header, Modal } from '../components';
 import { color, shadow, rounded } from '../utilities';

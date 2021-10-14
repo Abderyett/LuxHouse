@@ -3,7 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { BsFillHeartFill, BsHeart, BsHeartFill } from 'react-icons/bs';
 import { clearFilters, listProduct } from '../actions/productActions';
+import { addToWichlist } from '../actions/wichlistAction';
 import { addItem } from '../actions/cartAction';
 import { Header, Loader, Message, Accordion, ScrollTop } from '../components';
 import { color, shadow, rounded } from '../utilities';
@@ -16,7 +18,9 @@ export function ProductsScreen() {
   const cartItem = useSelector((state) => state.cart.cartItem);
   const filterProduct = useSelector((state) => state.filterProduct);
   const { color: pickedColor, price: selectedPrice, freeShipping } = filterProduct;
+  const wichlist = useSelector((state) => state.wichlist);
   const { loading, error, products } = porductList;
+  const { items } = wichlist;
 
   const [subCategories, setsubCategories] = useState([]);
   const [filtredProducts, setfiltredProducts] = useState([]);
@@ -24,6 +28,7 @@ export function ProductsScreen() {
   const [searchTerm, setSearchTerm] = useState();
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [sortBy, setSortBy] = useState('highest');
+  const [Hearts, setHearts] = useState(false);
   const ref = useRef();
   useEffect(() => {
     dispatch(listProduct());
@@ -124,6 +129,10 @@ export function ProductsScreen() {
     dispatch(listProduct());
   };
 
+  const wichlistHandler = (id) => {
+    dispatch(addToWichlist(id));
+  };
+
   return (
     <>
       <Header productList />
@@ -174,6 +183,9 @@ export function ProductsScreen() {
               <GridContainer>
                 {searchedProducts.map((el) => (
                   <Card key={el._id}>
+                    <HeartBtn type="button" onClick={() => wichlistHandler(el._id)}>
+                      {wichlist.items.find((x) => x.id === el._id) ? <HeartFill /> : <Heart />}
+                    </HeartBtn>
                     <Link to={`/products/${el._id}`}>
                       <StyledImg src={el.image && el.image[0].url} alt={el.subcategory} />
                       <Title>
@@ -252,16 +264,6 @@ const HeaderDetails = styled.div`
   }
 `;
 
-const Card = styled.div`
-  width: 20rem;
-  height: 24rem;
-  box-shadow: ${shadow.xxl};
-  background-color: ${color.white};
-  padding-left: 2rem;
-  padding-right: 2rem;
-  cursor: pointer;
-  position: relative;
-`;
 const StyledImg = styled.img`
   width: 15rem;
   position: relative;
@@ -439,3 +441,37 @@ const ResultsNumber = styled.span`
   margin-left: 3rem;
   margin-right: 1rem;
 `;
+
+const HeartFill = styled(BsFillHeartFill)`
+  color: ${color.red_vivid_500};
+`;
+const HeartBtn = styled.button`
+  background: transparent;
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  z-index: 99999;
+  cursor: pointer;
+  opacity: 0;
+  svg {
+    font-size: 1.5rem;
+  }
+`;
+
+const Card = styled.div`
+  width: 20rem;
+  height: 24rem;
+  box-shadow: ${shadow.xxl};
+  background-color: ${color.white};
+  padding-left: 2rem;
+  padding-right: 2rem;
+  cursor: pointer;
+  position: relative;
+  &:hover {
+    ${HeartBtn} {
+      opacity: 1;
+    }
+  }
+`;
+
+const Heart = styled(BsHeart)``;
