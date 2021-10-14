@@ -18,6 +18,7 @@ import 'react-medium-image-zoom/dist/styles.css';
 import { formatter } from '../helper/CurrencyFormat';
 import { detailProduct } from '../actions/productActions';
 import { incrementCartItem, decrementCartItem } from '../actions/cartAction';
+import { addToWichlist } from '../actions/wichlistAction';
 
 export function SingleProduct() {
   const { id } = useParams();
@@ -87,7 +88,14 @@ export function SingleProduct() {
                   {/* !Cart buttons */}
 
                   <CartBtn>
-                    <Heart />
+                    <button
+                      style={{ background: 'transparent' }}
+                      type="button"
+                      onClick={() => dispatch(addToWichlist(id))}
+                    >
+                      <Heart />
+                    </button>
+
                     {product && product.shipping && (
                       <Button>
                         {' '}

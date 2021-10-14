@@ -7,6 +7,7 @@ import { loginReducer, registerReducer, userDetailsReducer, updateUserProfileRed
 import { cartReducer } from './reducers/cartReducer';
 import { addedOrderReducer, allOrdersReducer, deliveryUpdateReducer, orderDetailsReducer, ordersDetailsReducer } from './reducers/orderReducer';
 import { paymentReducer, updatePaypalPaymentReducer, updateStripePaymentReducer } from './reducers/paymentReducer';
+import { wichlistReducer } from './reducers/wichlistReducer';
 
 
 // ? Combine Reducer ======================================================
@@ -37,7 +38,8 @@ const reducers = combineReducers(
     payment: paymentReducer,
     updateStripePayment: updateStripePaymentReducer,
     updatePaypalPayment: updatePaypalPaymentReducer,
-    selectedId: selectedIdReducer
+    selectedId: selectedIdReducer,
+    wichlist: wichlistReducer
   });
 
 
