@@ -69,6 +69,10 @@ const WrapperList = styled.div`
   width: 70%;
 
   padding: 2rem;
+  @media (max-width: 1030px) {
+    width: 95%;
+    padding: 1rem;
+  }
 `;
 
 const Card = styled.div`
@@ -83,6 +87,9 @@ const Img = styled.img`
   width: 10rem;
   border: 1px solid ${color.grey_300};
   margin-bottom: 1rem;
+  @media (max-width: 1030px) {
+    width: 7rem;
+  }
 `;
 const Name = styled.div`
   font-weight: bold;
@@ -104,6 +111,10 @@ const Description = styled.div`
   position: absolute;
   top: 4rem;
   left: 12rem;
+  @media (max-width: 1030px) {
+    top: 2rem;
+    left: 9rem;
+  }
 `;
 const Text = styled.p``;
 
@@ -116,6 +127,10 @@ const RemoveBtn = styled.button`
   top: 3rem;
   left: 90%;
   cursor: pointer;
+  @media (max-width: 1030px) {
+    top: 1.5rem;
+    right: 0;
+  }
 `;
 
 const ClearBtn = styled.button`
@@ -128,6 +143,9 @@ const ClearBtn = styled.button`
   top: 4rem;
   left: 60%;
   cursor: pointer;
+  @media (max-width: 1030px) {
+    left: 75%;
+  }
   &:hover {
     background-color: ${color.red_vivid_400};
   }
