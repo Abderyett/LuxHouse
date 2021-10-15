@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
-import { Header } from '../components';
+import { Header, Meta } from '../components';
 import shelf from '../utilities/svg/shelf.svg';
 import { color, shadow, rounded } from '../utilities';
 import { decrementCartItem, incrementCartItem, removeItem } from '../actions/cartAction';
@@ -18,6 +18,7 @@ export function CartScreen() {
 
   return (
     <>
+      <Meta title="Cart" />
       <Header />
       <IMG src={shelf} alt="pendent lamp with shelf" />
       <Container>

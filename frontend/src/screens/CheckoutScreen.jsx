@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import axios from 'axios';
 import { FaSort } from 'react-icons/fa';
-import { Header } from '../components';
+import { Header, Meta } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { addedShippingAdress } from '../actions/cartAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
@@ -164,6 +164,7 @@ export function CheckoutScreen() {
 
   return (
     <>
+      <Meta title="Checkout" />
       <Header />
       <IMG src={sofa} alt="sofa" />
       <Pendant src={pendant} alt="Pendant" />

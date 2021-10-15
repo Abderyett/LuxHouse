@@ -15,7 +15,7 @@ import { FaDollarSign, FaSort } from 'react-icons/fa';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BsTrash, BsChevronRight } from 'react-icons/bs';
 import axios from 'axios';
-import { Header, Loader, Message, Error, DropDownInput, LoaderSemiCircle } from '../components';
+import { Header, Loader, Message, Error, DropDownInput, LoaderSemiCircle, Meta } from '../components';
 import { updateProductAC, detailProduct } from '../actions/productActions';
 import { color, rounded, shadow } from '../utilities';
 import { UPDATE_PRODUCT_RESET, USER_UPDATE_RESET } from '../actions/types';
@@ -389,6 +389,7 @@ export function ProductEditScreen() {
       ) : (
         <>
           <Header />
+          <Meta title="Edit Product" />
           {loadingProduct && <Loader />}
           {errorProduct && <Message bg="danger">{errorProduct}</Message>}
           <Container>

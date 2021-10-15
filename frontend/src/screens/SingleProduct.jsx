@@ -12,7 +12,7 @@ import { BsXCircle } from 'react-icons/bs';
 import ImageZoom from 'react-medium-image-zoom';
 import { useSelector, useDispatch } from 'react-redux';
 import { color, shadow, rounded } from '../utilities';
-import { Header, Loader, Message } from '../components';
+import { Header, Loader, Message, Meta } from '../components';
 import { Heart, Equipement, Dimension } from '../utilities/svg';
 import 'react-medium-image-zoom/dist/styles.css';
 import { formatter } from '../helper/CurrencyFormat';
@@ -52,6 +52,7 @@ export function SingleProduct() {
         </Message>
       ) : (
         <Container>
+          <Meta title={product.name} />
           <FirstSection>
             <PhotosSection>
               <ImageZoom>

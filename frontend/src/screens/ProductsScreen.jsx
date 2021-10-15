@@ -7,7 +7,7 @@ import { BsFillHeartFill, BsHeart, BsHeartFill } from 'react-icons/bs';
 import { clearFilters, listProduct } from '../actions/productActions';
 import { addToWichlist } from '../actions/wichlistAction';
 import { addItem } from '../actions/cartAction';
-import { Header, Loader, Message, Accordion, ScrollTop } from '../components';
+import { Header, Loader, Message, Accordion, ScrollTop, Meta } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { BlueCircle, CheckCircle } from '../utilities/svg';
 import { ORDER_DETAILS_RESET, ADDED_ORDER_RESET } from '../actions/types';
@@ -136,6 +136,7 @@ export function ProductsScreen() {
   return (
     <>
       <Header productList />
+      <Meta title="Products | Experience our selection of designer furniture" />
       <ScrollTop />
       {loading ? (
         <Loader />

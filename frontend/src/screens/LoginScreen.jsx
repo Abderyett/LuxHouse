@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import styled, { css } from 'styled-components';
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { Error, Header, Message, Loader } from '../components';
+import { Error, Header, Message, Loader, Meta } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import pendantLamp from '../utilities/svg/pendant_lamp.svg';
 import sofa from '../utilities/svg/sofa.svg';
@@ -37,6 +37,7 @@ export function LoginScreen() {
   }, [error]);
   return (
     <>
+      <Meta title="Login | Register" />
       <Header />
       <Container>
         <RegisterContainer>

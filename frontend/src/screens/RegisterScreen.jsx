@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Error, Header, Footer, Message, Loader } from '../components';
+import { Error, Header, Footer, Message, Loader, Meta } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import registerSofa from '../utilities/svg/RegisterSofa.svg';
 import { registringUser } from '../actions/userActions';
@@ -33,6 +33,7 @@ export function RegisterScreen() {
   return (
     <>
       <Header />
+      <Meta title="Register" />
       <Container>
         <FromContainer>
           <Wrap>

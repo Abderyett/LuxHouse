@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
-import { Header, Loader, Message, Error } from '../components';
+import { Header, Loader, Message, Error, Meta } from '../components';
 import { getUser, updateUserAC } from '../actions/userActions';
 import { color, rounded, shadow } from '../utilities';
 import { USER_UPDATE_RESET } from '../actions/types';
@@ -42,6 +42,7 @@ export function UserScreen() {
         <Message bg="danger">{error}</Message>
       ) : (
         <>
+          <Meta title="Edit user" />
           <Header />
           <Container>
             <UserProfile>

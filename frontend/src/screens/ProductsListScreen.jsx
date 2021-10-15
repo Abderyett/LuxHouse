@@ -7,7 +7,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 
 import { showModalProduct } from '../actions/userActions';
-import { Loader, Message, Header, Modal } from '../components';
+import { Loader, Message, Header, Modal, Meta } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { listProduct, createProductAC } from '../actions/productActions';
 import { formatter } from '../helper/CurrencyFormat';
@@ -51,6 +51,7 @@ export function ProductsListScreen() {
   return (
     <>
       <Header />
+      <Meta title="Products List" />
 
       <Heading>Products</Heading>
       {loadingDelete && <Loader />}

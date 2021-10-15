@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { Header } from '../components';
+import { Header, Meta } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { addOrder, getOrderDetails } from '../actions/orderAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
@@ -76,6 +76,7 @@ export function PlaceOrderScreen() {
   return (
     <>
       <Header />
+      <Meta title="Place Order" />
       <IMG src={sofa} alt="sofa" />
 
       <ProgressWrapper>

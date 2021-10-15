@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Header } from '../components';
+import { Header, Meta } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { addedPaymentMethod } from '../actions/cartAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
@@ -42,6 +42,7 @@ export function PaymentScreen() {
   return (
     <>
       <Header />
+      <Meta title="Payment Method" />
       <IMG src={sofa} alt="sofa" />
       <Pendant src={pendant} alt="Pendant" />
       <ProgressWrapper>

@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { FaRegTimesCircle, FaTrashAlt } from 'react-icons/fa';
 import { FcOk } from 'react-icons/fc';
 import { FiEdit } from 'react-icons/fi';
 import { getUsersList, showModal } from '../actions/userActions';
-import { Loader, Message, Header, Modal } from '../components';
+import { Loader, Message, Header, Modal, Meta } from '../components';
 import { color, shadow } from '../utilities';
 import { GET_ID } from '../actions/types';
 
@@ -39,6 +39,7 @@ export function UsersListScreen() {
 
   return (
     <>
+      <Meta title="Users List" />
       <Header />
 
       <Heading>Users</Heading>

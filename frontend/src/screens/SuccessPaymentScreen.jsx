@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { FcOk } from 'react-icons/fc';
 import { emptyCart } from '../actions/cartAction';
 import { updateStripePayment } from '../actions/paymentAction';
+import { Meta } from '../components';
 import { color } from '../utilities';
 import { ORDER_DETAILS_RESET, PAYMENT_PAYPAL_RESET } from '../actions/types';
 
@@ -27,19 +28,22 @@ export function SuccessPaymentScreen() {
     }
   }, [orderDetails.success, dispatch]);
   return (
-    <Container>
-      <h4>
-        {' '}
-        <Check />
-        &nbsp; Thank you for your order
-      </h4>
-      <p>We are currently proccessing your order and will sent you confirmation email shortly</p>
-      <BtnWrapper>
-        <Btn type="button" onClick={() => history.push('/products')}>
-          Continue Shopping
-        </Btn>
-      </BtnWrapper>
-    </Container>
+    <>
+      <Meta title="Payment Successful" />
+      <Container>
+        <h4>
+          {' '}
+          <Check />
+          &nbsp; Thank you for your order
+        </h4>
+        <p>We are currently proccessing your order and will sent you confirmation email shortly</p>
+        <BtnWrapper>
+          <Btn type="button" onClick={() => history.push('/products')}>
+            Continue Shopping
+          </Btn>
+        </BtnWrapper>
+      </Container>
+    </>
   );
 }
 

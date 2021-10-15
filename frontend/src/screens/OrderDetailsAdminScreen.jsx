@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams, Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { BiRightArrowAlt } from 'react-icons/bi';
-import { Header, Message, Loader, LoaderSemiCircle } from '../components';
+import { Header, Message, Loader, LoaderSemiCircle, Meta } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { getOrderDetails, updateDeliveryStatus } from '../actions/orderAction';
 import { formatter } from '../helper/CurrencyFormat';
@@ -59,6 +59,7 @@ export function OrderDetailsAdminScreen() {
       ) : (
         <>
           <Header />
+          <Meta title="Order Details" />
 
           <Back to="/admin/orders"> &larr; Go Back</Back>
           <MainWrapper>

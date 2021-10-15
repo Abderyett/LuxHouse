@@ -9,7 +9,7 @@ import { FcOk } from 'react-icons/fc';
 import moment from 'moment';
 
 import { getAllOrders, getOrderDetails } from '../actions/orderAction';
-import { Loader, Header, Message } from '../components';
+import { Loader, Header, Message, Meta } from '../components';
 import { color, shadow } from '../utilities';
 
 import { formatter } from '../helper/CurrencyFormat';
@@ -38,6 +38,7 @@ export function OrdersScreen() {
   return (
     <>
       <Header />
+      <Meta title="Orders List" />
       {error && <Message bg="danger">{error}</Message>}
       <OrderSection>
         <Heading>My Orders</Heading>

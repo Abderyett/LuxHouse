@@ -7,7 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { FaRegTimesCircle } from 'react-icons/fa';
 import { FcOk } from 'react-icons/fc';
 import moment from 'moment';
-import { Header, Error, Message, Loader } from '../components';
+import { Header, Error, Message, Loader, Meta } from '../components';
 import { color, rounded, shadow } from '../utilities';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import { getOrdersDetails, getOrderDetails } from '../actions/orderAction';
@@ -44,6 +44,7 @@ export function ProfileScreen() {
   return (
     <>
       <Header />
+      <Meta title="Profile" />
       {error ? (
         <Message mt="4rem" bg="danger">
           {error}

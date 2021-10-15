@@ -9,7 +9,7 @@ import { BiRightArrowAlt } from 'react-icons/bi';
 import { BsCreditCard } from 'react-icons/bs';
 import { useStripe } from '@stripe/react-stripe-js';
 import { PayPalButton } from 'react-paypal-button-v2';
-import { Header, Message, Loader } from '../components';
+import { Header, Message, Loader, Meta } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { getOrderDetails } from '../actions/orderAction';
 import { formatter } from '../helper/CurrencyFormat';
@@ -103,6 +103,7 @@ export function OrderScreen() {
       ) : (
         <>
           <Header />
+          <Meta title="Order Status" />
 
           <MainWrapper>
             <Container>

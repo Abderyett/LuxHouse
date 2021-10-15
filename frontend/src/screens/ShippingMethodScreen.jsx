@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { BsDot } from 'react-icons/bs';
 import moment from 'moment';
-import { Header } from '../components';
+import { Header, Meta } from '../components';
 import { color, shadow, rounded } from '../utilities';
 import { addedShippingMethod } from '../actions/cartAction';
 import sofa from '../utilities/svg/checkoutSofa.svg';
@@ -81,6 +81,7 @@ export function ShippingMethodScreen() {
   return (
     <>
       <Header />
+      <Meta title="Shipping Method" />
       <IMG src={sofa} alt="sofa" />
       <Pendant src={pendant} alt="Pendant" />
       <ProgressWrapper>

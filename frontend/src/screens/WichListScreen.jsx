@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaTrashAlt } from 'react-icons/fa';
 import { color, shadow, rounded } from '../utilities';
-import { Header } from '../components';
+import { Header, Meta } from '../components';
 import { formatter } from '../helper/CurrencyFormat';
 import { removeFromWichlist, emptyWichList } from '../actions/wichlistAction';
 
@@ -13,6 +13,7 @@ export function WichListScreen() {
   const { items } = wichlist;
   return (
     <>
+      <Meta title="My Wichlist" />
       <Header />
       <Container>
         <Heading>My Wichlist</Heading>
