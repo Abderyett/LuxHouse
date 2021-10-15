@@ -4,10 +4,7 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 
 dotenv.config();
-const DB = process.env.MONGO_URI.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
+const DB = 'mongodb+srv://Raouf_Dev:0553089970@luxhousecluster.myr6l.mongodb.net/LuxHouse?retryWrites=true&w=majority'
 
 const connectDB = async () => {
   try {
