@@ -33,31 +33,33 @@ app.use('/api/v1/orders', orderRoute);
 app.use('/create-checkout-session', checkoutRoute);
 app.use('/api/v1/upload', uploadRoutes);
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, '/frontend/build')))
-
-//   app.get('*', (req, res) =>
-//     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-//   )
-// } else {
-//   app.get('/', (req, res) => {
-//     res.send('API is running....')
-//   })
-// }
-
 if (process.env.NODE_ENV === 'production') {
-  // Express will serve up production assets
-  // like our main.js file, or main.css file!
-  app.use(express.static('frontend/build'));
+  app.use(express.static(path.join(path.resolve(), '/frontend/build')));
 
-  // Express will serve up the index.html file
-  // if it doesn't recognize the route
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+  app.get('*', (req, res) =>
+    res.sendFile(
+      path.resolve(path.resolve(), 'frontend', 'build', 'index.html')
+    )
+  );
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running....');
   });
 }
-app.use('*', notFound);
+
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, '/frontend/build')));
+//   console.log(path.resolve('./frontend', 'build', 'index.html'));
+//   app.get('*', (req, res) =>
+//     res.sendFile(path.resolve('./frontend', 'build', 'index.html'))
+//   );
+// } else {
+//   app.get('/', (req, res) => {
+//     res.send('API is running....');
+//   });
+// }
+
+app.use(notFound);
 
 app.use(errorHandler);
 
