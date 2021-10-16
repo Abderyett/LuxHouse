@@ -33,19 +33,29 @@ app.use('/api/v1/orders', orderRoute);
 app.use('/create-checkout-session', checkoutRoute);
 app.use('/api/v1/upload', uploadRoutes);
 
-const __dirname = path.resolve()
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, '/frontend/build')))
 
+//   app.get('*', (req, res) =>
+//     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+//   )
+// } else {
+//   app.get('/', (req, res) => {
+//     res.send('API is running....')
+//   })
+// }
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/frontend/build')))
+  // Express will serve up production assets
+  // like our main.js file, or main.css file!
+  app.use(express.static('frontend/build'));
 
-  app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-  )
-} else {
-  app.get('/', (req, res) => {
-    res.send('API is running....')
-  })
+  // Express will serve up the index.html file
+  // if it doesn't recognize the route
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+  });
 }
 app.use('*', notFound);
 
