@@ -34,30 +34,15 @@ app.use('/create-checkout-session', checkoutRoute);
 app.use('/api/v1/upload', uploadRoutes);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(path.resolve(), '/frontend/build')));
-
-  app.get('*', (req, res) =>
-    res.sendFile(
-      path.resolve(path.resolve(), 'frontend', 'build', 'index.html')
-    )
-  );
+  app.use(express.static(path.join(__dirname, '/../frontend/build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`));
+  });
 } else {
   app.get('/', (req, res) => {
     res.send('API is running....');
   });
 }
-
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, '/frontend/build')));
-//   console.log(path.resolve('./frontend', 'build', 'index.html'));
-//   app.get('*', (req, res) =>
-//     res.sendFile(path.resolve('./frontend', 'build', 'index.html'))
-//   );
-// } else {
-//   app.get('/', (req, res) => {
-//     res.send('API is running....');
-//   });
-// }
 
 app.use(notFound);
 
