@@ -44,6 +44,7 @@ export function Hero() {
 const StyledSection = styled.section`
   height: 100vh;
   position: relative;
+  width: 100%;
 `;
 
 const Secondcolor = styled(motion.div)`
@@ -92,10 +93,12 @@ const Sofa = styled.img`
   @media (max-width: 800px) {
     width: 700px;
     left: 50%;
+    overflow-x: hidden;
   }
   @media (max-width: 650px) {
-    width: 700px;
-    left: 90%;
+    width: 600px;
+    left: 80%;
+    overflow-x: hidden;
   }
 `;
 

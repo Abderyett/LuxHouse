@@ -87,6 +87,9 @@ export const GlobalStyle = createGlobalStyle`
   margin: 0;
   border: 0;
 }
+html{
+  overflow-x:hidden;
+}
 
 body{
 

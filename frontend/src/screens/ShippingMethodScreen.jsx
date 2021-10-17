@@ -82,7 +82,7 @@ export function ShippingMethodScreen() {
     <>
       <Header />
       <Meta title="Shipping Method" />
-      <IMG src={sofa} alt="sofa" />
+      <Sofa src={sofa} alt="sofa" />
       <Pendant src={pendant} alt="Pendant" />
       <ProgressWrapper>
         <ShippingAdress>Shipping Adress</ShippingAdress>
@@ -160,6 +160,16 @@ const Container = styled.div`
   margin: 3rem;
   padding: 2rem;
   background-color: ${color.white};
+  z-index: 9999;
+  position: relative;
+  @media (max-width: 1030px) {
+    width: 90%;
+  }
+  @media (max-width: 768px) {
+    width: 90%;
+    margin-left: 1.5rem;
+    padding: 1.5rem;
+  }
 `;
 
 const FirstHeading = styled.h4`
@@ -218,16 +228,31 @@ const ButtonWrapper = styled.div`
   margin-top: 1rem;
 `;
 
-const IMG = styled.img`
+const Sofa = styled.img`
   position: absolute;
   bottom: 0;
   right: 0;
   width: 50%;
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `;
 const Pendant = styled.img`
   position: absolute;
   top: 0;
   right: 20%;
+  width: 400px;
+  @media (max-width: 1390px) {
+    width: 370px;
+    right: 5%;
+  }
+  @media (max-width: 1135px) {
+    width: 350px;
+    right: 5%;
+  }
+  @media (max-width: 1114px) {
+    display: none;
+  }
 `;
 //* Shipping container
 
@@ -283,6 +308,7 @@ const StyledDot = styled(BsDot)`
 const ProgressWrapper = styled.div`
   display: flex;
   padding: 3rem 3rem 0 3rem;
+  margin-top: 4.5rem;
 `;
 const ShippingAdress = styled.div`
   width: 11rem;

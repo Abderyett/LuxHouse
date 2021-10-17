@@ -26,7 +26,7 @@ export const listProduct = () => async (dispatch) => {
     dispatch({
       type: PRODUCT_LIST_REQUEST,
     });
-    const { data } = await axios.get('/api/v1/products');
+    const { data } = await axios.get('https://lux-house.herokuapp.com/api/v1/products');
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: data,
@@ -42,7 +42,7 @@ export const listProduct = () => async (dispatch) => {
 export const detailProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAIL_REQUEST });
-    const { data } = await axios.get(`/api/v1/products/${id}`);
+    const { data } = await axios.get(`https://lux-house.herokuapp.com/api/v1/products/${id}`);
     dispatch({ type: PRODUCT_DETAIL_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -66,7 +66,7 @@ export const removeProduct = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    await axios.delete(`/api/v1/products/${id}`, config);
+    await axios.delete(`https://lux-house.herokuapp.com/api/v1/products/${id}`, config);
 
     dispatch({
       type: REMOVE_PRODUCT_SUCCESS,
@@ -93,7 +93,7 @@ export const createProductAC = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(`/api/v1/products`, {}, config);
+    const { data } = await axios.post(`https://lux-house.herokuapp.com/api/v1/products`, {}, config);
 
     dispatch({
       type: CREATE_PRODUCT_SUCCESS,
@@ -121,7 +121,7 @@ export const updateProductAC = (id, product) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.put(`/api/v1/products/${id}`, product, config);
+    const { data } = await axios.put(`https://lux-house.herokuapp.com/api/v1/products/${id}`, product, config);
 
     dispatch({
       type: UPDATE_PRODUCT_SUCCESS,

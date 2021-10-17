@@ -223,17 +223,17 @@ const HeadWrapper = styled.header`
   background-color: ${color.white};
   z-index: 9;
   overflow: auto;
-  position: relative;
-  position: sticky;
+  position: fixed;
+  width: 100%;
   top: 0;
-  left: 0;
 `;
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 9;
-
+  position: fixed;
+  right: 0;
   @media (max-width: 1030px) {
     flex-direction: column;
     align-items: flex-start;
@@ -286,7 +286,6 @@ const ListStyle = css`
     padding: 1rem;
     width: 50vw;
     border: 0.5px solid ${color.grey_300};
-
     &:hover {
       background-color: ${color.sugar_swi};
       color: ${color.black};
@@ -299,7 +298,6 @@ const ListStyle = css`
 const ListWrapper = styled.div`
   font-weight: 600;
   font-family: 'avenir_regular';
-
   span {
     font-size: 1rem;
   }
@@ -308,10 +306,8 @@ const ListWrapper = styled.div`
       padding-left: 0;
     }
   }
-
   ul {
     display: flex;
-
     @media (max-width: 1030px) {
       flex-direction: column;
       padding-left: 0;
@@ -329,10 +325,12 @@ const dropDown = css`
   padding: 1rem;
   position: fixed;
   top: 4.5rem;
+
   box-shadow: ${shadow.xxl};
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
   @media (max-width: 1030px) {
     width: 50vw;
     height: auto;
@@ -345,11 +343,9 @@ const dropDown = css`
   @media (max-width: 768px) {
     width: 100vw;
   }
-
   &:hover {
     color: ${color.grey_800};
   }
-
   button {
     cursor: pointer;
     color: ${color.black};
@@ -370,6 +366,7 @@ const dropDown = css`
 
 const ProfileDropdown = styled.div`
   ${dropDown}
+
   @media (max-width: 1030px) {
     width: 50vw;
     height: auto;
@@ -402,14 +399,12 @@ const AdminDropdown = styled.div`
 
 const StyledArrowDropdown = styled(RiArrowDropDownLine)`
   width: 2rem;
-
   margin-left: 1rem;
   opacity: 1;
 `;
 
 const StyledArrowUpLine = styled(RiArrowDropUpLine)`
   width: 2rem;
-
   margin-left: 1rem;
   opacity: 1;
 `;
@@ -418,7 +413,6 @@ const account = css`
   border-right: 0.5px solid ${color.grey_300};
   cursor: pointer;
   padding: 0 0.75rem;
-
   @media (max-width: 1030px) {
     border: none;
     padding-top: 1rem;
@@ -443,7 +437,6 @@ const account = css`
         font-size: 2rem;
       }
     }
-
     :last-child {
       padding-bottom: 1rem;
     }
@@ -454,7 +447,6 @@ const account = css`
   }
   svg {
     font-size: 1.6rem;
-
     padding-right: 0.5rem;
     font-weight: 600;
     vertical-align: bottom;
@@ -474,7 +466,6 @@ const AccountAdmin = styled.div`
 const StyledLinks = css`
   cursor: pointer;
   color: ${color.black};
-
   &:hover {
     color: ${color.grey_600};
   }
@@ -514,16 +505,13 @@ const ShoppingCart = styled.a`
   display: flex;
   align-items: center;
   cursor: pointer;
-
   ${ListStyle};
 `;
 
 const ActionLink = styled(Link)`
   ${ListStyle}
   border-right:0.5px solid ${color.grey_300};
-
   padding: 0 0.75rem;
-
   @media (max-width: 1030px) {
     border: none;
     padding-top: 1rem;
@@ -544,7 +532,6 @@ const ActionLink = styled(Link)`
         font-size: 2rem;
       }
     }
-
     :last-child {
       padding-bottom: 1rem;
     }
@@ -555,7 +542,6 @@ const ActionLink = styled(Link)`
   }
   svg {
     font-size: 1.6rem;
-
     padding-right: 0.5rem;
     font-weight: 600;
     vertical-align: bottom;
@@ -566,7 +552,6 @@ const Button = styled.button`
   background-color: transparent;
   cursor: pointer;
   display: none;
-
   svg {
     font-size: 2rem;
   }

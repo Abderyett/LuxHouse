@@ -166,6 +166,10 @@ const MainWrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 60% 30%;
+  @media (max-width: 1030px) {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Container = styled.div`
@@ -178,6 +182,9 @@ const Container = styled.div`
   padding: 2rem;
   background-color: ${color.white};
   z-index: 1;
+  @media (max-width: 1030px) {
+    margin-left: 1rem;
+  }
 `;
 
 //* Heading
@@ -243,6 +250,7 @@ const IMG = styled.img`
 const ProgressWrapper = styled.div`
   display: flex;
   padding: 3rem 3rem 0 3rem;
+  margin-top: 4.5rem;
 `;
 const ShippingAdress = styled.div`
   width: 11rem;
@@ -275,6 +283,16 @@ const PlaceOrder = styled.div`
 const CheckoutSection = styled.section`
   width: 100%;
   margin-top: 3rem;
+  @media (max-width: 1030px) {
+    width: 90%;
+    margin-left: 3rem;
+    margin-bottom: 3rem;
+  }
+  @media (max-width: 768px) {
+    width: 90%;
+    margin-left: 1rem;
+    margin-bottom: 3rem;
+  }
 `;
 const CheckoutWrapper = styled.div`
   width: auto;

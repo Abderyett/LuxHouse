@@ -82,7 +82,7 @@ const Container = styled.div`
   display: grid;
   justify-content: start;
   align-content: start;
-  margin-left: 10rem;
+  margin-left: 2rem;
 `;
 
 //* background SVG
@@ -94,12 +94,15 @@ const IMG = styled.img`
   z-index: 0;
   cursor: pointer;
   width: 20rem;
+  @media (max-width: 1030px) {
+    width: 15rem;
+  }
 `;
 //* Wrapper
 
 const Wrapper = styled.div`
   max-width: 1200px;
-  width: 70vw;
+  width: 75vw;
   display: grid;
   justify-items: center;
   grid-template-columns: 65% 1fr;
@@ -108,6 +111,10 @@ const Wrapper = styled.div`
 
   z-index: 3;
   position: relative;
+  @media (max-width: 1030px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
 `;
 
 //*  Card
@@ -119,6 +126,9 @@ const CartItem = styled.section`
 const Card = styled.div`
   /* height: 10rem; */
   padding: 1rem;
+  @media (max-width: 768px) {
+    width: 90vw;
+  }
 `;
 
 const CardWrapper = styled.div`
@@ -129,6 +139,7 @@ const CardWrapper = styled.div`
   border-radius: ${rounded.sm};
   margin-top: 1rem;
   align-items: center;
+
   p {
     margin-bottom: 0;
     width: 10ch;
@@ -185,7 +196,7 @@ const CheckoutSection = styled.section`
 `;
 const CheckoutWrapper = styled.div`
   width: auto;
-  height: 15rem;
+  /* height: 15rem; */
   border: 1px solid ${color.grey_400};
   padding: 1rem;
   margin: 1rem;
@@ -210,7 +221,7 @@ const Btn = styled(Link)`
   text-transform: uppercase;
   background-color: ${color.black};
   color: ${color.white};
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   font-weight: bold;
   border: 1px solid black;
   transition: all 0.6s ease-in-out;
@@ -221,7 +232,7 @@ const Btn = styled(Link)`
 `;
 
 const BtnWrapper = styled.div`
-  margin-top: 2.5rem;
+  /* margin-top: 2rem; */
   width: 100%;
   display: flex;
   justify-content: center;

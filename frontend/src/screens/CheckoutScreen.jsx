@@ -53,7 +53,7 @@ export function CheckoutScreen() {
 
   const getCountries = async () => {
     try {
-      const { data } = await axios.get('/api/v1/countries');
+      const { data } = await axios.get('https://lux-house.herokuapp.com/api/v1/countries');
 
       setCountries(data);
       localStorage.setItem('coutries', JSON.stringify(data));
@@ -166,7 +166,7 @@ export function CheckoutScreen() {
     <>
       <Meta title="Checkout" />
       <Header />
-      <IMG src={sofa} alt="sofa" />
+      <Sofa src={sofa} alt="sofa" />
       <Pendant src={pendant} alt="Pendant" />
       <ProgressWrapper>
         <ShippingAdress>Shipping Adress</ShippingAdress>
@@ -256,12 +256,22 @@ export function CheckoutScreen() {
 
 const Container = styled.div`
   width: 40%;
-
+  background-color: ${color.white};
   border: 1px solid ${color.grey_400};
   border-radius: ${rounded.md};
   box-shadow: ${shadow.md};
   margin: 3rem;
   padding: 3rem;
+  z-index: 9999;
+  position: relative;
+  @media (max-width: 1030px) {
+    width: 70%;
+  }
+  @media (max-width: 768px) {
+    width: 90%;
+    margin-left: 1.5rem;
+    padding: 1.5rem;
+  }
 `;
 
 const FirstHeading = styled.h4`
@@ -284,7 +294,7 @@ const Wrap = styled.div`
 const styledInput = css`
   border-radius: ${rounded.md};
   height: 3rem;
-  width: 35rem;
+  width: 95%;
   max-width: 35rem;
   text-indent: 5%;
   font-size: 1.2rem;
@@ -296,7 +306,7 @@ const styledInput = css`
   z-index: 1;
 
   @media (max-width: 768px) {
-    width: 90vw;
+    width: 100%;
   }
   outline: none;
   &:focus {
@@ -453,16 +463,31 @@ const ButtonWrapper = styled.div`
 `;
 
 //* SVG ==========
-const IMG = styled.img`
+const Sofa = styled.img`
   position: absolute;
   bottom: 0;
   right: 0;
   width: 50%;
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `;
 const Pendant = styled.img`
   position: absolute;
   top: 0;
   right: 20%;
+  width: 400px;
+  @media (max-width: 1390px) {
+    width: 370px;
+    right: 5%;
+  }
+  @media (max-width: 1135px) {
+    width: 350px;
+    right: 5%;
+  }
+  @media (max-width: 1114px) {
+    display: none;
+  }
 `;
 
 //* Progress Bar
@@ -470,6 +495,7 @@ const Pendant = styled.img`
 const ProgressWrapper = styled.div`
   display: flex;
   padding: 3rem 3rem 0 3rem;
+  margin-top: 4.5rem;
 `;
 const ShippingAdress = styled.div`
   width: 11rem;

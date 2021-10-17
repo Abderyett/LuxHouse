@@ -52,7 +52,7 @@ export const orderDetailsReducer = (state = { loading: true, details: {} }, acti
       return state;
   }
 };
-export const ordersDetailsReducer = (state = { loading: true, orders: {} }, action) => {
+export const ordersDetailsReducer = (state = { loading: true, orders: [] }, action) => {
   switch (action.type) {
     case ORDERS_DETAILS_REQUEST:
       return { ...state, loading: true };

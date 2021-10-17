@@ -79,7 +79,7 @@ export function OrderScreen() {
     dispatch(proceedPayment(item));
   };
   useEffect(() => {
-    if (Object.entries(payment.paymentStatus).length > 0) {
+    if (payment.paymentStatus && Object.entries(payment.paymentStatus).length > 0) {
       const redirect = async () => {
         const { error } = await stripe.redirectToCheckout({ sessionId: payment.paymentStatus.sessionId });
         if (error) {
@@ -88,7 +88,7 @@ export function OrderScreen() {
       };
       redirect();
     }
-  }, [payment, stripe]);
+  }, [payment]);
 
   // Paypal
 

@@ -20,7 +20,7 @@ export function ProfileScreen() {
   const ordersDetails = useSelector((state) => state.ordersDetails);
   const { success } = userUpdateProfile;
   const { user, error } = userDetails;
-  const { loading, orders } = ordersDetails;
+  const { loading, orders, success: ordersSuccess } = ordersDetails;
 
   const { userInfo } = userLogin;
   const history = useHistory();
@@ -37,9 +37,11 @@ export function ProfileScreen() {
       history.push('/login');
     } else {
       dispatch(getUserDetails('profile'));
-      dispatch(getOrdersDetails());
     }
   }, [success, userInfo, dispatch, history]);
+  useEffect(() => {
+    dispatch(getOrdersDetails());
+  }, [dispatch]);
 
   return (
     <>
@@ -153,21 +155,22 @@ export function ProfileScreen() {
 
           <OrderSection>
             <Heading>My Orders</Heading>
-            {loading ? (
-              <Loader />
-            ) : (
-              <TableWrapper>
-                <Table>
-                  <thead>
-                    <tr>
-                      <Th>Order ID</Th>
-                      <Th>Order Date</Th>
-                      <Th>Total</Th>
-                      <Th>Paid</Th>
-                      <Th>Delivred</Th>
-                      <Th>{}</Th>
-                    </tr>
-                  </thead>
+
+            <TableWrapper>
+              <Table>
+                <thead>
+                  <tr>
+                    <Th>Order ID</Th>
+                    <Th>Order Date</Th>
+                    <Th>Total</Th>
+                    <Th>Paid</Th>
+                    <Th>Delivred</Th>
+                    <Th>{}</Th>
+                  </tr>
+                </thead>
+                {loading ? (
+                  <Loader />
+                ) : (
                   <tbody>
                     {orders &&
                       orders.map((order) => (
@@ -186,9 +189,9 @@ export function ProfileScreen() {
                         </Tr>
                       ))}
                   </tbody>
-                </Table>
-              </TableWrapper>
-            )}
+                )}
+              </Table>
+            </TableWrapper>
           </OrderSection>
         </Container>
       )}
