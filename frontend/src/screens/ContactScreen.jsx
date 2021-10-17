@@ -233,6 +233,7 @@ export function ContactScreen() {
 }
 const Container = styled.div`
   height: 100%;
+  margin-top: 4.5rem;
 
   padding-bottom: 10rem;
   margin-left: auto;

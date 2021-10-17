@@ -180,6 +180,11 @@ const MainWrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 60% 30%;
+  margin-top: 4.5rem;
+  @media (max-width: 1030px) {
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+  }
 `;
 
 const Container = styled.div`
@@ -247,6 +252,16 @@ const Image = styled.img`
 const CheckoutSection = styled.section`
   width: 100%;
   margin-top: 3rem;
+  @media (max-width: 1030px) {
+    width: 90%;
+    margin-left: 3rem;
+    margin-bottom: 3rem;
+  }
+  @media (max-width: 768px) {
+    width: 90%;
+    margin-left: 1rem;
+    margin-bottom: 3rem;
+  }
 `;
 const CheckoutWrapper = styled.div`
   width: auto;

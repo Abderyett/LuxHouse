@@ -91,10 +91,12 @@ export function OrdersScreen() {
 const Heading = styled.h3`
   font-family: 'avenir_bold';
   line-height: 1rem;
+  margin-top: 7rem;
 `;
 
 const TableWrapper = styled.div`
   padding-top: 1rem;
+
   @media (max-width: 1030px) {
     overflow-x: scroll;
   }

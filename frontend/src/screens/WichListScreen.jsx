@@ -56,6 +56,7 @@ const Container = styled.div`
   padding-left: 2rem;
   margin-bottom: 5rem;
   position: relative;
+  margin-top: 4.5rem;
 `;
 
 const Heading = styled.h3`

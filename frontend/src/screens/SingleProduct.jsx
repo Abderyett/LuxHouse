@@ -141,7 +141,9 @@ export function SingleProduct() {
     </>
   );
 }
-const Container = styled.div``;
+const Container = styled.div`
+  margin-top: 4.5rem;
+`;
 
 const FirstSection = styled.section`
   height: 70vh;

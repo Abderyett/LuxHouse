@@ -203,10 +203,9 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
   padding: 2rem;
-  margin-top: 4rem;
+  margin-top: 4.5rem;
   @media (max-width: 1030px) {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, 1fr);
     grid-gap: 4rem;
     overflow-x: scroll;
   }

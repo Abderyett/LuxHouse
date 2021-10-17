@@ -120,6 +120,7 @@ export function ProductsListScreen() {
 const Heading = styled.h2`
   padding-top: 2rem;
   padding-left: 2rem;
+  margin-top: 4.5rem;
 `;
 const TableWrapper = styled.div`
   padding-top: 1rem;

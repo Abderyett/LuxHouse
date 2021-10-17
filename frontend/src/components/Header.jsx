@@ -221,7 +221,7 @@ const HeadWrapper = styled.header`
   box-shadow: ${shadow.md};
   max-width: 2880px;
   background-color: ${color.white};
-  z-index: 9;
+  z-index: 99999;
   overflow: auto;
   position: fixed;
   width: 100%;
@@ -234,6 +234,7 @@ const Wrapper = styled.div`
   z-index: 9;
   position: fixed;
   right: 0;
+
   @media (max-width: 1030px) {
     flex-direction: column;
     align-items: flex-start;

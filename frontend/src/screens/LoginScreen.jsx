@@ -151,8 +151,10 @@ export function LoginScreen() {
 const Container = styled.div`
   display: flex;
   height: 94vh;
+  margin-top: 4.5rem;
   @media (max-width: 1030px) {
     flex-direction: column;
+    margin-top: 4.5rem;
   }
 `;
 

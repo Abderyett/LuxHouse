@@ -212,6 +212,7 @@ export function ProductsScreen() {
 
 const Container = styled.div`
   padding-bottom: 5rem;
+  margin-top: 4.5rem;
 `;
 const ContentWrapper = styled.div`
   padding-top: 5rem;

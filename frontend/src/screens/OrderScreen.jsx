@@ -229,6 +229,7 @@ const MainWrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 60% 30%;
+  margin-top: 4.5rem;
   @media (max-width: 1030px) {
     grid-template-columns: 1fr;
     grid-auto-flow: row;

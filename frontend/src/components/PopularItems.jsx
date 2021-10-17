@@ -9,7 +9,7 @@ import { Circle, NextArrow, PrevArrow, Dots } from '../utilities/svg';
 
 export function PopularItems() {
   const { ref, inView } = useInView({
-    threshold: 0.5,
+    threshold: 0.1,
   });
   const animation = useAnimation();
   const [data, setData] = useState(pagination());
@@ -93,14 +93,15 @@ const CardWrapper = styled.section`
   margin-right: auto;
   margin: 10rem 0;
   display: grid;
-  grid-auto-flow: column;
+  /* grid-auto-flow: column; */
   grid-template-columns: 30% 70%;
   position: relative;
-  @media (max-width: 768px) {
+  @media (max-width: 800px) {
     margin: 5rem 0;
     padding: 5rem 3rem;
-    grid-auto-flow: row;
-    grid-template-columns: 1fr;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
   }
   h2 {
     font-family: 'avenir_semi';

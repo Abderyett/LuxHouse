@@ -151,6 +151,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: flex-start;
   position: relative;
+
   @media (max-width: 1030px) {
     flex-direction: column;
     align-items: center;
@@ -161,6 +162,7 @@ const FromContainer = styled.div`
   height: 100vh;
   z-index: 3;
   display: grid;
+
   grid-auto-flow: column;
   place-items: center;
   @media (max-width: 768px) {
