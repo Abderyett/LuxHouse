@@ -32,7 +32,7 @@ export const addOrder = (order) => async (dispatch, getState) => {
   };
 
   try {
-    const { data } = await axios.post('https://lux-house.herokuapp.com/api/v1/orders', order, config);
+    const { data } = await axios.post('https://lux-house.up.railway.app/api/v1/orders', order, config);
     dispatch({
       type: ADDED_ORDER_SUCCESS,
       payload: data,
@@ -59,7 +59,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   };
 
   try {
-    const { data } = await axios.get(`https://lux-house.herokuapp.com/api/v1/orders/${id}`, config);
+    const { data } = await axios.get(`https://lux-house.up.railway.app/api/v1/orders/${id}`, config);
     localStorage.setItem('orderDetails', JSON.stringify(data._id));
 
     dispatch({
@@ -87,7 +87,7 @@ export const getOrdersDetails = () => async (dispatch, getState) => {
   };
 
   try {
-    const { data } = await axios.get(`https://lux-house.herokuapp.com/api/v1/orders`, config);
+    const { data } = await axios.get(`https://lux-house.up.railway.app/api/v1/orders`, config);
     console.log('orders', data);
 
     dispatch({
@@ -116,7 +116,7 @@ export const getAllOrders = () => async (dispatch, getState) => {
   };
 
   try {
-    const { data } = await axios.get('https://lux-house.herokuapp.com/api/v1/orders/all', config);
+    const { data } = await axios.get('https://lux-house.up.railway.app/api/v1/orders/all', config);
     dispatch({
       type: GET_ALL_ORDERS_SUCCESS,
       payload: data,
@@ -143,7 +143,7 @@ export const updateDeliveryStatus = (id) => async (dispatch, getState) => {
   };
 
   try {
-    const { data } = await axios.get(`https://lux-house.herokuapp.com/api/v1/orders/delivered/${id}`, config);
+    const { data } = await axios.get(`https://lux-house.up.railway.app/api/v1/orders/delivered/${id}`, config);
     dispatch({
       type: UPDATE_DELIVERY_ORDER_SUCCESS,
       payload: data,

@@ -294,7 +294,7 @@ export function ProductEditScreen() {
     const jsonData = JSON.stringify({ uri: base64EncodedImage });
 
     try {
-      const { data } = await axios.post('https://lux-house.herokuapp.com/api/v1/upload', jsonData, config);
+      const { data } = await axios.post('https://lux-house.up.railway.app/api/v1/upload', jsonData, config);
       setCloudinaryMainImg([{ url: data }]);
       setLoadingMainImg(false);
     } catch (error) {
@@ -320,7 +320,7 @@ export function ProductEditScreen() {
     const payload = { dataList: arr };
 
     try {
-      const { data } = await axios.post('https://lux-house.herokuapp.com/api/v1/upload/multiple', payload, config);
+      const { data } = await axios.post('https://lux-house.up.railway.app/api/v1/upload/multiple', payload, config);
       setCloudinaryImgs(data);
       setloadingImgs(false);
     } catch (error) {

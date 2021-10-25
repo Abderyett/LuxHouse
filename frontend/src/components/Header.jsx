@@ -240,6 +240,7 @@ const Wrapper = styled.div`
     align-items: flex-start;
     position: fixed;
     top: 0;
+    left: 0;
     left: ${({ isOpen }) => (isOpen ? '0' : '-100%')};
     margin-top: 4.5rem;
     background-color: ${color.white};

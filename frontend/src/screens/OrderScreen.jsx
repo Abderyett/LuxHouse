@@ -76,6 +76,7 @@ export function OrderScreen() {
       customer_email: details.user.email,
     };
 
+    // console.log(item);
     dispatch(proceedPayment(item));
   };
   useEffect(() => {
@@ -88,7 +89,7 @@ export function OrderScreen() {
       };
       redirect();
     }
-  }, [payment]);
+  }, [payment, dispatch, stripe]);
 
   // Paypal
 

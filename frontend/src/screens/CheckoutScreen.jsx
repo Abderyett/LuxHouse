@@ -53,7 +53,7 @@ export function CheckoutScreen() {
 
   const getCountries = async () => {
     try {
-      const { data } = await axios.get('https://lux-house.herokuapp.com/api/v1/countries');
+      const { data } = await axios.get('https://lux-house.up.railway.app/api/v1/countries');
 
       setCountries(data);
       localStorage.setItem('coutries', JSON.stringify(data));

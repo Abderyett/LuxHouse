@@ -27,7 +27,7 @@ export const proceedPayment = (item) => async (dispatch, getState) => {
   };
 
   try {
-    const { data } = await axios.post('https://lux-house.herokuapp.com/create-checkout-session', item, config);
+    const { data } = await axios.post('https://lux-house.netlify.app/create-checkout-session', item, config);
 
     dispatch({
       type: PAYMENT_SUCCESS,
@@ -57,7 +57,7 @@ export const updateStripePayment = (id) => async (dispatch, getState) => {
   };
 
   try {
-    const { data } = await axios.get(`https://lux-house.herokuapp.com/api/v1/orders/${id}/stripe`, config);
+    const { data } = await axios.get(`https://lux-house.up.railway.app/api/v1/orders/${id}/stripe`, config);
 
     dispatch({
       type: PAYMENT_STRIPE_UPDATE_SUCCESS,
@@ -88,7 +88,7 @@ export const updatePaypalPayment = (orderId, paymentResult) => async (dispatch, 
 
   try {
     const { data } = await axios.put(
-      `https://lux-house.herokuapp.com/api/v1/orders/${orderId}/paypal`,
+      `https://lux-house.up.railway.app/api/v1/orders/${orderId}/paypal`,
       paymentResult,
       config
     );

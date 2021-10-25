@@ -49,7 +49,7 @@ export const logUser = (email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      'https://lux-house.herokuapp.com/api/v1/users/login',
+      'https://lux-house.up.railway.app/api/v1/users/login',
       { email, password },
       config
     );
@@ -95,7 +95,7 @@ export const registringUser = (name, email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      'https://lux-house.herokuapp.com/api/v1/users/register',
+      'https://lux-house.up.railway.app/api/v1/users/register',
       { name, email, password },
       config
     );
@@ -131,7 +131,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`https://lux-house.herokuapp.com/api/v1/users/${id}`, config);
+    const { data } = await axios.get(`https://lux-house.up.railway.app/api/v1/users/${id}`, config);
 
     dispatch({
       type: USER_PROFILE_DETAILS_SUCCESS,
@@ -159,7 +159,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.put(`https://lux-house.herokuapp.com/api/v1/users/profile`, user, config);
+    const { data } = await axios.put(`https://lux-house.up.railway.app/api/v1/users/profile`, user, config);
 
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,
@@ -187,7 +187,7 @@ export const getUsersList = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`https://lux-house.herokuapp.com/api/v1/users`, config);
+    const { data } = await axios.get(`https://lux-house.up.railway.app/api/v1/users`, config);
 
     dispatch({
       type: USERS_LIST_SUCCESS,
@@ -215,7 +215,7 @@ export const removeUser = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    await axios.delete(`https://lux-house.herokuapp.com/api/v1/users/${id}`, config);
+    await axios.delete(`https://lux-house.up.railway.app/api/v1/users/${id}`, config);
 
     dispatch({
       type: REMOVE_USER_SUCCESS,
@@ -242,7 +242,7 @@ export const getUser = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`https://lux-house.herokuapp.com/api/v1/users/${id}`, config);
+    const { data } = await axios.get(`https://lux-house.up.railway.app/api/v1/users/${id}`, config);
 
     dispatch({
       type: USER_SUCCESS,
@@ -270,7 +270,7 @@ export const updateUserAC = (id, user) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.put(`https://lux-house.herokuapp.com/api/v1/users/${id}`, user, config);
+    const { data } = await axios.put(`https://lux-house.up.railway.app/api/v1/users/${id}`, user, config);
 
     dispatch({
       type: USER_UPDATE_SUCCESS,

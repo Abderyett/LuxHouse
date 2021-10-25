@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ADD_TO_WICHLIST, EMPTY_WICHLIST, REMOVE_FROM_WICHLIST } from './types';
 
 export const addToWichlist = (id) => async (dispatch, getState) => {
-  const { data } = await axios.get(`https://lux-house.herokuapp.com/api/v1/products/${id}`);
+  const { data } = await axios.get(`https://lux-house.up.railway.app/api/v1/products/${id}`);
   console.log(data);
   dispatch({
     type: ADD_TO_WICHLIST,
