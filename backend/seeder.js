@@ -8,7 +8,7 @@ const User = require('./models/userModel');
 const connectDB = require('./config/db');
 const products = require('./data/products.json');
 const users = require('./data/user');
-const countries = require('./data/countries.json');
+const countries = require('./data/countries');
 const Countries = require('./models/countriesModel');
 
 dotenv.config();

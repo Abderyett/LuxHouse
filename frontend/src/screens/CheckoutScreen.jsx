@@ -190,7 +190,7 @@ export function CheckoutScreen() {
             ) : (
               <Selected>
                 <span>
-                  <img src="https://www.countryflags.io/ca/shiny/64.png" alt="Canada" />
+                  <img src="https://flagcdn.com/ca.svg" alt="Canada" />
                   Canada
                 </span>
               </Selected>

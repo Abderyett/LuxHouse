@@ -1,968 +1,753 @@
 const countries = [
   {
-    id: 4,
     name: 'Afghanistan',
-    flag: 'https://www.countryflags.io/af/shiny/64.png',
+
+    flag: 'https://flagcdn.com/af.svg',
   },
+
   {
-    id: 8,
     name: 'Albania',
-    flag: 'https://www.countryflags.io/al/shiny/64.png',
+
+    flag: 'https://flagcdn.com/al.svg',
   },
   {
-    id: 12,
     name: 'Algeria',
-    flag: 'https://www.countryflags.io/dz/shiny/64.png',
+
+    flag: 'https://flagcdn.com/dz.svg',
   },
+
   {
-    id: 20,
-    name: 'Andorra',
-    flag: 'https://www.countryflags.io/ad/shiny/64.png',
+    name: 'AndorrA',
+
+    flag: 'https://flagcdn.com/ad.svg',
   },
+
   {
-    id: 24,
-    name: 'Angola',
-    flag: 'https://www.countryflags.io/ao/shiny/64.png',
-  },
-  {
-    id: 28,
-    name: 'Antigua and Barbuda',
-    flag: 'https://www.countryflags.io/ag/shiny/64.png',
-  },
-  {
-    id: 32,
     name: 'Argentina',
-    flag: 'https://www.countryflags.io/ar/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ar.svg',
   },
   {
-    id: 51,
     name: 'Armenia',
-    flag: 'https://www.countryflags.io/am/shiny/64.png',
+
+    flag: 'https://flagcdn.com/am.svg',
   },
+
   {
-    id: 36,
     name: 'Australia',
-    flag: 'https://www.countryflags.io/au/shiny/64.png',
+
+    flag: 'https://flagcdn.com/au.svg',
   },
   {
-    id: 40,
     name: 'Austria',
-    flag: 'https://www.countryflags.io/at/shiny/64.png',
+
+    flag: 'https://flagcdn.com/at.svg',
   },
   {
-    id: 31,
     name: 'Azerbaijan',
-    flag: 'https://www.countryflags.io/az/shiny/64.png',
+
+    flag: 'https://flagcdn.com/az.svg',
   },
   {
-    id: 44,
     name: 'Bahamas',
-    flag: 'https://www.countryflags.io/bs/shiny/64.png',
+
+    flag: 'https://flagcdn.com/bs.svg',
   },
   {
-    id: 48,
     name: 'Bahrain',
-    flag: 'https://www.countryflags.io/bh/shiny/64.png',
+
+    flag: 'https://flagcdn.com/bh.svg',
   },
   {
-    id: 50,
     name: 'Bangladesh',
-    flag: 'https://www.countryflags.io/bd/shiny/64.png',
+
+    flag: 'https://flagcdn.com/bd.svg',
   },
+
   {
-    id: 52,
-    name: 'Barbados',
-    flag: 'https://www.countryflags.io/bb/shiny/64.png',
-  },
-  {
-    id: 112,
     name: 'Belarus',
-    flag: 'https://www.countryflags.io/by/shiny/64.png',
+
+    flag: 'https://flagcdn.com/by.svg',
   },
   {
-    id: 56,
     name: 'Belgium',
-    flag: 'https://www.countryflags.io/be/shiny/64.png',
+
+    flag: 'https://flagcdn.com/be.svg',
   },
+
   {
-    id: 84,
-    name: 'Belize',
-    flag: 'https://www.countryflags.io/bz/shiny/64.png',
-  },
-  {
-    id: 204,
-    name: 'Benin',
-    flag: 'https://www.countryflags.io/bj/shiny/64.png',
-  },
-  {
-    id: 64,
     name: 'Bhutan',
-    flag: 'https://www.countryflags.io/bt/shiny/64.png',
+
+    flag: 'https://flagcdn.com/bt.svg',
   },
   {
-    id: 68,
-    name: 'Bolivia (Plurinational State of)',
-    flag: 'https://www.countryflags.io/bo/shiny/64.png',
+    name: 'Bolivia',
+
+    flag: 'https://flagcdn.com/bo.svg',
   },
   {
-    id: 70,
     name: 'Bosnia and Herzegovina',
-    flag: 'https://www.countryflags.io/ba/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ba.svg',
   },
+
   {
-    id: 72,
-    name: 'Botswana',
-    flag: 'https://www.countryflags.io/bw/shiny/64.png',
-  },
-  {
-    id: 76,
     name: 'Brazil',
-    flag: 'https://www.countryflags.io/br/shiny/64.png',
+
+    flag: 'https://flagcdn.com/br.svg',
   },
+
   {
-    id: 96,
-    name: 'Brunei Darussalam',
-    flag: 'https://www.countryflags.io/bn/shiny/64.png',
-  },
-  {
-    id: 100,
     name: 'Bulgaria',
-    flag: 'https://www.countryflags.io/bg/shiny/64.png',
+
+    flag: 'https://flagcdn.com/bg.svg',
   },
+
   {
-    id: 854,
-    name: 'Burkina Faso',
-    flag: 'https://www.countryflags.io/bf/shiny/64.png',
-  },
-  {
-    id: 108,
-    name: 'Burundi',
-    flag: 'https://www.countryflags.io/bi/shiny/64.png',
-  },
-  {
-    id: 132,
-    name: 'Cabo Verde',
-    flag: 'https://www.countryflags.io/cv/shiny/64.png',
-  },
-  {
-    id: 116,
     name: 'Cambodia',
-    flag: 'https://www.countryflags.io/kh/shiny/64.png',
+
+    flag: 'https://flagcdn.com/kh.svg',
   },
   {
-    id: 120,
     name: 'Cameroon',
-    flag: 'https://www.countryflags.io/cm/shiny/64.png',
+
+    flag: 'https://flagcdn.com/cm.svg',
   },
   {
-    id: 124,
     name: 'Canada',
-    flag: 'https://www.countryflags.io/ca/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ca.svg',
   },
   {
-    id: 140,
-    name: 'Central African Republic',
-    flag: 'https://www.countryflags.io/cf/shiny/64.png',
+    name: 'Cape Verde',
+
+    flag: 'https://flagcdn.com/cv.svg',
   },
+
   {
-    id: 148,
-    name: 'Chad',
-    flag: 'https://www.countryflags.io/td/shiny/64.png',
-  },
-  {
-    id: 152,
     name: 'Chile',
-    flag: 'https://www.countryflags.io/cl/shiny/64.png',
+
+    flag: 'https://flagcdn.com/cl.svg',
   },
   {
-    id: 156,
     name: 'China',
-    flag: 'https://www.countryflags.io/cn/shiny/64.png',
+
+    flag: 'https://flagcdn.com/cn.svg',
   },
+
   {
-    id: 170,
     name: 'Colombia',
-    flag: 'https://www.countryflags.io/co/shiny/64.png',
+
+    flag: 'https://flagcdn.com/co.svg',
   },
   {
-    id: 174,
     name: 'Comoros',
-    flag: 'https://www.countryflags.io/km/shiny/64.png',
+
+    flag: 'https://flagcdn.com/km.svg',
   },
+
   {
-    id: 178,
-    name: 'Congo',
-    flag: 'https://www.countryflags.io/cg/shiny/64.png',
-  },
-  {
-    id: 180,
-    name: 'Congo, Democratic Republic of the',
-    flag: 'https://www.countryflags.io/cd/shiny/64.png',
-  },
-  {
-    id: 188,
     name: 'Costa Rica',
-    flag: 'https://www.countryflags.io/cr/shiny/64.png',
+
+    flag: 'https://flagcdn.com/cr.svg',
   },
   {
-    id: 384,
-    name: "Côte d'Ivoire",
-    flag: 'https://www.countryflags.io/ci/shiny/64.png',
+    name: "Cote D'Ivoire",
+
+    flag: 'https://flagcdn.com/ci.svg',
   },
   {
-    id: 191,
     name: 'Croatia',
-    flag: 'https://www.countryflags.io/hr/shiny/64.png',
+
+    flag: 'https://flagcdn.com/hr.svg',
   },
   {
-    id: 192,
     name: 'Cuba',
-    flag: 'https://www.countryflags.io/cu/shiny/64.png',
+
+    flag: 'https://flagcdn.com/cu.svg',
   },
   {
-    id: 196,
     name: 'Cyprus',
-    flag: 'https://www.countryflags.io/cy/shiny/64.png',
+
+    flag: 'https://flagcdn.com/cy.svg',
   },
   {
-    id: 203,
-    name: 'Czechia',
-    flag: 'https://www.countryflags.io/cz/shiny/64.png',
+    name: 'Czech Republic',
+
+    flag: 'https://flagcdn.com/cz.svg',
   },
   {
-    id: 208,
     name: 'Denmark',
-    flag: 'https://www.countryflags.io/dk/shiny/64.png',
+
+    flag: 'https://flagcdn.com/dk.svg',
   },
+
   {
-    id: 262,
-    name: 'Djibouti',
-    flag: 'https://www.countryflags.io/dj/shiny/64.png',
-  },
-  {
-    id: 212,
     name: 'Dominica',
-    flag: 'https://www.countryflags.io/dm/shiny/64.png',
+
+    flag: 'https://flagcdn.com/dm.svg',
   },
   {
-    id: 214,
     name: 'Dominican Republic',
-    flag: 'https://www.countryflags.io/do/shiny/64.png',
+
+    flag: 'https://flagcdn.com/do.svg',
   },
   {
-    id: 218,
     name: 'Ecuador',
-    flag: 'https://www.countryflags.io/ec/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ec.svg',
   },
   {
-    id: 818,
     name: 'Egypt',
-    flag: 'https://www.countryflags.io/eg/shiny/64.png',
+
+    flag: 'https://flagcdn.com/eg.svg',
   },
+
   {
-    id: 222,
-    name: 'El Salvador',
-    flag: 'https://www.countryflags.io/sv/shiny/64.png',
-  },
-  {
-    id: 226,
-    name: 'Equatorial Guinea',
-    flag: 'https://www.countryflags.io/gq/shiny/64.png',
-  },
-  {
-    id: 232,
-    name: 'Eritrea',
-    flag: 'https://www.countryflags.io/er/shiny/64.png',
-  },
-  {
-    id: 233,
     name: 'Estonia',
-    flag: 'https://www.countryflags.io/ee/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ee.svg',
   },
   {
-    id: 748,
-    name: 'Eswatini',
-    flag: 'https://www.countryflags.io/sz/shiny/64.png',
-  },
-  {
-    id: 231,
     name: 'Ethiopia',
-    flag: 'https://www.countryflags.io/et/shiny/64.png',
+
+    flag: 'https://flagcdn.com/et.svg',
   },
+
   {
-    id: 242,
-    name: 'Fiji',
-    flag: 'https://www.countryflags.io/fj/shiny/64.png',
-  },
-  {
-    id: 246,
     name: 'Finland',
-    flag: 'https://www.countryflags.io/fi/shiny/64.png',
+
+    flag: 'https://flagcdn.com/fi.svg',
   },
   {
-    id: 250,
     name: 'France',
-    flag: 'https://www.countryflags.io/fr/shiny/64.png',
+
+    flag: 'https://flagcdn.com/fr.svg',
   },
+
   {
-    id: 266,
-    name: 'Gabon',
-    flag: 'https://www.countryflags.io/ga/shiny/64.png',
-  },
-  {
-    id: 270,
-    name: 'Gambia',
-    flag: 'https://www.countryflags.io/gm/shiny/64.png',
-  },
-  {
-    id: 268,
     name: 'Georgia',
-    flag: 'https://www.countryflags.io/ge/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ge.svg',
   },
   {
-    id: 276,
     name: 'Germany',
-    flag: 'https://www.countryflags.io/de/shiny/64.png',
+
+    flag: 'https://flagcdn.com/de.svg',
   },
+
   {
-    id: 288,
-    name: 'Ghana',
-    flag: 'https://www.countryflags.io/gh/shiny/64.png',
-  },
-  {
-    id: 300,
     name: 'Greece',
-    flag: 'https://www.countryflags.io/gr/shiny/64.png',
+
+    flag: 'https://flagcdn.com/gr.svg',
   },
+
   {
-    id: 308,
-    name: 'Grenada',
-    flag: 'https://www.countryflags.io/gd/shiny/64.png',
-  },
-  {
-    id: 320,
-    name: 'Guatemala',
-    flag: 'https://www.countryflags.io/gt/shiny/64.png',
-  },
-  {
-    id: 324,
-    name: 'Guinea',
-    flag: 'https://www.countryflags.io/gn/shiny/64.png',
-  },
-  {
-    id: 624,
-    name: 'Guinea-Bissau',
-    flag: 'https://www.countryflags.io/gw/shiny/64.png',
-  },
-  {
-    id: 328,
-    name: 'Guyana',
-    flag: 'https://www.countryflags.io/gy/shiny/64.png',
-  },
-  {
-    id: 332,
-    name: 'Haiti',
-    flag: 'https://www.countryflags.io/ht/shiny/64.png',
-  },
-  {
-    id: 340,
     name: 'Honduras',
-    flag: 'https://www.countryflags.io/hn/shiny/64.png',
+
+    flag: 'https://flagcdn.com/hn.svg',
   },
   {
-    id: 348,
+    name: 'Hong Kong',
+
+    flag: 'https://flagcdn.com/hk.svg',
+  },
+  {
     name: 'Hungary',
-    flag: 'https://www.countryflags.io/hu/shiny/64.png',
+
+    flag: 'https://flagcdn.com/hu.svg',
   },
   {
-    id: 352,
     name: 'Iceland',
-    flag: 'https://www.countryflags.io/is/shiny/64.png',
+
+    flag: 'https://flagcdn.com/is.svg',
   },
   {
-    id: 356,
     name: 'India',
-    flag: 'https://www.countryflags.io/in/shiny/64.png',
+
+    flag: 'https://flagcdn.com/in.svg',
   },
   {
-    id: 360,
     name: 'Indonesia',
-    flag: 'https://www.countryflags.io/id/shiny/64.png',
+
+    flag: 'https://flagcdn.com/id.svg',
   },
   {
-    id: 364,
-    name: 'Iran (Islamic Republic of)',
-    flag: 'https://www.countryflags.io/ir/shiny/64.png',
+    name: 'Iran, Islamic Republic Of',
+
+    flag: 'https://flagcdn.com/ir.svg',
   },
   {
-    id: 368,
     name: 'Iraq',
-    flag: 'https://www.countryflags.io/iq/shiny/64.png',
+
+    flag: 'https://flagcdn.com/iq.svg',
   },
   {
-    id: 372,
     name: 'Ireland',
-    flag: 'https://www.countryflags.io/ie/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ie.svg',
   },
+
   {
-    id: 376,
     name: 'Israel',
-    flag: 'https://www.countryflags.io/il/shiny/64.png',
+
+    flag: 'https://flagcdn.com/il.svg',
   },
   {
-    id: 380,
     name: 'Italy',
-    flag: 'https://www.countryflags.io/it/shiny/64.png',
+
+    flag: 'https://flagcdn.com/it.svg',
   },
   {
-    id: 388,
     name: 'Jamaica',
-    flag: 'https://www.countryflags.io/jm/shiny/64.png',
+
+    flag: 'https://flagcdn.com/jm.svg',
   },
   {
-    id: 392,
     name: 'Japan',
-    flag: 'https://www.countryflags.io/jp/shiny/64.png',
+
+    flag: 'https://flagcdn.com/jp.svg',
   },
+
   {
-    id: 400,
     name: 'Jordan',
-    flag: 'https://www.countryflags.io/jo/shiny/64.png',
+
+    flag: 'https://flagcdn.com/jo.svg',
   },
+
   {
-    id: 398,
-    name: 'Kazakhstan',
-    flag: 'https://www.countryflags.io/kz/shiny/64.png',
-  },
-  {
-    id: 404,
     name: 'Kenya',
-    flag: 'https://www.countryflags.io/ke/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ke.svg',
+  },
+
+  {
+    name: "Korea, Democratic People'S Republic of",
+
+    flag: 'https://flagcdn.com/kp.svg',
   },
   {
-    id: 296,
-    name: 'Kiribati',
-    flag: 'https://www.countryflags.io/ki/shiny/64.png',
-  },
-  {
-    id: 408,
-    name: "Korea (Democratic People's Republic of)",
-    flag: 'https://www.countryflags.io/kp/shiny/64.png',
-  },
-  {
-    id: 410,
     name: 'Korea, Republic of',
-    flag: 'https://www.countryflags.io/kr/shiny/64.png',
+
+    flag: 'https://flagcdn.com/kr.svg',
   },
   {
-    id: 414,
     name: 'Kuwait',
-    flag: 'https://www.countryflags.io/kw/shiny/64.png',
+
+    flag: 'https://flagcdn.com/kw.svg',
   },
+
   {
-    id: 417,
-    name: 'Kyrgyzstan',
-    flag: 'https://www.countryflags.io/kg/shiny/64.png',
-  },
-  {
-    id: 418,
-    name: "Lao People's Democratic Republic",
-    flag: 'https://www.countryflags.io/la/shiny/64.png',
-  },
-  {
-    id: 428,
     name: 'Latvia',
-    flag: 'https://www.countryflags.io/lv/shiny/64.png',
+
+    flag: 'https://flagcdn.com/lv.svg',
   },
   {
-    id: 422,
     name: 'Lebanon',
-    flag: 'https://www.countryflags.io/lb/shiny/64.png',
+
+    flag: 'https://flagcdn.com/lb.svg',
   },
+
   {
-    id: 426,
-    name: 'Lesotho',
-    flag: 'https://www.countryflags.io/ls/shiny/64.png',
-  },
-  {
-    id: 430,
     name: 'Liberia',
-    flag: 'https://www.countryflags.io/lr/shiny/64.png',
+
+    flag: 'https://flagcdn.com/lr.svg',
   },
   {
-    id: 434,
-    name: 'Libya',
-    flag: 'https://www.countryflags.io/ly/shiny/64.png',
+    name: 'Libyan Arab Jamahiriya',
+
+    flag: 'https://flagcdn.com/ly.svg',
   },
   {
-    id: 438,
     name: 'Liechtenstein',
-    flag: 'https://www.countryflags.io/li/shiny/64.png',
+
+    flag: 'https://flagcdn.com/li.svg',
   },
   {
-    id: 440,
     name: 'Lithuania',
-    flag: 'https://www.countryflags.io/lt/shiny/64.png',
+
+    flag: 'https://flagcdn.com/lt.svg',
   },
   {
-    id: 442,
     name: 'Luxembourg',
-    flag: 'https://www.countryflags.io/lu/shiny/64.png',
+
+    flag: 'https://flagcdn.com/lu.svg',
   },
   {
-    id: 450,
+    name: 'Macao',
+
+    flag: 'https://flagcdn.com/mo.svg',
+  },
+
+  {
     name: 'Madagascar',
-    flag: 'https://www.countryflags.io/mg/shiny/64.png',
+
+    flag: 'https://flagcdn.com/mg.svg',
   },
   {
-    id: 454,
-    name: 'Malawi',
-    flag: 'https://www.countryflags.io/mw/shiny/64.png',
-  },
-  {
-    id: 458,
     name: 'Malaysia',
-    flag: 'https://www.countryflags.io/my/shiny/64.png',
+
+    flag: 'https://flagcdn.com/my.svg',
   },
   {
-    id: 462,
     name: 'Maldives',
-    flag: 'https://www.countryflags.io/mv/shiny/64.png',
+
+    flag: 'https://flagcdn.com/mv.svg',
   },
   {
-    id: 466,
     name: 'Mali',
-    flag: 'https://www.countryflags.io/ml/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ml.svg',
   },
   {
-    id: 470,
     name: 'Malta',
-    flag: 'https://www.countryflags.io/mt/shiny/64.png',
+
+    flag: 'https://flagcdn.com/mt.svg',
   },
+
   {
-    id: 584,
-    name: 'Marshall Islands',
-    flag: 'https://www.countryflags.io/mh/shiny/64.png',
-  },
-  {
-    id: 478,
     name: 'Mauritania',
-    flag: 'https://www.countryflags.io/mr/shiny/64.png',
+
+    flag: 'https://flagcdn.com/mr.svg',
   },
+
   {
-    id: 480,
-    name: 'Mauritius',
-    flag: 'https://www.countryflags.io/mu/shiny/64.png',
-  },
-  {
-    id: 484,
     name: 'Mexico',
-    flag: 'https://www.countryflags.io/mx/shiny/64.png',
+
+    flag: 'https://flagcdn.com/mx.svg',
   },
+
   {
-    id: 583,
-    name: 'Micronesia (Federated States of)',
-    flag: 'https://www.countryflags.io/fm/shiny/64.png',
-  },
-  {
-    id: 498,
-    name: 'Moldova, Republic of',
-    flag: 'https://www.countryflags.io/md/shiny/64.png',
-  },
-  {
-    id: 492,
     name: 'Monaco',
-    flag: 'https://www.countryflags.io/mc/shiny/64.png',
+
+    flag: 'https://flagcdn.com/mc.svg',
   },
+
   {
-    id: 496,
-    name: 'Mongolia',
-    flag: 'https://www.countryflags.io/mn/shiny/64.png',
-  },
-  {
-    id: 499,
-    name: 'Montenegro',
-    flag: 'https://www.countryflags.io/me/shiny/64.png',
-  },
-  {
-    id: 504,
     name: 'Morocco',
-    flag: 'https://www.countryflags.io/ma/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ma.svg',
   },
+
   {
-    id: 508,
-    name: 'Mozambique',
-    flag: 'https://www.countryflags.io/mz/shiny/64.png',
-  },
-  {
-    id: 104,
-    name: 'Myanmar',
-    flag: 'https://www.countryflags.io/mm/shiny/64.png',
-  },
-  {
-    id: 516,
-    name: 'Namibia',
-    flag: 'https://www.countryflags.io/na/shiny/64.png',
-  },
-  {
-    id: 520,
-    name: 'Nauru',
-    flag: 'https://www.countryflags.io/nr/shiny/64.png',
-  },
-  {
-    id: 524,
-    name: 'Nepal',
-    flag: 'https://www.countryflags.io/np/shiny/64.png',
-  },
-  {
-    id: 528,
     name: 'Netherlands',
-    flag: 'https://www.countryflags.io/nl/shiny/64.png',
+
+    flag: 'https://flagcdn.com/nl.svg',
   },
+
   {
-    id: 554,
     name: 'New Zealand',
-    flag: 'https://www.countryflags.io/nz/shiny/64.png',
+
+    flag: 'https://flagcdn.com/nz.svg',
   },
   {
-    id: 558,
     name: 'Nicaragua',
-    flag: 'https://www.countryflags.io/ni/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ni.svg',
   },
+
   {
-    id: 562,
-    name: 'Niger',
-    flag: 'https://www.countryflags.io/ne/shiny/64.png',
-  },
-  {
-    id: 566,
     name: 'Nigeria',
-    flag: 'https://www.countryflags.io/ng/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ng.svg',
+  },
+
+  {
+    name: 'Northern Mariana Islands',
+
+    flag: 'https://flagcdn.com/mp.svg',
   },
   {
-    id: 807,
-    name: 'North Macedonia',
-    flag: 'https://www.countryflags.io/mk/shiny/64.png',
-  },
-  {
-    id: 578,
     name: 'Norway',
-    flag: 'https://www.countryflags.io/no/shiny/64.png',
+
+    flag: 'https://flagcdn.com/no.svg',
   },
   {
-    id: 512,
     name: 'Oman',
-    flag: 'https://www.countryflags.io/om/shiny/64.png',
+
+    flag: 'https://flagcdn.com/om.svg',
   },
   {
-    id: 586,
     name: 'Pakistan',
-    flag: 'https://www.countryflags.io/pk/shiny/64.png',
+
+    flag: 'https://flagcdn.com/pk.svg',
+  },
+
+  {
+    name: 'Palestine',
+
+    flag: 'https://flagcdn.com/ps.svg',
   },
   {
-    id: 585,
-    name: 'Palau',
-    flag: 'https://www.countryflags.io/pw/shiny/64.png',
-  },
-  {
-    id: 591,
     name: 'Panama',
-    flag: 'https://www.countryflags.io/pa/shiny/64.png',
+
+    flag: 'https://flagcdn.com/pa.svg',
   },
+
   {
-    id: 598,
-    name: 'Papua New Guinea',
-    flag: 'https://www.countryflags.io/pg/shiny/64.png',
-  },
-  {
-    id: 600,
     name: 'Paraguay',
-    flag: 'https://www.countryflags.io/py/shiny/64.png',
+
+    flag: 'https://flagcdn.com/py.svg',
   },
   {
-    id: 604,
     name: 'Peru',
-    flag: 'https://www.countryflags.io/pe/shiny/64.png',
+
+    flag: 'https://flagcdn.com/pe.svg',
   },
   {
-    id: 608,
     name: 'Philippines',
-    flag: 'https://www.countryflags.io/ph/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ph.svg',
   },
+
   {
-    id: 616,
     name: 'Poland',
-    flag: 'https://www.countryflags.io/pl/shiny/64.png',
+
+    flag: 'https://flagcdn.com/pl.svg',
   },
   {
-    id: 620,
     name: 'Portugal',
-    flag: 'https://www.countryflags.io/pt/shiny/64.png',
+
+    flag: 'https://flagcdn.com/pt.svg',
   },
   {
-    id: 634,
+    name: 'Puerto Rico',
+
+    flag: 'https://flagcdn.com/pr.svg',
+  },
+  {
     name: 'Qatar',
-    flag: 'https://www.countryflags.io/qa/shiny/64.png',
+
+    flag: 'https://flagcdn.com/qa.svg',
   },
   {
-    id: 642,
+    name: 'Reunion',
+
+    flag: 'https://flagcdn.com/re.svg',
+  },
+  {
     name: 'Romania',
-    flag: 'https://www.countryflags.io/ro/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ro.svg',
   },
   {
-    id: 643,
     name: 'Russian Federation',
-    flag: 'https://www.countryflags.io/ru/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ru.svg',
   },
   {
-    id: 646,
-    name: 'Rwanda',
-    flag: 'https://www.countryflags.io/rw/shiny/64.png',
+    name: 'RWANDA',
+
+    flag: 'https://flagcdn.com/rw.svg',
   },
+
   {
-    id: 659,
-    name: 'Saint Kitts and Nevis',
-    flag: 'https://www.countryflags.io/kn/shiny/64.png',
-  },
-  {
-    id: 662,
-    name: 'Saint Lucia',
-    flag: 'https://www.countryflags.io/lc/shiny/64.png',
-  },
-  {
-    id: 670,
-    name: 'Saint Vincent and the Grenadines',
-    flag: 'https://www.countryflags.io/vc/shiny/64.png',
-  },
-  {
-    id: 882,
-    name: 'Samoa',
-    flag: 'https://www.countryflags.io/ws/shiny/64.png',
-  },
-  {
-    id: 674,
     name: 'San Marino',
-    flag: 'https://www.countryflags.io/sm/shiny/64.png',
+
+    flag: 'https://flagcdn.com/sm.svg',
   },
   {
-    id: 678,
     name: 'Sao Tome and Principe',
-    flag: 'https://www.countryflags.io/st/shiny/64.png',
+
+    flag: 'https://flagcdn.com/st.svg',
   },
   {
-    id: 682,
     name: 'Saudi Arabia',
-    flag: 'https://www.countryflags.io/sa/shiny/64.png',
+
+    flag: 'https://flagcdn.com/sa.svg',
   },
   {
-    id: 686,
     name: 'Senegal',
-    flag: 'https://www.countryflags.io/sn/shiny/64.png',
+
+    flag: 'https://flagcdn.com/sn.svg',
   },
   {
-    id: 688,
-    name: 'Serbia',
-    flag: 'https://www.countryflags.io/rs/shiny/64.png',
+    name: 'Serbia and Montenegro',
+
+    flag: 'https://flagcdn.com/cs.svg',
   },
   {
-    id: 690,
     name: 'Seychelles',
-    flag: 'https://www.countryflags.io/sc/shiny/64.png',
+
+    flag: 'https://flagcdn.com/sc.svg',
   },
   {
-    id: 694,
     name: 'Sierra Leone',
-    flag: 'https://www.countryflags.io/sl/shiny/64.png',
+
+    flag: 'https://flagcdn.com/sl.svg',
   },
   {
-    id: 702,
     name: 'Singapore',
-    flag: 'https://www.countryflags.io/sg/shiny/64.png',
+
+    flag: 'https://flagcdn.com/sg.svg',
   },
   {
-    id: 703,
     name: 'Slovakia',
-    flag: 'https://www.countryflags.io/sk/shiny/64.png',
+
+    flag: 'https://flagcdn.com/sk.svg',
   },
   {
-    id: 705,
     name: 'Slovenia',
-    flag: 'https://www.countryflags.io/si/shiny/64.png',
+
+    flag: 'https://flagcdn.com/si.svg',
   },
   {
-    id: 90,
     name: 'Solomon Islands',
-    flag: 'https://www.countryflags.io/sb/shiny/64.png',
+
+    flag: 'https://flagcdn.com/sb.svg',
   },
+
   {
-    id: 706,
-    name: 'Somalia',
-    flag: 'https://www.countryflags.io/so/shiny/64.png',
-  },
-  {
-    id: 710,
     name: 'South Africa',
-    flag: 'https://www.countryflags.io/za/shiny/64.png',
+
+    flag: 'https://flagcdn.com/za.svg',
   },
+
   {
-    id: 728,
-    name: 'South Sudan',
-    flag: 'https://www.countryflags.io/ss/shiny/64.png',
-  },
-  {
-    id: 724,
     name: 'Spain',
-    flag: 'https://www.countryflags.io/es/shiny/64.png',
+
+    flag: 'https://flagcdn.com/es.svg',
   },
   {
-    id: 144,
     name: 'Sri Lanka',
-    flag: 'https://www.countryflags.io/lk/shiny/64.png',
+
+    flag: 'https://flagcdn.com/lk.svg',
   },
   {
-    id: 729,
     name: 'Sudan',
-    flag: 'https://www.countryflags.io/sd/shiny/64.png',
+
+    flag: 'https://flagcdn.com/sd.svg',
+  },
+
+  {
+    name: 'Swaziland',
+
+    flag: 'https://flagcdn.com/sz.svg',
   },
   {
-    id: 740,
-    name: 'Suriname',
-    flag: 'https://www.countryflags.io/sr/shiny/64.png',
-  },
-  {
-    id: 752,
     name: 'Sweden',
-    flag: 'https://www.countryflags.io/se/shiny/64.png',
+
+    flag: 'https://flagcdn.com/se.svg',
   },
   {
-    id: 756,
     name: 'Switzerland',
-    flag: 'https://www.countryflags.io/ch/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ch.svg',
   },
   {
-    id: 760,
     name: 'Syrian Arab Republic',
-    flag: 'https://www.countryflags.io/sy/shiny/64.png',
+
+    flag: 'https://flagcdn.com/sy.svg',
   },
   {
-    id: 762,
+    name: 'Taiwan',
+
+    flag: 'https://flagcdn.com/tw.svg',
+  },
+  {
     name: 'Tajikistan',
-    flag: 'https://www.countryflags.io/tj/shiny/64.png',
+
+    flag: 'https://flagcdn.com/tj.svg',
   },
   {
-    id: 834,
     name: 'Tanzania',
-    flag: 'https://www.countryflags.io/tz/shiny/64.png',
+
+    flag: 'https://flagcdn.com/tz.svg',
   },
   {
-    id: 764,
     name: 'Thailand',
-    flag: 'https://www.countryflags.io/th/shiny/64.png',
+
+    flag: 'https://flagcdn.com/th.svg',
   },
+
   {
-    id: 626,
-    name: 'Timor-Leste',
-    flag: 'https://www.countryflags.io/tl/shiny/64.png',
-  },
-  {
-    id: 768,
-    name: 'Togo',
-    flag: 'https://www.countryflags.io/tg/shiny/64.png',
-  },
-  {
-    id: 776,
-    name: 'Tonga',
-    flag: 'https://www.countryflags.io/to/shiny/64.png',
-  },
-  {
-    id: 780,
     name: 'Trinidad and Tobago',
-    flag: 'https://www.countryflags.io/tt/shiny/64.png',
+
+    flag: 'https://flagcdn.com/tt.svg',
   },
   {
-    id: 788,
     name: 'Tunisia',
-    flag: 'https://www.countryflags.io/tn/shiny/64.png',
+
+    flag: 'https://flagcdn.com/tn.svg',
   },
   {
-    id: 792,
     name: 'Turkey',
-    flag: 'https://www.countryflags.io/tr/shiny/64.png',
+
+    flag: 'https://flagcdn.com/tr.svg',
   },
+
   {
-    id: 795,
-    name: 'Turkmenistan',
-    flag: 'https://www.countryflags.io/tm/shiny/64.png',
-  },
-  {
-    id: 798,
     name: 'Tuvalu',
-    flag: 'https://www.countryflags.io/tv/shiny/64.png',
+
+    flag: 'https://flagcdn.com/tv.svg',
   },
   {
-    id: 800,
     name: 'Uganda',
-    flag: 'https://www.countryflags.io/ug/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ug.svg',
   },
   {
-    id: 804,
     name: 'Ukraine',
-    flag: 'https://www.countryflags.io/ua/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ua.svg',
   },
   {
-    id: 784,
     name: 'United Arab Emirates',
-    flag: 'https://www.countryflags.io/ae/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ae.svg',
   },
   {
-    id: 826,
     name: 'United Kingdom',
-    flag: 'https://www.countryflags.io/gb/shiny/64.png',
+
+    flag: 'https://flagcdn.com/gb.svg',
   },
   {
-    id: 840,
     name: 'United States',
-    flag: 'https://www.countryflags.io/us/shiny/64.png',
+
+    flag: 'https://flagcdn.com/us.svg',
   },
+
   {
-    id: 858,
     name: 'Uruguay',
-    flag: 'https://www.countryflags.io/uy/shiny/64.png',
+
+    flag: 'https://flagcdn.com/uy.svg',
   },
   {
-    id: 860,
     name: 'Uzbekistan',
-    flag: 'https://www.countryflags.io/uz/shiny/64.png',
+
+    flag: 'https://flagcdn.com/uz.svg',
+  },
+
+  {
+    name: 'Venezuela',
+
+    flag: 'https://flagcdn.com/ve.svg',
   },
   {
-    id: 548,
-    name: 'Vanuatu',
-    flag: 'https://www.countryflags.io/vu/shiny/64.png',
+    name: 'Vietnam',
+
+    flag: 'https://flagcdn.com/vn.svg',
+  },
+
+  {
+    name: 'Western Sahara',
+
+    flag: 'https://flagcdn.com/eh.svg',
   },
   {
-    id: 862,
-    name: 'Venezuela (Bolivarian Republic of)',
-    flag: 'https://www.countryflags.io/ve/shiny/64.png',
-  },
-  {
-    id: 704,
-    name: 'Viet Nam',
-    flag: 'https://www.countryflags.io/vn/shiny/64.png',
-  },
-  {
-    id: 887,
     name: 'Yemen',
-    flag: 'https://www.countryflags.io/ye/shiny/64.png',
+
+    flag: 'https://flagcdn.com/ye.svg',
   },
   {
-    id: 894,
     name: 'Zambia',
-    flag: 'https://www.countryflags.io/zm/shiny/64.png',
+
+    flag: 'https://flagcdn.com/zm.svg',
   },
   {
-    id: 716,
     name: 'Zimbabwe',
-    flag: 'https://www.countryflags.io/zw/shiny/64.png',
+
+    flag: 'https://flagcdn.com/zw.svg',
   },
 ];
 
