@@ -1,6 +1,7 @@
 {
   "name": "lux-house",
   "version": "1.0.0",
+  "engines": {"node":"16.20.1"},
   "description": "e-commerce funiture",
   "main": "server.js",
   "scripts": {
